@@ -1,0 +1,83 @@
+<div class="wikidoc"><h2>Documentation Home Page</h2>There is a help file included with the download that provides an overview of the various classes. The <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa446802(v=VS.85).aspx">Microsoft MSDN documentation</a> provides an excellent overview of the Task Scheduler along with details around security and permission, idle conditions, and trigger repetition.<br />
+<ul><li>The <a href="https://taskscheduler.codeplex.com/wikipage?title=Classes%20Overview&referringTitle=Documentation">Classes Overview</a> describes each of the major classes and how they are used.</li>
+<li>The <a href="https://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation">Examples Page</a> shows some C# code that demonstrates almost every function of the library.
+<ul><li><a href="https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples&referringTitle=Documentation">Trigger Example Code</a> has specific examples around triggers.</li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=ActionSamples&referringTitle=Documentation">Action Example Code</a> has specific examples around actions.</li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=EventSamples&referringTitle=Documentation">Task Event Management Code</a> has examples around how to view and watch events related to tasks.</li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Documentation">Security Explanations and Samples</a> show how to connect to remote servers and how to create tasks that run in different security contexts (system account, user account, elevated, etc.)</li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=PowerShell&referringTitle=Documentation">PowerShell Examples</a> has examples on how to use the library from PowerShell.</li></ul></li>
+<li>The <a href="https://taskscheduler.codeplex.com/wikipage?title=Install&referringTitle=Documentation">Installation &#38; Samples Page</a> explains how to use this library in your own projects and includes a sample project.</li></ul>
+Below is a brief example of how to use the library from C#.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">using</span> System;
+<span style="color:Blue;">using</span> Microsoft.Win32.TaskScheduler;
+
+<span style="color:Blue;">class</span> Program
+{
+   <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> Main(<span style="color:Blue;">string</span>[] args)
+   {
+      <span style="color:Green;">// Create a new task definition for the local machine and assign properties</span>
+      TaskDefinition td = TaskService.Instance.NewTask();
+      td.RegistrationInfo.Description = <span style="color:#A31515;">&quot;Does something&quot;</span>;
+
+      <span style="color:Green;">// Add a trigger that, starting tomorrow, will fire every other week on Monday</span>
+      <span style="color:Green;">// and Saturday and repeat every 10 minutes for the following 11 hours</span>
+      WeeklyTrigger wt = <span style="color:Blue;">new</span> WeeklyTrigger();
+      wt.StartBoundary = DateTime.Today.AddDays(1);
+      wt.DaysOfWeek = DaysOfTheWeek.Monday | DaysOfTheWeek.Saturday;
+      wt.WeeksInterval = 2;
+      wt.Repetition.Duration = TimeSpan.FromHours(11);
+      wt.Repetition.Interval = TimeSpan.FromMinutes(10);
+      td.Triggers.Add(wt);
+
+      <span style="color:Green;">// Create an action that will launch Notepad whenever the trigger fires</span>
+      td.Actions.Add(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\\test.log&quot;</span>);
+
+      <span style="color:Green;">// Register the task in the root folder of the local machine</span>
+      TaskService.Instance.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;Test&quot;</span>, td);
+   }
+}
+</pre></div><br />Here&#39;s the same as above but in VB.NET<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">Imports</span> Microsoft.Win32.TaskScheduler
+
+<span style="color:Blue;">Module</span> Module1
+
+    <span style="color:Blue;">Sub</span> Main()
+        <span style="color:Blue;">Using</span> ts <span style="color:Blue;">As</span> <span style="color:Blue;">New</span> TaskService()
+            <span style="color:Green;">&#39; Create a new task definition and assign properties</span>
+            <span style="color:Blue;">Dim</span> td <span style="color:Blue;">As</span> TaskDefinition = ts.NewTask
+            td.RegistrationInfo.Description = <span style="color:#A31515;">&quot;Does something&quot;</span>
+
+            <span style="color:Green;">&#39; Add a trigger that will, starting tomorrow, fire every other week on Monday</span>
+            <span style="color:Green;">&#39; and Saturday and repeat every 10 minutes for the following 11 hours</span>
+            <span style="color:Blue;">Dim</span> wt <span style="color:Blue;">As</span> <span style="color:Blue;">New</span> WeeklyTrigger()
+            wt.StartBoundary = DateTime.Today.AddDays(1)
+            wt.DaysOfWeek = DaysOfTheWeek.Monday <span style="color:Blue;">Or</span> DaysOfTheWeek.Saturday
+            wt.WeeksInterval = 2
+            wt.Repetition.Duration = TimeSpan.FromHours(11)
+            wt.Repetition.Interval = TimeSpan.FromMinutes(10)
+            td.Triggers.Add(wt)
+
+            <span style="color:Green;">&#39; Add an action (shorthand) that runs Notepad</span>
+            td.Actions.Add(<span style="color:Blue;">New</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\test.log&quot;</span>))
+
+            <span style="color:Green;">&#39; Register the task in the root folder</span>
+            ts.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;Test&quot;</span>, td)
+        <span style="color:Blue;">End</span> <span style="color:Blue;">Using</span>
+    <span style="color:Blue;">End</span> <span style="color:Blue;">Sub</span>
+
+<span style="color:Blue;">End</span> <span style="color:Blue;">Module</span>
+</pre></div><br />If you&#39;re really into shorthand code, here&#39;s almost the same functionality as the C# code above, but much shorter:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">using</span> System;
+<span style="color:Blue;">using</span> Microsoft.Win32.TaskScheduler;
+
+<span style="color:Blue;">class</span> Program
+{
+   <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> Main(<span style="color:Blue;">string</span>[] args)
+   {
+      TaskService.Instance.AddTask(<span style="color:#A31515;">&quot;Test&quot;</span>, <span style="color:Blue;">new</span> DailyTrigger { DaysInterval = 2 },
+         <span style="color:Blue;">new</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\\test.log&quot;</span>, <span style="color:Blue;">null</span>));
+   }
+}
+</pre></div><br />Alternately, you can use the library declaratively or &quot;fluently&quot;:<br /><br /><div style="color:Black;background-color:White;"><pre>
+Task t = TaskService.Instance.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).WithArguments(<span style="color:#A31515;">@&quot;c:\test.log&quot;</span>).Every(2).Days().AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+</pre></div></div><div class="ClearBoth"></div>

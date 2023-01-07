@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionDlgEditCaption" xml:space="preserve">
+    <value>Editar acción</value>
+  </data>
+  <data name="ActionDlgNewCaption" xml:space="preserve">
+    <value>Nueva acción</value>
+  </data>
+  <data name="ActionTypeComHandler" xml:space="preserve">
+    <value>Controlador personalizado</value>
+  </data>
+  <data name="ActionTypeExecute" xml:space="preserve">
+    <value>Iniciar un programa</value>
+  </data>
+  <data name="ActionTypeSendEmail" xml:space="preserve">
+    <value>Enviar un correo electrónico</value>
+  </data>
+  <data name="ActionTypeShowMessage" xml:space="preserve">
+    <value>Mostrar un mensaje</value>
+  </data>
+  <data name="AnyConnection" xml:space="preserve">
+    <value>Cualquier conexión</value>
+  </data>
+  <data name="BrowseForTargetServerPrompt" xml:space="preserve">
+    <value>Seleccionar un nuevo equipo de destino:</value>
+  </data>
+  <data name="ChangeUserBtn" xml:space="preserve">
+    <value>Cambiar usuario o grupo...</value>
+  </data>
+  <data name="ChangeUserBtnNonAdmin" xml:space="preserve">
+    <value>Cambiar usuario...</value>
+  </data>
+  <data name="ComObjectDoesNotSupportInterfaceErrorMessage" xml:space="preserve">
+    <value>Esta clase COM no admite la interfaz requerida.</value>
+  </data>
+  <data name="CredentialPromptMessage" xml:space="preserve">
+    <value>Escriba la información de cuenta de usuario para ejecutar esta tarea.</value>
+  </data>
+  <data name="DateTimeSyncText" xml:space="preserve">
+    <value>Sincronizar zonas horarias</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Deshabilitado</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Habilitado</value>
+  </data>
+  <data name="Error_CannotEditTrigger" xml:space="preserve">
+    <value>No se puede editar este tipo de desencadenador en esta herramienta.</value>
+  </data>
+  <data name="Error_CannotRetrieveHistory" xml:space="preserve">
+    <value>No se puede recuperar el historial de tareas. Error: {0}</value>
+  </data>
+  <data name="Error_CredUIConfirmFailed" xml:space="preserve">
+    <value>La llamada a CredUIConfirmCredentials falló con código de error: {0}</value>
+  </data>
+  <data name="Error_CredUIPromptFailed" xml:space="preserve">
+    <value>La llamada a CredUIPromptForCredentials falló con código de error: {0}</value>
+  </data>
+  <data name="Error_EventFilterBadQuery" xml:space="preserve">
+    <value>El texto encontrado en la consulta XML no es válido.</value>
+  </data>
+  <data name="Error_EventFilterBadQueryText" xml:space="preserve">
+    <value>Texto ofensivo: '{0}'</value>
+  </data>
+  <data name="Error_EventsNotSupported" xml:space="preserve">
+    <value>El historial de eventos de la tarea no es compatible en las versiones .NET inferiores a la versión 3.5.</value>
+  </data>
+  <data name="Error_EventTriggerIDInvalid" xml:space="preserve">
+    <value>La ID del patrón no es válido</value>
+  </data>
+  <data name="Error_InvalidNameFormat" xml:space="preserve">
+    <value>El nombre de la tarea no contiene un formato válido. No se permiten carácteres no válidos de nombre de archivo en un nombre de tarea.</value>
+  </data>
+  <data name="Error_InvalidQueryFormat" xml:space="preserve">
+    <value>El contenido debe ser texto o un archivo que contenga una consulta Xml válida.</value>
+  </data>
+  <data name="Error_InvalidSddlFormat" xml:space="preserve">
+    <value>El SDDL debe estar en formato definido en http://goo.gl/6au0V</value>
+  </data>
+  <data name="Error_InvalidUriFormat" xml:space="preserve">
+    <value>La URI no tiene un formato correcto</value>
+  </data>
+  <data name="Error_InvalidVersionFormat" xml:space="preserve">
+    <value>La versión debe estar en el formato major.minor[.build[.revision]].</value>
+  </data>
+  <data name="Error_NoGroupsUnderV1" xml:space="preserve">
+    <value>Ejecutar una tarea con una cuenta de usuario de grupo se admite solo en Windows Vista™ o posterior. Para ejecutar una tarea con una cuenta de grupo, debe actualizar la tarea a una tarea de Windows Vista™.</value>
+  </data>
+  <data name="Error_PrincipalSidTypeInvalid" xml:space="preserve">
+    <value>La cuenta de usuario en la ficha General debe establecerse en 'Servicio de red' o 'Servicio LOCAL' cuando el proceso de SID Type es 'Ilimitado' en la ficha complementos. Debe cambiar el SID Type o establecer el usuario en una de las cuentas válidas.</value>
+  </data>
+  <data name="Error_RepetitionMoreThanDuration" xml:space="preserve">
+    <value>El valor de intervalo de repetición debe ser menor o igual que el valor de duración de la repetición.</value>
+  </data>
+  <data name="Error_TaskDeleteMustHaveExpiringTrigger" xml:space="preserve">
+    <value>Si desea que una tarea se elimine automáticamente después de ejecutarse, agregue al menos un desencadenador con una fecha de expiración.</value>
+  </data>
+  <data name="Error_TaskPropertiesIncompatible" xml:space="preserve">
+    <value>Los siguientes valores de propiedad no pueden utilizarse con la opción de compatibilidad seleccionado:</value>
+  </data>
+  <data name="Error_TaskPropertiesIncompatibleSimple" xml:space="preserve">
+    <value>Algunas opciones son incompatibles con esta selección.</value>
+  </data>
+  <data name="EventDetailHeader" xml:space="preserve">
+    <value>Evento {0}, TaskScheduler</value>
+  </data>
+  <data name="EventKeywordsAll" xml:space="preserve">
+    <value>&lt;Todas las palabras clave&gt;</value>
+  </data>
+  <data name="EventKeywordsAuditFailure" xml:space="preserve">
+    <value>Error de auditoría </value>
+  </data>
+  <data name="EventKeywordsAuditSuccess" xml:space="preserve">
+    <value>Auditoría correcta</value>
+  </data>
+  <data name="EventKeywordsCorrelationHint2" xml:space="preserve">
+    <value>Indicio de correlación </value>
+  </data>
+  <data name="EventKeywordsEventLogClassic" xml:space="preserve">
+    <value>Clásico</value>
+  </data>
+  <data name="EventKeywordsResponseTime" xml:space="preserve">
+    <value>Tiempo de respuesta</value>
+  </data>
+  <data name="EventKeywordsSqm" xml:space="preserve">
+    <value>SQM </value>
+  </data>
+  <data name="EventKeywordsWdiContext" xml:space="preserve">
+    <value>Contexto WDI </value>
+  </data>
+  <data name="EventKeywordsWdiDiagnostic" xml:space="preserve">
+    <value>Diagnóstico WDI</value>
+  </data>
+  <data name="EventLogParentApps" xml:space="preserve">
+    <value>Registros de aplicaciones y servicios</value>
+  </data>
+  <data name="EventLogParentStandard" xml:space="preserve">
+    <value>Registros de Windows</value>
+  </data>
+  <data name="EventLogsAll" xml:space="preserve">
+    <value>&lt;Todos los Registros&gt;</value>
+  </data>
+  <data name="EventLogTime12Hours" xml:space="preserve">
+    <value>Últimas 12 horas</value>
+  </data>
+  <data name="EventLogTime30Days" xml:space="preserve">
+    <value>Últimos 30 días</value>
+  </data>
+  <data name="EventLogTimeAnyTime" xml:space="preserve">
+    <value>cualquier momento</value>
+  </data>
+  <data name="EventLogTimeCustom" xml:space="preserve">
+    <value>(Intervalo personalizado)</value>
+  </data>
+  <data name="EventLogTimeCustomFrom" xml:space="preserve">
+    <value>Todos los eventos desde {0}</value>
+  </data>
+  <data name="EventLogTimeCustomFromTo" xml:space="preserve">
+    <value>De {0} a {1}</value>
+  </data>
+  <data name="EventLogTimeCustomTo" xml:space="preserve">
+    <value>Todos los eventos hasta {1}</value>
+  </data>
+  <data name="EventLogTimeDay" xml:space="preserve">
+    <value>Últimas 24 horas</value>
+  </data>
+  <data name="EventLogTimeHour" xml:space="preserve">
+    <value>Última hora</value>
+  </data>
+  <data name="EventLogTimeWeek" xml:space="preserve">
+    <value>Últimos 7 días</value>
+  </data>
+  <data name="EventPropertiesDialogTitle" xml:space="preserve">
+    <value>Propiedades de eventos - evento {0}, TaskScheduler</value>
+  </data>
+  <data name="EventSourcesAll" xml:space="preserve">
+    <value>&lt;Todos los orígenes&gt;</value>
+  </data>
+  <data name="EventTasksAll" xml:space="preserve">
+    <value>&lt;Todas las categorías de tareas&gt;</value>
+  </data>
+  <data name="EventTriggerFilterGoManualPrompt" xml:space="preserve">
+    <value>Si elige editar la consulta manualmente, ya no podrá modificarla usando los controles en la ficha Filtro. ¿Desea continuar?</value>
+  </data>
+  <data name="EventTriggerFilterUseFormPrompt" xml:space="preserve">
+    <value>¿Desea usar la ficha Filtro para editar esta consulta? Esto resultará en cambios manuales hechos en la consulta que se está descartando.</value>
+  </data>
+  <data name="EventViewerDialogTitle" xml:space="preserve">
+    <value>Visor de eventos</value>
+  </data>
+  <data name="HistoryHeader" xml:space="preserve">
+    <value> Número de eventos: {0}</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Último</value>
+  </data>
+  <data name="LastResultRunning" xml:space="preserve">
+    <value>La tarea se está ejecutando actualmente. (0x{0:X})</value>
+  </data>
+  <data name="LastResultSuccessful" xml:space="preserve">
+    <value>Operación completada correctamente. (0x0)</value>
+  </data>
+  <data name="LoadingPrompt" xml:space="preserve">
+    <value>Cargando...</value>
+  </data>
+  <data name="LocalMachine" xml:space="preserve">
+    <value>Equipo local</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Nunca</value>
+  </data>
+  <data name="NoUserSpecifiedText" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="ProcessPriorityAboveNormal" xml:space="preserve">
+    <value>Por encima de lo normal</value>
+  </data>
+  <data name="ProcessPriorityBelowNormal" xml:space="preserve">
+    <value>Por debajo de lo normal</value>
+  </data>
+  <data name="ProcessPriorityHigh" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="ProcessPriorityIdle" xml:space="preserve">
+    <value>Inactivo</value>
+  </data>
+  <data name="ProcessPriorityNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="ProcessPriorityRealTime" xml:space="preserve">
+    <value>Tiempo real</value>
+  </data>
+  <data name="SIDTypeDefault" xml:space="preserve">
+    <value>Predeterminado</value>
+  </data>
+  <data name="SIDTypeNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="SIDTypeUnrestricted" xml:space="preserve">
+    <value>Sin restricciones</value>
+  </data>
+  <data name="TaskCompatibility" xml:space="preserve">
+    <value>Servicio AT|Windows Server ™ 2003, Windows® XP o Windows 2000| Windows Vista™, Windows™ Server 2008| Windows® 7, Windows Server™ 2008 R2| Windows® 8 o 8.1, Windows Server ™ 2012| Windows® 10</value>
+  </data>
+  <data name="TaskEditDlgTitle" xml:space="preserve">
+    <value>Propiedades de {0} ({1})</value>
+  </data>
+  <data name="TaskEventStatusFailure" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="TaskEventStatusStillRunning" xml:space="preserve">
+    <value>Aún en ejecución</value>
+  </data>
+  <data name="TaskEventStatusSuccess" xml:space="preserve">
+    <value>Correcto</value>
+  </data>
+  <data name="TaskEventStatusTerminated" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="TaskInstancesIgnoreNew" xml:space="preserve">
+    <value>No iniciar una instancia nueva</value>
+  </data>
+  <data name="TaskInstancesParallel" xml:space="preserve">
+    <value>Ejecutar una instancia nueva en paralelo</value>
+  </data>
+  <data name="TaskInstancesQueue" xml:space="preserve">
+    <value>Poner en cola una instancia nueva</value>
+  </data>
+  <data name="TaskInstancesStopExisting" xml:space="preserve">
+    <value>Detener la instancia existente</value>
+  </data>
+  <data name="TaskMustHaveActionsError" xml:space="preserve">
+    <value>Debe haber al menos una acción asignada a esta tarea.</value>
+  </data>
+  <data name="TaskRunTimesDialogTitle" xml:space="preserve">
+    <value>Tiempos de ejecución de la tarea ({0})</value>
+  </data>
+  <data name="TaskSchedulerName" xml:space="preserve">
+    <value>Programador de tareas</value>
+  </data>
+  <data name="TimeSpanDoNotWait" xml:space="preserve">
+    <value>No esperar</value>
+  </data>
+  <data name="TimeSpanImmediately" xml:space="preserve">
+    <value>Inmediatamente</value>
+  </data>
+  <data name="TimeSpanIndefinitely" xml:space="preserve">
+    <value>Indefinidamente</value>
+  </data>
+  <data name="TimeSpanNotStarted" xml:space="preserve">
+    <value>No iniciado</value>
+  </data>
+  <data name="TriggerDlgEditCaption" xml:space="preserve">
+    <value>Editar desencadenador</value>
+  </data>
+  <data name="TriggerDlgNewCaption" xml:space="preserve">
+    <value>Nuevo desencadenador</value>
+  </data>
+  <data name="TriggerTypeBoot" xml:space="preserve">
+    <value>Al inicio</value>
+  </data>
+  <data name="TriggerTypeCustom" xml:space="preserve">
+    <value>Desencadenador personalizado</value>
+  </data>
+  <data name="TriggerTypeEvent" xml:space="preserve">
+    <value>Al producirse un evento</value>
+  </data>
+  <data name="TriggerTypeIdle" xml:space="preserve">
+    <value>Al estar inactivo</value>
+  </data>
+  <data name="TriggerTypeLogon" xml:space="preserve">
+    <value>Al iniciar la sesión</value>
+  </data>
+  <data name="TriggerTypeRegistration" xml:space="preserve">
+    <value>Al crear o modificar tarea</value>
+  </data>
+  <data name="TriggerTypeRemoteConnect" xml:space="preserve">
+    <value>Al conectarse a una sesión de usuario remoto</value>
+  </data>
+  <data name="TriggerTypeRemoteDisconnect" xml:space="preserve">
+    <value>Al desconectarse a una sesión de usuario remoto</value>
+  </data>
+  <data name="TriggerTypeSchedule" xml:space="preserve">
+    <value>Según una programación</value>
+  </data>
+  <data name="TriggerTypeSessionConnect" xml:space="preserve">
+    <value>Al conectarse a una sesión de usuario</value>
+  </data>
+  <data name="TriggerTypeSessionDisconnect" xml:space="preserve">
+    <value>Al desconectarse de una sesión de usuario</value>
+  </data>
+  <data name="TriggerTypeWorkstationLock" xml:space="preserve">
+    <value>Al bloquearse la estación de trabajo</value>
+  </data>
+  <data name="TriggerTypeWorkstationUnlock" xml:space="preserve">
+    <value>Al desbloquearse la estación de trabajo</value>
+  </data>
+  <data name="UserAuthenticationError" xml:space="preserve">
+    <value>No se proporcionó una contraseña válida para la cuenta especificada.</value>
+  </data>
+  <data name="UseUnifiedResetQuestion" xml:space="preserve">
+    <value>Al establecer esta propiedad se desactivarán otras propiedades. ¿Seguro que desea continuar?</value>
+  </data>
+  <data name="WizActionSubtextEmail" xml:space="preserve">
+    <value>Envía un correo electrónico utilizando la información introducida.</value>
+  </data>
+  <data name="WizActionSubtextExecute" xml:space="preserve">
+    <value>Ejecuta una operación de línea de comandos.</value>
+  </data>
+  <data name="WizActionSubtextShowMessage" xml:space="preserve">
+    <value>Muestra un mensaje cuando se activa una tarea.</value>
+  </data>
+  <data name="WizActionTextExecute" xml:space="preserve">
+    <value>Ejecutar un programa</value>
+  </data>
+  <data name="WizActionTextSendEmail" xml:space="preserve">
+    <value>Enviar un correo electrónico</value>
+  </data>
+  <data name="WizActionTextShowMessage" xml:space="preserve">
+    <value>Mostrar un mensaje</value>
+  </data>
+  <data name="WizardEventTriggerErrorTitle" xml:space="preserve">
+    <value>Desencadenador de evento no válido</value>
+  </data>
+  <data name="WizardEventTriggerInvalid" xml:space="preserve">
+    <value>Como mínimo, se debe seleccionar un registro.</value>
+  </data>
+  <data name="WizardMonthlyDOWTriggerInvalid" xml:space="preserve">
+    <value>Debe de haber al menos un mes, una semana y un día de la semana seleccionado.</value>
+  </data>
+  <data name="WizardMonthlyTriggerErrorTitle" xml:space="preserve">
+    <value>Desencadenador mensual no válido</value>
+  </data>
+  <data name="WizardMonthlyTriggerInvalid" xml:space="preserve">
+    <value>Debe haber al menos un mes y un día seleccionado.</value>
+  </data>
+  <data name="WizardSummaryFormatString" xml:space="preserve">
+    <value>Nombre: {0}
+
+Descripción: {1}
+
+Desencadenador: {2}
+
+Acción : {3}</value>
+  </data>
+  <data name="WizTriggerSubtextDaily" xml:space="preserve">
+    <value>Inicia una tarea basada en un programa diario. Por ejemplo, la tarea empieza a una hora específica todos los dias, cada día, cada tercer día, y así sucesivamente.</value>
+  </data>
+  <data name="WizTriggerSubtextEvent" xml:space="preserve">
+    <value>Inicia una tarea cuando se produce un evento del sistema.</value>
+  </data>
+  <data name="WizTriggerSubtextMonthly" xml:space="preserve">
+    <value>Inicia una tarea basada en un calendario mensual. Por ejemplo, la tarea empieza en días específicos de meses específicos.</value>
+  </data>
+  <data name="WizTriggerSubtextTime" xml:space="preserve">
+    <value>Inicia una tarea en una fecha y hora específicas.</value>
+  </data>
+  <data name="WizTriggerSubtextWeekly" xml:space="preserve">
+    <value>Inicia una tarea basada en un programa semanal. Por ejemplo, la tarea comienza a las 8:00 en un día específico de la semana, cada semana o cada dos semanas.</value>
+  </data>
+  <data name="WizTriggerTextDaily" xml:space="preserve">
+    <value>Diariamente</value>
+  </data>
+  <data name="WizTriggerTextEvent" xml:space="preserve">
+    <value>Cuando se registre un evento específico</value>
+  </data>
+  <data name="WizTriggerTextMonthly" xml:space="preserve">
+    <value>Mensual</value>
+  </data>
+  <data name="WizTriggerTextTime" xml:space="preserve">
+    <value>Una vez</value>
+  </data>
+  <data name="WizTriggerTextWeekly" xml:space="preserve">
+    <value>Semanalmente</value>
+  </data>
+  <data name="TimeSpanUnset" xml:space="preserve">
+    <value>Sin establecer</value>
+  </data>
+  <data name="Error_MaintenanceDeadlineLimit" xml:space="preserve">
+    <value>El plazo mínimo o periodo de que una tarea puede utilizar es 1 día. El plazo también debe ser mayor que en el periodo.</value>
+  </data>
+  <data name="Error_RepetitionDurationOutOfRange" xml:space="preserve">
+    <value>El valor de duración de la repetición debe ser 1 minuto o más.</value>
+  </data>
+  <data name="Error_RepetitionIntervalOutOfRange" xml:space="preserve">
+    <value>El valor de intervalo de repetición debe ser 1 minuto o mayor y menor o igual a 31 días.</value>
+  </data>
+  <data name="Error_PasswordMustBeProvided" xml:space="preserve">
+    <value>Programador de tareas no puede crear la tarea. Se desconoce la cuenta de usuario, la contraseña es incorrecta, o la cuenta de usuario no tiene permiso para crear esta tarea.</value>
+  </data>
+  <data name="Error_InvalidSpanValue" xml:space="preserve">
+    <value>Valor de duración válida.!</value>
+  </data>
+  <data name="Error_InvalidFileName" xml:space="preserve">
+    <value>El programa/script suministrado no es un nombre de archivo válido. Por favor corregir antes de continuar.!</value>
+  </data>
+</root>

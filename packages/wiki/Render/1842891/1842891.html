@@ -1,0 +1,23 @@
+<div class="wikidoc"><h1>Action Samples</h1>All actions are derived from the abstract <span class="codeInline">Action</span> class. All versions of the base library support the <span class="codeInline">ExecAction</span>. It only has three properties that allow it to run an executable with parameters.<br /><br /><div style="color:Black;background-color:White;"><pre>
+ExecAction ea1 = <span style="color:Blue;">new</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;file.txt&quot;</span>, <span style="color:Blue;">null</span>);
+ExecAction ea2 = <span style="color:Blue;">new</span> ExecAction();
+ea2.Path = <span style="color:#A31515;">&quot;notepad.exe&quot;</span>;
+ea.Arguments = <span style="color:#A31515;">&quot;file2.txt&quot;</span>;
+</pre></div><h2>Cross-platform Support</h2>Post Vista, in the V2 library, there are three new actions. Under V1 systems (XP/WS2003 and earlier), these actions can be enabled via PowerShell and setting the <span class="codeInline">TaskDefinition.Actions.PowerShellConversion</span> property to <span class="codeInline">PowerShellActionPlatformOption.All</span>. Turning on support for PowerShell under V1 systems also allow the library to support more than one action.<br /><br /><div style="color:Black;background-color:White;"><pre>
+TaskDefinition td = TaskService.Instance.NewTask()
+td.Actions.PowerShellConversion = PowerShellActionPlatformOption.All;
+<span style="color:Green;">// Define rest of task and register...</span>
+</pre></div><br />This same property can be used to prevent PowerShell from being used to convert <span class="codeInline">EmailAction</span> and <span class="codeInline">ShowMessageAction</span> actions under Windows 8 and newer systems:<br /><br /><div style="color:Black;background-color:White;"><pre>
+TaskDefinition td = TaskService.Instance.NewTask()
+td.Actions.PowerShellConversion = PowerShellActionPlatformOption.Never;
+<span style="color:Green;">// Define rest of task and register...</span>
+</pre></div>
+<h2>Email, Message and COM Object Actions</h2>The <span class="codeInline">EmailAction</span> allows for an email to be sent when the task is triggered. It works as follows:<br /><br /><div style="color:Black;background-color:White;"><pre>
+EmailAction eAction = <span style="color:Blue;">new</span> EmailAction(<span style="color:#A31515;">&quot;Task fired&quot;</span>, <span style="color:#A31515;">&quot;sender@email.com&quot;</span>, <span style="color:#A31515;">&quot;recipient@email.com&quot;</span>, <span style="color:#A31515;">&quot;You just got a message&quot;</span>, <span style="color:#A31515;">&quot;smtp.company.com&quot;</span>);
+eAction.Cc = <span style="color:#A31515;">&quot;alternate@email.com&quot;</span>;
+</pre></div><br />You can also display a message when the trigger fires using the <span class="codeInline">ShowMessageAction</span>.<br /><br /><div style="color:Black;background-color:White;"><pre>
+ShowMessageAction msg = <span style="color:Blue;">new</span> ShowMessageAction(<span style="color:#A31515;">&quot;You just got a message!&quot;</span>, <span style="color:#A31515;">&quot;SURPRISE&quot;</span>);
+</pre></div><br />The last action is the most complex. It allows the task to execute and In-Proc COM server object that implements the <span class="codeInline">ITaskHandler</span> interface. There is a sample project that shows how to do this in the Downloads section, but here is how to define the action.<br /><br /><div style="color:Black;background-color:White;"><pre>
+ComHandlerAction comAction = <span style="color:Blue;">new</span> ComHandlerAction(<span style="color:Blue;">new</span> Guid(<span style="color:#A31515;">&quot;{CE7D4428-8A77-4c5d-8A13-5CAB5D1EC734}&quot;</span>));
+comAction.Data = <span style="color:#A31515;">&quot;Something specific the COM object needs to execute. This can be left unassigned as well.&quot;</span>;
+</pre></div></div><div class="ClearBoth"></div>

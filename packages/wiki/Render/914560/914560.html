@@ -1,0 +1,50 @@
+<div class="wikidoc"><h2>Security Explanations and Samples</h2>Below are some discussions and sample code related to the following tasks:
+<ul><li><a href="#remote">Connecting to a remote server or local server with different credentials</a> (This is often required when using ASP.NET)</li>
+<li><a href="#system">Creating tasks that run as a system account</a></li>
+<li><a href="#user">Creating tasks that run as a different user</a></li>
+<li><a href="#highest">Running tasks with Administrator rights that ignore UAC warnings</a></li></ul>
+<h3>Connecting to a remote server or local server with different credentials<a name="remote"></a></h3>Connecting to both a local and a remote server to manage tasks is done through the <b><span class="codeInline">TaskService</span></b> constructor.<br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">public</span> TaskService(
+   <span style="color:Green;">// The name of the computer that you want to connect to. If the this parameter is</span>
+   <span style="color:Green;">// null or empty, then this will connect to the local computer.</span>
+   <span style="color:Blue;">string</span> targetServer,
+   <span style="color:Green;">// The user name that is used during the connection to the computer. If the user</span>
+   <span style="color:Green;">// is not specified, then the current token is used.</span>
+   <span style="color:Blue;">string</span> userName = <span style="color:Blue;">null</span>,
+   <span style="color:Green;">// The domain of the user specified in the userName parameter.</span>
+   <span style="color:Blue;">string</span> accountDomain = <span style="color:Blue;">null</span>,
+   <span style="color:Green;">// The password that is used to connect to the computer. If the user name and</span>
+   <span style="color:Green;">// password are not specified, then the current token is used.</span>
+   <span style="color:Blue;">string</span> password = <span style="color:Blue;">null</span>,
+   <span style="color:Green;">// If set to true force Task Scheduler 1.0 compatibility and disallow 2.0</span>
+   <span style="color:Green;">// functionality.</span>
+   <span style="color:Blue;">bool</span> forceV1 = <span style="color:Blue;">false</span>
+)
+</pre></div>In calling the constructor, there are some settings to note:
+<ul><li>Either do not use the last boolean parameter (as in the example below) or set the value to &#39;false&#39; to make sure that the newest version of the library is used.</li>
+<li>Do not put backslashes in front of the server name.</li>
+<li>If calling this method from within code, make sure that UAC or IIS settings aren&#39;t preventing your full rights from being available.</li></ul>
+<div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Connect to the computer &quot;REMOTE&quot; using credentials</span>
+TaskService ts = <span style="color:Blue;">new</span> TaskService(<span style="color:#A31515;">&quot;REMOTE&quot;</span>, <span style="color:#A31515;">&quot;myusername&quot;</span>, <span style="color:#A31515;">&quot;MYDOMAIN&quot;</span>, <span style="color:#A31515;">&quot;mypassword&quot;</span>);
+</pre></div>There are some important security considerations too:
+<ul><li>By default, to schedule a task, you must be a member of the Administrators, Backup Operators, or Server Operators group on the local computer.</li>
+<li>By default, when creating a scheduled task, you cannot enter a user who belongs to a group that has more rights than the group you belong to.</li>
+<li>By default, a user who creates a task can read, update, delete, and run the task.</li>
+<li>Members of the Administrators group or the SYSTEM account can read, update, delete, and run any tasks. Members of the Users group, the LocalService account, and the NetworkService account can only read, update, delete, and run the tasks that they have created.</li>
+<li>If you are connecting to a remote computer running Windows Vista or Windows Server 2008 from a computer running Windows Vista or Windows Server 2008, you need to enable the Remote Scheduled Tasks Management firewall exception on the remote computer. To allow this exception click Start , Control Panel , Security , Allow a program through Windows Firewall , and then select the Remote Scheduled Tasks Management check box. Then click the Ok button in the Windows Firewall Settings dialog box.</li>
+<li>If you are connecting to a remote computer running Windows XP or Windows Server 2003 from a computer running Windows Vista or Windows Server 2008, you need to allow the File and Printer Sharing firewall exception on the remote computer. To allow this exception click Start , Control Panel , double-click Windows Firewall , select the Exceptions tab, and then select the File and Printer Sharing firewall exception. Then click the Ok button in the Windows Firewall dialog box.</li></ul>
+<h3>Creating tasks that run as a system account<a name="system"></a></h3>If you have the permissions (see above) to create a task for the desired system account, you can do so by registering it with that well-known account name (&quot;SYSTEM&quot; in the example below) and using the TaskLogonType.ServiceAccount value for the logonType parameter. You must set the password parameter to null.<br /><br />This is a common model for running tasks that interact only with the system non-interactively and is generally required whenever using Triggers that run based on system events (boot, events, system state changes).<br /><div style="color:Black;background-color:White;"><pre>
+ts.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;TaskName&quot;</span>, taskDefinition,
+   TaskCreation.CreateOrUpdate, <span style="color:#A31515;">&quot;SYSTEM&quot;</span>, <span style="color:Blue;">null</span>,
+   TaskLogonType.ServiceAccount);
+</pre></div><h3>Creating tasks that run as a different user<a name="user"></a></h3>The only way to run a task as a user other than the one specified when instantiating the TaskService (or the current user if calling the default TaskService constructor), is to specify the user credentials, password and using the TaskLogonType.Password value for the logonType parameter. When registered <br /><div style="color:Black;background-color:White;"><pre>
+ts.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;TaskName&quot;</span>, taskDefinition,
+   TaskCreation.CreateOrUpdate, <span style="color:#A31515;">&quot;userDomain\\userName&quot;</span>, <span style="color:#A31515;">&quot;userPassword&quot;</span>,
+   TaskLogonType.Password);
+</pre></div><h3>Running tasks with Administrator rights that ignore UAC warnings<a name="highest"></a></h3>Applications running from the Desktop in Windows Vista and later run under an access controlled environment unless specifically run &quot;as Administrator&quot; even if the user has Administrator rights. If you are getting Access Denied errors when registering tasks, this is often the cause.<br /><br />To run tasks in a heightened security mode, you must set the <b><span class="codeInline">Task.Definition.Principal.RunLevel</span></b> to <b><span class="codeInline">Highest</span></b>. If a task is registered using the Builtin\Administrator account or the Local System or Local Service accounts, then the <b><span class="codeInline">RunLevel</span></b> property will be ignored. The property value will also be ignored if User Account Control (UAC) is turned off.<br /><br />If a task is registered using the Administrators group for the security context of the task, then you must also set the <b><span class="codeInline">RunLevel</span></b> property to <b><span class="codeInline">Highest</span></b> if you want to run the task.<br /><div style="color:Black;background-color:White;"><pre>
+TaskDefinition td = ts.NewTask();
+td.Principal.RunLevel = TaskRunLevel.Highest;
+<span style="color:Green;">// Set trigger and action and other properties...</span>
+ts.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;Test&quot;</span>, td);
+</pre></div></div><div class="ClearBoth"></div>

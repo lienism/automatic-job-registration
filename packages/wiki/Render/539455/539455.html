@@ -1,0 +1,16 @@
+<div class="wikidoc"><b>Manual Installation</b>
+<ol><li>From the Downloads page, download the TaskScheduler.zip and TaskSchedulerEditor.zip files and extract all their contents to a folder on your system. </li>
+<li>From your project within Visual Studio add references to all the assemblies in that folder
+<ol><li>Microsoft.Win32.TaskScheduler.dll (<i>required</i>)</li>
+<li>Microsoft.Win32.TaskSchedulerEditor.dll (<i>only if UI elements are required: TaskEditDialog, etc.</i>)</li>
+<li>TimeSpan2.dll (<i>required if Microsoft.Win32.TaskSchedulerEditor.dll is used</i>)</li>
+<li>CubicOrange.Windows.Forms.ActiveDirectory.dll (<i>required if Microsoft.Win32.TaskSchedulerEditor.dll is used and tasks can be edited</i>)</li>
+<li>AeroWizard.dll (<i>only if TaskSchedulerWizard control is used</i>)</li>
+<li>GroupControls.dll (<i>only if TaskSchedulerWizard control is used</i>)</li></ol></li>
+<li>You should then be able to use any of the classes either using the &#39;using&#39; directive and referencing &#39;Microsoft.Win32.TaskScheduler&#39; or by using the full name of the class. </li></ol>
+<br /><b>NuGet Installation</b>
+<ol><li>Install NuGet from http://nuget.org/. </li>
+<li>Using NuGet from within Visual Studio, add references to the TaskScheduler and TaskSchedulerEditor packages </li>
+<li>Enjoy the benefit of having NuGet automatically keep all your assemblies up to date! </li></ol>
+<br /><b>Sample project</b><br />This project is a simple form that has a button that shows a task. It is using a current build of the library which may not be the most recent. <u>Do not use the TaskScheduler assemblies in this download</u> for your project. Please use the ones from the <a href="http://taskscheduler.codeplex.com/releases">downloads page</a>.
+<ul><li><a href=".\139bbd05-3ee8-4c57-9ad4-a8e9dbfc8af3">SimpleTaskForm.zip</a></li></ul></div><div class="ClearBoth"></div>

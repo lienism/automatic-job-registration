@@ -1,0 +1,99 @@
+<div class="wikidoc"><h1>Trigger Samples</h1>First thing to note is that all triggers derive from the abstract <span class="codeInline">Trigger</span> class. There are some basic properties in this class which can be set for all triggers. For the sample below, we&#39;ll use the <span class="codeInline">TimeTrigger</span> derived class but only set properties available on the <span class="codeInline">Trigger</span> class.<br /><br />All triggers have constructors that provide a shortcut to setting common properties.
+<h3>General Trigger Creation</h3><div style="color:Black;background-color:White;"><pre>
+TimeTrigger tt = <span style="color:Blue;">new</span> TimeTrigger();
+<span style="color:Green;">// **** V1 and V2 properties ******************************************</span>
+<span style="color:Green;">// Disable the trigger from firing the task</span>
+tt.Enabled = <span style="color:Blue;">false</span>; <span style="color:Green;">// Default is true</span>
+<span style="color:Green;">// Set the start time for today at 11:00 p.m.</span>
+tt.StartBoundary = DateTime.Today + TimeSpan.FromHours(23); <span style="color:Green;">// Default is the time the trigger is instantiated</span>
+<span style="color:Green;">// Set the last time the trigger will run to a year from now.</span>
+tt.EndBoundary = DateTime.Today + TimeSpan.FromDays(365); <span style="color:Green;">// Default is DateTime.MaxValue (or forever)</span>
+<span style="color:Green;">// Set the time in between each repetition of the task after it starts to 30 minutes.</span>
+tt.Repetition.Interval = TimeSpan.FromMinutes(30); <span style="color:Green;">// Default is TimeSpan.Zero (or never)</span>
+<span style="color:Green;">// Set the time the task will repeat to 1 day.</span>
+tt.Repetition.Duration = TimeSpan.FromDays(1); <span style="color:Green;">// Default is TimeSpan.Zero (or never)</span>
+<span style="color:Green;">// Set the task to end even if running when the duration is over</span>
+tt.Repetition.StopAtDurationEnd = <span style="color:Blue;">true</span>; <span style="color:Green;">// Default is false;</span>
+
+<span style="color:Green;">// **** V2 only properties ********************************************</span>
+<span style="color:Green;">// Set an identifier to be used when logging</span>
+tt.Id = <span style="color:#A31515;">&quot;Some unique identifier&quot;</span>;
+<span style="color:Green;">// Set the maximum time this task can run once triggered to one hour.</span>
+tt.ExecutionTimeLimit = TimeSpan.FromHours(1); <span style="color:Green;">// Default is TimeSpan.Zero (or never)</span>
+
+<span style="color:Green;">// Trigger must then be added to the task&#39;s trigger collection</span>
+myTask.Definition.Triggers.Add(tt);
+</pre></div><h3>Updating a trigger</h3><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Get an instance of an existing task</span>
+Task myTask = myTaskSvc.GetTask(<span style="color:#A31515;">&quot;MyTaskName&quot;</span>);
+
+<span style="color:Green;">// Check to ensure you have a trigger and it is the one want</span>
+<span style="color:Blue;">if</span> (myTask.Definition.Triggers.Count &gt; 0 &amp;&amp; myTask.Definition.Triggers[0] <span style="color:Blue;">is</span> TimeTrigger)
+{
+   <span style="color:Green;">// Remove current task</span>
+   myTask.Definition.Triggers.RemoveAt(0);
+   <span style="color:Green;">// Add new trigger that will run at noon today</span>
+   myTask.Definition.Triggers.Add(<span style="color:Blue;">new</span> TimeTrigger(DateTime.Today + TimeSpan.FromHours(12)));
+}
+
+<span style="color:Green;">// Register the changes (Note: if there is a password associated with the task, </span>
+<span style="color:Green;">// you will need to register using the TaskFolder.RegisterTaskDefinition method.</span>
+myTask.RegisterChanges();
+</pre></div><h2>Triggers that work on all Windows OS variants (V1 &amp; V2)</h2><h3>BootTrigger</h3>A <span class="codeInline">BootTrigger</span> will fire when the system starts. It can only be delayed. All triggers that support a delay implement the <span class="codeInline">ITriggerDelay</span> interface.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create trigger that fires 5 minutes after the system starts.</span>
+BootTrigger bt = <span style="color:Blue;">new</span> BootTrigger();
+bt.Delay = TimeSpan.FromMinutes(5);  <span style="color:Green;">// V2 only</span>
+</pre></div><h3>DailyTrigger</h3>A <span class="codeInline">DailyTrigger</span> will fire at a specified time every day or interval of days.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that runs every other day and will start randomly between 10 a.m. and 12 p.m.</span>
+DailyTrigger dt = <span style="color:Blue;">new</span> DailyTrigger();
+dt.StartBoundary = DateTime.Today + TimeSpan.FromHours(10);
+dt.DaysInterval = 2;
+dt.RandomDelay = TimeSpan.FromHours(2); <span style="color:Green;">// V2 only</span>
+</pre></div><h3>IdleTrigger</h3>An <span class="codeInline">IdleTrigger</span> will fire when the system becomes idle. It is generally a good practice to set a limit on how long it can run using the ExecutionTimeLimit property.<br /><br /><div style="color:Black;background-color:White;"><pre>
+IdleTrigger it = <span style="color:Blue;">new</span> IdleTrigger();
+</pre></div><h3>LogonTrigger</h3>A <span class="codeInline">LogonTrigger</span> will fire after a user logs on. It can only be delayed. Under V2, you can specify which user it applies to.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that fires 15 minutes after the user Mickey logs in</span>
+LogonTrigger lt = <span style="color:Blue;">new</span> LogonTrigger();
+lt.Delay = TimeSpan.FromMinutes(15); <span style="color:Green;">// V2 only</span>
+lt.UserId = <span style="color:#A31515;">&quot;Mickey&quot;</span>; <span style="color:Green;">// V2 only</span>
+</pre></div><h3>MonthlyTrigger</h3>A <span class="codeInline">MonthlyTrigger</span> will fire at a specific time on specified days of the month.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that will run at 10 a.m. on the 10th, 20th and last days of July and November</span>
+MonthlyTrigger mTrigger = <span style="color:Blue;">new</span> MonthlyTrigger();
+mTrigger.StartBoundary = DateTime.Today + TimeSpan.FromHours(10);
+mTrigger.DaysOfMonth = <span style="color:Blue;">new</span> <span style="color:Blue;">int</span>[] { 10, 20 };
+mTrigger.MonthsOfYear = MonthsOfTheYear.July | MonthsOfTheYear.November;
+mTrigger.RunOnLastDayOfMonth = <span style="color:Blue;">true</span>; <span style="color:Green;">// V2 only</span>
+</pre></div><h3>MonthlyDOWTrigger</h3>A <span class="codeInline">MonthlyDOWTrigger</span> runs at a specific time on specified days of specified weeks on specified months.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that runs Saturday in the first and last week of January and Decemeber at 1 a.m.</span>
+MonthlyDOWTrigger mdTrigger = <span style="color:Blue;">new</span> MonthlyDOWTrigger();
+mdTrigger.StartBoundary = DateTime.Today + TimeSpan.FromHours(1);
+mdTrigger.DaysOfWeek = DaysOfTheWeek.Saturday;
+mdTrigger.MonthsOfYear = MonthsOfTheYear.January | MonthsOfTheYear.December;
+mdTrigger.WeeksOfMonth = WhichWeek.FirstWeek | WhichWeek.LastWeek;
+</pre></div><h3>TimeTrigger</h3>A <span class="codeInline">TimeTrigger</span> runs at a specified date and time.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that runs the last minute of this year</span>
+TimeTrigger tTrigger = <span style="color:Blue;">new</span> TimeTrigger();
+tTrigger.StartBoundary = <span style="color:Blue;">new</span> DateTime(DateTime.Today.Year, 12, 31, 23, 59, 0);
+</pre></div><h3>WeeklyTrigger</h3>A <span class="codeInline">WeeklyTrigger</span> runs at a specified time on specified days of the week every week or interval of weeks.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that runs on Monday every third week just after midnight.</span>
+WeeklyTrigger wTrigger = <span style="color:Blue;">new</span> WeeklyTrigger();
+wTrigger.StartBoundary = DateTime.Today + TimeSpan.FromSeconds(15);
+wTrigger.DaysOfWeek = DaysOfTheWeek.Monday;
+wTrigger.WeeksInterval = 3;
+</pre></div><h2>Triggers that run on Windows Vista and later</h2><h3>EventTrigger</h3>The <span class="codeInline">EventTrigger</span> runs when a system event fires.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a triger that will fire whenever a level 2 system event fires.</span>
+EventTrigger eTrigger = <span style="color:Blue;">new</span> EventTrigger();
+eTrigger.Subscription = <span style="color:#A31515;">@&quot;&lt;QueryList&gt;&lt;Query Id=&#39;1&#39;&gt;&lt;Select Path=&#39;System&#39;&gt;*[System/Level=2]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;&quot;</span>;
+eTrigger.ValueQueries.Add(<span style="color:#A31515;">&quot;Name&quot;</span>, <span style="color:#A31515;">&quot;Value&quot;</span>);
+</pre></div><h3>RegistrationTrigger</h3>The <span class="codeInline">RegistrationTrigger</span> will fire after the task is registered (saved). It is good to put in a delay.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a trigger that will fire the task 5 minutes after its registered</span>
+RegistrationTrigger rTrigger = <span style="color:Blue;">new</span> RegistrationTrigger();
+rTrigger.Delay = TimeSpan.FromMinutes(5);
+</pre></div><h3>SessionStateChangeTrigger</h3>The <span class="codeInline">SessionStateChangeTrigger</span> will fire after six different system events: connecting or disconnecting locally or remotely, or locking or unlocking the session.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.ConsoleConnect, UserId = <span style="color:#A31515;">&quot;joe&quot;</span> };
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.ConsoleDisconnect };
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.RemoteConnect };
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.RemoteDisconnect };
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.SessionLock, UserId = <span style="color:#A31515;">&quot;joe&quot;</span> };
+<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange = TaskSessionStateChangeType.SessionUnlock };
+</pre></div></div><div class="ClearBoth"></div>

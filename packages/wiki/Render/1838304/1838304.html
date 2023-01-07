@@ -1,0 +1,6 @@
+<div class="wikidoc"><h2>PowerShell Examples</h2>As a .NET library, all of the Task Scheduler Managed Wrapper can be used from within PowerShell. You simply need to load the assembly and then use the interop methods, like New-Object, to interact with the classes.
+<h3>Create a task</h3><div style="color:Black;background-color:White;"><pre>
+<span style="color:Gray;">[</span><span style="color:Teal;">Reflection.Assembly</span><span style="color:Gray;">]</span><span style="color:Gray;">::</span>LoadFile(<span style="color:#A31515;">&quot;C:\CodeShare\Microsoft.Win32.TaskScheduler.dll&quot;</span>)
+<span style="color:Gray;">[</span><span style="color:Teal;">Microsoft.Win32.TaskScheduler.TaskService</span><span style="color:Gray;">]</span><span style="color:Gray;">::</span>Instance.AddTask(<span style="color:#A31515;">&quot;Test&quot;</span>,
+    <span style="color:Gray;">[</span><span style="color:Teal;">Microsoft.Win32.TaskScheduler.QuickTriggerType</span><span style="color:Gray;">]</span><span style="color:Gray;">::</span>Hourly, <span style="color:#A31515;">&quot;cmd&quot;</span>, <span style="color:#A31515;">&quot;/param1&quot;</span>)
+</pre></div></div><div class="ClearBoth"></div>

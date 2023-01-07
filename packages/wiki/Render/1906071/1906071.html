@@ -1,0 +1,386 @@
+<div class="wikidoc"><h2>Examples Home Page</h2>You can go to these pages for more sample code:<br />
+<ul><li><a href="https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples&referringTitle=Examples">Trigger Example Code</a></li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=ActionSamples&referringTitle=Examples">Action Example Code</a></li>
+<li><a href="https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Examples">Security Explanations and Samples</a></li></ul>
+Below are some examples of how to use most of the functions of the library:<br />
+<ul><li><a href="#editor">Using the editor</a></li>
+<li><a href="#simple">Simple task creation</a></li>
+<li><a href="#get">Get and delete a task</a></li>
+<li><a href="#enum">Enumerate all tasks</a></li>
+<li><a href="#complex">Complex example</a></li>
+<li><a href="#xml">XML example</a></li>
+<li><a href="#fluent">Fluent example</a></li>
+<li><a href="#history">Task history example</a></li></ul>
+<i><b>On all these examples, if you get an error on ambiguous references for &#39;Action&#39;, please preface it with &#39;Microsoft.Win32.TaskScheduler.Action&#39;.</b></i><br /><br /><b>Using the editor</b><a name="editor"></a><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Get the service on the local machine</span>
+<span style="color:Blue;">using</span> (TaskService ts = <span style="color:Blue;">new</span> TaskService())
+{
+   <span style="color:Green;">// Create a new task</span>
+   <span style="color:Blue;">const</span> <span style="color:Blue;">string</span> taskName = <span style="color:#A31515;">&quot;Test&quot;</span>;
+   Task t = ts.AddTask(taskName, 
+      <span style="color:Blue;">new</span> TimeTrigger() { StartBoundary = DateTime.Now + TimeSpan.FromHours(1),
+         Enabled = <span style="color:Blue;">false</span> },
+      <span style="color:Blue;">new</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\\test.log&quot;</span>, &quot;C:\\&quot;));
+
+   <span style="color:Green;">// Edit task and re-register if user clicks Ok</span>
+   TaskEditDialog editorForm = <span style="color:Blue;">new</span> TaskEditDialog();
+   editorForm.Editable = <span style="color:Blue;">true</span>;
+   editorForm.RegisterTaskOnAccept = <span style="color:Blue;">true</span>;
+   editorForm.Initialize(t);
+   <span style="color:Green;">// ** The four lines above can be replaced by using the full constructor</span>
+   <span style="color:Green;">// TaskEditDialog editorForm = new TaskEditDialog(t, true, true);</span>
+   editorForm.ShowDialog();
+}
+</pre></div><br /><b>Simple task creation</b><a name="simple"></a><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Get the service on the local machine</span>
+<span style="color:Blue;">using</span> (TaskService ts = <span style="color:Blue;">new</span> TaskService())
+{
+   <span style="color:Green;">// Create a new task definition and assign properties</span>
+   TaskDefinition td = ts.NewTask();
+   td.RegistrationInfo.Description = <span style="color:#A31515;">&quot;Does something&quot;</span>;
+   td.Principal.LogonType = TaskLogonType.InteractiveToken;
+
+   <span style="color:Green;">// Add a trigger that will fire the task at this time every other day</span>
+   DailyTrigger dt = (DailyTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> DailyTrigger(2));
+   dt.Repetition.Duration = TimeSpan.FromHours(4);
+   dt.Repetition.Interval = TimeSpan.FromHours(1);
+
+   <span style="color:Green;">// Add a trigger that will fire every week on Friday</span>
+   td.Triggers.Add(<span style="color:Blue;">new</span> WeeklyTrigger { StartBoundary = DateTime.Today
+      + TimeSpan.FromHours(2), DaysOfWeek = DaysOfTheWeek.Friday });
+
+   <span style="color:Green;">// Add an action that will launch Notepad whenever the trigger fires</span>
+   td.Actions.Add(<span style="color:Blue;">new</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\\test.log&quot;</span>, <span style="color:Blue;">null</span>));
+
+   <span style="color:Green;">// Register the task in the root folder</span>
+   <span style="color:Blue;">const</span> <span style="color:Blue;">string</span> taskName = <span style="color:#A31515;">&quot;Test&quot;</span>;
+   ts.RootFolder.RegisterTaskDefinition(taskName, td);
+}
+</pre></div><br /><b>Get and delete a task</b><a name="get"></a><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">void</span> GetAndDeleteTask(taskName)
+{
+   <span style="color:Green;">// Retrieve the task, change the trigger and re-register it.</span>
+   <span style="color:Green;">// A taskName by itself assumes the root folder (e.g. &quot;MyTask&quot;)</span>
+   <span style="color:Green;">// A taskName can include folders (e.g. &quot;MyFolder\MySubFolder\MyTask&quot;)</span>
+   Task t = ts.GetTask(taskName);
+   <span style="color:Blue;">if</span> (t == <span style="color:Blue;">null</span>) <span style="color:Blue;">return</span>;
+   t.Definition.Triggers[0].StartBoundary = DateTime.Today + TimeSpan.FromDays(7);
+   t.RegisterChanges();
+
+   <span style="color:Green;">// Check to make sure account privileges allow task deletion</span>
+   <span style="color:Blue;">var</span> identity = WindowsIdentity.GetCurrent();
+   <span style="color:Blue;">var</span> principal = <span style="color:Blue;">new</span> WindowsPrincipal(identity);
+   <span style="color:Blue;">if</span> (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+      <span style="color:Blue;">throw</span> <span style="color:Blue;">new</span> Exception($<span style="color:#A31515;">&quot;Cannot delete task with your current identity &#39;{identity.Name}&#39; permissions level.&quot;</span> +
+      <span style="color:#A31515;">&quot;You likely need to run this application &#39;as administrator&#39; even if you are using an administrator account.&quot;</span>);
+
+   <span style="color:Green;">// Remove the task we just created</span>
+   ts.RootFolder.DeleteTask(taskName);
+}
+</pre></div><br /><b>Enumerate all tasks</b><a name="enum"></a><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">void</span> EnumAllTasks()
+{
+   <span style="color:Blue;">using</span> (TaskService ts = <span style="color:Blue;">new</span> TaskService())
+      EnumFolderTasks(ts.RootFolder);
+}
+
+<span style="color:Blue;">void</span> EnumFolderTasks(TaskFolder fld)
+{
+   <span style="color:Blue;">foreach</span> (Task task <span style="color:Blue;">in</span> fld.Tasks)
+      ActOnTask(task);
+   <span style="color:Blue;">foreach</span> (TaskFolder sfld <span style="color:Blue;">in</span> fld.SubFolders)
+      EnumFolderTasks(sfld);
+}
+
+<span style="color:Blue;">void</span> ActOnTask(Task t)
+{
+   <span style="color:Green;">// Do something interesting here</span>
+}
+</pre></div><br /><b>Complex example</b><a name="complex"></a><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">string</span> user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+<span style="color:Blue;">bool</span> preWin7 = <span style="color:Blue;">true</span>;
+
+<span style="color:Green;">// Get the service on the local machine</span>
+<span style="color:Blue;">using</span> (TaskService ts = <span style="color:Blue;">new</span> TaskService())
+{
+   <span style="color:Green;">// Display version and server state</span>
+   Version ver = ts.HighestSupportedVersion;
+   <span style="color:Blue;">bool</span> newVer = (ver &gt;= <span style="color:Blue;">new</span> Version(1, 2));
+   Console.WriteLine(<span style="color:#A31515;">&quot;Highest version: &quot;</span> + ver);
+   Console.WriteLine(<span style="color:#A31515;">&quot;Server: {0} ({1})&quot;</span>, ts.TargetServer,
+      ts.Connected ? <span style="color:#A31515;">&quot;Connected&quot;</span> : <span style="color:#A31515;">&quot;Disconnected&quot;</span>);
+
+   <span style="color:Green;">// Output all of the running tasks</span>
+   Console.WriteLine(<span style="color:#A31515;">&quot;Running tasks:&quot;</span>);
+   <span style="color:Blue;">foreach</span> (RunningTask rt <span style="color:Blue;">in</span> ts.GetRunningTasks(<span style="color:Blue;">true</span>))
+   {
+      <span style="color:Blue;">if</span> (rt != <span style="color:Blue;">null</span>)
+      {
+         Console.WriteLine(<span style="color:#A31515;">&quot;+ {0}, {1} ({2})&quot;</span>, rt.Name, rt.Path, rt.State);
+         <span style="color:Blue;">if</span> (ver.Minor &gt; 0)
+            Console.WriteLine(<span style="color:#A31515;">&quot;  Current Action: &quot;</span> + rt.CurrentAction);
+      }
+   }
+
+   <span style="color:Green;">// Output all the tasks in the root folder with their triggers and actions</span>
+   TaskFolder tf = ts.RootFolder;
+   Console.WriteLine(<span style="color:#A31515;">&quot;\nRoot folder tasks ({0}):&quot;</span>, tf.Tasks.Count);
+   <span style="color:Blue;">foreach</span> (Task t <span style="color:Blue;">in</span> tf.Tasks)
+   {
+      <span style="color:Blue;">try</span>
+      {
+         Console.WriteLine(<span style="color:#A31515;">&quot;+ {0}, {1} ({2})&quot;</span>, t.Name,
+            t.Definition.RegistrationInfo.Author, t.State);
+         <span style="color:Blue;">foreach</span> (Trigger trg <span style="color:Blue;">in</span> t.Definition.Triggers)
+            Console.WriteLine(<span style="color:#A31515;">&quot; + {0}&quot;</span>, trg);
+         <span style="color:Blue;">foreach</span> (Action act <span style="color:Blue;">in</span> t.Definition.Actions)
+            Console.WriteLine(<span style="color:#A31515;">&quot; = {0}&quot;</span>, act);
+      }
+      <span style="color:Blue;">catch</span> { }
+   }
+
+   <span style="color:Green;">// Output an enumeration of all folders under the root</span>
+   Console.WriteLine(<span style="color:#A31515;">&quot;\n***Checking folder enum***&quot;</span>);
+   TaskFolderCollection tfs = tf.SubFolders;
+   <span style="color:Blue;">if</span> (tfs.Count &gt; 0)
+   {
+      Console.WriteLine(<span style="color:#A31515;">&quot;\nSub folders:&quot;</span>);
+      <span style="color:Blue;">try</span>
+      {
+         <span style="color:Blue;">foreach</span> (TaskFolder sf <span style="color:Blue;">in</span> tfs)
+            Console.WriteLine(<span style="color:#A31515;">&quot;+ {0}&quot;</span>, sf.Path);
+      }
+      <span style="color:Blue;">catch</span> (Exception ex)
+      {
+         Console.WriteLine(ex.ToString());
+      }
+   }
+
+   <span style="color:Green;">// Display information about the Microsoft folder</span>
+   <span style="color:Blue;">if</span> (newVer)
+   {
+      Console.WriteLine(<span style="color:#A31515;">&quot;\n***Checking folder retrieval***&quot;</span>);
+      <span style="color:Blue;">try</span>
+      {
+         TaskFolder sub = tf.SubFolders[<span style="color:#A31515;">&quot;Microsoft&quot;</span>];
+         Console.WriteLine(<span style="color:#A31515;">&quot;\nSubfolder path: &quot;</span> + sub.Path);
+      }
+      <span style="color:Blue;">catch</span> (NotSupportedException) { }
+      <span style="color:Blue;">catch</span> (Exception ex)
+      {
+         Console.WriteLine(ex.ToString());
+      }
+   }
+
+   Console.WriteLine(<span style="color:#A31515;">&quot;\n***Checking task creation***&quot;</span>);
+   <span style="color:Blue;">try</span>
+   {
+      <span style="color:Green;">// Create a new task definition and assign properties</span>
+      TaskDefinition td = ts.NewTask();
+      td.Data = <span style="color:#A31515;">&quot;Your data&quot;</span>;
+      td.Principal.UserId = user;
+      td.Principal.LogonType = TaskLogonType.InteractiveToken;
+      td.RegistrationInfo.Author = <span style="color:#A31515;">&quot;dahall&quot;</span>;
+      td.RegistrationInfo.Description = <span style="color:#A31515;">&quot;Does something&quot;</span>;
+      td.RegistrationInfo.Documentation = <span style="color:#A31515;">&quot;Don&#39;t pretend this is real.&quot;</span>;
+      td.Settings.DisallowStartIfOnBatteries = <span style="color:Blue;">true</span>;
+      td.Settings.Enabled = <span style="color:Blue;">false</span>;
+      td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(2);
+      td.Settings.Hidden = <span style="color:Blue;">false</span>;
+      td.Settings.IdleSettings.IdleDuration = TimeSpan.FromMinutes(20);
+      td.Settings.IdleSettings.RestartOnIdle = <span style="color:Blue;">false</span>;
+      td.Settings.IdleSettings.StopOnIdleEnd = <span style="color:Blue;">false</span>;
+      td.Settings.IdleSettings.WaitTimeout = TimeSpan.FromMinutes(10);
+      td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;
+      td.Settings.RunOnlyIfIdle = <span style="color:Blue;">false</span>;
+      td.Settings.RunOnlyIfNetworkAvailable = <span style="color:Blue;">false</span>;
+      td.Settings.StopIfGoingOnBatteries = <span style="color:Blue;">true</span>;
+      <span style="color:Blue;">if</span> (newVer)
+      {
+         td.Principal.RunLevel = TaskRunLevel.Highest; <span style="color:Green;">//.LUA;</span>
+         td.RegistrationInfo.Source = <span style="color:#A31515;">&quot;Test App&quot;</span>;
+         td.RegistrationInfo.URI = <span style="color:Blue;">new</span> Uri(<span style="color:#A31515;">&quot;test://app&quot;</span>);
+         td.RegistrationInfo.Version = <span style="color:Blue;">new</span> Version(0, 9);
+         td.Settings.AllowDemandStart = <span style="color:Blue;">true</span>;
+         td.Settings.AllowHardTerminate = <span style="color:Blue;">true</span>;
+         td.Settings.Compatibility = TaskCompatibility.V2;
+         td.Settings.DeleteExpiredTaskAfter = TimeSpan.FromMinutes(1);
+         td.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;
+         td.Settings.StartWhenAvailable = <span style="color:Blue;">true</span>;
+         td.Settings.WakeToRun = <span style="color:Blue;">false</span>;
+         td.Settings.RestartCount = 5;
+         td.Settings.RestartInterval = TimeSpan.FromSeconds(100);
+      }
+
+      <span style="color:Blue;">if</span> (preWin7)
+      {
+         <span style="color:Green;">// Create a trigger that fires 5 minutes after the system is booted</span>
+         BootTrigger bTrigger = (BootTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> BootTrigger { Enabled = <span style="color:Blue;">false</span> });
+         <span style="color:Blue;">if</span> (newVer) bTrigger.Delay = TimeSpan.FromMinutes(5);
+      }
+
+      <span style="color:Green;">// Create a trigger that fires every other day randomly between 6:00 and 8:00 a.m.</span>
+      DailyTrigger dTrigger = (DailyTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> DailyTrigger());
+      dTrigger.StartBoundary = DateTime.Today + TimeSpan.FromHours(6);
+      dTrigger.DaysInterval = 2;
+      <span style="color:Blue;">if</span> (newVer) dTrigger.RandomDelay = TimeSpan.FromHours(2);
+
+      <span style="color:Blue;">if</span> (newVer)
+      {
+         <span style="color:Blue;">if</span> (preWin7)
+         {
+            <span style="color:Green;">// Create a trigger that will fire on a system security event</span>
+            EventTrigger eTrigger = (EventTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> EventTrigger());
+            eTrigger.SetBasic(<span style="color:#A31515;">&quot;Security&quot;</span>, <span style="color:#A31515;">&quot;VSSAudit&quot;</span>, 25);
+            eTrigger.ValueQueries.Add(<span style="color:#A31515;">&quot;Name&quot;</span>, <span style="color:#A31515;">&quot;Value&quot;</span>);
+         }
+
+         <span style="color:Green;">// Create a trigger that fires 5 minutes after this task is registered</span>
+         td.Triggers.Add(<span style="color:Blue;">new</span> RegistrationTrigger { Delay = TimeSpan.FromMinutes(5) });
+
+         <span style="color:Blue;">if</span> (preWin7)
+         {
+            <span style="color:Green;">// Create triggers that fire after various system states are changed</span>
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.ConsoleConnect, UserId = user });
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.ConsoleDisconnect });
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.RemoteConnect });
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.RemoteDisconnect });
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.SessionLock, UserId = user });
+            td.Triggers.Add(<span style="color:Blue;">new</span> SessionStateChangeTrigger { StateChange =
+               TaskSessionStateChangeType.SessionUnlock });
+         }
+      }
+
+      <span style="color:Green;">// Create a trigger that fires when the system is idle</span>
+      td.Triggers.Add(<span style="color:Blue;">new</span> IdleTrigger());
+
+      <span style="color:Green;">// Create a trigger that fires 15 minutes after the current user logs on and</span>
+      <span style="color:Green;">// then every 1000 seconds after that</span>
+      LogonTrigger lTrigger = (LogonTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> LogonTrigger());
+      <span style="color:Blue;">if</span> (newVer)
+      {
+         lTrigger.Delay = TimeSpan.FromMinutes(15);
+         lTrigger.UserId = user;
+         lTrigger.Repetition.Interval = TimeSpan.FromSeconds(1000);
+      }
+
+      <span style="color:Green;">// Create a trigger that fires on the 3rd, 6th, 10th, 18th, and last days of</span>
+      <span style="color:Green;">// July and November and stops triggering 90 days from now</span>
+      MonthlyTrigger mTrigger = (MonthlyTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> MonthlyTrigger());
+      mTrigger.DaysOfMonth = <span style="color:Blue;">new</span> <span style="color:Blue;">int</span>[] { 3, 6, 10, 18 };
+      mTrigger.MonthsOfYear = MonthsOfTheYear.July | MonthsOfTheYear.November;
+      <span style="color:Blue;">if</span> (newVer) mTrigger.RunOnLastDayOfMonth = <span style="color:Blue;">true</span>;
+      mTrigger.EndBoundary = DateTime.Today + TimeSpan.FromDays(90);
+
+      <span style="color:Green;">// Create a trigger that fires every day of the first and last week of</span>
+      <span style="color:Green;">// December and January</span>
+      MonthlyDOWTrigger mdTrigger = (MonthlyDOWTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> MonthlyDOWTrigger());
+      mdTrigger.DaysOfWeek = DaysOfTheWeek.AllDays;
+      mdTrigger.MonthsOfYear = MonthsOfTheYear.January | MonthsOfTheYear.December;
+      <span style="color:Blue;">if</span> (newVer) mdTrigger.RunOnLastWeekOfMonth = <span style="color:Blue;">true</span>;
+      mdTrigger.WeeksOfMonth = WhichWeek.FirstWeek;
+
+      <span style="color:Green;">// Create a trigger that fires 1 minute from now and then every 15 minutes for the</span>
+      <span style="color:Green;">// next 7 days.</span>
+      TimeTrigger tTrigger = (TimeTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> TimeTrigger());
+      tTrigger.StartBoundary = DateTime.Now + TimeSpan.FromMinutes(1);
+      tTrigger.EndBoundary = DateTime.Today + TimeSpan.FromDays(7);
+      <span style="color:Blue;">if</span> (newVer) tTrigger.ExecutionTimeLimit = TimeSpan.FromSeconds(15);
+      <span style="color:Blue;">if</span> (newVer) tTrigger.Id = <span style="color:#A31515;">&quot;Time test&quot;</span>;
+      tTrigger.Repetition.Duration = TimeSpan.FromMinutes(20);
+      tTrigger.Repetition.Interval = TimeSpan.FromMinutes(15);
+      tTrigger.Repetition.StopAtDurationEnd = <span style="color:Blue;">true</span>;
+
+      <span style="color:Green;">// Create a trigger that fires every third week on Monday</span>
+      WeeklyTrigger wTrigger = (WeeklyTrigger)td.Triggers.Add(<span style="color:Blue;">new</span> WeeklyTrigger());
+      wTrigger.DaysOfWeek = DaysOfTheWeek.Monday;
+      wTrigger.WeeksInterval = 3;
+
+      <span style="color:Green;">// Create an action which opens a log file in notepad</span>
+      td.Actions.Add(<span style="color:Blue;">new</span> ExecAction(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>, <span style="color:#A31515;">&quot;c:\\test.log&quot;</span>, <span style="color:Blue;">null</span>));
+      <span style="color:Blue;">if</span> (newVer)
+      {
+         <span style="color:Green;">// Create an action which shows a message to the interactive user</span>
+         td.Actions.Add(<span style="color:Blue;">new</span> ShowMessageAction(<span style="color:#A31515;">&quot;Running Notepad&quot;</span>, <span style="color:#A31515;">&quot;Info&quot;</span>));
+         <span style="color:Green;">// Create an action which sends an email</span>
+         td.Actions.Add(<span style="color:Blue;">new</span> EmailAction(<span style="color:#A31515;">&quot;Testing&quot;</span>, <span style="color:#A31515;">&quot;dahall@codeplex.com&quot;</span>,
+            <span style="color:#A31515;">&quot;user@test.com&quot;</span>, <span style="color:#A31515;">&quot;You&#39;ve got mail.&quot;</span>, <span style="color:#A31515;">&quot;mail.myisp.com&quot;</span>));
+         <span style="color:Green;">// Create an action which loads a COM object and calls the ITaskHandler</span>
+         <span style="color:Green;">// interface</span>
+         td.Actions.Add(<span style="color:Blue;">new</span> ComHandlerAction(<span style="color:Blue;">new</span> Guid(<span style="color:#A31515;">&quot;CE7D4428-8A77-4c5d-8A13-5CAB5D1EC734&quot;</span>),
+            <span style="color:Blue;">string</span>.Empty));
+      }
+
+      <span style="color:Green;">// Register the task definition (saves it) in the security context of the</span>
+      <span style="color:Green;">// interactive user</span>
+      tf.RegisterTaskDefinition(<span style="color:#A31515;">&quot;Test&quot;</span>, td, TaskCreation.CreateOrUpdate, <span style="color:Blue;">null</span>, <span style="color:Blue;">null</span>,
+         TaskLogonType.InteractiveToken, <span style="color:Blue;">null</span>);
+   }
+   <span style="color:Blue;">catch</span> (Exception ex)
+   {
+      Console.WriteLine(ex.ToString());
+   }
+
+   <span style="color:Green;">// Display information about the newly created task</span>
+   Task runningTask = tf.Tasks[<span style="color:#A31515;">&quot;Test&quot;</span>];
+   Console.WriteLine(<span style="color:#A31515;">&quot;\nNew task will run at &quot;</span> + runningTask.NextRunTime);
+   Console.WriteLine(<span style="color:#A31515;">&quot;\nNew task triggers:&quot;</span>);
+   <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; runningTask.Definition.Triggers.Count; i++)
+      Console.WriteLine(<span style="color:#A31515;">&quot;  {0}: {1}&quot;</span>, i, runningTask.Definition.Triggers[i]);
+   Console.WriteLine(<span style="color:#A31515;">&quot;\nNew task actions:&quot;</span>);
+   <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; runningTask.Definition.Actions.Count; i++)
+      Console.WriteLine(<span style="color:#A31515;">&quot;  {0}: {1}&quot;</span>, i, runningTask.Definition.Actions[i]);
+
+   <span style="color:Green;">// Remove the task we just created since this was just a test</span>
+   tf.DeleteTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+}
+</pre></div><br /><b>XML example</b><a name="xml"></a><br />Tasks can be saved or created from scratch in XML and then registered directly as an alternative to setting individual properties.<br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Save a Task&#39;s XML to a file</span>
+<span style="color:Blue;">string</span> xml = TaskService.Instance.GetTask(<span style="color:#A31515;">&quot;\\Temp&quot;</span>).Xml;
+System.IO.File.WriteAllText(<span style="color:#A31515;">&quot;localfile.xml&quot;</span>, td.XmlText, System.Text.Encoding.Unicode);
+<span style="color:Green;">// Create a Task using XML with user information</span>
+TaskService.Instance.RootFolder.RegisterTask(<span style="color:#A31515;">&quot;NewTask1&quot;</span>, xml, TaskCreation.Create,
+   <span style="color:#A31515;">&quot;SYSTEM&quot;</span>, <span style="color:Blue;">null</span>, TaskLogonType.SystemAccount);
+<span style="color:Green;">// Create a Task directly from a file</span>
+TaskService.Instance.RootFolder.ImportTask(<span style="color:#A31515;">&quot;NewTask2&quot;</span>, <span style="color:#A31515;">&quot;localfile.xml&quot;</span>);
+<span style="color:Green;">// Load an XML file for editing, change a property, and register</span>
+TaskDefintion td  = TaskService.Instance.NewTask();
+td.XmlText = System.IO.File.ReadAllText(<span style="color:#A31515;">&quot;localfile.xml&quot;</span>);
+td.Settings.AllowDemandStart = <span style="color:Blue;">true</span>;
+TaskService.Instance.RootFolder.RegisterTaskDefinition(<span style="color:#A31515;">&quot;NewTask3&quot;</span>, td);
+</pre></div><br /><b>Fluent example</b><a name="fluent"></a><br />The library also exposes a Fluent syntax for accomplishing most functions. Below are a number of examples.<br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">using</span> (TaskService ts = <span style="color:Blue;">new</span> TaskService())
+{
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).WithArguments(<span style="color:#A31515;">@&quot;c:\temp\music.txt&quot;</span>).Once().Starting(2013, 11, 11, 11, 0, 0).RepeatingEvery(TimeSpan.FromMinutes(5)).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).Every(2).Days().Starting(<span style="color:#A31515;">&quot;12/25/2013 7:00pm&quot;</span>).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).Every(3).Weeks().AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).OnAll(DaysOfTheWeek.Monday).In(WhichWeek.FirstWeek).Of(MonthsOfTheYear.January).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).InTheMonthOf(MonthsOfTheYear.January).OnTheDays(1, 3, 5).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).OnBoot().AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).OnIdle().AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).OnStateChange(TaskSessionStateChangeType.ConsoleConnect).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).AtLogonOf(<span style="color:#A31515;">&quot;AMERICAS\\dahall&quot;</span>).AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+
+   ts.Execute(<span style="color:#A31515;">&quot;notepad.exe&quot;</span>).AtTaskRegistration().AsTask(<span style="color:#A31515;">&quot;Test&quot;</span>);
+}
+</pre></div><br /><b>Task history example</b><a name="history"></a><br />If you use the TaskEventLog constructor which specifies a remote machine, you will need to use impersonation to logon to an account with privileges to the remote machine before instantiating the TaskEventLog.<br /><div style="color:Black;background-color:White;"><pre>
+TaskEventLog log = <span style="color:Blue;">new</span> TaskEventLog(task.Path);
+List&lt;ListViewItem&gt; c = <span style="color:Blue;">new</span> List&lt;ListViewItem&gt;(100);
+<span style="color:Blue;">foreach</span> (TaskEvent item <span style="color:Blue;">in</span> log)
+   c.Add(<span style="color:Blue;">new</span> ListViewItem(<span style="color:Blue;">new</span> <span style="color:Blue;">string</span>[] { item.Level, item.TimeCreated.ToString(),
+      item.EventId.ToString(), item.TaskCategory, item.OpCode,
+      item.ActivityId.ToString() }));
+</pre></div></div><div class="ClearBoth"></div>

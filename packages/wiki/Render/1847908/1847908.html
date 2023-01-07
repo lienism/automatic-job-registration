@@ -1,0 +1,111 @@
+<div class="wikidoc"><h2>Task Event Management</h2>Many applications have the need to audit the execution of the tasks they supply. To enable this, the library provides the <span class="codeInline">TaskEventLog</span> class that allows for <span class="codeInline">TaskEvent</span> instances to be enumerated. This can be done for single tasks or the entire system. It can also be filtered by specific events or criticality.<br /><br />Sometimes, a developer will need to know about events as they occur. In this case, they can use the <span class="codeInline">TaskEventWatcher</span> component that enables the developer to watch a task, a folder, or the entire system for filtered events.<br />
+<h3>Task Event Logs</h3><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create a log instance for the Maint task in the root directory</span>
+TaskEventLog log = <span style="color:Blue;">new</span> TaskEventLog(<span style="color:#A31515;">@&quot;\Maint&quot;</span>,
+   <span style="color:Green;">// Specify the event id(s) you want to enumerate</span>
+   <span style="color:Blue;">new</span> <span style="color:Blue;">int</span>[] { 141 <span style="color:Green;">/* TaskDeleted */</span>, 201 <span style="color:Green;">/* ActionSuccess */</span> },
+   <span style="color:Green;">// Specify the start date of the events to enumerate. Here, we look at the last week.</span>
+   DateTime.Now.AddDays(-7));
+
+<span style="color:Green;">// Tell the enumerator to expose events &#39;newest first&#39;</span>
+log.EnumerateInReverse = <span style="color:Blue;">false</span>;
+
+<span style="color:Green;">// Enumerate the events</span>
+<span style="color:Blue;">foreach</span> (TaskEvent ev <span style="color:Blue;">in</span> log)
+{
+   <span style="color:Green;">// TaskEvents can interpret event ids into a well known, readable, enumerated type</span>
+   <span style="color:Blue;">if</span> (ev.StandardEventId == StandardTaskEventId.TaskDeleted)
+      output.WriteLine($<span style="color:#A31515;">&quot;  Task &#39;{ev.TaskPath}&#39; was deleted&quot;</span>);
+
+   <span style="color:Green;">// TaskEvent exposes a number of properties regarding the event</span>
+   <span style="color:Blue;">else</span> <span style="color:Blue;">if</span> (ev.EventId == 201)
+      output.WriteLine($<span style="color:#A31515;">&quot;  Completed action &#39;{ev.DataValues[&quot;</span>ActionName&quot;]}&#39;,
+         ({ev.DataValues[<span style="color:#A31515;">&quot;ResultCode&quot;</span>]}) at {ev.TimeCreated.Value}.&quot;);
+}
+</pre></div><h3>Task Event Watching<a name="watcher"></a></h3>Below is information on how to watch a folder for all task events. For a complete example, look at this sample project: <a href=".\a9ee5f5c-ed1e-46b4-8ed8-80e27ced87e5">TestTaskWatcher.zip</a><br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">private</span> TaskEventWatcher watcher;
+
+<span style="color:Green;">// Create and configure a new task watcher for the task folder</span>
+<span style="color:Blue;">private</span> <span style="color:Blue;">void</span> SetupWatcher(TaskFolder tf)
+{
+   <span style="color:Blue;">if</span> (tf != <span style="color:Blue;">null</span>)
+   {
+      <span style="color:Green;">// Set up a watch over the supplied task folder.</span>
+      watcher = <span style="color:Blue;">new</span> TaskEventWatcher(tf);
+
+      <span style="color:Green;">// Assign a SynchronizingObject to a local UI class to synchronize the events in this thread.</span>
+      watcher.SynchronizingObject = <span style="color:Blue;">this</span>;
+
+      <span style="color:Green;">// Only watch for tasks that start with my company name</span>
+      watcher.Filter.TaskName = <span style="color:#A31515;">&quot;MyCo*&quot;</span>;
+
+      <span style="color:Green;">// Only watch for task events that are informational</span>
+      watcher.Filter.EventLevels = <span style="color:Blue;">new</span> <span style="color:Blue;">int</span>[]
+         { 0 <span style="color:Green;">/* StandardEventLevel.LogAlways */</span>, (<span style="color:Blue;">int</span>)StandardEventLevel.Informational };
+
+      <span style="color:Green;">// Assign an event handler for when events are recorded</span>
+      watcher.EventRecorded += Watcher_EventRecorded;
+      
+      <span style="color:Green;">// Start watching the folder by enabling the watcher</span>
+      watcher.Enabled = <span style="color:Blue;">true</span>;
+   }
+}
+
+<span style="color:Green;">// Cleanup and release the task watcher</span>
+<span style="color:Blue;">private</span> <span style="color:Blue;">void</span> TearDownWatcher()
+{
+   <span style="color:Blue;">if</span> (watcher != <span style="color:Blue;">null</span>)
+   {
+      <span style="color:Green;">// Unhook the event</span>
+      watcher.EventRecorded -= Watcher_EventRecorded;
+      <span style="color:Green;">// Stop watching for events</span>
+      watcher.Enabled = <span style="color:Blue;">false</span>;
+      <span style="color:Green;">// Initiate garbage collection for the watcher</span>
+      watcher = <span style="color:Blue;">null</span>;
+   }
+}
+
+<span style="color:Green;">// Update ListView instance when task events occur</span>
+<span style="color:Blue;">private</span> <span style="color:Blue;">void</span> Watcher_EventRecorded(<span style="color:Blue;">object</span> sender, TaskEventArgs e)
+{
+   <span style="color:Blue;">int</span> idx = IndexOfTask(e.TaskName);
+   
+   <span style="color:Green;">// If event is for a task we already have in the list...</span>
+   <span style="color:Blue;">if</span> (idx != -1)
+   {
+      <span style="color:Green;">// If event indicates that task has been deleted, remove it from the list</span>
+      <span style="color:Blue;">if</span> (e.TaskEvent.StandardEventId == StandardTaskEventId.TaskDeleted)
+      {
+          listView1.Items.RemoveAt(idx);
+      }
+      
+      <span style="color:Green;">// If event is anything else, it most likely represents a change,</span>
+      <span style="color:Green;">// so update the item using information supplied through the</span>
+      <span style="color:Green;">// TaskEventArgs instance.</span>
+      <span style="color:Blue;">else</span>
+      {
+         <span style="color:Blue;">var</span> lvi = listView1.Items[idx];
+         lvi.Subitems[0].Text = e.TaskName;
+         lvi.Subitems[1].Text = e.Task.State.ToString();
+         lvi.Subitems[2].Text = GetNextRunTimeString(e.Task);
+      }
+   }
+   
+   <span style="color:Green;">// If event is for a task we don&#39;t have in our list, add it</span>
+   <span style="color:Blue;">else</span>
+   {
+      <span style="color:Blue;">var</span> lvi = <span style="color:Blue;">new</span> ListViewItem(<span style="color:Blue;">new</span> <span style="color:Blue;">string</span>[] { e.TaskName,
+         e.Task.State.ToString(), GetNextRunTimeString(e.Task) });
+      listView1.Items.Add(lvi);
+      listView1.Sort();
+   }
+}
+
+<span style="color:Green;">// Get the next run time for a task</span>
+<span style="color:Blue;">private</span> <span style="color:Blue;">string</span> GetNextRunTimeString(Task t)
+{
+    <span style="color:Blue;">if</span> (t.State == TaskState.Disabled || t.NextRunTime &lt; DateTime.Now)
+        <span style="color:Blue;">return</span> <span style="color:Blue;">string</span>.Empty;
+    <span style="color:Blue;">return</span> t.NextRunTime.ToString(<span style="color:#A31515;">&quot;G&quot;</span>);
+}
+</pre></div></div><div class="ClearBoth"></div>

@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="taskNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 15</value>
+  </data>
+  <data name="taskNameLabel.Text" xml:space="preserve">
+    <value>Na&amp;me:</value>
+  </data>
+  <data name="actionIntroLabel.Text" xml:space="preserve">
+    <value>Wenn Sie eine Aufgabe erstellen, müssen Sie die Aktion angeben, die ausgeführt wird, wenn Ihre Aufgabe startet.</value>
+  </data>
+  <data name="actionsTab.Text" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="addPropTab.Text" xml:space="preserve">
+    <value>Ergänzungen</value>
+  </data>
+  <data name="autoMaintGroup.Text" xml:space="preserve">
+    <value>Automatische Wartung</value>
+  </data>
+  <data name="changePrincipalButton.Text" xml:space="preserve">
+    <value>&amp;Benutzer oder Gruppe ändern...</value>
+  </data>
+  <data name="conditionIntroLabel.Text" xml:space="preserve">
+    <value>Geben Sie die Bedingungen an, die zusammen mit dem Trigger bestimmen, ob der Task ausgeführt werden soll. Der Task wird nicht ausgeführt, wenn eine der angegebenen Bedingungen nicht erfüllt ist.</value>
+  </data>
+  <data name="conditionsTab.Text" xml:space="preserve">
+    <value>Bedingungen</value>
+  </data>
+  <data name="generalTab.Text" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="historyTab.Text" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="idleConditionGroupBox.Text" xml:space="preserve">
+    <value>Leerlauf</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Es ist nicht möglich die Laufzeiten für diese Aufgabe zu zeigen.</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Lage:</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Fehler:</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Geben Sie zusätzliche Sicherheits-, Wartung- und System-Funktionskompatibilität Einstellungen für die Aufgabe an.</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Geben Sie die Registrierungsinformationen für die Aufgabe an.</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>&amp;Ebene:</value>
+  </data>
+  <data name="networkConditionGroupBox.Text" xml:space="preserve">
+    <value>Netzwerk</value>
+  </data>
+  <data name="powerConditionGroupBox.Text" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="principalReqPrivilegesLabel.Text" xml:space="preserve">
+    <value>&amp;Erforderlichen Berechtigungen:</value>
+  </data>
+  <data name="principalSIDTypeLabel.Text" xml:space="preserve">
+    <value>Prozess&amp;sicherheitsidentitätstyp (SID):</value>
+  </data>
+  <data name="regInfoTab.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="runTimesErrorLabel.Text" xml:space="preserve">
+    <value>(Fehlertext)</value>
+  </data>
+  <data name="runTimesTab.Text" xml:space="preserve">
+    <value>Laufzeiten</value>
+  </data>
+  <data name="secHardGroup.Text" xml:space="preserve">
+    <value>Verstärkung der Sicherheit</value>
+  </data>
+  <data name="settingsIntroLabel.Text" xml:space="preserve">
+    <value>Geben Sie zusätzliche Einstellungen an, die sich auf das Verhalten des Vorgangs auswirken.</value>
+  </data>
+  <data name="settingsTab.Text" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="taskAllowDemandStartCheck.Text" xml:space="preserve">
+    <value>&amp;Aufgabe bei Bedarf ausgeführen lassen</value>
+  </data>
+  <data name="taskAllowHardTerminateCheck.Text" xml:space="preserve">
+    <value>Wenn die laufende Aufgabe nicht beendet ist, &amp;zwinge sie zu stoppen</value>
+  </data>
+  <data name="taskAuthorLabel.Text" xml:space="preserve">
+    <value>Autor:</value>
+  </data>
+  <data name="taskDeleteAfterCheck.Text" xml:space="preserve">
+    <value>Wenn es nicht geplant ist, die Aufgabe wieder auszuführen, &amp;lösche sie nach:</value>
+  </data>
+  <data name="taskDescLabel.Text" xml:space="preserve">
+    <value>&amp;Beschreibung:</value>
+  </data>
+  <data name="taskDisallowStartIfOnBatteriesCheck.Text" xml:space="preserve">
+    <value>Aufgabe nur starten, wenn der Computer im AC-&amp;Modus  ist</value>
+  </data>
+  <data name="taskDisallowStartOnRemoteAppSessionCheck.Text" xml:space="preserve">
+    <value>&amp;Start nicht erlauben, wenn in einer Remote Applications Integrated Locally (RAIL) Sitzung</value>
+  </data>
+  <data name="taskEnabledCheck.Text" xml:space="preserve">
+    <value>&amp;Aktiviert</value>
+  </data>
+  <data name="taskExecutionTimeLimitCheck.Text" xml:space="preserve">
+    <value>Aufgabe stoppen, wenn sie länger läuft als:</value>
+  </data>
+  <data name="taskHiddenCheck.Text" xml:space="preserve">
+    <value>Versteckt</value>
+  </data>
+  <data name="taskIdleDurationCheck.Text" xml:space="preserve">
+    <value>Aufgabe nur starten wenn der &amp;Computer im Leerlauf ist:</value>
+  </data>
+  <data name="taskIdleWaitTimeoutLabel.Text" xml:space="preserve">
+    <value>W&amp;arte auf Leerlauf für:</value>
+  </data>
+  <data name="taskLocalOnlyCheck.Text" xml:space="preserve">
+    <value>Speichern Sie das &amp;Kennwort nicht. Die Aufgabe hat nur Zugriff auf lokale Computerressourcen.</value>
+  </data>
+  <data name="taskLoggedOnRadio.Text" xml:space="preserve">
+    <value>&amp;Nur ausführen, wenn der Benutzer angemeldet ist</value>
+  </data>
+  <data name="taskLoggedOptionalRadio.Text" xml:space="preserve">
+    <value>Starten egal ob der Benutzer angemeldet ist oder nicht</value>
+  </data>
+  <data name="taskMaintenanceDeadlineLabel.Text" xml:space="preserve">
+    <value>Wenn die Aufgabe nicht abgeschlossen ist, starte sie neu nach:</value>
+  </data>
+  <data name="taskMaintenanceExclusiveCheck.Text" xml:space="preserve">
+    <value>Aufgabe starten im E&amp;xclusive-Modus</value>
+  </data>
+  <data name="taskMaintenancePeriodLabel.Text" xml:space="preserve">
+    <value>Bei Wartung, Aufgabe starten alle:</value>
+  </data>
+  <data name="taskNameText.Text" xml:space="preserve">
+    <value>Aufgabenname</value>
+  </data>
+  <data name="taskRegDocLabel.Text" xml:space="preserve">
+    <value>&amp;Dokumentation:</value>
+  </data>
+  <data name="taskRegSDDLBtn.Text" xml:space="preserve">
+    <value>Sicherheit bearbeiten...</value>
+  </data>
+  <data name="taskRegSDDLLabel.Text" xml:space="preserve">
+    <value>Sicherheit:</value>
+  </data>
+  <data name="taskRegSourceLabel.Text" xml:space="preserve">
+    <value>&amp;Quelle:</value>
+  </data>
+  <data name="taskRegURILabel.Text" xml:space="preserve">
+    <value>&amp;URI:</value>
+  </data>
+  <data name="taskRegVersionLabel.Text" xml:space="preserve">
+    <value>&amp;Version:</value>
+  </data>
+  <data name="taskRestartAttemptTimesLabel.Text" xml:space="preserve">
+    <value>Mal</value>
+  </data>
+  <data name="taskRestartCountLabel.Text" xml:space="preserve">
+    <value>Versuche neu zu starten bis zu:</value>
+  </data>
+  <data name="taskRestartIntervalCheck.Text" xml:space="preserve">
+    <value>Wenn die &amp;Aufgabe fehlschlägt, neu starten alle:</value>
+  </data>
+  <data name="taskRestartOnIdleCheck.Text" xml:space="preserve">
+    <value>Neustarten, wenn immer noch im Leerlauf-Modus</value>
+  </data>
+  <data name="taskRunLevelCheck.Text" xml:space="preserve">
+    <value>Ausführung mit höchsten Privilegien</value>
+  </data>
+  <data name="taskRunningRuleLabel.Text" xml:space="preserve">
+    <value>Wenn die Aufgabe bereits läuft, gilt die folgende Regel:</value>
+  </data>
+  <data name="taskSecurityGroupBox.Text" xml:space="preserve">
+    <value>Sicherheitsoptionen</value>
+  </data>
+  <data name="taskStartIfConnectionCheck.Text" xml:space="preserve">
+    <value>Nur starten, wenn die folgende Netzwerkverbindung verfügbar ist:</value>
+  </data>
+  <data name="taskStartWhenAvailableCheck.Text" xml:space="preserve">
+    <value>Die Aufgabe so schnell wie möglich ausführen, wenn ein geplantes Start verpasst wurde</value>
+  </data>
+  <data name="taskStopIfGoingOnBatteriesCheck.Text" xml:space="preserve">
+    <value>Anhalten, wenn der Computer in den &amp;Akku-Modus wechselt</value>
+  </data>
+  <data name="taskStopOnIdleEndCheck.Text" xml:space="preserve">
+    <value>Anhalten sobald der Computer nicht mehr im Leerlauf ist</value>
+  </data>
+  <data name="taskTriggerIntroLabel.Text" xml:space="preserve">
+    <value>Wenn Sie eine Aufgabe erstellen, können Sie die Bedingungen angeben, die den Vorgang auslösen.</value>
+  </data>
+  <data name="taskUserAcctLabel.Text" xml:space="preserve">
+    <value>Beim Ausführen der Aufgabe folgendes Benutzerkonto verwenden:</value>
+  </data>
+  <data name="taskUseUnifiedSchedulingEngineCheck.Text" xml:space="preserve">
+    <value>&amp;Verwendung Unified Planungsmodul</value>
+  </data>
+  <data name="taskVersionLabel.Text" xml:space="preserve">
+    <value>&amp;Konfigurieren für:</value>
+  </data>
+  <data name="taskVolatileCheck.Text" xml:space="preserve">
+    <value>&amp;Aufgabe automatisch deaktivieren, jedes Mal Windows gestartet wird</value>
+  </data>
+  <data name="taskWakeToRunCheck.Text" xml:space="preserve">
+    <value>&amp;Computer reaktivieren, um diese Aufgabe auszuführen</value>
+  </data>
+  <data name="triggersTab.Text" xml:space="preserve">
+    <value>Trigger</value>
+  </data>
+  <data name="actionsTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="conditionsTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="generalTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="historyTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="settingsTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="triggersTab.HelpKeyword" xml:space="preserve">
+    <value></value>
+  </data>
+</root>
