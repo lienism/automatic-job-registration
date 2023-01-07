@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "The comment on the exception is \"Tasks which have been registered previously with stored passwords must use the TaskFolder.RegisterTaskDefinition method for updates.\" I'm not sure why that comes through to PowerShell the way it does, but that is likely the problem.",
+    "ClosedDate": "2015-10-03T09:35:16.593-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm attempting to use the TaskService library (because it offers some functionality missing in the native PoweShell cmdlets for Scheduled Jobs) to update a scheduled task with a 'Zero' timespan which should disable the 'Stop the task if it runs longer than' setting however when I call the 'RegisterChanges' method I get the following exception:\n\nException calling \"RegisterChanges\" with \"0\" argument(s): \"The name provided is not a properly formed account name.\"\n...\n+ $task.RegisterChanges()\n+ ~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : SecurityException\n\nAny ideas?  Given the error message I've tried updating the scheduled task with the Library using both a local admin account and with a domain account that has local admin rights on both a Windows 7 Desktop and a Windows Server 2008 R2 system but I get the same exception in both environments for both accounts.\n\nThanks in advance,\n\nRyan",
+    "LastUpdatedDate": "2017-12-11T21:32:30.85-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-10-02T11:45:01.383-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "RegisterChanges Method Exception - account name",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12225
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks dahall - appreciate the help.",
+      "PostedDate": "2015-10-05T07:36:23.213-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:30.85-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

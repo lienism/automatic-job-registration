@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "157181",
+    "ThreadId": "46994",
+    "Html": "This TaskScheduler 2.0 is a great helpful work. <br>\r\n<br>\r\nBut its a pity, the TaskScheduler 2.0 do not provide a possibility to <strong>show a PropertySheet</strong> Dialog of a choosen Task to a User.<br>\r\nIn Taskscheduler 1.0 this was no problem. I also <a href=\"http://groups.google.com/group/microsoft.public.dotnet.framework.windowsforms/tree/browse_frm/thread/e7b477726787fb01/af9d9a17ceec0df7?_done=/group/microsoft.public.dotnet.framework.windowsforms/browse_frm/thread/e7b477726787fb01/af9d9a17ceec0df7?&\" title=\"Managed Windows Forms Newsgroup\">asked</a> this topic to a managed Newsgroup, but still we do not have a solution.<br>\r\n<br>\r\nDo anybody know a workaround?<br>\r\n<br>\r\nciao Frank Dzaebel<br>\r\n",
+    "PostedDate": "2009-02-12T12:39:39.37-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "185660",
+    "ThreadId": "46994",
+    "Html": "<p>In Release 1.3 I have added a method to the Task class which will show the property page (ShowPropertyPage()) under v1.0. In Release 1.4.2 and later there is the TaskEditDialog and the TaskSchedulerWizard which mimic the functionality in the native Task Scheduler management tool and allow editing and viewing of both 1.0 and 2.0 tasks.</p>",
+    "PostedDate": "2009-04-30T11:17:15.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363700",
+    "ThreadId": "46994",
+    "Html": "<p>Is it possible on Vista to force a new task to be added in v1 mode?&nbsp; This way we could still show the property page.&nbsp;</p>\r\n<p>I have some software that I wrote a while back in Delphi that uses some scheduler library and I notice that when I add a new task in XP or Vista it works as an old style task with an entry in C:\\Windows\\Tasks.&nbsp; I can then show the task property page regardless of what OS it is on.</p>\r\n<p>Andrew</p>",
+    "PostedDate": "2010-02-24T07:34:40.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363737",
+    "ThreadId": "46994",
+    "Html": "<p>There are two answers to your question.</p>\r\n<ol>\r\n<li>Yes, it is possible to add a 1.0 task under Vista. This is accomplished by setting the TaskDefinition.Settings.Compatibility = TaskCompatibility.V1. You can also for the TaskService into 1.0 mode at construction by calling &quot;new TaskService(null, null, null, null, <span style=\"text-decoration:underline\">true</span>)&quot;.</li>\r\n<li>With the latest version of the library we have added TaskEditorDialog which mimics the functionality provided by the Vista native editor for a rich editing experience and also a wizard that allows simple tasks to be created. Either can edit 1.0 or 2.x tasks.</li>\r\n</ol>",
+    "PostedDate": "2010-02-24T09:07:46.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "387292",
+    "ThreadId": "46994",
+    "Html": "<blockquote style=\"border:solid .1em #ccc;font-style:italic;margin:.25em 1em 0 1em;padding:0 .25em 0 .25em\"><strong>dahall wrote:</strong><br>\r\n<p style=\"background-color:#EEEEEE\">In Release 1.3 I have added a method to the Task class which will show the property page (ShowPropertyPage()) under v1.0. In Release 1.4.2 and later there is the TaskEditDialog and the TaskSchedulerWizard which mimic the functionality in the native Task Scheduler management tool and allow editing and viewing of both 1.0 and 2.0 tasks.</p>\r\n</blockquote>\r\n<p>Thank you for your work!</p>\r\n<p>ciao Frank Dzaebel</p>",
+    "PostedDate": "2010-02-24T22:51:57.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414335",
+    "ThreadId": "46994",
+    "Html": "<p>With a v1 task, when using ShowPropertyPage is there a way to control where the dialog appears on the screen?&nbsp;</p>\r\n<p>It is appearing towards the left side of the screen but it would be nice to be centered over my form.</p>",
+    "PostedDate": "2010-03-04T13:04:10.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414407",
+    "ThreadId": "46994",
+    "Html": "<p>There is not a way with the native library to change the location of the property page dialog. The only option I can think of is to create a separate thread just before calling the ShowPropertyPage method that looks for the creation of a window with that title and then moves it. It would look funny though as it would appear in one place and then immediately move to another.</p>\r\n<p>If you need total control, your best option is to use the TaskEditDialog or the TaskSchedulerWizard provided by this library.</p>",
+    "PostedDate": "2010-03-04T17:52:36.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

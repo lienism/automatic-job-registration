@@ -1,0 +1,76 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Security model changed in 2.1.0 to resolve this issue and others",
+    "ClosedDate": "2014-04-17T10:32:25.483-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The methods Task.GetSecurityDescriptorSddlForm and Task.SetSecurityDescriptorSddlForm accept a parameter of type AccessControlSections.  The value of this parameter is passed to [IRegisteredTask::GetSecurityDescriptor](http://msdn.microsoft.com/en-us/library/windows/desktop/aa380760(v=vs.85).aspx) and [IRegisteredTask::SetSecurityDescriptor](http://msdn.microsoft.com/en-us/library/windows/desktop/aa380769(v=vs.85).aspx) respectively.  This results in incorrect behavior.\n\n[IRegisteredTask::GetSecurityDescriptor](http://msdn.microsoft.com/en-us/library/windows/desktop/aa380760(v=vs.85).aspx) expects a [SECURITY_INFORMATION](http://msdn.microsoft.com/en-us/library/windows/desktop/aa379573(v=vs.85).aspx) data type which does not align with [AccessControlSections](http://msdn.microsoft.com/en-us/library/system.security.accesscontrol.accesscontrolsections(v=vs.110).aspx).  For example, passing AccessControlSettings.Audit to this method results in the Owner part being returned.\n\nThe documentation for [IRegisteredTask::SetSecurityDescriptor](http://msdn.microsoft.com/en-us/library/windows/desktop/aa380769(v=vs.85).aspx) indicates that the TASK_DONT_ADD_PRINCIPAL_ACE flag from the [TASK_CREATION](http://msdn.microsoft.com/en-us/library/windows/desktop/aa382538(v=vs.85).aspx) enumeration can be specified for the second parameter.",
+    "LastUpdatedDate": "2014-04-17T10:32:25.483-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-01-31T12:42:59.123-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Task.SetSecurityDescriptorSddlForm and GetSecurityDescriptorSddlForm should not use AccessControlSections",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11550
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3790,
+      "FileName": "TestTaskService.2.0.4.zip",
+      "DownloadUrl": ".\\3790"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "A better example of the problem:\r\n\r\n```\ntask.GetSecurityDescriptorSddlForm(AccessControlSections.Owner);\n```\nShould return:\r\n\r\n```\nO:BA\n```\r\n\r\nInstead, it returns:\r\n\r\n```\nD:AI(A;;FR;;;S-1-5-21...  (etc)\n```\r\n\r\nAs previously mentioned, this is because the value of AccessControlSections is being passed to IRegisteredTask::GetSecurityDescriptor when a SECURITY_INFORMATION should have been used instead.",
+      "PostedDate": "2014-01-31T12:56:14.18-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fixing this could be accomplished with one of the following approaches:\n1. Implementing Task.GetSecurityDescriptorSddlForm and Task.SetSecurityDescriptorSddlForm in a way that they work with AccessControlSections.\n2. Changing the signature of the methods so that Task.GetSecurityDescriptorSddlForm accepts a SECURITY_INFORMATION instead of an AccessControlSections and Task.SetSecurityDescriptorSddlForm either omits the second parameter or accepts a TASK_CREATION and defaults it to TASK_DONT_ADD_PRINCIPAL_ACE.",
+      "PostedDate": "2014-01-31T13:01:56.163-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-02-04T20:54:17.417-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have attached a zip file with the code changes to address this issue. Please test and provide your feedback as, I believe, you are the first person to need this functionality.",
+      "PostedDate": "2014-02-04T20:54:18.993-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am considering the removal of all security related methods and properties and then adding a SetAccessControl and GetAccessControl method consistent with other secured objects (files, wait handles, etc.) using a new class to manage the security descriptor. What do you think?",
+      "PostedDate": "2014-02-17T09:19:17.077-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-04-17T10:32:25.483-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

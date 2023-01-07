@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1242463",
+    "ThreadId": "544563",
+    "Html": "i want  start and stop task scheduler when user is Login then sheduler should be star as par given start time and when user is Logout then scheduler should be stop as par given duration time.\r<br />\nplease sir reply soon with as  suitable code.<br />\n",
+    "PostedDate": "2014-05-07T02:52:44.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242616",
+    "ThreadId": "544563",
+    "Html": "I am assuming you mean start/stop a task and not start/start the Task Scheduler. You will use a LogonTrigger with a blank UserId (so it affects all local users) at start and then you will need to determine when to shut it down as there is not a Logoff trigger.<br />\n",
+    "PostedDate": "2014-05-07T07:39:23.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:05:46.71-07:00"
+  },
+  {
+    "Id": "1242874",
+    "ThreadId": "544563",
+    "Html": "Thanks Dahall......<br />\n",
+    "PostedDate": "2014-05-07T22:02:36.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

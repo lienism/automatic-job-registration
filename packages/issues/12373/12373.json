@@ -1,0 +1,141 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-27T07:31:57.463-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi, \n\nSince version Release 2.5.17 I'm unable to schedule a task using \"computername\\username\"\nThis worked in version Release 2.4.2\n\nExample:\nComputer is Lan \nUser is LanUser\n\nPlease note that it's a local admin account (not domain)\nTrying to log in with Lan\\LanUser fails with \"Access is denied\"",
+    "LastUpdatedDate": "2016-04-27T07:31:57.463-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-04-14T00:44:45.933-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "computername\\username Access denied",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12373
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5071,
+      "FileName": "TaskSched.2.5.19.b2.net4.zip",
+      "DownloadUrl": ".\\5071"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Please send the full exception detail so I can determine where the method is failing. I have added some error handling and account validation sine 2.4.2 that could be at fault.",
+      "PostedDate": "2016-04-15T08:15:49.297-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Getting an: \nAccess is denied\r\n\r\nStacktrace:\nat Microsoft.Win32.NativeMethods.DsHandle..ctor(String domainControllerName, String dnsDomainName)\n   at Microsoft.Win32.TaskScheduler.User..ctor(String userName)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at ConnectionTester.test()",
+      "PostedDate": "2016-04-19T02:41:27.813-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-20T17:07:43.83-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I think I have this addressed. I have posted code with the fix as an attached file for this issue. Will you please test and confirm?",
+      "PostedDate": "2016-04-20T17:07:46.193-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It's a nogo, can't even get the project to run\r\n\r\nError\t1\tThe type or namespace name 'TaskScheduler' does not exist in the namespace 'Microsoft.Win32' (are you missing an assembly reference?\n",
+      "PostedDate": "2016-04-20T23:55:31.597-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-21T07:50:05.097-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-21T07:58:24.59-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have attached another zip with assemblies compiled against .NET versions 2, 3.5 and 4. I know these are working from my unit tests, so I'm guessing this is a directory or version problem. Select the folder for the .NET version you're using (4 will work with 4.5 and above), place each assembly over the one your current project is using (which may be in the folder created by NuGet and not in your project dir), and the do a rebuild of your app.",
+      "PostedDate": "2016-04-21T07:58:25.17-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That worked (my project is 4.0)\r\n\r\nHowever I'm getting a new error now:\nSome or all identity references could not be translated.\r\n\r\nThis happens when there is a null value for parameter sddlForm\nStacktrace:\n   at System.Security.Principal.NTAccount.Translate(IdentityReferenceCollection sourceAccounts, Type targetType, Boolean forceSuccess)\n   at System.Security.Principal.NTAccount.Translate(Type targetType)\n   at Microsoft.Win32.TaskScheduler.User..ctor(String userName)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Tester(String hostname, Action scanFinished, String login, String password)",
+      "PostedDate": "2016-04-21T08:42:23.83-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This would be related to the UserId parameter and not the sddlForm parameter. What are you passing into RegisterTaskDefinition now for the UserId?",
+      "PostedDate": "2016-04-21T09:39:28.103-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "```\nWindowsImpersonationContext ImpersoToken = Impersonate(User, Domain, password);\n if (ImpersoToken != null)\n {\n    using (ImpersoToken)\n    {\n       using (TaskService ts = new TaskService(hostname, null, null, null, !IsVistaOrLater))\n       {\n        TaskDefinition tduser = ts.NewTask();\n        tduser.Actions.Add(new ExecAction(\"cmd\", \"/c set >> \" + rootPath + \"\\\\Test.txt\", null));\n        ts.RootFolder.RegisterTaskDefinition(\"Tester\", tduser, TaskCreation.Create, Domain + \"\\\\\" + User, password, TaskLogonType.Password);\n        ts.GetTask(\"Tester\").Run();\n        }\n    }\n }\n```",
+      "PostedDate": "2016-04-21T23:47:57.72-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've added a small piece of code as poc.\nImpersonating a user has always worked before\nDomain => Computername\nUser => Username \npassword => User password\nrootPath => c:\\Windows",
+      "PostedDate": "2016-04-21T23:52:41.483-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The TaskService constructor uses impersonation from the Microsoft library for its connection. If you pass in the domain, user and password to it, you don't necessarily need to pass credentials into the RegisterTaskDefinition method. However, I'll look into this particular problem as it does appear to be a bug.",
+      "PostedDate": "2016-04-22T07:02:38.637-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've run the following code that runs from my local account without admin permissions and it works. I'm unable to replicate your impersonation code. Thoughts?\n```C#\nvar taskName = \"Tester\";\nvar Domain = \"LOCAL17\";\nvar User = \"admin\";\nvar password = \"adminpwd\";\nvar rootPath = @\"c:\\Windows\";\r\n\r\nusing (var nts = new TaskService(Domain))\n{\n  var tduser = ts.NewTask();\n  tduser.Actions.Add(\"cmd\", \"/c set >> \" + rootPath + \"\\\\Test.txt\", null);\n  nts.RootFolder.RegisterTaskDefinition(taskName, tduser, TaskCreation.Create, \n     Domain + \"\\\\\" + User, password, TaskLogonType.Password);\n}\n```",
+      "PostedDate": "2016-04-22T09:23:59.863-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-22T14:26:38.79-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I'm trying something with the code I just attached (TaskSched.2.5.19.b2.net4.zip). Please test and let me know if it resolves the original and new problem.",
+      "PostedDate": "2016-04-22T14:26:39.43-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-22T14:26:51.333-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks,\r\n\r\nThe last version seemed to do the trick. :-)\r\n\r\nRegarding the impersonation, I added it somewhere about 2 years ago since I noticed sometimes the impersonation of the taskscheduler would give an 'access denied' while impersonation first and calling the taskservice with all 'null' values did work.\n",
+      "PostedDate": "2016-04-25T07:24:11.823-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-27T07:31:57.463-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

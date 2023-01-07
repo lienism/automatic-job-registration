@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1471406",
+    "ThreadId": "654027",
+    "Html": "Hi the property enabled dont work when do RegisterChanges(), some help? version 2.5.17\r<br />\n<br />\nregards!<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  if (t != null)\n  {\n    if (!t.Enabled)\n    {\n      t.Enabled = true;\n      t.RegisterChanges();\n    }\n  }\n}</code></pre>\n\n",
+    "PostedDate": "2016-04-26T15:10:54.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471469",
+    "ThreadId": "654027",
+    "Html": "See the answered response to <a href=\"https://taskscheduler.codeplex.com/discussions/585279\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/585279</a>.<br />\n",
+    "PostedDate": "2016-04-27T07:35:06.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T10:04:50.81-07:00"
+  },
+  {
+    "Id": "1471489",
+    "ThreadId": "654027",
+    "Html": "I read the thread, has been util for me, now work perfect, thanks for your help!<br />\n",
+    "PostedDate": "2016-04-27T09:25:01.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

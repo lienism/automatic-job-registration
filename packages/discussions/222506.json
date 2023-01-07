@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "476637",
+    "ThreadId": "222506",
+    "Html": "<p>I'm trying to set up an interactive task with XP's v1.0 Task Scheduler.</p>\r\n<p>With this existing code below (I did not include the references to all the variables), the task only runs in the background (seen in the task manager). I managed to get that far looking at some of the older discussions posted here.</p>\r\n<p>If I use the AT command with the /interactive flag, the task executes and runs interactively.&nbsp; What would be the equivalent of that in the Task Scheduler library using C#?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre>                                        TaskService ts = new TaskService();\r\n                                        TaskDefinition td = ts.NewTask();\r\n                                        td.Actions.Add(new ExecAction(deployPath + deployAppName, &quot;&quot;, null));\r\n                                        td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(25);\r\n                                        td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n                                        td.Principal.UserId = @&quot;NT AUTHORITY\\System&quot;;\r\n\r\n                                        Common.DaysOfTheWeek week = new Common.DaysOfTheWeek();\r\n\r\n                                        foreach (string day in week)\r\n                                        {\r\n                                            if (days_times.get(day) != string.Empty)\r\n                                            {\r\n                                                DateTime dt = Common.formatTimeForLoading(days_times.get(day));\r\n                                                dt = dt.AddMinutes(Convert.ToDouble(offset_delay));\r\n\r\n                                                Microsoft.Win32.TaskScheduler.DaysOfTheWeek theday = (Microsoft.Win32.TaskScheduler.DaysOfTheWeek)Enum.Parse(typeof(Microsoft.Win32.TaskScheduler.DaysOfTheWeek), char.ToUpper(day[0]) + day.Substring(1));\r\n                                                td.Triggers.Add(new Microsoft.Win32.TaskScheduler.WeeklyTrigger { StartBoundary = dt, DaysOfWeek = theday });\r\n                                            }\r\n                                        }\r\n\r\n                                        ts.RootFolder.RegisterTaskDefinition(scheduledTaskName, td, TaskCreation.Create, null, null, TaskLogonType.ServiceAccount,null);\r\n                                        </pre>\r\n<p>Any suggestions?&nbsp; Thanks :)</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-04T15:52:12.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "476934",
+    "ThreadId": "222506",
+    "Html": "<div style=\"color:black;background-color:white\">I haven't tested this, but believe it is correct. Task registration will override any previously set Principal information. Omit the lines</div>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\ntd.Principal.UserId = <span style=\"color:#a31515\">@&quot;NT AUTHORITY\\System&quot;</span>;\r\n</pre>\r\n</div>\r\n<p>Add a line</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>td.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">true</span>;\r\n</pre>\r\n</div>\r\n<p>And change the last line to</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(scheduledTaskName, td, TaskCreation.Create, <span style=\"color:blue\"><span style=\"color:#a31515\">@&quot;NT AUTHORITY\\System&quot;</span></span>, <span style=\"color:blue\">null</span>, TaskLogonType.InteractiveToken, <span style=\"color:blue\">null</span>);</pre>\r\n</div>",
+    "PostedDate": "2010-08-05T07:58:29.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "477036",
+    "ThreadId": "222506",
+    "Html": "<p>I tried your suggestions, but the task doesn't appear to run at all.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre> TaskService ts = <span style=\"color:blue\">new</span> TaskService();\r\n                                        TaskDefinition td = ts.NewTask();\r\n                                        td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(deployPath + deployAppName, <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:blue\">null</span>));\r\n                                        td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(25);\r\n                                        td.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">true</span>;\r\n\r\n                                        Common.DaysOfTheWeek week = <span style=\"color:blue\">new</span> Common.DaysOfTheWeek();\r\n\r\n                                        <span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">string</span> day <span style=\"color:blue\">in</span> week)\r\n                                        {\r\n                                            <span style=\"color:blue\">if</span> (days_times.<span style=\"color:blue\">get</span>(day) != <span style=\"color:blue\">string</span>.Empty)\r\n                                            {\r\n                                                DateTime dt = Common.formatTimeForLoading(days_times.<span style=\"color:blue\">get</span>(day));\r\n                                                dt = dt.AddMinutes(Convert.ToDouble(offset_delay));\r\n\r\n                                                Microsoft.Win32.TaskScheduler.DaysOfTheWeek theday = (Microsoft.Win32.TaskScheduler.DaysOfTheWeek)Enum.Parse(<span style=\"color:blue\">typeof</span>(Microsoft.Win32.TaskScheduler.DaysOfTheWeek), <span style=\"color:blue\">char</span>.ToUpper(day[0]) + day.Substring(1));\r\n                                                td.Triggers.Add(<span style=\"color:blue\">new</span> Microsoft.Win32.TaskScheduler.WeeklyTrigger { StartBoundary = dt, DaysOfWeek = theday });\r\n                                            }\r\n                                        }\r\n\r\n                                        ts.RootFolder.RegisterTaskDefinition(scheduledTaskName, td, TaskCreation.Create, <span style=\"color:#a31515\">@&quot;NT AUTHORITY\\System&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.InteractiveToken, <span style=\"color:blue\">null</span>);\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-05T11:24:52.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "477197",
+    "ThreadId": "222506",
+    "Html": "<p>I just ran the code on my XP VM. Specify &quot;SYSTEM&quot; for the user name and it does run. However, it will not run in the user session of the logged on user. It will run under SYSTEM's user session. You can see the task in the scheduled tasks applet and see the process start under the SYSTEM account. If the task needs to run in the user session, it has to be registered to run as the user.</p>",
+    "PostedDate": "2010-08-05T18:31:57.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "477478",
+    "ThreadId": "222506",
+    "Html": "<p>hmm...</p>\r\n<p>In XP, is there a way to schedule something to run as *any* user who logs in?</p>\r\n<p>Under Windows 7, I got it to work by specifying the user as &quot;MyDomain\\Domain Users&quot;.&nbsp; Under XP, it doesn't seem to allow that.</p>",
+    "PostedDate": "2010-08-06T11:35:23.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "477706",
+    "ThreadId": "222506",
+    "Html": "<p>See this thread for your answer:</p>\r\n<p><a href=\"http://taskscheduler.codeplex.com/Thread/View.aspx?ThreadId=45013\">http://taskscheduler.codeplex.com/Thread/View.aspx?ThreadId=45013</a></p>",
+    "PostedDate": "2010-08-07T20:55:10.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "478246",
+    "ThreadId": "222506",
+    "Html": "<p>That code doesn't work.&nbsp; It's the same thing that I included in my first post.</p>",
+    "PostedDate": "2010-08-09T12:12:30.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "478848",
+    "ThreadId": "222506",
+    "Html": "<p>I get an error thrown when I try using the recommended code on XP:</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>TaskService ts = <span style=\"color:blue\">new</span> TaskService();\r\nTaskDefinition td = ts.NewTask();\r\ntd.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(deployPath + deployAppName, <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:blue\">null</span>));\r\ntd.Settings.ExecutionTimeLimit = TimeSpan.FromHours(25);\r\ntd.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">true</span>;\r\ntd.Principal.Id = <span style=\"color:#a31515\">@&quot;NT AUTHORITY\\System&quot;</span>;\r\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\nCommon.DaysOfTheWeek week = <span style=\"color:blue\">new</span> Common.DaysOfTheWeek();\r\n\r\n<span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">string</span> day <span style=\"color:blue\">in</span> week)\r\n{\r\n    <span style=\"color:blue\">if</span> (days_times.<span style=\"color:blue\">get</span>(day) != <span style=\"color:blue\">string</span>.Empty)\r\n    {\r\n        DateTime dt = Common.formatTimeForLoading(days_times.<span style=\"color:blue\">get</span>(day));\r\n        dt = dt.AddMinutes(Convert.ToDouble(offset_delay));\r\n\r\n        Microsoft.Win32.TaskScheduler.DaysOfTheWeek theday = (Microsoft.Win32.TaskScheduler.DaysOfTheWeek)Enum.Parse(<span style=\"color:blue\">typeof</span>(Microsoft.Win32.TaskScheduler.DaysOfTheWeek), <span style=\"color:blue\">char</span>.ToUpper(day[0]) + day.Substring(1));\r\n        td.Triggers.Add(<span style=\"color:blue\">new</span> Microsoft.Win32.TaskScheduler.WeeklyTrigger { StartBoundary = dt, DaysOfWeek = theday });\r\n    }\r\n}\r\n\r\nts.RootFolder.RegisterTaskDefinition(scheduledTaskName, td, TaskCreation.Create, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color:blue\">null</span>);\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre><em>NoV1Supported..ctor is not supported on Task Scheduler 1.0\r\n\r\nat Microsoft.Win32.TaskScheduler.TaskPrincipal.set_Id(String value)</em></pre>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-08-10T16:00:45.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "481534",
+    "ThreadId": "222506",
+    "Html": "<p>This is working as it should. The TaskPrincipal.Id property is&nbsp;V2 only. You cannot set it under XP. Remove that line or make it conditional on</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">if</span> (ts.HighestSupportedVersion &gt;= <span style=\"color:blue\">new</span> Version(1, 2))\r\n   ...\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-08-17T12:00:10.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

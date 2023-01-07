@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "150030",
+    "ThreadId": "45013",
+    "Html": "Has anyone been able to create a Task that runs as System (NT AUTHORITY\\SYSTEM) in XP?  I can successfully create one under Vista, but under XP it either default to my current login, or gives me an HRESULT error that the task has been configured with an unsupported combination of account settings and runtime options. <br>\r\n<br>\r\nOne other note:  I want the task to run whether the user is logged in or not (e.g. TaskLoginType.ServiceAccount).  Perhaps that is not supported in XP, although it seems to be from the UI??\r\n",
+    "PostedDate": "2009-01-22T19:08:11.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "150041",
+    "ThreadId": "45013",
+    "Html": "OK - To answer my own question - I just needed to supply NULL as the account and password along with TaskLoginType.ServiceAccount to get my desired result.  I probably would have stumbled onto this via trial and error, but instead read up on the IScheduledWorkItem COM Interface on MSDN to find the solution.  <br>\r\n<br>\r\nBTW - thanks - this library is a big time saver!\r\n",
+    "PostedDate": "2009-01-22T19:46:38.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "161867",
+    "ThreadId": "45013",
+    "Html": "Hi, how you got System (NT AUTHORITY\\SYSTEM)  in Vista?\r\n",
+    "PostedDate": "2009-02-25T05:16:14.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "195655",
+    "ThreadId": "45013",
+    "Html": "<p>Hi, I think I am having a similar problem.</p>\r\n<p>I need to develop a scheduled task to work on XP and Vista and using Local System as account information.</p>\r\n<p>It seems that everything goes OK (I am following but the <em>Task Schedule 1.0 Examples </em>from msdn) but the result of doing <em>pIPersistFile-&gt;Save(NULL,TRUE)</em> gives me an error <em>0x80041316</em>&nbsp; <em>SCHED_E_UNEXPECTEDNODE&nbsp; </em>and I don't know&nbsp; how to solve it.</p>\r\n<p>I think the problem is in the<em> pITask-&gt;SetAccountInformation(L&quot;&quot;,NULL) </em>I am using.</p>\r\n<p>How can I solve the problem?</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>\r\n<p><em><br></em></p>",
+    "PostedDate": "2009-05-29T06:04:41.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "196958",
+    "ThreadId": "45013",
+    "Html": "<p>This forum is for discussing the .NET wrapper around the COM interfaces for both the 1.0 and 2.0 Task Scheduler libraries and not a general support group for troubleshooting Task Scheduler coding problems. There are examples and threads in this forum that describe how to accomplish what you are doing using this wrapper library. Please feel free to post if you are having specific issues with this library.</p>",
+    "PostedDate": "2009-06-02T12:24:57.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "250036",
+    "ThreadId": "45013",
+    "Html": "<p>Hi bbalmer,</p>\r\n<p>&nbsp;</p>\r\n<p>Could you please elaborate &quot;I just needed to supply NULL as the account and password along with TaskLoginType.ServiceAccount to get my desired result.&quot; ? I am having the same issue but can't resolve it...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2009-10-26T22:03:09.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "250171",
+    "ThreadId": "45013",
+    "Html": "<p>I believe something was changed or improved since I made this post - my current code using the newest version of the library looks like this.</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size:x-small\">currently I simply create the task like this (never supplying a password).&nbsp; </span></p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\ntd.Principal.UserId = <span style=\"color:#A31515\">&quot;NT AUTHORITY\\\\SYSTEM&quot;</span>;\r\n</pre>\r\n</div>\r\n<p>&nbsp;Later I register the task like this</p>\r\n<pre>ts.RootFolder.RegisterTaskDefinition(TaskName, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.ServiceAccount, null);</pre>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-27T07:16:00.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

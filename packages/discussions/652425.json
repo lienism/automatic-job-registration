@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1466498",
+    "ThreadId": "652425",
+    "Html": "I now want to create a Microsoft.Win32.TaskScheduler.task in the memory, but not in OS.\r<br />\n<br />\nI read the interface and source cod, and found that the only way to get task is create a task in OS.\r<br />\nI want to create a task without any effect in Windows, is it possible?<br />\n",
+    "PostedDate": "2016-03-11T02:06:17.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466535",
+    "ThreadId": "652425",
+    "Html": "This library works only with the OS. An application can create a task however that has a defined termination and deletion time or can be programmatically deleted when an application shuts down.<br />\n",
+    "PostedDate": "2016-03-11T06:33:07.3-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-03-11T06:33:10.223-08:00"
+  }
+]

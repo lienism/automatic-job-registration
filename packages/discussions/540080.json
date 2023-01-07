@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1226434",
+    "ThreadId": "540080",
+    "Html": "Hello! <br />\n<br />\nTo start with, I have read a lot of threads that have similar issues, but the solutions dont seem to be applicable in my case.<br />\n<br />\nThe exception I get is this:<br />\n<pre><code>[COMException (0x80041318): The task XML contains a value which is incorrectly formatted or out of range. (Exception from HRESULT: 0x80041318)]\n   Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Definition() +0\n   Microsoft.Win32.TaskScheduler.Task.CreateTask(TaskService svc, IRegisteredTask iTask) +924\n   Microsoft.Win32.TaskScheduler.V2TaskEnumerator.get_Current() +40\n   Microsoft.Win32.TaskScheduler.V2TaskEnumerator.MoveNext() +37\n   System.Collections.Generic.List`1.InsertRange(Int32 index, IEnumerable`1 collection) +454\n   Microsoft.Win32.TaskScheduler.TaskService.FindTaskInFolder(TaskFolder fld, Regex taskName, List`1&amp; results, Boolean recurse) +65\n   Microsoft.Win32.TaskScheduler.TaskService.FindAllTasks(Regex name, Boolean searchAllFolders) +69</code></pre>\n\nThe code that calls FindAllTasks works fine as long as I call it from Visual Studio (Windows 7). But if I publish the project to the webserver running IIS 7 on Windows WebServer 2008, it fails. <br />\n<br />\nI checked the XML from one task that I receive, and it says that the Task version is 1.2. <br />\n<br />\nAny ideas?<br />\n<br />\n(The parameters I use are regex matching anything (.*) and false for the searchAllFolders)<br />\n",
+    "PostedDate": "2014-03-25T06:51:52.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1232626",
+    "ThreadId": "540080",
+    "Html": "Try now with the 2.1.0 release. This problem should be resolved, but let me know if it isn't.<br />\n",
+    "PostedDate": "2014-04-09T18:25:47.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237000",
+    "ThreadId": "540080",
+    "Html": "It seems to run now!<br />\n<br />\nBut I do have a small issue on one of the servers, from which I retrieve tasks. I get an InvalidOperationException with the message: <br />\n<br />\n&quot;The current version of the native library (1.2) does not support the original or minimum version of the &quot;User_Feed_Synchronization-{77CB3D00-5AB4-408A-90BB-65BCFFAE25EE}&quot; task (1.3/1.3)&quot;<br />\n<br />\nI get the exception if I try to read the IsActive property from the task.<br />\n<br />\nThis only happens if I run from the webserver, as in the original post.<br />\n",
+    "PostedDate": "2014-04-23T05:11:59.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237360",
+    "ThreadId": "540080",
+    "Html": "What this is saying is that there are settings in the task that will allow it to only be consumed by a Windows 7 (1.3) native library and that you are on 1.2 (Vista or equivalent server). One thing you can do now with the 2.1.1 library is set the AllowReadOnlyTasks property to true on the TaskService instance. This should then allow you to get tasks from upstream servers that are &quot;stripped&quot; of any settings that cannot be read by the downstream system. Note however, that if a task's ReadOnly property is set, then you cannot edit it at all.<br />\n",
+    "PostedDate": "2014-04-23T21:34:29.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-23T21:36:36.487-07:00"
+  }
+]

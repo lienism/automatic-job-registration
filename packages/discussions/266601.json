@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "647733",
+    "ThreadId": "266601",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I was trying to create a task on a Windows Server 2008 machine and the task gets created. But I could find that the 'Run with highest privileges' option is unchecked due to which the program that this task is running fails. Is there any condition that needs\r\n to be met while creating tasks using this API for this option to be enabled?</p>\r\n<p>The following is the code snippet that I use.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (TaskService taskSvc = <span style=\"color:blue\">new</span> TaskService(<span style=\"color:blue\">null</span>, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">null</span>, <span style=\"color:blue\">true</span>))\r\n                {\r\n\r\n                    <span style=\"color:green\">//initializing the task definition</span>\r\n                    TaskDefinition taskDef = taskSvc.NewTask();\r\n\r\n                    taskDef.RegistrationInfo.Description = scheduledTask.ScheduleDescription;\r\n                    taskDef.RegistrationInfo.Author = scheduledTask.ScheduleAuthor;\r\n                    <span style=\"color:green\">//identification data of a scheduled task</span>\r\n                    taskDef.Data = scheduledTask.ParentEntity.WidgetInstanceID.ToString();\r\n                    \r\n\r\n                    <span style=\"color:green\">//adding appropriate triggers</span>\r\n                    <span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">var</span> trigger <span style=\"color:blue\">in</span> scheduledTask.Triggers)\r\n                        <span style=\"color:blue\">this</span>.ProcessAndAddTrigger(taskDef, trigger);\r\n\r\n                    <span style=\"color:green\">//adding action</span>\r\n                    taskDef.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(actionPath,\r\n                        scheduledTask.ScheduleIID.ToString(),\r\n                        <span style=\"color:blue\">string</span>.Empty));\r\n\r\n                    <span style=\"color:green\">//if the schedule name already exists, then deleting and recreating it</span>\r\n                    <span style=\"color:blue\">this</span>.DeleteSchedule(scheduledTask.ScheduleName);\r\n\r\n                    <span style=\"color:green\">//registering the scheduled task</span>\r\n                    <span style=\"color:blue\">if</span> (!<span style=\"color:blue\">string</span>.IsNullOrEmpty(runUserID))\r\n                        taskSvc.RootFolder.RegisterTaskDefinition(scheduledTask.ScheduleName,\r\n                            taskDef,\r\n                            TaskCreation.CreateOrUpdate,\r\n                            runUserID,\r\n                            runUserPassword,\r\n                            TaskLogonType.Password,\r\n                            <span style=\"color:blue\">null</span>);\r\n                    <span style=\"color:blue\">else</span>\r\n                        taskSvc.RootFolder.RegisterTaskDefinition(scheduledTask.ScheduleName,\r\n                            taskDef,\r\n                            TaskCreation.CreateOrUpdate,\r\n                            <span style=\"color:blue\">null</span>,\r\n                            <span style=\"color:blue\">null</span>,\r\n                            TaskLogonType.ServiceAccount,\r\n                            <span style=\"color:blue\">null</span>);\r\n\r\n                    taskDef.Dispose();\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-07-26T06:58:19.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "647966",
+    "ThreadId": "266601",
+    "Html": "<p>That item is related to the TaskDefinition.Principal.RunLevel property and can be set to LUA or Highest under V2 (Vista and later). Prior to Vista, that value always returns Highest and cannot be set.</p>",
+    "PostedDate": "2011-07-26T14:04:55.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648083",
+    "ThreadId": "266601",
+    "Html": "<p>Hi,</p>\r\n<p>Thank you for the speedy reply. I checked the task scheduler version on the Windows Server 2008 machine and it reads Ver. 1.0. I guess, because of this, the RunLevel property I set is throwing an exception as <strong>TaskPrincipal.set_RunLevel is not supported on Task Scheduler 1.0</strong>. I believe Windows Server 2008 is supposed to have Ver.2.0 of the Task Scheduler if I'm not mistaken. Could you please let me know what's wrong here and a solution if possible?</p>\r\n<p>Thank you.</p>",
+    "PostedDate": "2011-07-26T22:47:41.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648523",
+    "ThreadId": "266601",
+    "Html": "<p>Window Server 2008 should have version 2 of the Task Scheduler.&nbsp;Make sure that when you construct the TaskService instance, that you are not forcing version 1.0 behavior by specifying 'true' as the value to the last parameter as you have in your sample code above. By specifying 'false', you will allow for the highest version of the Task Scheduler to be used. You can then use the TaskService.HighestSupportedVersion property&nbsp;to determine which version of the library you are using.&nbsp;That property will return Version(1,1) when under version 1 and Version(1,2) or higher when under version 2.</p>",
+    "PostedDate": "2011-07-27T13:17:48.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649367",
+    "ThreadId": "266601",
+    "Html": "<p>Great.. Thank you Dahall.</p>\r\n<p>On further investigation, I could figure out that the option was remaining unchecked because of UAC settings on that machine. When I disabled UAC, the option was getting checked even with v1.0 compatibility. Anyway, thank you for you help.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-07-28T23:03:59.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714265",
+    "ThreadId": "266601",
+    "Html": "<p>I am currently trying that on Win7.</p>\r\n<p>I find no way to enable the \"Highest Privileges\". It just stays disabled :(.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>td.Principal.RunLevel = TaskRunLevel.Highest;\r\n\r\nMessageBox.Show(ts.HighestSupportedVersion.ToString()); <span style=\"color: green;\">//1.3</span>\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2011-12-19T07:37:24.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714350",
+    "ThreadId": "266601",
+    "Html": "<p>This property works under Windows 7 when you have constructed the TaskService instance or registered the task with an account that has permissions to run things at that run level. You also need to make sure the executable is running with UAC on as noted above.</p>",
+    "PostedDate": "2011-12-19T10:39:25.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714362",
+    "ThreadId": "266601",
+    "Html": "<p>I have run the application with right click/as administrator.</p>\r\n<p>But it won't take it. :-/</p>\r\n<p>&nbsp;</p>\r\n<p>Any idea?</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-12-19T11:05:41.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "714490",
+    "ThreadId": "266601",
+    "Html": "<p>Will you try just something simple like the following and see if it works?</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> System;\r\n<span style=\"color: blue;\">using</span> Microsoft.Win32.TaskScheduler;\r\n\r\n<span style=\"color: blue;\">class</span> Program\r\n{\r\n   <span style=\"color: blue;\">static</span> <span style=\"color: blue;\">void</span> Main(<span style=\"color: blue;\">string</span>[] args)\r\n   {\r\n      <span style=\"color: green;\">// Get the service on the local machine</span>\r\n      <span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n      {\r\n         <span style=\"color: green;\">// Create a new task definition and assign properties</span>\r\n         TaskDefinition td = ts.NewTask();\r\n         td.Principal.RunLevel = TaskRunLevel.Highest;\r\n\r\n         <span style=\"color: green;\">// Create a trigger that will fire the task at this time every other day</span>\r\n         td.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger { DaysInterval = 2 });\r\n\r\n         <span style=\"color: green;\">// Create an action that will launch Notepad whenever the trigger fires</span>\r\n         td.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, <span style=\"color: #a31515;\">\"c:\\\\test.log\"</span>, <span style=\"color: blue;\">null</span>));\r\n\r\n         <span style=\"color: green;\">// Register the task in the root folder</span>\r\n         ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">@\"Test\"</span>, td);\r\n      }\r\n   }\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-12-19T14:06:07.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715003",
+    "ThreadId": "266601",
+    "Html": "<p>Got it ;) I wrote the RunLevel thing under the RegisterTaskDefinition :D.</p>\r\n<p>I have used it in my following project, to reset my network interfaces to dhcp on each wakeup of the system.</p>\r\n<p><a href=\"http://forum.scilor.com/viewtopic.php?t=947&amp;p=2799#p2799\">http://forum.scilor.com/viewtopic.php?t=947&amp;p=2799#p2799</a></p>",
+    "PostedDate": "2011-12-20T11:27:44.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "924756",
+    "ThreadId": "266601",
+    "Html": "<p>The code posted by dahall works fine. To see the option as \"selected\", you have to reload Task Scheduler window by pressing F5. Switching from an activity row to another, the window keep showing the old settings...</p>\r\n<p>Sorry for the late response! :) Bye!</p>",
+    "PostedDate": "2012-10-10T08:51:34.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

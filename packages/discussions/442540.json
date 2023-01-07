@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1039304",
+    "ThreadId": "442540",
+    "Html": "(Win8 x64, .NET 4.0) I get the following error when I try to enable or disable a task using VB.NET:\r<br />\n<br />\n&quot;An unhandled exception of type 'System.Security.SecurityException' occurred in Microsoft.Win32.TaskScheduler.dll\r<br />\n<br />\nAdditional information: Tasks which have been registered previously with stored passwords must use the TaskFolder.RegisterTaskDefinition method for updates.&quot;\r<br />\n<br />\nThe code I use is very simple:<br />\n<pre><code>Dim t As Task = ts.GetTask(originaltask.Path)\n            t.Enabled = True\n            t.RegisterChanges()</code></pre>\n\nI don't want to prompt for user name &amp; password for enabling/disabling tasks.\r<br />\n<br />\nWhat can I do?<br />\n",
+    "PostedDate": "2013-05-04T01:47:50.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1039386",
+    "ThreadId": "442540",
+    "Html": "Those are restrictions from the Microsoft library. Once a task is registered with a stored password, it must have that password specified with each re-registration. The RegisterChanges method cannot handle this type of update.<br />\n",
+    "PostedDate": "2013-05-04T09:35:10.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

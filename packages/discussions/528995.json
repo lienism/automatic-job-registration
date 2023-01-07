@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1202949",
+    "ThreadId": "528995",
+    "Html": "Does someone knows is there a possibility do create tasks that will fire even when user is not logged in? There is such option in windows task scheduler, but i cant find it in the wrapper. Situation is, after server reboots (power issues or whatsoever), no user log in automatically.\r<br />\n<br />\nThanks in advance, btw awesome work with the wrapper<br />\n",
+    "PostedDate": "2014-02-05T05:49:11.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203278",
+    "ThreadId": "528995",
+    "Html": "There a couple of ways: 1) You can define a BootTrigger using an account that has Administrator rights or SYSTEM. This will run every time the system is booted. 2) Use any trigger, but register with an account that provides a password or the SYSTEM account.<br />\n",
+    "PostedDate": "2014-02-05T18:58:31.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-02-06T03:51:44.307-08:00"
+  },
+  {
+    "Id": "1203392",
+    "ThreadId": "528995",
+    "Html": "Thanks, it worked, i used<br />\n<br />\nts.GetFolder(&quot;ProgressDatabaseCleaner&quot;<a href=\"mailto:).RegisterTaskDefinition(@&quot;ProgressDataBaseCleaner1&quot;,\" rel=\"nofollow\">).RegisterTaskDefinition(@\"ProgressDataBaseCleaner1\",</a> td,TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);<br />\n",
+    "PostedDate": "2014-02-06T03:52:37.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

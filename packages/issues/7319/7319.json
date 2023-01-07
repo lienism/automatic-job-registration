@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Resolved in Change Set 60274. Solution proposed is best solution in my opinion as it more closely follows good COM interop guidelines.",
+    "ClosedDate": "2010-11-27T14:29:07.24-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi am am tracking a problem calling getruntimes on a vista 32 bit os.\nit works fine on a win 7 32 bit and win 7 64 bit.  Work okay on xp 32 as well.",
+    "LastUpdatedDate": "2013-05-16T04:49:13.303-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-10-01T12:38:53.337-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Get run times error on vista 32",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7319
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I have seen the same problem where an AccessViolationException is thrown when calling GetRunTimes. But for me it was under the following conditions: Windows 7 32 bit (it doesn't happen on 64 bit) with the host application compiled as Release (it doesn't happen in Debug). I've been able to solve this by changing the \"TaskSchedulerV2Interop.cs\" file to add \"ref\" for the parameters as follows:\r\n\r\nvoid GetRunTimes([In] ref Microsoft.Win32.TaskScheduler.V1Interop.SystemTime pstStart, [In] ref Microsoft.Win32.TaskScheduler.V1Interop.SystemTime pstEnd, [In, Out] ref uint pCount, [In, Out] ref IntPtr pRunTimes);\r\n\r\nBut I have to admit I don't know if that is the right way to solve it...",
+      "PostedDate": "2010-11-26T23:34:58.027-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-11-27T14:29:07.24-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:07.593-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:13.303-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

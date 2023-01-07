@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457551",
+    "ThreadId": "649451",
+    "Html": "When registering a task that requires a password, if the user enters a wrong password, the message is shown here: <a href=\"http://screencast.com/t/vt4i4p15QlBm\" rel=\"nofollow\">http://screencast.com/t/vt4i4p15QlBm</a>\r<br />\n<br />\nInstead, the dialog should say something like &quot;&quot;Authentication Failed&quot; or &quot;Wrong Password&quot; and allow the user to Try Again with different credentials or Cancel.<br />\n",
+    "PostedDate": "2015-12-30T09:32:33.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457563",
+    "ThreadId": "649451",
+    "Html": "I have replaced that error response with a duplicate of the message used by the Windows Task Scheduler:\r<br />\n<br />\nTask Scheduler cannot create the task. The user account is unknown, the password is incorrect, or the user account does not have permission to create this task.<br />\n",
+    "PostedDate": "2015-12-30T11:17:57.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T11:27:48.57-08:00"
+  },
+  {
+    "Id": "1457564",
+    "ThreadId": "649451",
+    "Html": "Thanks  :o)<br />\n",
+    "PostedDate": "2015-12-30T11:28:28.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

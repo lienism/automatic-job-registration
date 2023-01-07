@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1451011",
+    "ThreadId": "647018",
+    "Html": "I'm running into an issue when the task name is a number only. When passing this through as taskservice.rootfolder.tasks(&quot;TaskName&quot;) I get an error that &quot;Value does not fall within the expected range.&quot;  as it is seeing the name as a number instead of a string. I am passing it as a string so I'm not sure if anyone else has seen this issue. \r<br />\n<br />\nAny help would be appreciated.\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2015-11-05T05:45:38.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451208",
+    "ThreadId": "647018",
+    "Html": "I'm assuming this is not on a system prior to Windows Vista. If so, then we are dealing with a limitation of the base library from Microsoft. That error comes from calling the base library's <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa380754(v=vs.85).aspx\" rel=\"nofollow\">IRegisteredTaskCollection.Item property</a> that takes either an integer or a string. If working with the V1 native library on XP systems and earlier, this would be an artifact of the <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa381813(v=vs.85).aspx\" rel=\"nofollow\">ITaskScheduler.Activate</a> method. I don't put any code between those calls.<br />\n",
+    "PostedDate": "2015-11-06T09:10:44.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451325",
+    "ThreadId": "647018",
+    "Html": "I'm on a win7 machine. I worked pasted it by using the getTasks method using a regular expression. Thanks for the help<br />\n",
+    "PostedDate": "2015-11-08T08:38:43.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-11-09T11:05:13.67-08:00"
+  }
+]

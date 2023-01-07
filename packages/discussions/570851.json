@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1317442",
+    "ThreadId": "570851",
+    "Html": "Hi,<br />\n<br />\nCurrently I am trying to create a task in remote machine through TaskService class. The remote machine is connected through workgroup. But I am not able to create task in remote machine. I am getting following exception.<br />\n<br />\nSystem.UnauthorizedAccessException was unhandled<br />\n  Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))<br />\n<br />\nSo is it possible to create task in remote machine where computers are connected through workgroup? Or it is only possible through if computers are connected through domain server?<br />\n<br />\nPlease revert.<br />\n<br />\nRegards,<br />\nPabitra<br />\n",
+    "PostedDate": "2014-10-29T11:29:18.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1317665",
+    "ThreadId": "570851",
+    "Html": "I don't have a configuration that will allow me to test, but I believe this can be done by specifying a valid username and password during the TaskService instantiation.<br />\n<pre><code>TaskService ts = new TaskService(&quot;COMPUTERNAME&quot;, &quot;remoteUserAcctName&quot;, &quot;COMPUTERNAME&quot;, &quot;remoteUserPassword&quot;);</code></pre>\n\n",
+    "PostedDate": "2014-10-30T06:43:34.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1317716",
+    "ThreadId": "570851",
+    "Html": "Hi Dahall,<br />\n<br />\nThank you for your response. I tried with your suggestion but got same error, &quot;Access is denied&quot;.<br />\nI am trying to create task in remote computer running Windows 7 from a computer running Windows 7. Can I do this? Because as per this link, <a href=\"http://technet.microsoft.com/en-us/library/cc766266.aspx\" rel=\"nofollow\">http://technet.microsoft.com/en-us/library/cc766266.aspx</a> , one can connect to remote computers running Windows Server® 2008, Windows Vista®, Windows Server 2003, Windows XP, or Windows 2000,<br />\n<br />\nAlso I tried from Task Scheduler menu 'Action | Connect to Another Computer', <a href=\"http://screencast.com/t/wIDbDcdhOE\" rel=\"nofollow\">http://screencast.com/t/wIDbDcdhOE</a> , I got error 'You do not permission to access this computer'.<br />\n<br />\nPlease revert. I am waiting for your reply.<br />\n<br />\nRegards,<br />\nPabitra<br />\n",
+    "PostedDate": "2014-10-30T08:41:01.773-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433858",
+    "ThreadId": "570851",
+    "Html": "HI,\r<br />\n<br />\nI repaired this error going to services.msc and activating the &quot;Remote Registry&quot;. But I'm getting another error right now. &quot;Excepción al llamar a &quot;GetFolder&quot; con los argumentos &quot;1&quot;: &quot;Sólo se permite esta operación cuando está conectado al servidor. (Excepción de HRESULT: 0x800704E3)&quot;&quot;\r<br />\n<br />\nIt's like is trying to get the folder but im not connected and it can't acces. \r<br />\n<br />\nSomeone knows what can i do?\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2015-07-10T00:36:03.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433956",
+    "ThreadId": "570851",
+    "Html": "josesi: Thanks for the recommendation. When and how are you getting the GetFolder error? Which method throws the exception, GetFolder explicitly or through another method call? Are you getting a COMException or another exception?<br />\n",
+    "PostedDate": "2015-07-10T14:34:52.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

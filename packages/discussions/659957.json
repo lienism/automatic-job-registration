@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1489354",
+    "ThreadId": "659957",
+    "Html": "No exists method for add task in subfolder.\r<br />\n<br />\nOr why add task in subfolder. <br />\n",
+    "PostedDate": "2016-12-06T08:54:28.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489379",
+    "ThreadId": "659957",
+    "Html": "The TaskFolder class represents a folder regardless of its level and tasks are added to a folder using the RegisterTaskDefinition method.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nTaskService.Instance.RootFolder.Subfolders[<span style=\"color:#A31515;\">&quot;SubFldName&quot;</span>].RegisterTaskDefinition(....).\r\n</pre></div>",
+    "PostedDate": "2016-12-06T13:23:39.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-12-06T13:23:43.433-08:00"
+  }
+]

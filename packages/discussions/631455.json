@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1415425",
+    "ThreadId": "631455",
+    "Html": "How i can add task from xml string ? Not from xml file. I am going to get xml  tasks from ms sql database.<br />\n",
+    "PostedDate": "2015-04-17T22:11:06.807-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1415970",
+    "ThreadId": "631455",
+    "Html": "You will get a TaskFolder instance for the folder in which you want to place the task, and then call the RegisterTask method setting the second parameter to the XML text string that contains the task's definition in the schema defined at <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa383609(v=vs.85).aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/aa383609(v=vs.85).aspx</a>.<br />\n",
+    "PostedDate": "2015-04-20T08:11:16.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:11:20.497-07:00"
+  },
+  {
+    "Id": "1416841",
+    "ThreadId": "631455",
+    "Html": "What is my mistake ?<br />\n<pre><code>  using (TaskService ts = new TaskService())\n              {\n                  string Task_Settings = System.IO.File.ReadAllText(@&quot;D:\\DailyTrigger.xml&quot;);\n\n                  TaskFolder tf = ts.RootFolder;\n                  tf.RegisterTask(@&quot;XMLTask&quot;, Task_Settings);\n              }  </code></pre>\n\nMy xml file works successfully with method NewTaskFromFile. <br />\n",
+    "PostedDate": "2015-04-22T08:10:38.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416924",
+    "ThreadId": "631455",
+    "Html": "NewTaskFromFile will give you a TaskDefinition but does not create (register) the task. The problem you may be having is a permissions problem when registering. Are you running the executable from an account that has permissions to create tasks? Are you not running as Administrator and having UAC block your access? Your code is correct if you have permissions. Alternately, you could do all that in one line:<br />\n<pre><code>TaskService.Instance.RootFolder.ImportTask(&quot;XMLTask&quot;, @&quot;D:\\DailyTrigger.xml&quot;);</code></pre>\n\nIf you have permission problems, you may need to supply user information:<br />\n<pre><code>using (var ts = new TaskService())\n{\n   // If user information is in the XML file under the Principal tag, you can use this short form:\n   ts.RootFolder.RegisterTaskDefinition(&quot;XMLTask&quot;, ts.NewTaskFromFile(@&quot;D:\\DailyTrigger.xml&quot;));\n   // If you need to supply user information at this time use this form. See documentation for detail on TaskLogonType.\n   ts.RootFolder.RegisterTaskDefinition(&quot;XMLTask&quot;, ts.NewTaskFromFile(@&quot;D:\\DailyTrigger.xml&quot;),\n      TaskCreation.CreateOrUpdate, &quot;username&quot;, &quot;password&quot;, TaskLogonType.XYZ);\n}</code></pre>\n\n",
+    "PostedDate": "2015-04-22T11:04:05.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

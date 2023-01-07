@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1472632",
+    "ThreadId": "654378",
+    "Html": "Hi!\r<br />\n<br />\nI need to implement scheduled tasks in my application and your library turned to be great.\r<br />\nThe problem is that I will need to distribute it to clients with different Windows localization settings.\r<br />\nMy task is pretty simple, executes a program daily every few hours and after boot also.\r<br />\n<br />\nI've tested on an English Windows 7 64 bits and also Dutch Windows 8 64 bits, both worked fine.\r<br />\nBut I'm afraid this might fail on other languages.\r<br />\n<br />\nSince you mention support only for &quot;English, Spanish, Italian, French, Chinese (Simplified), German.&quot; and it worked on Dutch, I wonder if you are referring to another component of the library and not to the simple creation of tasks.\r<br />\n<br />\nDo you think this might fail on other languages?\r<br />\nIf that's the case, I'm going to have to implement a scheduler by importing an .XML file.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2016-05-06T01:55:26.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472796",
+    "ThreadId": "654378",
+    "Html": "The translations apply to the UI elements provided for editing tasks with the library or displaying information about tasks. For creating tasks, the library will work with any language. There is the native editor included with Windows for editing tasks as well.<br />\n",
+    "PostedDate": "2016-05-08T16:46:20.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-09T10:57:55.257-07:00"
+  },
+  {
+    "Id": "1473112",
+    "ThreadId": "654378",
+    "Html": "Perfect, thanks a lot for all the work in the library, it's a great help.<br />\n",
+    "PostedDate": "2016-05-11T00:26:11.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

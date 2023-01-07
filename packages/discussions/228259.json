@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "497324",
+    "ThreadId": "228259",
+    "Html": "<p>The Task.Run function don't seems to work.</p>\r\n<p>When i go to the GUI of the Task Scheduler and click &quot;Run&quot; in the filemenu the task runs as intended but if i call the Run funktion on the task nothing happens.</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>TaskService ts = <span style=\"color:blue\">new</span> TaskService();\r\nTaskFolder tf = ts.GetFolder(<span style=\"color:#a31515\">&quot;MyTaskFolder&quot;</span>);\r\nTask t = tf.Tasks[<span style=\"color:#a31515\">&quot;MyTaskName&quot;</span>];\r\nt.Run(<span style=\"color:blue\">new</span> String[] { });\r\n</pre>\r\n</div>\r\n<p>What am I doing wrong?</p>\r\n<p>Anyone who can suggest anything?</p>\r\n<p>Regards Flo</p>",
+    "PostedDate": "2010-09-22T18:59:48.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499636",
+    "ThreadId": "228259",
+    "Html": "<p>First of all, try replacing the last line with just t.Run(). If that doesn't work, then you may want to see if the task is disabled (under v2) or if the task is not set to run interactively it may be actually be&nbsp;running but in a different user session.</p>",
+    "PostedDate": "2010-09-28T13:32:28.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "499664",
+    "ThreadId": "228259",
+    "Html": "<p>Thanks for the help I just tried it again before applying the changes you suggested, and it seems it has evolved^^</p>\r\n<p>It runs perfectly now after lettig it sit for a view days.</p>\r\n<p>Anyway best regards. I enjoy the Wrapper very much.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-28T14:56:38.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

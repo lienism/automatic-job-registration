@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "709543",
+    "ThreadId": "282315",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm trying to register a task from a WCF Service running asp.net 4.0 but get the following error:</p>\r\n<p>Message:&nbsp;(39,4):Task:</p>\r\n<p>StackTrace:</p>\r\n<p>&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String\r\n Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)&nbsp; &nbsp;at\r\n Utpl.Syllabus.Framework.Batch.WindowsScheduler.CreateTask(String name, String description, SchedulerOptions options) in .... &nbsp; at System.ServiceModel.Dispatcher.SyncMethodInvoker.Invoke(Object instance, Object[] inputs, Object[]&amp; outputs)&nbsp; &nbsp;at\r\n System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeBegin(MessageRpc&amp; rpc)</p>\r\n<p>Visual Studio says &quot;check the error property&quot;, the error property is&nbsp;-2147216616, as far as I know this is not a valid HRESULT, so can't determine which is the cause of the error.</p>\r\n<p>&nbsp;</p>\r\n<p>This is my code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> taskService = <span style=\"color:blue\">new</span> TaskService())\r\n{\r\n     TaskDefinition taskDefinition = taskService.NewTask();\r\n     taskDefinition.RegistrationInfo.Description = description;\r\n\r\n     taskDefinition.Triggers.Add(GetTrigger(options));\r\ntaskDefinition.Actions.Add(DetermineActionToExecute(options));\r\n\r\n                taskService.RootFolder.RegisterTaskDefinition(\r\n                    <span style=\"color:blue\">string</span>.Format(<span style=\"color:#a31515\">@&quot;{0}\\{1}&quot;</span>, <span style=\"color:#a31515\">&quot;AppTasksFolder&quot;</span>  ,\r\n                                  name), taskDefinition);\r\n}\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>Any ideas?</p>\r\n<p>&nbsp;</p>\r\n<p>My system:</p>\r\n<p>Windows 7 Profession x64</p>\r\n<p>ASP.net 4.0</p>\r\n",
+    "PostedDate": "2011-12-08T13:54:07.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709941",
+    "ThreadId": "282315",
+    "Html": "<p>That is the error SCHED_E_INVALIDVALUE (0x80041318) - The task XML contains a value which is incorrectly formatted or out of range.</p>\r\n<p>My guess is that you have a problem with a value in the the trigger or action.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2011-12-09T09:24:11.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712251",
+    "ThreadId": "282315",
+    "Html": "<p>Hi,</p>\r\n<p>Thanks for the reply.</p>\r\n<p>What are the required permissions for the user to create Task?, I have created a unit test and everything works fine, however using the WCF Service I get the errors, so I'm assuming that is a permissions issue.</p>",
+    "PostedDate": "2011-12-14T10:09:12.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712817",
+    "ThreadId": "282315",
+    "Html": "<p>Check&nbsp;the <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx\">MSDN documentation</a> for a full description on security.</p>",
+    "PostedDate": "2011-12-15T09:59:09.263-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1287867",
+    "ThreadId": "560531",
+    "Html": "I need to create a Task at LogOn\r<br />\nwhich repeats after every 1 hr\r<br />\nand should Run whether UserLogged On or Not\r<br />\nalso should run with Highest Privileges\r<br />\n<br />\nand it should run for the first time as soon as it gets created for the first time\r<br />\ncan anyone help me creating a code snippet for it.\r<br />\n<br />\n<img src=\"http://i57.tinypic.com/2py6td3.jpg\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2014-08-07T20:23:08.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1287914",
+    "ThreadId": "560531",
+    "Html": "OKie I was able to create a Task and execute at time of Task Creation\r<br />\n<br />\nTwo Things which I'm missing is\r<br />\n 1.Setting task as  &quot;Run Task Whether User is logged In or Not<br />\n<ol>\n<li>I checked after the interval the &quot;Next Run Time &quot; is coming blank the execution is not taking place after a fixed interval .\r<br />\nHere is the code snippet</li>\n</ol>\n<pre><code>private void button1_Click(object sender, EventArgs e)\n        {\n\n            using (TaskService ts=new TaskService() )\n            {\n                TaskDefinition td = NewMethod(ts);\n\n                LogonTrigger lt = new LogonTrigger();\n\n                lt.Repetition.Interval = TimeSpan.FromMinutes(2);\n                lt.Repetition.Duration = TimeSpan.Zero;\n                lt.StartBoundary = DateTime.Now;\n                lt.EndBoundary = DateTime.MaxValue;\n\n                td.Triggers.Add(lt);\n\n                td.Actions.Add(new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null));\n\n                TaskFolder tf = ts.RootFolder;\n                // Register the task in the root folder\n                  //ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td);\n                Task task = tf.RegisterTaskDefinition(&quot;test&quot;, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken, null);\n                task.Run(&quot;test&quot;);\n\n            }\n        }</code></pre>\n\n<pre><code>private static TaskDefinition NewMethod(TaskService ts)\n        {\n            string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;\n            TaskDefinition td = ts.NewTask();\n\n            td.Principal.UserId = user;\n            td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n            td.RegistrationInfo.Description = &quot;xyz&quot;;\n            td.RegistrationInfo.Author = &quot;xyz Sync&quot;;\n            td.RegistrationInfo.Date = DateTime.Now;\n\n            td.Principal.RunLevel = TaskRunLevel.Highest;\n            \n            td.Settings.Priority = ProcessPriorityClass.High;            \n            td.Settings.StopIfGoingOnBatteries = false;\n            td.Settings.DisallowStartIfOnBatteries = false;\n            td.Settings.StartWhenAvailable = true;\n            td.Settings.RunOnlyIfNetworkAvailable = true;\n            td.Settings.Enabled = true;\n            td.Settings.Hidden = false;\n            //td.Settings.RunOnlyIfLoggedOn = false;\n\n            return td;\n        }</code></pre>\n\n",
+    "PostedDate": "2014-08-08T00:16:50.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1288114",
+    "ThreadId": "560531",
+    "Html": "Your logic doesn't work. You can't have a LogonTrigger that is able to run when the user is not logged on. What is the requirement? Is it that you need a task to run using a specific user's credentials every hour?<br />\n",
+    "PostedDate": "2014-08-08T09:50:43.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

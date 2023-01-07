@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1463574",
+    "ThreadId": "651445",
+    "Html": "Hi,\r<br />\n<br />\nI am trying to set the 'Delete It After' on the settings tab to 'Immediately' by using \r<br />\n<br />\ntaskdef.Settings.DeleteExpiredTaskAfter = TimeSpan.zero\r<br />\n<br />\nwhich should work according to the wrapper\r<br />\nBut instead it disables the option. I feel like I am missing something here.\r<br />\nAny help will be appreciated\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2016-02-17T23:03:06.15-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463648",
+    "ThreadId": "651445",
+    "Html": "Actually, the library's documentation says, &quot;A TimeSpan value of 1 second indicates the task is set to delete when done. A value of TimeSpan.Zero indicates that the task should not be deleted.&quot;<br />\n",
+    "PostedDate": "2016-02-18T11:43:00.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-18T11:43:03.757-08:00"
+  },
+  {
+    "Id": "1463682",
+    "ThreadId": "651445",
+    "Html": "Thanks for the reply. I tried giving<br />\n<br />\ntaskdef.Settings.DeleteExpiredTaskAfter = TimeSpan.FromSeconds(1);<br />\n<br />\nbut the Task created in system's task scheduler shows '1 second' instead of 'Immediately' .<br />\n",
+    "PostedDate": "2016-02-18T21:54:13.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463730",
+    "ThreadId": "651445",
+    "Html": "I see the problem now. When I originally wrote the library, there were not nullable types supported in either C# or VB.NET. The native library uses strings that can have the following values:<br />\n<ul>\n<li>'null' == 'Never delete'</li>\n<li>'PT0S' (or TimeSpan.Zero)  == 'Immediately'</li>\n<li>\n'PTxx' == other times<br />\n</li>\n</ul>\nI needed a solution that would work without nullable types, so I chose to implement the library using Microsoft's solution for the V1 library, which is:<br />\n<ul>\n<li>TimeSpan.Zero == 'Never delete'</li>\n<li>TimeSpan.FromSeconds(1) == 'Immediately'</li>\n<li>\nTimeSpan (other) == other times<br />\n</li>\n</ul>\nI believe this is the discrepancy you're seeing. Sorry for the confusion.<br />\n",
+    "PostedDate": "2016-02-19T08:36:33.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-19T08:36:39.613-08:00"
+  }
+]

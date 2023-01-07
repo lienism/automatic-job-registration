@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "823049",
+    "ThreadId": "352103",
+    "Html": "<p>Kindly clarify the meaning of the following HighestSupportedVersion values:</p>\n<p>HighestSupportedVersion = 1.1 (for pre-Vista OS?)<br />HighestSupportedVersion = 1.2 (for Vista and other pre-Win7 OS?)<br />HighestSupportedVersion = 1.3 (for Windows 7 OS?)</p>\n<p>Thanks!</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2012-04-12T11:24:02.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "823056",
+    "ThreadId": "352103",
+    "Html": "<p>Yes. Exactly. Along with corresponding Windows Server releases. There are almost no changes between 1.2 and 1.3 as officially they are both recognized as Task Scheduler 2.0 in the Microsoft documentation. Version 1.1 represents the Task Scheduler 1.0.</p>",
+    "PostedDate": "2012-04-12T11:55:56.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "823057",
+    "ThreadId": "352103",
+    "Html": "<p>Thanks David!</p>",
+    "PostedDate": "2012-04-12T11:57:37.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

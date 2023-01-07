@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "824760",
+    "ThreadId": "352536",
+    "Html": "<p>I want to run a task even if the user is logged off but don't want to request the password of the currently logged on user, hence wanting to schedule as the SYSTEM account.</p>\n<p>This is the code:</p>\n<p>\n<div style=\"color: black; background-color: white;\">\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">@\"My Task Name\"</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color: blue;\">null</span>);</pre>\n</div>\n</p>\n<p><br />However when run, I get an E_ACCESSDENIED exception.</p>",
+    "PostedDate": "2012-04-17T03:06:33.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "824874",
+    "ThreadId": "352536",
+    "Html": "<p>Where do you get the exception? At which method call?</p>",
+    "PostedDate": "2012-04-17T07:02:22.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "825315",
+    "ThreadId": "352536",
+    "Html": "<p>The exception is thrown by the RegisterTaskDefinition method.</p>\r\n<p>I notice if I run the application as an administrator it works fine, however the user account it's currently running under is a member of the Administrators group.</p>",
+    "PostedDate": "2012-04-18T01:26:31.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "825662",
+    "ThreadId": "352536",
+    "Html": "<p>I'm also getting this error. &nbsp;</p>\r\n<p>I'm hoping to use this within a web app running under IIS App Pool Identity so I need to be able to create these scheduled tasks as an&nbsp;unprivileged&nbsp;user. &nbsp;Will this library be able to do this? &nbsp;Is it even possible with completely compromising my servers security?</p>",
+    "PostedDate": "2012-04-18T14:35:35.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "825702",
+    "ThreadId": "352536",
+    "Html": "<p>In order to register a ServiceAccount, like SYSTEM, the connected user of the TaskService must have permissions to use that account. Under ASP.NET, the thread typically run under a special account that does not have those permissions. Check the thread <a href=\"http://taskscheduler.codeplex.com/discussions/277730\">http://taskscheduler.codeplex.com/discussions/277730</a>&nbsp;for more information on permissions required to register tasks.</p>",
+    "PostedDate": "2012-04-18T16:22:33.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

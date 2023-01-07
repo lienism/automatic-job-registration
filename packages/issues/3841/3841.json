@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in latest code drop. Will release in next build.",
+    "ClosedDate": "2009-07-08T22:18:09.25-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am creating a 'MonthlyDOWTrigger' trigger, which will run on every last week (on a specified day) of every month.\n \nIf I set,\n \nmonthlyDowTrigger.WeeksOfMonth = WhichWeek.LastWeek\n \na 'System.ArgumentException' is thrown.\n \nIf I set,\n \nmonthlyDowTrigger.RunOnLastWeekOfMonth = True\n \nthe task gets register but it gets register with first week and last week. Ideally it should register with only last week.\n \nIf I set, both the properties \n \nmonthlyDowTrigger.RunOnLastWeekOfMonth = True\nmonthlyDowTrigger.WeeksOfMonth = WhichWeek.SecondWeek\n \nthe task gets register but it gets register with Second week and last week.\n \nIf I set\n \nmonthlyDowTrigger.RunOnLastWeekOfMonth = True\nmonthlyDowTrigger.WeeksOfMonth = WhichWeek.LastWeek\n \na 'System.ArgumentException' is thrown.\n \nIs there any way to register the task having trigger, which will get activated only on the last week (on specified day) of the month?",
+    "LastUpdatedDate": "2013-05-16T04:49:15.413-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2009-07-08T22:17:33.92-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Help me to set last week trigger.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 3841
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

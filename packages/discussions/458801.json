@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1098036",
+    "ThreadId": "458801",
+    "Html": "Hi,\r<br />\n<br />\nTrigger.ToString() returns a description string that represents the corresponding trigger. Is there any method that does the opposite, i.e., build a trigger given its description string?\r<br />\n<br />\nSomething like:  Trigger.Build(descriptionString);\r<br />\n<br />\nThanks!\r<br />\n<br />\nBest regards,\r<br />\n<br />\nMuhaNERD<br />\n",
+    "PostedDate": "2013-09-23T07:18:39.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098256",
+    "ThreadId": "458801",
+    "Html": "There is not. In the 2.0 library, there is a Fluent API that allows you to kind of use word-like syntax, but there is no string parsing capability.<br />\n",
+    "PostedDate": "2013-09-23T15:39:45.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098366",
+    "ThreadId": "458801",
+    "Html": "Thanks for your reply!\r<br />\n<br />\nWell, this is what I want to do. Maybe you could recommend a better way.\r<br />\n<br />\nI use the Task Scheduler Managed Wrapper to schedule Windows Tasks, and save the settings in an external database (for backup reasons). I want, in case someone has deleted the Windows Tasks (by mistake), that I retrun them by recreating them from the DB-backup.\r<br />\n<br />\nCould you maybe advise me how to do that?<br />\n",
+    "PostedDate": "2013-09-23T23:43:18.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098388",
+    "ThreadId": "458801",
+    "Html": "Is Serialization the right thing to do?<br />\n",
+    "PostedDate": "2013-09-24T00:34:00.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098728",
+    "ThreadId": "458801",
+    "Html": "You can use the Task.Export() method to save the Xml to a file or your can capture the Task.Xml property and save that elsewhere. To regenerate the task, you can use the TaskService.NewTaskFromFile() method to create a TaskDefintion from a file or you can use the TaskService.NewTask method and then assign the Xml the string you extracted from the Xml property. Either way, you will need to then register the new TaskDefinition.<br />\n",
+    "PostedDate": "2013-09-24T12:31:52.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1099548",
+    "ThreadId": "458801",
+    "Html": "Thank you very much!\r<br />\n<br />\nI used the XmlText property of TaskDefinition and it works perfectly! :)<br />\n",
+    "PostedDate": "2013-09-26T02:03:00.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

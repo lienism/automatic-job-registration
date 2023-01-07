@@ -1,0 +1,206 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-03-07T07:52:09.447-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "```\nTaskEditDialog ted = new TaskEditDialog(dct, true, true);\ntry \n{\n   ted.ShowDialog();\n```\n\nOn Windows 2008 R2 Server, logged in as an Administrator, when the ShowDialog() call exits (but before it hits the next line of my code) I am seeing an Unhandled Exception.\n\nOn my Windows 10 dev machine it is absolutely fine, on other platforms it also seems fine. It is the specific circumstances that seems to be causing the problem.\n\nAny advice most welcomed. If I can provide more/better diagnostic information I'd be very happy to.",
+    "LastUpdatedDate": "2017-03-07T07:52:09.447-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-11-10T01:41:23.817-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Windows 2008 R2 Server - unhandled exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12432
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5086,
+      "FileName": "Data Communicator 2 Task.xml",
+      "DownloadUrl": ".\\5086"
+    },
+    {
+      "FileId": 5088,
+      "FileName": "CodeSnippet.cs",
+      "DownloadUrl": ".\\5088"
+    },
+    {
+      "FileId": 5089,
+      "FileName": "CreateDataCommunicatorTask.cs",
+      "DownloadUrl": ".\\5089"
+    },
+    {
+      "FileId": 5090,
+      "FileName": "BlowUp.txt",
+      "DownloadUrl": ".\\5090"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "It definitely has to do with the settings of the TaskDefinition you are passing in. On the Windows 10 system, please capture and send me the XML for the task. I can then unravel it on my test systems to find the bug.",
+      "PostedDate": "2016-11-16T21:52:45.803-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-11-29T02:24:33.023-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "HI. Sorry for the delay. Here's the XML of the Task that causes an unhandled exception. This is from a Windows 10 machine. The fault has only been reproduced on WIndows Server 2008 R2. It's fine on other platforms that we've tested.",
+      "PostedDate": "2016-11-29T02:24:36.03-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Here's the task creation code.\r\n\r\n```\r\n\r\n        public static Microsoft.Win32.TaskScheduler.Task CreateDataCommunicatorTask()\n        {\n            TaskService tsmgr = new TaskService();\r\n\r\n            Microsoft.Win32.TaskScheduler.Task dct = tsmgr.GetTask(strings.DataCommunicator2Task);\r\n\r\n            if (dct == null)\n            {\n                string strThisProgram = Assembly.GetEntryAssembly().CodeBase.ToString();\n                strThisProgram = strThisProgram.Replace(@\"file:///\", @\"\");\n                strThisProgram = strThisProgram.Replace('/', '\\\\');\r\n\r\n                TaskDefinition td = tsmgr.NewTask();\r\n\r\n                td.RegistrationInfo.Description = strings.ExecuteTheDataCommunicator;\r\n\r\n\n                TimeTrigger tg = new TimeTrigger(DateTime.Now.AddHours(2));\n                tg.Repetition.Interval = TimeSpan.FromMinutes(5);\r\n\r\n                td.Triggers.Add(tg);\n                td.Actions.Add(strThisProgram);\r\n\r\n                try\n                {\n                    tsmgr.RootFolder.RegisterTaskDefinition(strings.DataCommunicator2Task, td);\n                    dct = tsmgr.GetTask(strings.DataCommunicator2Task);\n                }\n                catch\n                {\n                    MessageBox.Show(strings.CouldNotCreateDataCommunicatorTask);\n                    dct = null;\n                }\r\n\r\n            }\r\n\r\n            return dct;\n        }\n```",
+      "PostedDate": "2016-11-29T02:32:43.653-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I finally figured out the problem. It has to do with the UserId tag under the Principal tag. WS2008 doesn't recognize the SID and reports back an empty string for the user name. My code didn't handle the empty string condition and caused an exception. I have fixed the code in 2.5.22, due shortly. In the mean time, if you remove the UserId tag, it should fix your problem as that will default to the current user.",
+      "PostedDate": "2017-01-30T17:50:26.05-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Can't thank you enough. I'll look forward to the release...\r\n\r\nDon",
+      "PostedDate": "2017-01-31T00:19:06.193-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-05T12:44:51.597-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have recompiled my app with the new library, 2.5.22. I'm afraid I get the same error, crashing out just after the dialog closes but before the next line of my code.",
+      "PostedDate": "2017-02-06T03:26:57.76-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fixed in 2.5.22\n\n** Closed by dahall 05/02/2017 12:44",
+      "PostedDate": "2017-02-06T03:27:53.817-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-06T03:27:53.937-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Well, darn! What settings are you putting on the TaskEditDialog? I'll create the task using the XML and then run those settings and do my test again.",
+      "PostedDate": "2017-02-06T11:09:34.95-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "If there are no other settings that those you set with the constructor, please let me know. Also, will you confirm that the user is pressing OK to exit the dialog or does this also happen with Cancel?",
+      "PostedDate": "2017-02-06T11:11:15.487-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-06T11:16:01.297-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Sorry, one more thing. Since you are not using my precompiled assemblies, which version of .NET are you compiling against? I have tested my builds of 2.5.22 for both 2.0, 3.5 and 4.0 in Windows Server 2008 R2 and am able to read in the XML file you provided and display the edit dialog and save changes without error.",
+      "PostedDate": "2017-02-06T11:41:12.27-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-07T02:03:41.66-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David. Thanks so much for your efforts! Much appreciated.\r\n\r\nI am using VS2012 to compile a C# project against the .NET 4.5.2 Framework. I added Task Scheduler to the project using NUGET - which makes it effortless! I could upgrade the project to VS2015 and 4.6 and give that a go... I am not compiling Task Scheduler, I have just added the necessary assembly references, using statements etc. \r\n\r\nI have attached a code snippet showing how I am launching the TaskEditDialog. A previous attachment has the Task Creation code. I'll comment out the OS check and test pressing Cancel this afternoon.\r\n\r\nThanks for any pointers you can give me. ",
+      "PostedDate": "2017-02-07T02:03:43.847-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have just tested again on Windows Server 2008 R2. Once the dialog has displayed I can press either OK or Cancel and get the same crash. I'm going to upgrade the project to VS2015 and see if that makes a difference. If it remains unreproducible I'll put the project/compiler on the server and try to use the debugger to step to  the point of failure. \r\n\r\nThanks for your help.",
+      "PostedDate": "2017-02-07T03:34:00.267-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I upgraded the project to VS2015 and .NET to 4.6.\nExactly the same problem. \r\n\r\nI'm going to put VS2015 on the server I can reproduce the problem on and step the code. I'll let you know what I find...",
+      "PostedDate": "2017-02-07T06:17:37.303-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Two questions:\n1. Have you tried creating a very simple task with something like `TaskService.Instance.AddTask(\"Test\", QuickTriggerType.Daily, \"myprogram.exe\")` to see if the dialog fails still?\n2. Will you send me the code behind util.CreateDataCommunicatorTask()?",
+      "PostedDate": "2017-02-07T16:11:21.247-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-08T06:19:46.14-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've attached the util.CreateDataCommunicatorTask function.\nThis afternoon I hope to compile and step my project on the W2008R2 server that I have reproduced the issue on. Thanks as always.",
+      "PostedDate": "2017-02-08T06:19:48.53-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-08T07:36:21.007-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Got this from the debugger:\r\n\r\nSystem.AccessViolationException was unhandled\n  HResult=-2147467261\n  Message=Attempted to read or write protected memory. This is often an indication that other memory is corrupt.\n  Source=System.Windows.Forms\n  StackTrace:\n       at System.Windows.Forms.UnsafeNativeMethods.CallWindowProc(IntPtr wndProc, IntPtr hWnd, Int32 msg, IntPtr wParam, IntPtr lParam)\n       at System.Windows.Forms.NativeWindow.DefWndProc(Message& m)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ComboBox.WndProc(Message& m)\n       at System.Windows.Forms.DisabledItemComboBox.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.SendMessage(HandleRef hWnd, Int32 msg, Int32 wParam, Int32 lParam)\n       at System.Windows.Forms.ComboBox.get_SelectedIndex()\n       at System.Windows.Forms.ComboBox.OnHandleDestroyed(EventArgs e)\n       at System.Windows.Forms.Control.WmDestroy(Message& m)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ComboBox.WndProc(Message& m)\n       at System.Windows.Forms.DisabledItemComboBox.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n  InnerException: \r\n\r\nSome kind of memory leak?",
+      "PostedDate": "2017-02-08T07:36:21.6-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I'll do the very simplest program I can and see if I can reproduce the issue with that, next.",
+      "PostedDate": "2017-02-08T07:37:57.327-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That is a very strange error. From the trace, it appears that on close, the combo box at the bottom of the form that selects compatibility is having an internal message pump problem. The handler is the native .NET combo box. I'll check my code on how I'm handling close events on the subclass I created. I created a very simple 4.5.2 app with the 2.5.22 NuGet packages and don't see the same failure.",
+      "PostedDate": "2017-02-08T09:23:31.88-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Back in the day when I was a C Win16/Win32 programmer you'd get odd crashes due to message pump issues. You'd solve them (mostly) by having the code send a message to itself to carry on... In VB the equivalent was DoEvents. I've never needed the C# equivalent - yet. It's an odd one.\r\n\r\nIt works fine on every other platform I have tried so please don't expend too much in the way of valuable effort on this. ",
+      "PostedDate": "2017-02-09T00:24:29.237-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nI have built the smallest simplest possible program to test this issue and, as you might guess, the problem does ____not____ reproduce at all. The name of the task is different but everything else is the same. So although the code is breaking inside the TaskEditor dialog the problem must be external to it. \r\n\r\nThe application the library is embedded in is highly complex with SQL CE, multi-threading background tasks and other things going on. Take all that away and the problem is disappears.\r\n\r\nSo this is my problem. Please don't waste any more of your valuable time on this. Thank you for your time and assistance, it is much appreciated.",
+      "PostedDate": "2017-02-09T03:51:38.96-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you for your work to isolate the problem and for calling off my hunt. Best of luck in finding the problem. I had a thought, try setting the parameters on the constructor to (task, true, false) which will not re-register the task on exit. If the ShowDialog method returns DialogResult.OK, then register the task yourself. It is a long shot, but definitely simplifies the code run inside my library.",
+      "PostedDate": "2017-02-09T07:38:39.82-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-03-07T07:52:09.447-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

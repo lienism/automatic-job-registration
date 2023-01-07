@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1233198",
+    "ThreadId": "541975",
+    "Html": "Hello,<br />\n<br />\nrecently I get an OutOfMemoryException when I instantiate an object of TaskService (giving a wrong password) and my windows account got blocked (I cannot login anymore) :/<br />\n<br />\nIn a first call I get &quot;Access Denied&quot; .. in a subsequent call I get &quot;OutOfMemoryException&quot;<br />\n<br />\n<strong>Call</strong>:<br />\n<pre><code>            TaskService ts = new TaskService(\n                Credentials.ServerName,\n                Credentials.Username,\n                Credentials.AccountDomain,\n                Credentials.Password);\n</code></pre>\n\n<strong>Exception</strong>:<br />\n<br />\nSystem.OutOfMemoryException<br />\nbei Microsoft.Win32.TaskScheduler.V2Interop.TaskSchedulerClass.Connect(Object serverName, Object user, Object domain, Object password)<br />\n   bei Microsoft.Win32.TaskScheduler.TaskService.Connect()<br />\n   bei Microsoft.Win32.TaskScheduler.TaskService.EndInit()<br />\n   bei Microsoft.Win32.TaskScheduler.TaskService..ctor(String targetServer, String userName, String accountDomain, String password, Boolean forceV1)<br />\n<br />\n<br />\nAny idea?<br />\n<br />\n<br />\nThanks!<br />\n<br />\nMuhaNERD<br />\n",
+    "PostedDate": "2014-04-11T06:47:24.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1233774",
+    "ThreadId": "541975",
+    "Html": "I see that someone else had the same problem long time ago (<a href=\"https://taskscheduler.codeplex.com/workitem/8839\" rel=\"nofollow\">https://taskscheduler.codeplex.com/workitem/8839</a>). But I don't find a solution for it? Any help please?\r<br />\n<br />\np.s.\r<br />\nI noticed that this error happens when &quot;Credentials.ServerName&quot; is the local machine. When I test the case (i.e., providing wrong password) on a remote server I got always &quot;Access Denied&quot; (which is what I expect also on the local machine). The question is: why there is a difference between executing it on local vs. remote machine?<br />\n",
+    "PostedDate": "2014-04-14T00:13:17.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1233940",
+    "ThreadId": "541975",
+    "Html": "What values are you providing as parameters and what version of Windows is the local machine? OutOfMemoryException usually means there is an infinite loop somewhere. I don't see any in this section of my code so I'm wondering if this may be a Microsoft issue. If it is, then maybe I can prevent the scenario in my code.<br />\n",
+    "PostedDate": "2014-04-14T09:22:15.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234185",
+    "ThreadId": "541975",
+    "Html": "It happens on Window 8.1 Pro.\r<br />\n<br />\nI wrote a small test WPF application. Here is the code (used v4.0 of Task Scheduler Managed Wrapper):\r<br />\n<br />\n<strong>MainWindows.xaml.cs</strong>\r<br />\n<br />\npublic partial class MainWindow : Window<br />\n<pre><code>{\n    public MainWindow()\n    {\n        InitializeComponent();\n        this.TxtServer.Text = Environment.MachineName;\n        this.TxtUsername.Text = string.Format(&quot;{0}\\\\{1}&quot;, Environment.UserDomainName, Environment.UserName);\n    }\n\n    private void BtnOk_OnClick(object sender, RoutedEventArgs e)\n    {\n        string server = this.TxtServer.Text;\n\n        string[] domainUsername = this.TxtUsername.Text.Split('\\\\');\n        string domain = string.Empty, username = string.Empty;\n        if (domainUsername.Any())\n        {\n            if (domainUsername.Length == 2)\n            {\n                domain = domainUsername[0];\n                username = domainUsername[1];\n            }\n        }\n\n        string password = this.TxtPassword.Password;\n        try\n        {\n            TaskService ts = new TaskService(server, username, domain, password);\n            TaskDefinition td = ts.NewTask();\n        }\n        catch (Exception ex)\n        {\n            MessageBox.Show(string.Format(&quot;{0}\\n{1}&quot;, ex.Message, ex.StackTrace));\n        }\n    }\n\n    private void BtnCancel_Click(object sender, RoutedEventArgs e)\n    {\n        this.Close();\n    }\n}\n\n</code></pre>\n\n<strong>MainWindow.xaml</strong>\r<br />\n<br />\n&lt;Window x:Class=&quot;TaskSchedulerDemo.MainWindow&quot;<br />\n<pre><code>    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;\n    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;\n    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;\n            xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;\n    xmlns:ignore=&quot;http://www.ignore.com&quot;\n\n    mc:Ignorable=&quot;d ignore&quot;\n    SizeToContent=&quot;WidthAndHeight&quot;\n    WindowStartupLocation=&quot;CenterScreen&quot;\n    ResizeMode=&quot;NoResize&quot;\n    Title=&quot;Task Scheduler Demo&quot;\n    &gt;\n&lt;StackPanel Margin=&quot;10&quot;&gt;\n    &lt;StackPanel Margin=&quot;5,0,0,5&quot;&gt;\n        &lt;Label Content=&quot;Enter username and password&quot;/&gt;\n    &lt;/StackPanel&gt;\n    &lt;StackPanel Margin=&quot;10, 0, 0, 0&quot; Orientation=&quot;Horizontal&quot;&gt;\n        &lt;StackPanel  Width=&quot;100&quot;&gt;\n            &lt;Label Content=&quot;Server:&quot; Width=&quot;170&quot; Height=&quot;30&quot; Margin=&quot;-5, 0, 0, 0&quot;/&gt;\n            &lt;Label Content=&quot;Username:&quot; Width=&quot;170&quot; Height=&quot;30&quot; Margin=&quot;-5, 5, 0, 0&quot;/&gt;\n            &lt;Label Content=&quot;Password:&quot;  Width=&quot;170&quot; Height=&quot;30&quot; Margin=&quot;-5, 5, 0, 0&quot;/&gt;\n        &lt;/StackPanel&gt;\n        &lt;StackPanel Width=&quot;250&quot; HorizontalAlignment=&quot;Center&quot;&gt;\n            &lt;TextBox   x:Name=&quot;TxtServer&quot; TextWrapping=&quot;Wrap&quot; Width=&quot;250&quot; Height=&quot;23&quot; Margin=&quot;0, 5, 0, 0&quot; /&gt;\n            &lt;TextBox   x:Name=&quot;TxtUsername&quot; TextWrapping=&quot;Wrap&quot; Width=&quot;250&quot; Height=&quot;23&quot; Margin=&quot;0, 10, 0, 0&quot;/&gt;\n            &lt;PasswordBox   x:Name=&quot;TxtPassword&quot; Width=&quot;250&quot; Height=&quot;23&quot; Margin=&quot;0, 10, 0, 0&quot;/&gt;\n        &lt;/StackPanel&gt;\n    &lt;/StackPanel&gt;\n    &lt;Grid  Margin=&quot;0, 10, 0, 0&quot;&gt;\n        &lt;Grid.ColumnDefinitions&gt;\n            &lt;ColumnDefinition Width=&quot;110&quot;/&gt;\n            &lt;ColumnDefinition SharedSizeGroup=&quot;Buttons&quot;/&gt;\n            &lt;ColumnDefinition Width=&quot;5&quot;/&gt;\n            &lt;ColumnDefinition SharedSizeGroup=&quot;Buttons&quot;/&gt;\n        &lt;/Grid.ColumnDefinitions&gt;\n        &lt;Button Grid.Column=&quot;1&quot; x:Name=&quot;BtnOk&quot; Content=&quot;OK&quot; Click=&quot;BtnOk_OnClick&quot; IsDefault=&quot;True&quot;/&gt;\n        &lt;Button Grid.Column=&quot;3&quot; x:Name=&quot;BtnCancel&quot; Content=&quot;Cancel&quot; Click=&quot;BtnCancel_Click&quot; IsCancel=&quot;True&quot;/&gt;\n    &lt;/Grid&gt;\n&lt;/StackPanel&gt;</code></pre>\n\n&lt;/Window&gt;<br />\n",
+    "PostedDate": "2014-04-14T22:55:47.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234590",
+    "ThreadId": "541975",
+    "Html": "Have you tried it? Did you find anything that explains the problem?<br />\n",
+    "PostedDate": "2014-04-16T00:10:10.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234708",
+    "ThreadId": "541975",
+    "Html": "I believe that since you are pulling the server name from a TextBox, if blank the value will be String.Empty. This may be causing the problem. I have updated the code so that String.Empty values are changed to null. However, until that code is released, try this check:<br />\n<pre><code>string server = this.TxtServer.Text;\nif (String.Empty == server)\n   server = null;</code></pre>\n\n",
+    "PostedDate": "2014-04-16T07:03:24.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234929",
+    "ThreadId": "541975",
+    "Html": "Well giving &quot;server = null&quot; has solved the problem, but not because it was empty. I have always provided a server name even if I am working with my local computer. Apparently I had to give &quot;null&quot; if the &quot;server == computer_name&quot;. Maybe you should fix this in your code in this way:\r<br />\n<br />\nif (server.equals(Environment.MachineName)){\r<br />\n   server = null;\r<br />\n}\r<br />\n<br />\nI must admit that I find the Execption I got because of this issue a weird one :/\r<br />\n<br />\n<br />\nThanks anyway for your help! :)<br />\n",
+    "PostedDate": "2014-04-16T23:52:16.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1235096",
+    "ThreadId": "541975",
+    "Html": "I have updated the code in 2.1.1 to avoid this problem. The oddly termed exception is actually coming from the Microsoft system library. It must be a bug there. Anyway, thanks to your help, users of this library should never encounter it again.<br />\n",
+    "PostedDate": "2014-04-17T09:06:00.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:08:02.79-07:00"
+  }
+]

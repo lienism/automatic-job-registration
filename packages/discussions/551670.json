@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1266145",
+    "ThreadId": "551670",
+    "Html": "This is what i have tried but i have a few question to ask\r<br />\n1) Where do we get the taskpath from ? The scheduler is running an application every 1 hour. Is the path equals to the path of the application ?\r<br />\n<br />\n2)Can i get the last run time exactly like the one displayed in the windows task scheduler because i did not create a task dynamically using this library\r<br />\n<br />\nstring lastruntime;\r<br />\nusing (TaskService ts = new TaskService())\r<br />\n{<br />\n<pre><code>    Microsoft.Win32.TaskScheduler.Task task = ts.GetTask(@&quot;C:\\Program Files     (x86)\\Google\\Update\\GoogleUpdate.exe&quot;);\n    if (task!= null)\n    {\n           lastruntime = task.LastRunTime.ToString();\n     }</code></pre>\n\n}<br />\n",
+    "PostedDate": "2014-07-16T00:37:21.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273563",
+    "ThreadId": "551670",
+    "Html": "<ol>\n<li>The path needed by the GetTask method is the full folder hierarchy plus the task name. When looking in the system Task Scheduler applet, on systems Vista or later you will see a set of folders just like the file system. For example, the path to the single task in the Bluetooth folder under Windows 8 is &quot;\\Microsoft\\Windows\\Bluetooth\\UninstallDeviceTask&quot;.</li>\n<li>\nSince this library is simply a wrapper around the core Microsoft library, tasks created by either should be available to either. Your code is correct for retrieving the last run time of a named task.<br />\n</li>\n</ol>\n",
+    "PostedDate": "2014-07-17T07:32:19.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-07-17T07:32:26.827-07:00"
+  }
+]

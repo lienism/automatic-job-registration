@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "543941",
+    "ThreadId": "240477",
+    "Html": "\r\n<p>I'm sure I'm just being a bone-head - that's usually the case... running through the 1.5 beta 3 examples in vb.net 2008 on Windows 7 32 bit system&nbsp;- I'm ble to create new tasks/triggers and they show up just fine in the Windows task scheduler interface\r\n - all is well there.</p>\r\n<p>However, I'd like to allow users to just use the task editor dialog to edit settings - I see the &quot;using the editor&quot; example but there is no &quot;TaskEditDialog&quot; defined in the Microsoft.Win32.TaskSchduler when I import the DLL into the project .&nbsp; So in\r\n other words &quot;dim myDialog as new TaskEditDialog&quot; does not compile for me.</p>\r\n<p>I assume I'm missing something very basic here... anyone have any tips?</p>\r\n<p>thanks</p>\r\n<p>-J</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-04T13:44:41.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544044",
+    "ThreadId": "240477",
+    "Html": "\r\n<p>as I figured... there was a seperate download for the Microsoft.Win32.TaskScheduleEditor I didn't see... duh.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-04T16:56:02.537-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

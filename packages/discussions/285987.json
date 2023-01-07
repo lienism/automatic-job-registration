@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "724468",
+    "ThreadId": "285987",
+    "Html": "<p>I just tried the TaskSchedulerWizard:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">using</span> (TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard())\n{\n  wiz.ShowDialog();\n}\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>In the Security OPtions step, no matter what I try (clicking on the \"Change User or Group\", \"Run only...\" etc, it crashes with:</p>\n<p>&nbsp;</p>\n<pre>System.NullReferenceException: Object reference not set to an instance of an object.\n   at Microsoft.Win32.TaskScheduler.TaskSchedulerWizard.taskLocalOnlyCheck_CheckedChanged(Object sender, EventArgs e)\n   at Microsoft.Win32.TaskScheduler.TaskSchedulerWizard.taskLoggedOptionalRadio_CheckedChanged(Object sender, EventArgs e)\n   at System.Windows.Forms.RadioButton.OnCheckedChanged(EventArgs e)\n   at System.Windows.Forms.RadioButton.set_Checked(Boolean value)\n   at System.Windows.Forms.RadioButton.OnClick(EventArgs e)\n   at System.Windows.Forms.RadioButton.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message&amp; m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n</pre>\n<p>Any ideas?</p>",
+    "PostedDate": "2012-01-12T13:33:17.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724507",
+    "ThreadId": "285987",
+    "Html": "<p>You must initialize the dialog by calling the Initialize method before calling ShowDialog.</p>",
+    "PostedDate": "2012-01-12T14:53:26.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724515",
+    "ThreadId": "285987",
+    "Html": "<p>Ah, ok. Sorry.</p>\n<p>But how do I save the new task?</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre style=\"color: black;\"><span style=\"color: blue;\"></span></pre>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\n{\n  <span style=\"color: blue;\">using</span> (TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard())\n  {\n    TaskDefinition newTaskDef = ts.NewTask();\n    wiz.Initialize(ts, newTaskDef);\n\n    <span style=\"color: blue;\">if</span> (wiz.ShowDialog() == DialogResult.OK)\n    {\n      <span style=\"color: green;\">// save task</span>\n      ts.RootFolder.RegisterTaskDefinition(newTaskDef.Data, newTaskDef);\n\n    }\n  }\n}\n</pre>\n</div>\n<pre style=\"color: black;\">\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>EDIT: Ah, figured it out.</p>\n<p>Simply use:&nbsp;</p>\n<pre>ts.RootFolder.RegisterTaskDefinition(newTaskDef.Data,&nbsp;newTaskDef);\n</pre>",
+    "PostedDate": "2012-01-12T15:13:33.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724550",
+    "ThreadId": "285987",
+    "Html": "<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>\n<p>Alternately, you can also use the following and the wizard will do the work for you:</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: blue;\"><pre><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n  TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard();\r\n  wiz.Initialize(ts);\r\n  wiz.RegisterTaskOnFinish = <span style=\"color: blue;\">true</span>;\r\n  wiz.ShowDialog();\r\n}\r\n</pre>\n</div>\n</pre>\n</span></pre>\n</div>",
+    "PostedDate": "2012-01-12T16:37:55.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848769",
+    "ThreadId": "285987",
+    "Html": "<p>Hi dahall, I'm having the same problem and seems the posted code doesn't work.</p>\r\n<p>Here is my code using taskscheduler-78172 running on Windows XP Professional 2002 SP3.</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using(TaskService ts = new TaskService())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskSchedulerWizard wizard = new TaskSchedulerWizard();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wizard.Initialize(ts, td);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wizard.RegisterTaskOnFinish = true;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wizard.ShowDialog();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>When I come to Security Options page, user account is automatically displayed, and I click Next button, popup dialog shows to input user name and password.</p>\r\n<p>After I input them, I got this exception:</p>\r\n<p>System.NullReferenceException was unhandled<br />&nbsp; Message=\"Object reference not set to an instance of an object.\"<br />&nbsp; Source=\"Microsoft.Win32.TaskSchedulerEditor\"<br />&nbsp; StackTrace:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.CredentialsDialog.IsValidPassword(String userName, String password)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.CredentialsDialog.RunDialog(IntPtr parentWindowHandle)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.CommonDialog.ShowDialog(IWin32Window owner)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskSchedulerWizard.InvokeCredentialDialog(String userName)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskSchedulerWizard.secOptPage_Commit(Object sender, WizardPageConfirmEventArgs e)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at AeroWizard.WizardPage.OnCommit()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at AeroWizard.WizardPage.CommitPage()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at AeroWizard.WizardControl.NextPage(WizardPage nextPage)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at AeroWizard.WizardControl.NextPage()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at AeroWizard.WizardControl.nextButton_Click(Object sender, EventArgs e)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.OnClick(EventArgs e)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Button.OnClick(EventArgs e)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG&amp; msg)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Application.RunDialog(Form form)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Form.ShowDialog()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at DataUploadAutomationTest.TaskScheduler.OpenWizard() in C:\\Source\\DataUploadAutomationTest\\DataUploadAutomationTest\\TaskScheduler.cs:line 28<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at DataUploadAutomationTest.TaskScheduler.Main(String[] args) in C:\\Source\\DataUploadAutomationTest\\DataUploadAutomationTest\\TaskScheduler.cs:line 15<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.AppDomain._nExecuteAssembly(Assembly assembly, String[] args)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart_Context(Object state)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart()<br />&nbsp; InnerException:</p>\r\n<p>Any idea?</p>",
+    "PostedDate": "2012-06-13T23:00:44.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "849326",
+    "ThreadId": "285987",
+    "Html": "<p>I don't know for sure if this will work, but try setting the td.Principal.UserId to a real value before initializing the wizard.</p>",
+    "PostedDate": "2012-06-14T21:04:42.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "849400",
+    "ThreadId": "285987",
+    "Html": "<p>Hey dahall, thanks a lot! It solved the problem.</p>\r\n<p>&nbsp;</p>\r\n<p>Seems like it's a bug in \"CredentialsDialog.RunDialog\" method, in the following line -</p>\r\n<p>......</p>\r\n<p>if (this.ValidatePassword &amp;&amp; !IsValidPassword(this.UserName, password.ToString()))</p>\r\n<p>......</p>\r\n<p>Instead of using \"this.UserName\", it should just use \"userName\" cause that one is filled after calling \"CredUIPromptForCredentials\" method, right?</p>",
+    "PostedDate": "2012-06-15T00:48:04.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1472953",
+    "ThreadId": "654489",
+    "Html": "In the TriggerEidtDialog, When I chose Weekly trigger and in put 100 in &quot;Recur every:&quot; control, and then click OK, it seem to everything is OK.\r<br />\nBut if I want to save the task, it is a exception show: (63,30):WeeksInterval:100\r<br />\n<br />\nMaybe the value should not lager than 52, and the UI forget to handle with this<br />\n",
+    "PostedDate": "2016-05-10T01:38:46.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473059",
+    "ThreadId": "654489",
+    "Html": "Fixed<br />\n",
+    "PostedDate": "2016-05-10T11:55:28.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-10T11:55:30.983-07:00"
+  }
+]

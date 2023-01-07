@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1495749",
+    "ThreadId": "662677",
+    "Html": "I'm new to this wrapper so my issue could be just ignorance. I have tried to register a task using various login types and I keep trapping an error with this message, &quot;(15,19):UserId:1&quot;.\r<br />\n<br />\nDoes anyone know what this means? Thanks!\r<br />\n<br />\nDarren<br />\n",
+    "PostedDate": "2017-04-24T08:57:42.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495776",
+    "ThreadId": "662677",
+    "Html": "Are you mimicking the &quot;Creating tasks...&quot; samples <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&amp;referringTitle=Documentation\" rel=\"nofollow\">here</a> or <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples#simple\" rel=\"nofollow\">here</a>? That error usually is from an incorrectly formatted userId in the RegisterTaskDefinition method.<br />\n",
+    "PostedDate": "2017-04-25T06:38:40.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-17T06:29:31.643-07:00"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "635111",
+    "ThreadId": "263336",
+    "Html": "\r\n<p>I'm working on a project to remove tasks (so we can be sure they don't trigger during the second step), edit/copy/remove some files, and restore the task, and so I have a bit of code that looks like so:</p>\r\n<p>string taskName = &quot;ExampleTask&quot;;</p>\r\n<p>using{TaskService ts = new TaskService())</p>\r\n<p>{</p>\r\n<p>Task t = ts.GetTask(taskName);</p>\r\n<p>TaskDefinition td = t.Definition;</p>\r\n<p>ts.RootFolder.DeleteTask(taskName);</p>\r\n<p>... And the code goes on to do the actual work.</p>\r\n<p>Then later:</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(taskName, td);</p>\r\n<p>&nbsp;</p>\r\n<p>Is the point where the exception is thrown from IPersist in the Win32 library. &nbsp;The odd part is that if I change taskName before re-registering the Task it works fine, however it breaks other applications that depend on knowing about this Task's status\r\n and is thus Not A Valid Solution. &nbsp;I've tried breaking out of the first using block and instantiating a second TaskService, that doesn't change anything. &nbsp;The value of td isn't null when the exception is thrown, so its not like we accidentally lost\r\n the value, if I enumerate the Tasks after deleting it, it's gone, and I have no problem creating a new Task with any other name I want aside from the one I deleted, what gives?</p>\r\n",
+    "PostedDate": "2011-06-29T17:28:55.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635185",
+    "ThreadId": "263336",
+    "Html": "<p>This is an oddity with the V1 COM objects and how the library is holding on to their instance. This will only show up on XP/WS2003 and prior Windows versions. This is an awkward work-around, but should work until I can figure out a fix. Replace your last line with the following:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>t = ts.RootFolder.RegisterTaskDefinition(taskName + <span style=\"color: #a31515;\">\"2\"</span>, td);\r\ntd = t.Definition;\r\nts.RootFolder.DeleteTask(taskName + <span style=\"color: #a31515;\">\"2\"</span>);\r\nts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-06-29T22:08:14.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635189",
+    "ThreadId": "263336",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://taskscheduler.codeplex.com/workitem/8875\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2011-06-29T22:11:37.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

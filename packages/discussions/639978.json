@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1430480",
+    "ThreadId": "639978",
+    "Html": "I have a user of my program that contains this library and he's getting COMException exceptions along with the error message &quot;The task image is damaged or tampered with&quot;. Has anyone else been seeing a lot of these lately?<br />\n",
+    "PostedDate": "2015-06-15T10:41:38.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430725",
+    "ThreadId": "639978",
+    "Html": "This is the first I have heard of this, but a quick internet search turned up these suggestions:<br />\n<ul>\n<li><a href=\"http://answers.microsoft.com/en-us/windows/forum/windows_vista-performance/task-image-is-corrupt-or-has-been-tampered-with/91c0aef2-fa32-4795-8eb2-5c109cabe550\" rel=\"nofollow\">http://answers.microsoft.com/en-us/windows/forum/windows_vista-performance/task-image-is-corrupt-or-has-been-tampered-with/91c0aef2-fa32-4795-8eb2-5c109cabe550</a></li>\n<li><a href=\"http://www.ghacks.net/2011/07/28/fix-the-task-image-is-corrupt-or-has-been-tampered-with-errors/\" rel=\"nofollow\">http://www.ghacks.net/2011/07/28/fix-the-task-image-is-corrupt-or-has-been-tampered-with-errors/</a></li>\n</ul>\n",
+    "PostedDate": "2015-06-17T09:48:31.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1430728",
+    "ThreadId": "639978",
+    "Html": "That's the funny thing, I rolled back to version 2.0 of the DLL and it instantly fixed it for the people who were having issues. I was using version 2.32 and that was causing issues for some people. Something changed between version 2.0 and version 2.32 that broke something but I have no idea what.<br />\n",
+    "PostedDate": "2015-06-17T10:15:00.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431439",
+    "ThreadId": "639978",
+    "Html": "Between those versions, I added support for the new interfaces introduced in Windows 8. Other than bug fixes and task validation, only minor edits have been made since. In which version(s) of Windows are you seeing the error?<br />\n",
+    "PostedDate": "2015-06-22T19:42:56.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431533",
+    "ThreadId": "639978",
+    "Html": "Some users reported the issue on Windows 7 and Windows 8.x.<br />\n",
+    "PostedDate": "2015-06-23T06:34:10.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1431538",
+    "ThreadId": "639978",
+    "Html": "Can you tell me which line of code causes the exception? If not, can you tell me what activities the users are performing relating to tasks when the exception occurs?<br />\n",
+    "PostedDate": "2015-06-23T06:56:03.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432176",
+    "ThreadId": "639978",
+    "Html": "The only thing I can tell you is this...\r<br />\nThe exception occurred at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Xml()\r<br />\n<br />\nI don't include the debugging symbols file for the task scheduler DLL with my program.<br />\n",
+    "PostedDate": "2015-06-27T19:19:19.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

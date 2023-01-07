@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "597902",
+    "ThreadId": "254053",
+    "Html": "<p>I use version 1 setting for a XP machine and i cannot set Daily Trigger, neither Weekly trigger. But everything work fine on my Win7 machine. I have invalid range value exception on my XP machine. Any idea?</p>\n<p>&nbsp;</p>\n<p>I have this error on:</p>\n<p>&nbsp;</p>\n<p>td.Triggers.Add(trigger);</p>\n<p>&nbsp;</p>\n<p>The trigger contain :</p>\n<p>{Trigger Type: RunDaily;\\n&gt; Start: 2011-04-15 01:01:00; End: 2011-04-26 00:00:00;\\n&gt; DurMin: 0; DurItv: 1;\\n&gt;}</p>\n<p>Type version1... when version2 all work fine.</p>\n<p>The Trigger is made with this code:</p>\n<pre><div style=\"color: black; background-color: white;\"><pre>        Trigger trigger = <span style=\"color: blue;\">new</span> DailyTrigger()\n         {\n            Enabled = <span style=\"color: blue;\">true</span>,\n            StartBoundary = executionTime,\n            DaysInterval = (<span style=\"color: blue;\">short</span>)scheduleDaily.IntervalDays,\n            EndBoundary = endingTime\n         };\n</pre>\n<pre><br /></pre>\n<pre><br /></pre>\n<pre>-Edit : </pre>\n<pre>I have referenced the code of your library and the problem occur in SetV1TriggerData&gt;():</pre>\n<pre>You can see a screenshot : http://clip2net.com/clip/m12122/1302878625-clip-47kb.png</pre>\n<pre>Complete error message:</pre>\n<pre>System.ArgumentException occurred&nbsp; Message=Value does not fall within the expected range.&nbsp; Source=Microsoft.Win32.TaskScheduler&nbsp; StackTrace:&nbsp; &nbsp; &nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger&amp; Trigger)&nbsp; &nbsp; &nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData() in C:\\dev\\20-LabPlusV3\\Trunk\\Tools\\TaskScheduler\\TaskService\\Trigger.cs:line 606&nbsp; InnerException:&nbsp;<br /></pre>\n</div>\nStack:</pre>\n<pre><br /></pre>\n<pre>&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger&amp; Trigger)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData() in C:\\dev\\20-LabPlusV3\\Trunk\\Tools\\TaskScheduler\\TaskService\\Trigger.cs:line 606<br /></pre>",
+    "PostedDate": "2011-04-15T06:21:20.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598081",
+    "ThreadId": "254053",
+    "Html": "<p>I just ran the following under XP without any problems:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>td.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger() { Enabled = <span style=\"color: blue;\">true</span>, StartBoundary = DateTime.Now, DaysInterval = 1, EndBoundary = DateTime.Now + TimeSpan.FromDays(14) });\r\n</pre>\r\n</div>\r\n<p>That leads me to believe it is a problem with one of the properties. In the screenshot you provided, I would ask that you provide me the full detail of the v1TriggerData structure. That will let me see if there is some property that will cause the error you're seeing. That error, by the way, is from the Microsoft core library saying that something with the structure is amiss.</p>",
+    "PostedDate": "2011-04-15T10:24:11.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598098",
+    "ThreadId": "254053",
+    "Html": "<p>Sure here is the structure :</p>\n<p>Part1:</p>\n<p>﻿﻿http://clip2net.com/clip/m12122/1302889422-clip-30kb.png</p>\n<p>Part2:</p>\n<p>http://clip2net.com/clip/m12122/1302889452-clip-29kb.png</p>\n<p>Part3:</p>\n<p>http://clip2net.com/clip/m12122/1302889612-clip-12kb.png</p>\n<p>&nbsp;</p>\n<p>I want to add that UniqueTrigger work :P bot not the daily and weekly. Monthly seems to work too. Confusing :S</p>",
+    "PostedDate": "2011-04-15T10:44:45.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598119",
+    "ThreadId": "254053",
+    "Html": "<p>Found your issue. Under V1, the Trigger.Repetition.Duration&nbsp;specified must be greater than or equal to the Trigger.Repetition.Interval setting.</p>",
+    "PostedDate": "2011-04-15T11:16:29.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599120",
+    "ThreadId": "254053",
+    "Html": "<p>&nbsp;</p>\r\n<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>var</span>&nbsp;interval&nbsp;=&nbsp;<span>new</span>&nbsp;<span>TimeSpan</span>(0,&nbsp;scheduleDaily.IntervalMinutes,&nbsp;0);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trigger.Repetition.Interval&nbsp;=&nbsp;interval;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trigger.Repetition.Duration&nbsp;=&nbsp;interval;<span>//Must&nbsp;be&nbsp;greater&nbsp;or&nbsp;equal&nbsp;of&nbsp;Interval&nbsp;with&nbsp;V1</span></pre>\r\n<pre><span><br /></span></pre>\r\n<pre><span>Does not work...</span></pre>",
+    "PostedDate": "2011-04-18T07:42:48.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599180",
+    "ThreadId": "254053",
+    "Html": "<p>Ok it work if I add +1 to the interval for duration.</p>\r\n<p>It's not equal or greater but just greater.</p>\r\n<p>I think the API should handle those type of stuff for V1. Thanks for you help.</p>",
+    "PostedDate": "2011-04-18T08:52:45.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "599331",
+    "ThreadId": "254053",
+    "Html": "<p><span style=\"color: black; font-size: 10pt;\">Thanks for the suggestion. I'll look into including that error checking in the next release. Interestingly enough, there is a discrepancy in the <a href=\"http://msdn.microsoft.com/en-us/library/aa383618(v=vs.85).aspx\" target=\"_blank\">Microsoft help for V1</a>. I quoted the incorrect one obviously. Thanks for testing and posting your findings.</span></p>\r\n<p><span style=\"color: black; font-size: 10pt;\">Just for clarity for other readers, Repetition.Interval must be less than Repetition.Duration when adding triggers to a V1 task.</span></p>",
+    "PostedDate": "2011-04-18T12:44:51.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

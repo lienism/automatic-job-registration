@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1451321",
+    "ThreadId": "647108",
+    "Html": "I'm creating a task service monitor that puts all of the root tasks into a datagrid and displays their information. I'm using a a binding source as taskservice.rootfolder.tasks and binding that to the datasource of a the datagrid. I'm having some issues with the changes to tasks propagating to the datagridview. When an automated task is run the datagridview doesn't update the appropriate information until that row is clicked. <br />\n<br />\nAm I missing a way to watch for change notifications? Has anyone else tried to implement this?<br />\n<br />\nThe point of this app is to show real time status for all tasks. If a task is running I would like to know immediately. Having the grid refresh every second might is too taxing resource wise. After having more than 15 tasks the whole program starts to lag the system horribly.<br />\n<br />\nHere is the code that I have. In a normal situation if I were using a dataset then dgv auto updates and repaints the new information.<br />\n<pre><code>    Dim WithEvents _tskSrvc As TaskService = Nothing\n    Dim WithEvents _bSource As BindingSource = Nothing\n\n    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load\n\n        _tskSrvc = New TaskService()\n        _bSource = New BindingSource\n\n        _bSource.DataSource = _tskSrvc.RootFolder.Tasks\n        _bSource.RaiseListChangedEvents = True\n\n        taskDGV2.DataSource = _bSource\n\n    End Sub</code></pre>\n\n",
+    "PostedDate": "2015-11-08T07:49:56.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451466",
+    "ThreadId": "647108",
+    "Html": "Unfortunately, there is not an easy way to do this. The TaskCollection and RunningTaskCollection instances that can be retrieved do not have any change events that would alert the consumer to changes in the underlying tasks.\r<br />\n<br />\nIn order to achieve what you are looking for, you would need to set a timer and then manually compare the lists and task properties and then update your grid. You could also just refresh the grid at some interval and re-retrieve the task list.<br />\n",
+    "PostedDate": "2015-11-09T11:14:15.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451489",
+    "ThreadId": "647108",
+    "Html": "That is what I figured. refreshing enough where it seemed instantaneous caused a huge amount of lag in the gui. The way I went about it was to have a 5 second timer to refresh the grid and a 100ms timer to check that the grid row count matched the task count and to rebind the datasource if it was a mismatch.\r<br />\n<br />\nThanks for the help<br />\n",
+    "PostedDate": "2015-11-09T13:33:37.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451824",
+    "ThreadId": "647108",
+    "Html": "In version 2.5.4 a TaskEventWatcher class has been added that will enable this. See <a href=\"https://taskscheduler.codeplex.com/wikipage?title=EventSamples\" rel=\"nofollow\">documentation</a> for code examples on how to use it.<br />\n",
+    "PostedDate": "2015-11-11T10:35:19.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-11-17T10:29:16.863-08:00"
+  }
+]

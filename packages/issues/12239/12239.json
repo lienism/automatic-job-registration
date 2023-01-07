@@ -1,0 +1,80 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed in 2.5.0 release.",
+    "ClosedDate": "2015-11-09T11:15:17.267-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm getting this when editing a Task and trying to change the behaviour if the Task is already running.\n\nSystem.InvalidCastException was unhandled\n  HResult=-2147467262\n  Message=Specified cast is not valid.\n  Source=Microsoft.Win32.TaskSchedulerEditor\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.taskMultInstCombo_SelectedIndexChanged(Object sender, EventArgs e)\n       at System.Windows.Forms.ComboBox.OnSelectedIndexChanged(EventArgs e)\n       at System.Windows.Forms.ComboBox.WmReflectCommand(Message& m)\n       at System.Windows.Forms.ComboBox.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n  InnerException: \n\nI'm calling the UI Dialog as follows:\n\n            Microsoft.Win32.TaskScheduler.Task dct = null;\n            \n            try\n            {\n                dct = util.CreateTask();\n            }\n            catch (Exception ex)\n            {\n                MessageBox.Show(ex.Message); \n            }\n\n            if (dct != null)\n            {\n                TaskEditDialog ted = new TaskEditDialog(dct, true, true);\n                try { ted.ShowDialog(); }\n                catch (Exception ex) { MessageBox.Show(ex.Message); }\n            }\n\nWindows 10 Professional. Visual Studio 2012. Nuget packages installed Sep 2015. Any assistance gratefully received.",
+    "LastUpdatedDate": "2015-11-09T11:15:17.267-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-10-19T05:28:33.527-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Exception when editing a Task",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12239
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "The exception is thrown in the \"ted.ShowDialog();\" call. It only occurs if you try to change the \"If the task is currently running then the following rule applies\" combo-box control.\r\n\r\nI've tested it on Windows Server 2012 R2 and it breaks on that as well...even when you \"Run As Administrator\" (if you don't \"Run As Administrator\" then my exception handling steps in.",
+      "PostedDate": "2015-10-19T05:55:45.07-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It looks to be this routine...\r\n\r\n\tprivate void taskMultInstCombo_SelectedIndexChanged(object sender, EventArgs e)\n\t\t{\n\t\t\tif (!onAssignment && v2 && td != null)\n\t\t\t\ttd.Settings.MultipleInstances = (TaskInstancesPolicy)((DropDownCheckListItem)taskMultInstCombo.SelectedItem).Value;\n\t\t}\r\n\r\nThe td.Settings cast must be wrong somehow....",
+      "PostedDate": "2015-10-19T06:41:25.833-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "What are the values of the task's Definition.Settings.MultipleInstances property and Definition.Settings.UseUnifiedSchedulingEngine property that are passed into the constructor for the dialog?",
+      "PostedDate": "2015-10-30T08:07:44-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I create the Task if it's not there like so\r\n\r\n```\n            TaskService tsmgr = new TaskService();\r\n\r\n            Microsoft.Win32.TaskScheduler.Task dct = tsmgr.FindTask(strings.DataCommunicator2Task, true);\r\n\r\n            if (dct == null)\n            {\n                string strThisProgram = Assembly.GetEntryAssembly().CodeBase.ToString();\n                strThisProgram = strThisProgram.Replace(@\"file:///\", @\"\");\n                strThisProgram = strThisProgram.Replace('/', '\\\\');\r\n\r\n                TaskDefinition td = tsmgr.NewTask();\r\n\r\n                td.Settings.AllowDemandStart = true;\n                //td.Settings.RunOnlyIfLoggedOn = false;\r\n\r\n                td.RegistrationInfo.Description = strings.ExecuteTheDataCommunicator;\r\n\r\n                DateTime dt2 = DateTime.Now;\n                dt2 = dt2.AddHours(2);\r\n\r\n                TimeTrigger tg = new TimeTrigger();\n                tg.Enabled = true;\n                tg.StartBoundary = dt2;\n                tg.Repetition.Interval = TimeSpan.FromMinutes(5);\r\n\r\n                td.Triggers.Add(tg);\r\n\r\n                td.Actions.Add(new ExecAction(strThisProgram, null, null));\r\n\r\n                try\n                {\n                    tsmgr.RootFolder.RegisterTaskDefinition(strings.DataCommunicator2Task, td);\n                    dct = tsmgr.FindTask(strings.DataCommunicator2Task, true);\n                }\n                catch\n                {\n                    MessageBox.Show(strings.CouldNotCreateDataCommunicatorTask);\n                    dct = null;\n                }\r\n\r\n            }\r\n\r\n            return dct;\n```\nSo I guess those will be the default values? Until you edit them...",
+      "PostedDate": "2015-10-30T08:57:29.19-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. I'm running tests now and will reply when I have a resolution. In the mean time, I have some suggestions for how to use the library that are a little more optimal. 1) Use GetTask instead of FindTask if you know the task is in the root folder. 2) You are setting some properties to their default values. 3) The TimeTrigger constructor allows for the start time. 4) The Actions.Add method has a shortcut for adding executables.\n```\nTaskService tsmgr = new TaskService();\r\n\r\nvar dct = tsmgr.GetTask(strings.DataCommunicator2Task);\r\n\r\nif (dct == null)\n{\n    string strThisProgram = Assembly.GetEntryAssembly().CodeBase.ToString();\n    strThisProgram = strThisProgram.Replace(@\"file:///\", @\"\");\n    strThisProgram = strThisProgram.Replace('/', '\\\\');\r\n\r\n    TaskDefinition td = tsmgr.NewTask();\r\n\r\n    // td.Settings.AllowDemandStart = true;  Default value - not needed\r\n\r\n    td.RegistrationInfo.Description = strings.ExecuteTheDataCommunicator;\r\n\r\n    TimeTrigger tg = new TimeTrigger(DateTime.Now.AddHours2);\n    // tg.Enabled = true; Default value - not needed\n    tg.Repetition.Interval = TimeSpan.FromMinutes(5);\r\n\r\n    td.Triggers.Add(tg);\r\n\r\n    td.Actions.Add(strThisProgram);\r\n\r\n    try\n    {\n        tsmgr.RootFolder.RegisterTaskDefinition(strings.DataCommunicator2Task, td);\n        dct = tsmgr.GetTask(strings.DataCommunicator2Task);\n    }\n    catch\n    {\n        MessageBox.Show(strings.CouldNotCreateDataCommunicatorTask);\n        dct = null;\n    }\r\n\r\n}\r\n\r\nreturn dct;\n```",
+      "PostedDate": "2015-10-30T10:49:25.467-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Good news. I found the bug and it's fix will release shorty with version 2.5.",
+      "PostedDate": "2015-10-30T12:00:44.79-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you, much appreciated.",
+      "PostedDate": "2015-11-02T02:20:19.267-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-11-09T11:15:17.267-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

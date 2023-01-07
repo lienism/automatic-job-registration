@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "618536",
+    "ThreadId": "259058",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>It looks like the assembly Microsoft.Win32.TaskScheduler.dll is not signed.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Cyril Lagrange&nbsp;</p>\r\n",
+    "PostedDate": "2011-05-26T01:54:26.023-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619110",
+    "ThreadId": "259058",
+    "Html": "<p>None of the assemblies are signed. However, if you download the source code, you will find a TaskService.snk file and you can build the assembly with that key.</p>",
+    "PostedDate": "2011-05-26T23:35:27.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

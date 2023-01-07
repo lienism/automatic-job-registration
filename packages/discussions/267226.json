@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "650294",
+    "ThreadId": "267226",
+    "Html": "<p>I have a folder in my structure called Chris' Tasks.<br />It existed before I found your DLL. <br />I can't seem to get the tasks out of it.<br />GetFolder seems to work, but foreaching it's tasks comes up blank.</p>\n<p>This is where my rename a folder question stemmed from, I realized later, I should bring this to your attention.</p>\n<p>Thanks!</p>",
+    "PostedDate": "2011-07-31T15:16:45.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653299",
+    "ThreadId": "267226",
+    "Html": "<p>I just tested this under Win7 and found I was able to create a folder named \"Chris' Tasks\", add tasks to it, enumerate those tasks,&nbsp;remove those tasks, and then delete the folder. Below is the code:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">const</span> <span style=\"color: blue;\">string</span> testFolder = <span style=\"color: #a31515;\">\"Chris' Tasks\"</span>;\r\ntf.CreateFolder(testFolder);\r\nTaskFolder sub = tf.SubFolders[testFolder];\r\noutput.WriteLine(<span style=\"color: #a31515;\">\"\\nSubfolder path: \"</span> + sub.Path);\r\nts.AddTask(testFolder + <span style=\"color: #a31515;\">@\"\\MyTask\"</span>, <span style=\"color: blue;\">new</span> LogonTrigger(), <span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad\"</span>));\r\noutput.WriteLine(<span style=\"color: #a31515;\">\" - Tasks: \"</span> + sub.Tasks.Count.ToString());\r\nsub.DeleteTask(<span style=\"color: #a31515;\">\"MyTask\"</span>);\r\ntf.DeleteFolder(testFolder);\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-08-05T10:36:09.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "611980",
+    "ThreadId": "257431",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I want to store a taskdefinition as part of my configuration into an xml file. What is the best way? Do you support class serialization or an other kind of storage interface?</p>\r\n<p>Thanks<br>\r\nDirk</p>\r\n",
+    "PostedDate": "2011-05-12T13:04:11.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "612066",
+    "ThreadId": "257431",
+    "Html": "<p>If you are on Vista or later, you can use TaskDefinition.XmlText. If on an earlier OS, then you will need to figure something else out.</p>",
+    "PostedDate": "2011-05-12T15:53:34.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

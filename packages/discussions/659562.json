@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1488409",
+    "ThreadId": "659562",
+    "Html": "Hi,<br />\n<br />\nI want to create a task scheduler on weekly basis. i want my exe file run on Monday &amp; Tuesday around 11:00 AM in morning.<br />\n<br />\nHow to do the code<br />\nbelow is code<br />\n<pre><code>Private Sub TaskRunSheduler()\n        Using ts As New TaskService()\n            ' Create a new task definition and assign properties\n            Dim td As TaskDefinition = ts.NewTask()\n            td.RegistrationInfo.Description = &quot;Does something&quot;\n            td.Principal.LogonType = TaskLogonType.InteractiveToken\n\n            ' Add a trigger that will fire the task at this time every other day\n            Dim dt As DailyTrigger = DirectCast(td.Triggers.Add(New DailyTrigger(2)), DailyTrigger)\n            dt.Repetition.Duration = TimeSpan.FromHours(11)\n            dt.Repetition.Interval = TimeSpan.FromHours(0)\n\n            ' Add a trigger that will fire every week on Friday\n\n\n            ' below i will put my exe file\n            td.Actions.Add(New ExecAction(&quot;D:\\Atn.exe&quot;))\n\n            ' Register the task in the root folder\n            Const taskName As String = &quot;RunWeeklyBasis&quot;\n            ts.RootFolder.RegisterTaskDefinition(taskName, td)\n        End Using\n\n    End Sub</code></pre>\n\n",
+    "PostedDate": "2016-11-20T06:45:01.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489381",
+    "ThreadId": "659562",
+    "Html": "One line of code!<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">Private</span> <span style=\"color:Blue;\">Sub</span> TaskRunSheduler()\n  <span style=\"color:Green;\">&#39; Create a new task definition and assign properties</span>\n  <span style=\"color:Blue;\">Dim</span> t <span style=\"color:Blue;\">As</span> Task = TaskService.Instance.AddTask(<span style=\"color:#A31515;\">&quot;RunWeeklyBasis&quot;</span>,\n    <span style=\"color:Blue;\">New</span> WeeklyTrigger <span style=\"color:Blue;\">With</span> { .StartBoundary = DateTime.Today + TimeSpan.FromHours(11), .DaysOfWeek = DaysOfTheWeek.Monday <span style=\"color:Blue;\">Or</span> DaysOfTheWeek.Tuesday },\n    <span style=\"color:Blue;\">New</span> ExecAction(<span style=\"color:#A31515;\">&quot;D:\\Atn.exe&quot;</span>))\n<span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">Sub</span>\r\n</pre></div>",
+    "PostedDate": "2016-12-06T13:39:18.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-12-06T13:39:23.427-08:00"
+  }
+]

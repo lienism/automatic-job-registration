@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "541435",
+    "ThreadId": "239829",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>My application is developed and run on the Win server 2003 x64 machine using VS2010 and tried to access the scheduled tasks in another win 7 machine, they are both in the same domain. However, when I use the statement,</p>\r\n<p>TaskService ts = new TaskService(&quot;Win7Host&quot;, null,null,null, true);</p>\r\n<p>It reports the exception, 'The network path was not dound (Exception from HRESULT: 0x80070035)'</p>\r\n<p>The most werid thing is it's all OK for connection from Win 7 to Win server 2003 or for the connection just between two win 7 machines or two Win NT machines. The exception just happens for the connection from Win Server 2003 to Win 7.&nbsp;</p>\r\n<p>Could anyone help me solve this problem. Many thanks.</p>\r\n",
+    "PostedDate": "2010-12-28T17:40:35.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "543037",
+    "ThreadId": "239829",
+    "Html": "\r\n<p>I would suggest playing around with the machine name (&quot;\\\\Win7Host&quot;, &quot;Win7Host.Domain.com&quot;, etc.). I would also try supplying the user credentials in the constructor.</p>\r\n",
+    "PostedDate": "2011-01-02T21:36:12.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "666222",
+    "ThreadId": "239829",
+    "Html": "<p>I am having the same problem error when connecting to a workgroup machine. I am supplying all the credentials. Any solution?</p>",
+    "PostedDate": "2011-09-01T05:28:40.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

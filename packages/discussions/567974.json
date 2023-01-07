@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1306627",
+    "ThreadId": "567974",
+    "Html": "Hi,<br />\n<br />\nI want to know the last run result of some of the tasks scheduled in windows scheduler. How can I get that information using this library?<br />\nI tried using &quot;LastTaskResult&quot; property of &quot;Task&quot; class but it is returning different integer values from which I am not able to figure the last run result of tasks.<br />\nPlease respond to this thread.<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-09-20T05:02:11.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1306651",
+    "ThreadId": "567974",
+    "Html": "The only two properties that report on the results of the last execution of a task are LastRunTime and LastTaskResult. LastRunTime gives the time when the execution started and LastRunResult gives the exit code for the executable specified in the task's ExecAction that fired.\r<br />\n<br />\nFor a bunch more detail, you can create a TaskEventLog object for the task and iterate through the events fired by the task. However, depending on how your task reports its result, this may not give an answer either.<br />\n",
+    "PostedDate": "2014-09-20T08:36:31.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

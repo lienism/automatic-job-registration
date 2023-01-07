@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1343203",
+    "ThreadId": "578041",
+    "Html": "Hi I want to store the created task information in sql server as tables not as standard xml part, Any Idea How to do that<br />\n",
+    "PostedDate": "2015-01-19T04:05:57.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1343334",
+    "ThreadId": "578041",
+    "Html": "The only way I can think of is to create tables that match the properties of Task, TaskDescription, TaskSettings, TaskRegistrationInfo, TaskPrincipal, Trigger (and each derivative that might be used), and Action (and each derivative that might be used), and then loop through the properties using reflection to pull the values and push them into the tables. Needless to say, a lot of work. I would seriously consider using the Xml if you can or at least something a little more fungible like JSON, though this would be a lot of work too.<br />\n",
+    "PostedDate": "2015-01-19T12:21:59.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-26T08:41:44.747-08:00"
+  }
+]

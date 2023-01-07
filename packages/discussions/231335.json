@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "508829",
+    "ThreadId": "231335",
+    "Html": "<p>Sorry if I missed something, but I had an exception in Windows 7 64-bit when I call the Stop() method of&nbsp;a Tasko object. When I look into Task.Stop() implementation I found the following code:﻿</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">void</span> Stop()\r\n{\r\n    <span style=\"color:blue\">if</span> (v2Task != <span style=\"color:blue\">null</span>)\r\n        v2Task.Stop(0);\r\n     v1Task.Terminate();\r\n}\r\n\r\nNote that v1Task.Termiate() is called always even if v2Task is not null.</pre>\r\n<pre>Locally I fixed it by putting &quot;else&quot; before v1Task.Terminate();</pre>\r\n<pre>Please clarify if my fix is right, or v1Task.Terminate() really should be called always.</pre>\r\n<pre>Best regards,</pre>\r\n<pre>Sergey</pre>\r\n</div>",
+    "PostedDate": "2010-10-18T07:54:46.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508899",
+    "ThreadId": "231335",
+    "Html": "<p>Great catch. I have updated the code with your fix.</p>",
+    "PostedDate": "2010-10-18T10:24:53.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

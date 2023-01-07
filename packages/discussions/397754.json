@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "920764",
+    "ThreadId": "397754",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>how can we create a daily trigger with multiple start time with taskservice.</p>\r\n",
+    "PostedDate": "2012-10-02T11:13:47.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "920942",
+    "ThreadId": "397754",
+    "Html": "<p>Use two daily triggers within the same task.</p>",
+    "PostedDate": "2012-10-02T16:48:06.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922099",
+    "ThreadId": "397754",
+    "Html": "<p>In taskscheduler service (﻿﻿﻿﻿microsoft.win32.taskscheduler.dll) does not have a daily trigger constructor&nbsp;that accepts starttime, by default the start time gets sets to</p>\r\n<p>current time.I tried creating two daily triggers with two diff time interval , but only one gets created.</p>",
+    "PostedDate": "2012-10-04T13:06:48.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922159",
+    "ThreadId": "397754",
+    "Html": "<p>StartBoundary is a property on all triggers and can be set upon trigger creation. For example, if you wanted to create task that executes every day from this point forward at 2:00 a.m. and 2:00 p.m., you could do the following:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>td.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger() { StartBoundary = DateTime.Today.AddHours(2) });\r\ntd.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger() { StartBoundary = DateTime.Today.AddHours(14) });\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-10-04T14:41:11.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

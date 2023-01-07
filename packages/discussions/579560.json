@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1349324",
+    "ThreadId": "579560",
+    "Html": "Hi, are there any plans to create a version based around Quartz.Net? If not, would it be possible and/or acceptable for someone to create a version based around Quartz.Net?<br />\n",
+    "PostedDate": "2015-02-05T07:03:18.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1349350",
+    "ThreadId": "579560",
+    "Html": "I've played some with Quartz.Net and so I am curious how you are considering bringing the two libraries together. The primary difference is that this library uses the Windows Task Scheduler engine and Quartz.Net uses its own. They effectively have the same constructs (TaskService == IScheduler, Task + Action(s) == IJob, Trigger == ITrigger, System Events == IJobListeners). Both libraries support a fluent syntax (e.g. ts.Execute(&quot;notepad.exe&quot;).Every(2).Days().Starting(&quot;12/25/2013 7:00pm&quot;).AsTask(&quot;Test&quot;); ), though implemented slightly different. Both libraries support triggering on schedules and from a Cron statement.\r<br />\n<br />\nSo given that whole diatribe, what functions of one are you wanting to work with the other?<br />\n",
+    "PostedDate": "2015-02-05T08:32:07.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1349657",
+    "ThreadId": "579560",
+    "Html": "Hi, thanks for replying. I haven't really looked at the code in great detail but as the wrapper utilises similar artifacts (Jobs, Tasks, Schedules etc.) to Quartz, I wondered if it would be possible to refactor the code to replace Task Scheduler with Quartz.Net? The only driver behind this would be as an alternative to the dependency of using Task Scheduler. Don't know if it would be feasible though.<br />\n",
+    "PostedDate": "2015-02-06T03:18:23.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350012",
+    "ThreadId": "579560",
+    "Html": "Thanks for the idea. I'll collaborate with the authors of Quartz.Net to see what could be done.<br />\n",
+    "PostedDate": "2015-02-07T15:26:41.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1354632",
+    "ThreadId": "579560",
+    "Html": "After a deeper review of the code and a few days of trying to refactor it to work with another scheduler engine, I've decided to abandon the effort. The pure amount of change I believe will introduce so many potential defects that I'm afraid it would be a step back for the project as a whole.<br />\n",
+    "PostedDate": "2015-02-21T11:56:48.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:03:26.747-07:00"
+  },
+  {
+    "Id": "1354763",
+    "ThreadId": "579560",
+    "Html": "\r\n<div>\r\n<div style=\"font-family:Calibri,sans-serif; font-size:11pt\">Hi, thanks for letting me know that. I guess it would require something to be designed from the ground up, maybe if I get the time I could look into it. Appreciate the feedback though, cheers\r\n</div>\r\n</div>\r\n<div dir=\"ltr\">\r\n<hr>\r\n<span style=\"font-family:Calibri,sans-serif; font-size:11pt; font-weight:bold\"></span></div>\r\n",
+    "PostedDate": "2015-02-22T13:47:18.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

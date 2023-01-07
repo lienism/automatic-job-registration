@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-12-17T05:24:26.987-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nI retested version 2.5.6 after closing issue 12303.  I retested it and it is better now, but still not working properly in my case.\n\nThe example below has always been working on XP. The red line is used to remove all actions to make sure only 1 action is left after inserting the new one. The task is properly saved. But, reading the tasks will still give Definition.Actions.Count = 0 on XP.\n\nCould you check this, please?\n\n__Create task:__\n```\n        Using ts As New TaskService()\n            ' Create a new task definition and assign properties\n            Dim td As TaskDefinition = ts.NewTask\n            td.RegistrationInfo.Description = \"Does something\"\n\n            ' Add a trigger that will, starting tomorrow, fire every other week on Monday\n            ' and Saturday and repeat every 10 minutes for the following 11 hours\n            Dim wt As New WeeklyTrigger()\n            wt.StartBoundary = DateTime.Today.AddDays(1)\n            wt.DaysOfWeek = DaysOfTheWeek.Monday Or DaysOfTheWeek.Saturday\n            wt.WeeksInterval = 2\n            wt.Repetition.Duration = TimeSpan.FromHours(11)\n            wt.Repetition.Interval = TimeSpan.FromMinutes(10)\n            td.Triggers.Add(wt)\n\n            td.Actions.Clear()\n            td.Actions.Add(New ExecAction(\"notepad.exe\", \"c:\\test.log\"))\n\t\t\t\n            ' Register the task in the root folder\n            ts.RootFolder.RegisterTaskDefinition(\"Test\", td)\n        End Using\n```\n\n__Read Task:__\n```\n\t\tDim AllTasks() As Task = ts.FindAllTasks(New System.Text.RegularExpressions.Regex(\".\"), False)\n\t\tFor i As Integer = 0 To AllTasks.Length - 1\n\t\t\t   ' AllTasks(i).Definition.Actions.Count is zero on XP for the just created task 'Test'\n\t\tNext\n```",
+    "LastUpdatedDate": "2015-12-17T05:24:26.987-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-12-14T22:59:37.803-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskDefinition.Actions.Count is still zero for XP",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12305
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Note: I refer to a red line. I mean line:\n```\ntd.Actions.Clear()\n```",
+      "PostedDate": "2015-12-14T23:00:58.533-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I'm not understanding. After td.Actions.Clear() is called, the td.Actions.Count property should equal zero. On XP, only a single action can be added unless the td.Actions.PowerShellConversion is set to PowerShellActionPlatformOption.All or V1. If I'm not understanding you, please restate.",
+      "PostedDate": "2015-12-15T17:26:15.753-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "In the example above, I create a task called 'Test'. I call in that part td.Actions.Clear() before calling td.Actions.Add() to make sure only 1 action is available.  This is working properly. The task is properly saved.\r\n\r\nAt a later time, I want to find this task. For that purpose, I use ts.FindAllTasks(...). This will find the task 'Test'. \nHowever, Definition.Actions.Count for this found task 'Test' is zero on XP. I have no idea why. \r\n\r\nI hope this explanation helps.",
+      "PostedDate": "2015-12-15T22:40:31.923-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try 2.5.7 and let me know if the error persists.",
+      "PostedDate": "2015-12-16T11:45:21.013-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I tested version 2.5.7 and it is working properly now. \nThanks.",
+      "PostedDate": "2015-12-17T01:29:56.28-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-17T05:24:26.987-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

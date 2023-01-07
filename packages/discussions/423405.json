@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "976190",
+    "ThreadId": "423405",
+    "Html": "\r\n<p>I am getting Access is denied error when try to run the example code in front page which is</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n                {\r\n                  \r\n                    \r\n                    TaskDefinition td = ts.NewTask();\r\n                    td.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;Does something&quot;</span>;\r\n\r\n                    td.Triggers.Add(<span style=\"color:blue\">new</span> DailyTrigger { DaysInterval = 2 });\r\n\r\n\r\n                    td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#a31515\">&quot;c:\\\\test.log&quot;</span>, <span style=\"color:blue\">null</span>));\r\n\r\n                    TaskPrincipal tp = td.Principal;\r\n                 \r\n                    ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">@&quot;Test&quot;</span>, td);\r\n\r\n\r\n                    ts.RootFolder.DeleteTask(<span style=\"color:#a31515\">&quot;Test&quot;</span>);\r\n                }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I have running this code with Administration privileges and also I have manually created Test folder in Task Scheduler in Windows. My operation system is Windows 7 with UAC disabled.</p>\r\n<p>&nbsp;</p>\r\n<p>So any idea, what I am missing? I had just search other discussions tried all other things but no solution..</p>\r\n",
+    "PostedDate": "2012-12-26T06:22:47.423-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982335",
+    "ThreadId": "423405",
+    "Html": "\r\n<p>Permissions at either the system level or checking if UAC is blocking your rights would be my first guess. Nothing else seems to be amiss.</p>\r\n",
+    "PostedDate": "2013-01-02T07:40:08.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

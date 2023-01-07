@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "608310",
+    "ThreadId": "256611",
+    "Html": "\r\n<p>I've written a Windows service that uses the TaskScheduler library, and which, during startup, checks to see if certain tasks exist on the server, and if they don't, attempts to create them. Running on my developer PC, my code works just fine. However, when\r\n I switched to a VM running a clean installation of W2K8 R2, I get the following exception:</p>\r\n<p>Service cannot be started. System.Runtime.InteropServices.COMException (0x80070534): (45,4):LogonType:<br>\r\n&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)<br>\r\n&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)<br>\r\n&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)</p>\r\n<p>at the point in my code when I try to create the task. The service is running under the WORKGROUP\\SYSTEM account. Apart from granting that user account local Administrator privileges, is there anything else I can set to get this working?</p>\r\n",
+    "PostedDate": "2011-05-06T00:15:50.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608617",
+    "ThreadId": "256611",
+    "Html": "<p>This is an expected error given the parameters you have specified (see <a href=\"http://msdn.microsoft.com/en-us/library/aa381365(v=vs.85).aspx\">http://msdn.microsoft.com/en-us/library/aa381365(v=vs.85).aspx</a>). Make sure when you call the RegisterTaskDefinition method, it looks something like this:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>tf.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test\"</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color: blue;\">null</span>);\r\n</pre>\r\n</div>\r\n<p>The other possibility is that this is a permissions problem. Make sure you have SeBatchLogonRight for the account trying to register the task.</p>",
+    "PostedDate": "2011-05-06T09:56:19.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "609288",
+    "ThreadId": "256611",
+    "Html": "<p>Just the code change was sufficient to fix the issue for me - many thanks for the quick and accurate response!</p>",
+    "PostedDate": "2011-05-08T16:43:54.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

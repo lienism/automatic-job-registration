@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "819173",
+    "ThreadId": "351002",
+    "Html": "\r\n<p>I've read through the various posts on the whole interactive issue and I'm a little unclear on something.</p>\r\n<p>I'm using the DLL as part of a management tool that can create Scheduled Tasks on remote machines. &nbsp;This tool is normally run using alternate credentials (i.e. via RUNAS)</p>\r\n<p>Long story short, I have a checkbox on a form that says &quot;Run Interactively&quot; as well as some textboxes to allow the user to specify credentials under which the task can run.</p>\r\n<p>If I specify credentials for the task I can get it to create an interactive or non-interactive task. &nbsp;However, if I leave the credentials fields blank it creates the task with the credentials of the user running the application (this is absolutely fine).\r\n &nbsp;However, it will never create a non-interactive tasks.</p>\r\n<p>I am trying to create tasks on Windows 2008 R2 &nbsp;and here's the code</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">Me</span>.bln_Interactive = <span style=\"color:blue\">Me</span>.chk_Interactive.Checked\r\n\r\n\r\n        <span style=\"color:blue\">If</span> <span style=\"color:blue\">Me</span>.bln_taskConfigured <span style=\"color:blue\">Then</span>\r\n            <span style=\"color:blue\">Try</span>\r\n                <span style=\"color:blue\">If</span> <span style=\"color:blue\">Me</span>.chk_RunAsSystem.Checked <span style=\"color:blue\">Then</span>\r\n                    ts.RootFolder.RegisterTaskDefinition(<span style=\"color:blue\">Me</span>.txt_Description.Text, td, TaskCreation.Create, <span style=\"color:#a31515\">&quot;SYSTEM&quot;</span>, <span style=\"color:blue\">Nothing</span>, TaskLogonType.ServiceAccount, <span style=\"color:blue\">Nothing</span>)\r\n                <span style=\"color:blue\">Else</span>\r\n                    <span style=\"color:blue\">If</span> <span style=\"color:blue\">Me</span>.bln_Interactive <span style=\"color:blue\">Then</span>\r\n                        td.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">True</span>\r\n                        ts.RootFolder.RegisterTaskDefinition(<span style=\"color:blue\">Me</span>.txt_Description.Text, td, TaskCreation.Create, <span style=\"color:blue\">Me</span>.txt_ID.Text, <span style=\"color:blue\">Me</span>.txt_Password.Text, TaskLogonType.InteractiveTokenOrPassword, <span style=\"color:blue\">Nothing</span>)\r\n                    <span style=\"color:blue\">Else</span>\r\n                        td.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">False</span>\r\n                        ts.RootFolder.RegisterTaskDefinition(<span style=\"color:blue\">Me</span>.txt_Description.Text, td, TaskCreation.Create, <span style=\"color:blue\">Me</span>.txt_ID.Text, <span style=\"color:blue\">Me</span>.txt_Password.Text, TaskLogonType.Password, <span style=\"color:blue\">Nothing</span>)\r\n                    <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n                <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n                ts.Dispose()\r\n            <span style=\"color:blue\">Catch</span> ex <span style=\"color:blue\">As</span> Exception\r\n            <span style=\"color:blue\">End</span> <span style=\"color:blue\">Try</span>\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-04-03T03:48:49.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819216",
+    "ThreadId": "351002",
+    "Html": "<p>Right, just out of interest I added a little check to see if&nbsp;Me.txt_ID.Text and&nbsp;Me.txt_ID.password were empty and, if so, to give them my userID and password</p>\r\n<p>When I do this I can create non-interactive tasks (i.e. User does not have to be logged on). &nbsp;So, it seems that if you create the task and pass null values for userid and password it will default to the current user's credentials BUT the tasks is ALWAYS interactive. &nbsp;Is this a bug? &nbsp;</p>",
+    "PostedDate": "2012-04-03T05:48:46.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819289",
+    "ThreadId": "351002",
+    "Html": "<p>When Registering a task that you desire to run only if the user is logged into an interactive session, use the TaskLogonType.InteractiveToken value. Passing a null value for the user will pull the name from the current session, but the TaskLogonType will determine how the credentials are used. You can get a full explanation of those values in the help file for the library or from the documentation from the COM library <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa383566(v=vs.85).aspx\" target=\"_self\">here</a>.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2012-04-03T08:24:58.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819297",
+    "ThreadId": "351002",
+    "Html": "<p>Maybe I wasn't clear (or I'm being stupid). &nbsp;I want to be able to pass null values for userID and password have it create a NON-interactive task. &nbsp;This doesn't seem to work with any of the LogonTypes. &nbsp;If I specify a LogonType of Password then I MUST pass  a value for UserID and Password. &nbsp;If I specify LogonInteractive it will always create an interactive task (naturally)</p>\n<p>So, essentially, I want to not pass credentials but have the task created as \"Run whether user is logged on or not\". &nbsp;Maybe this isn't possible?</p>",
+    "PostedDate": "2012-04-03T08:39:09.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819562",
+    "ThreadId": "351002",
+    "Html": "<p>You are correct. The base COM library will not support what you want to do. To run non-interactively, you must supply a password and use a LogonType that accepts a password.</p>",
+    "PostedDate": "2012-04-03T21:17:08.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819666",
+    "ThreadId": "351002",
+    "Html": "<p>Ah well. &nbsp;It's as I expected then. &nbsp;I'll just have to force the users to enter some credentials for each task they create.&nbsp;</p>",
+    "PostedDate": "2012-04-04T01:53:25.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "821861",
+    "ThreadId": "351002",
+    "Html": "<p>I have the exact same problem. I noticed that&nbsp;the above&nbsp;can be done if&nbsp;I run&nbsp;my application \"as administrator\".&nbsp; Somehow you should rise the permissions of the .NET application in order to make this possible. If someone has any knowledge of that, let me know.</p>\r\n<p>I know just \"try\" to set it and catch the authorization exception in case it doesn't work. (I think I'll add a dialog that urges the user to change the run settings manually in case he wants to run it non-interactive)</p>\r\n<p>My line of code:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(TASK_NAME, theTask.Definition, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount,<span style=\"color: blue;\">null</span>);</pre>\r\n</div>",
+    "PostedDate": "2012-04-10T01:24:51.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "821897",
+    "ThreadId": "351002",
+    "Html": "It's possible if you use Impersonation. I have a <a href=\"http://VB.NET\">VB.NET</a> class that I found online that I can send you.\r\n<div><br>\r\n</div>\r\n<div>Matt<br>\r\n<br>\r\n<div>On 10 April 2012 10:24, nschoot <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"margin:0 0 0 .8ex; border-left:1px #ccc solid; padding-left:1ex\">\r\n<div>\r\n<p>From: nschoot</p>\r\n<div>\r\n<p>I have the exact same problem. I noticed that the above can be done if I run my application &quot;as administrator&quot;. Somehow you should rise the permissions of the .NET application in order to make this possible. If someone has any knowledge of that, let me know.</p>\r\n<p>I know just &quot;try&quot; to set it and catch the authorization exception in case it doesn't work. (I think I'll add a dialog that urges the user to change the run settings manually in case he wants to run it non-interactive)</p>\r\n<p>My line of code:</p>\r\n<div style=\"\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(TASK_NAME, theTask.Definition, TaskCreation.CreateOrUpdate, <span style=\"color:#a31515\">&quot;SYSTEM&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount,<span style=\"color:blue\">null</span>);</pre>\r\n</div>\r\n</div>\r\n<div>\r\n<p>Read the <a href=\"http://taskscheduler.codeplex.com/discussions/351002#post821861\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:taskscheduler@discussions.codeplex.com?subject=[taskscheduler:351002]\" target=\"_blank\">taskscheduler@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:taskscheduler@discussions.codeplex.com\" target=\"_blank\">\r\ntaskscheduler@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://taskscheduler.codeplex.com/discussions/351002/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n</div>\r\n",
+    "PostedDate": "2012-04-10T03:26:54.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822462",
+    "ThreadId": "351002",
+    "Html": "<p>There is also an impersonation class in the library. You can find it at <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/77318#78561\">http://taskscheduler.codeplex.com/SourceControl/changeset/view/77318#78561</a>.</p>",
+    "PostedDate": "2012-04-11T09:19:03.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

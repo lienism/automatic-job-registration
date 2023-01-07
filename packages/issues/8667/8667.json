@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-05-25T16:59:17.73-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "mistake, please delete",
+    "LastUpdatedDate": "2013-05-16T04:49:12.123-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-05-25T14:05:43.52-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskService connect didn't work| Visual Basic",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8667
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

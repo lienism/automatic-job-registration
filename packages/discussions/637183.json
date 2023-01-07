@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1423683",
+    "ThreadId": "637183",
+    "Html": "when trying to create tasks I get access denied unless the program is stated as admin.  the user is a local admin on the system, the task is being created on the same system, and the task is to be run as a different user.  below is the gist of the code, please let me know <br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n           TimeTrigger start = new TimeTrigger { StartBoundary = dateTime1.Value };\n            TaskDefinition td = ts.NewTask();\n            td.Triggers.Add(start);\n            td.Principal.RunLevel = TaskRunLevel.Highest;\n            td.Settings.Compatibility = TaskCompatibility.V2_2;\n            td.Actions.Add(new ExecAction(Environment.GetCommandLineArgs()[0], cmd, null));\n            ts.RootFolder.RegisterTaskDefinition(&quot;Task Name&quot;, td, TaskCreation.Create, username, password, TaskLogonType.Password);\n}</code></pre>\n\nany ideas?<br />\n",
+    "PostedDate": "2015-05-06T21:57:27.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424487",
+    "ThreadId": "637183",
+    "Html": "The code calling the TaskService constructor must be running as Administrator to avoid UAC blocks. The security rights of the TaskService instance will determine if the RegisterTaskDefinition method can be called. Registering a task as a specific user instruct that task to run as that user.<br />\n",
+    "PostedDate": "2015-05-10T12:29:36.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:00:09.297-07:00"
+  }
+]

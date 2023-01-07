@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Corrected in release following 2.0.3.",
+    "ClosedDate": "2014-02-13T20:01:43.8-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Checkbox for \"Start only if the following network connections is available\" is not checked when editing\n\nChanges are saved to the task but the checkbox state is not read when opening the task. It is always 'unchecked'.",
+    "LastUpdatedDate": "2017-12-11T21:32:29.003-08:00",
+    "PlannedForRelease": "Release 2.0.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-02-13T08:54:19.71-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Checkbox for \"Start only if the following network connections is available\" is not checked when editing",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11577
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

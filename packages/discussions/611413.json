@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1393404",
+    "ThreadId": "611413",
+    "Html": "I use TaskEditDialog. On Window 2008 when I try to open &quot;Change User or Group&quot; dialog I get message:<br />\n&quot;the program cannot open the required dialog box because it cannot determine whether the computer named '' is joined to a domain&quot;<br />\nAfter closing the dialog I get unhandled exception:<br />\n<pre><code>************** Exception Text **************\nSystem.Runtime.InteropServices.COMException (0x80070005): IDsObjectPicker.Initialize failed\n   at CubicOrange.Windows.Forms.ActiveDirectory.DirectoryObjectPickerDialog.Initialize()\n   at CubicOrange.Windows.Forms.ActiveDirectory.DirectoryObjectPickerDialog.RunDialog(IntPtr hwndOwner)\n   at System.Windows.Forms.CommonDialog.ShowDialog(IWin32Window owner)\n   at Microsoft.Win32.TaskScheduler.HelperMethods.SelectAccount(IWin32Window parent, String targetComputerName, String&amp; acctName, Boolean&amp; isGroup, Boolean&amp; isService, String&amp; sid) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\HelperMethods.cs:line 18\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.InvokeObjectPicker(String targetComputerName) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\TaskPropertiesControl.cs:line 632\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.changePrincipalButton_Click(Object sender, EventArgs e) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\TaskPropertiesControl.cs:line 538\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message&amp; m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\n   at System.Windows.Forms.Button.WndProc(Message&amp; m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</code></pre>\n\nI use 2.3.1 version. Before that I used 2.2.2 and got the same message and exception on Windows 8.<br />\n<br />\nimages:<br />\n<a href=\"https://onedrive.live.com/redir?resid=5E1C7C9247C84872%21106\" rel=\"nofollow\">Message</a><br />\n<a href=\"http://1drv.ms/18UNpGK\" rel=\"nofollow\">Exception</a><br />\n",
+    "PostedDate": "2015-03-24T07:07:56.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1393703",
+    "ThreadId": "611413",
+    "Html": "Also the dialog allows change only to current user. In other cases after ok pressing It always generate unhandled exception:<br />\n<pre><code>System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskFolder.cs:line 404\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskFolder.cs:line 369\n   at Microsoft.Win32.TaskScheduler.Task.RegisterChanges() in c:\\spb.Common Components\\TaskScheduler\\TaskService\\Task.cs:line 1230\n   at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e) in c:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\TaskEditDialog.cs:line 280\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message&amp; m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\n   at System.Windows.Forms.Button.WndProc(Message&amp; m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</code></pre>\n\nIs it right behavior? <br />\n",
+    "PostedDate": "2015-03-24T09:38:59.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1393798",
+    "ThreadId": "611413",
+    "Html": "The first error is due to a problem with how that particular system is representing the computer to the domain. The prompt you get is from Windows. The COMException generated and not handled is a bug in the library which I have fixed and will be released in 2.3.2 shortly.\r<br />\n<br />\nThe second error is a permissions problem with the account used to initialize the TaskService. If no account was specified, it is the local account. That account does have permission to make changes to the task.<br />\n",
+    "PostedDate": "2015-03-24T13:02:28.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:13:32.223-07:00"
+  }
+]

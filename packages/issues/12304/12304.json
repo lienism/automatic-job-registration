@@ -1,0 +1,211 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-12-24T14:19:20.073-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi David,\n\nThe following localized Polish string don't work:\nminut or minuty (for minutes)\ngodzin (for hours)\n\nThe following work:\ngodzina (for hour or hours) \nBez ograniczeń (for Indefinitely)\ndzień (for day)\n\nNo Polish translation for minutes seem to work. Call to: \n\ninternal bool TryParse(string s, IFormatProvider provider, out TimeSpan result)\n\nin TimeSpanFormatInfo class returns false for minut or minuty.\n\nThanks,\nAudi",
+    "LastUpdatedDate": "2015-12-24T14:19:20.073-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-12-12T07:40:58.9-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Some localized time units in Polish don't work when setting \"Repeat task every:\" feature.",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 12304
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5046,
+      "FileName": "TaskEditor_Mixed.png",
+      "DownloadUrl": ".\\5046"
+    },
+    {
+      "FileId": 5047,
+      "FileName": "TimeSpan2.zip",
+      "DownloadUrl": ".\\5047"
+    },
+    {
+      "FileId": 5048,
+      "FileName": "TaskScheduler.zip",
+      "DownloadUrl": ".\\5048"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Polish is not a supported language but is not that difficult to add if you can provide someone that can translate English to Polish. I have posted a file with all the project resources that, when translated, can easily be added to the project. Let me know if this is something you can do.",
+      "PostedDate": "2015-12-12T07:41:58.87-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-12T11:18:52.013-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "First file: TimeSpan_Resources.xlsx -- This file is for those items specifically in the boxes that accept time spans. Create a new column for the language you wish to expose and provide the translations in that column for all items in the spreadsheet.",
+      "PostedDate": "2015-12-12T11:18:52.707-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-12T11:20:41.183-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Second file: TSMW_Resources.xlsx -- Same instructions for providing translations as the first file. This is for all the resources in the UI forms and controls provided for working with Tasks. When done, post both translated files to this work item. I'll incorporate them into the build and post an updated version.",
+      "PostedDate": "2015-12-12T11:20:41.71-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Awesome...thanks David! Will post both translated files to this work item as soon as I hear back from our Polish localizers. Really appreciate your kind assistance. Have a great weekend!\r\n\r\nAudi",
+      "PostedDate": "2015-12-12T17:27:46.533-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nWe have the following question from our language translator manager:\r\n\r\n\"It looks like the two xlsx spreadsheets were extracted from a .properties file (or maybe .resx file).\"\r\n\r\n\"We have translation tools that can produce localized .properties files directly without having to copy/paste into Excel.\"\r\n\r\n\"Could you please provide the source .properties files (or .resx) instead?\"\r\n\r\n\"Then we can produce individual .properties files for you per language.\"\r\n\r\nThanks,\nSøren\n",
+      "PostedDate": "2015-12-14T04:35:53.737-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nWe haven't updated our TaskEditor source for quite a while, so the our TaskEditorResources.resx file may, most likely, vary from that of your recent version, especially with respect to the content of the TSMW_Resources.xlsx file. We have localized versions of the TaskEditor for languages other than English. Would it be an issue is we provide a TSMW_Resources.xlsx file based on our localized (older) version of TaskEditorResources.resx? The only issue we have right now is the fact that some translations of TimeSpan units (like the Polish \"minut\" for minutes, cannot be parsed by the TaskEditor, while it is able to parse other Polish time units like \"godzina\" for hour or hours, Bez ograniczeń or Indefinitely, dzień for day.\r\n\r\nThanks,\nAudi\r\n\r\n",
+      "PostedDate": "2015-12-14T12:12:02.177-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Would it suffice to provide only the TimeSpan_Resources.xlsx translations as we already have localized versions of our TaskEditor forms?",
+      "PostedDate": "2015-12-14T12:16:39.28-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I found out that with the current (unmodified) time format parsing pattern, the Polish \"minuta\" for minutes work! ",
+      "PostedDate": "2015-12-14T12:58:32.78-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes. If you can fill out just the TimeSpan spreadsheet, then I can localize the TimeSpan2 assembly.",
+      "PostedDate": "2015-12-14T14:59:50.013-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-16T08:02:40.707-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nHere's the localized version of TimeSpan_Resources.xlsx.\r\n\r\nThanks, Audi",
+      "PostedDate": "2015-12-16T08:02:42.963-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I see a number of new languages in the file. Would you like me to add all of them?",
+      "PostedDate": "2015-12-16T12:49:00.357-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-16T13:05:16.613-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I just added and updated everything you gave me. Attached is a zip file with the new build. Please install these files over the existing and let me know if it all works as you'd expect.",
+      "PostedDate": "2015-12-16T13:05:17.27-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hello David, many thanks for the swift help! I forgot to tell you that our version of your TaskScheduler component integrates the original TimeSpan2.cs file into our TaskEditor source, and doesn't use a separate TimeSpan2.dll. Sorry, I may have wasted your time unnecessarily. I may need to dismantle the TimeSpan2.cs code references from our source, and reference the TimeSpan2.ll instead. Let me know if you have other ideas or suggestions.\r\n\r\nThanks again!\r\n\r\nP.S. In the spirit of the Christmas Season, I tried to send you a personal email, but it came back as undeliverable. Here's the content of that email:\r\n\r\n\"I would like to send you a Papa John’s gift card (by email) as a token appreciation of your prompt invaluable help every time we request for assistance. Please let me know if you have access to a Papa John’s Pizza branch (or a similar business, in which online ordering is available, and you have easy access to pick it up).\r\n\r\nThank you and best wishes for a fantastic 2015 holiday season!\r\n\r\nAudi (Reply to: apbangi@yahoo.com)",
+      "PostedDate": "2015-12-17T06:15:13.163-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T07:24:44.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nOne of our localization developers reported this:\r\n\r\nIIZUKA, M.:18Dec2015 at 00:14:16:\nMixed UI language in TaskEditor when application UI culture and format of Windows region\nare not the same. Please see TaskEditor_Mixed.png. The example is that application UI is\nJapanese and format of Windows region setting is Polish.\r\n\r\nProblem is CultureInfo.CurrentCulture is used to load resource. .\nCultureInfo.CurrentUICulture  should be used.\r\n\r\nFollowing codes have problem.\nTaskEditor Project\nNativeMethods.cs\nFullDateTimePicker.cs\nTimeSpan2\\TimeSpanFormatInfo.cs\nTimeSpan2\\TimeSpanPicker.cs\r\n\r\nAbout the DatePicker, it seems that this is a Microsoft bug:\nhttps://support.microsoft.com/en-us/kb/889834\n",
+      "PostedDate": "2015-12-18T07:24:45.837-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:20:17.003-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Let me know if these latest zip files fix the problems with CurrentUICulture for TimeSpan2 & TaskScheduler.",
+      "PostedDate": "2015-12-18T13:20:19.247-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:23:07.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:23:18.86-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:30:43.987-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:30:47.917-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-18T13:32:18.28-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Adding final attachment",
+      "PostedDate": "2015-12-18T13:32:18.793-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi David,\r\n\r\nUnfortunately, we cannot use your TimeSpan2 and TaskScheduler component as they are. We have a much older version in which the TimeSpan2 source is integrated into the main source. \r\n\r\nIf you can please point me to your code changes with respect to the use of CurrentUICulture instead of CurrentCulture, that would be enough, Our localizers have solved the issue with respect to their translations not working initially. Everything is working now, except for the mixed UI issue, which I'm going to fix.\r\n\r\nThanks again.\r\n\r\nAudimar",
+      "PostedDate": "2015-12-21T06:34:52.687-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The changes for those items in TimeSpan2 are here: http://timespan2.codeplex.com/SourceControl/changeset/97991\r\n\r\nThose for TaskScheduler are here: https://taskscheduler.codeplex.com/SourceControl/changeset/97992\r\n\r\nSearching for CurrentUICulture will show you the lines that were changed.\n",
+      "PostedDate": "2015-12-21T07:28:31.473-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks David! That should complete the work for this issue.\r\n\r\nI really appreciate all the help.\r\n\r\nHappy Holidays!\n",
+      "PostedDate": "2015-12-23T10:19:25.703-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-24T14:19:20.073-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "277747",
+    "ThreadId": "80996",
+    "Html": "<p>Hi,</p>\r\n<p>This wrapper seems to be just what I was looking for, but as soon as I add the line:</p>\r\n<p>TaskService ts = new TaskService();</p>\r\n<p>to my Windows Home Server Add-in it no longer works (I get an error message from WHS saying there is a problem with the Add-in).</p>\r\n<p>Should it work or are there some other steps I need to take to get it to work in this scenario?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-15T14:09:35.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "280167",
+    "ThreadId": "80996",
+    "Html": "<p>I'm just guessing as I have no WHS to try this on, but I would check on run permissions. Add-ins typically run in a more secure sandbox than regular code. The Task Scheduler requires Admin privileges to run and your plug-in may not have that. I would write a really simple piece of code, maybe copying something on the project home page or in the Documentation area, to see if you can run it stand-alone on WHS. If that fails then there are different problems. If not, then you know it has something to do with the plug-in environment. Another thought is that this is a .NET 2.0 library so you plug-in will have to accommodate that version.</p>",
+    "PostedDate": "2010-01-21T10:48:40.137-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "281055",
+    "ThreadId": "80996",
+    "Html": "<p>Hi again,</p>\r\n<p>I have tried just putting the add-in into a Windows Form application and that runs correctly on the WHS machine, I was logged in as Administrator when I ran the program. So I think your theory is right. Does that mean that I can't use this approach in my WHS add-in?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n<p>ChangedDaily</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-24T07:59:40.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "281286",
+    "ThreadId": "80996",
+    "Html": "<p>You can try decorating your class with the System.Security.Permissions.PermissionSetAttribute attribute to try and get your code trusted. Beyond that, I'm not sure what to tell you other than to look on WHS forums for more info on permissions, .NET code, and plug-ins. Good luck. If you find a solution, please be sure to post it here so others don't have to go looking.</p>",
+    "PostedDate": "2010-01-25T01:15:52.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

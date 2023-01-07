@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "583625",
+    "ThreadId": "250502",
+    "Html": "\r\n<p>Hi</p>\r\n<p>The library is using namespaces starting with Microsoft. I suggest this is not a good idea. Probably to prefix with your name or the name of the project ONLY</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2011-03-21T03:25:15.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "583754",
+    "ThreadId": "250502",
+    "Html": "<p>Thank you for your suggestion. Given that there are a number of other projects and even commercial applications using the library now, changing the namespace at this point would cause a lot of non-value-add work for those teams.</p>",
+    "PostedDate": "2011-03-21T07:36:30.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

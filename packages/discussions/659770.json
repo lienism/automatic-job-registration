@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1488888",
+    "ThreadId": "659770",
+    "Html": "Since i'm new to programming C#, how can i use this DLL file?<br />\n",
+    "PostedDate": "2016-11-28T04:19:47.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489380",
+    "ThreadId": "659770",
+    "Html": "You can pull this into your project using NuGet. Look for the Task Scheduler Managed Wrapper (TaskScheduler) package.<br />\n",
+    "PostedDate": "2016-12-06T13:25:41.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-12-06T13:25:44.953-08:00"
+  }
+]

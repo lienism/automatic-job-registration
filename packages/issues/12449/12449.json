@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-03-07T07:53:13.61-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The task edit dialog seems to produce an error dialog when the user creating or updating the task does not have the correct permissions to do so on the system. \n\nThe following is the exception that appears in a JIT debugger window. \n\n```\nSee the end of this message for details on invoking \njust-in-time (JIT) debugging instead of this dialog box.\n\n************** Exception Text **************\nSystem.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message& m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n   at System.Windows.Forms.Button.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n```",
+    "LastUpdatedDate": "2017-03-07T07:53:13.61-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-02-01T17:09:02.693-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEditDialog okBtn_Click results in System.UnauthorizedAccessException",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12449
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is expected behavior. What would you expect the behavior to be?",
+      "PostedDate": "2017-02-02T12:28:17.42-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-03-07T07:53:13.61-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

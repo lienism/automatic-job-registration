@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "941626",
+    "ThreadId": "403183",
+    "Html": "\r\n<p>I do the following calls:</p>\r\n<p>TaskService service = new TaskService();</p>\r\n<p>Task task = service.FindTask(&quot;TaskName&quot;);</p>\r\n<p>task.Run(new string[] { &quot;c:\\\\data.xml&quot; });</p>\r\n<p>&nbsp;</p>\r\n<p>Task started but program didn't get any argument. What I did wrong?</p>\r\n",
+    "PostedDate": "2012-11-14T07:30:35.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941789",
+    "ThreadId": "403183",
+    "Html": "\r\n<p>You must specify in the ExecAction that you are willing to take arguments. See\r\n<a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa383549(v=vs.85).aspx\">\r\nhttp://msdn.microsoft.com/en-us/library/windows/desktop/aa383549(v=vs.85).aspx</a>&nbsp;towards the bottom of the page under &quot;Using Variables in Action Properties&quot; for more information.</p>\r\n",
+    "PostedDate": "2012-11-14T12:08:51.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "941985",
+    "ThreadId": "403183",
+    "Html": "\r\n<p>Thanks dahall! Your solution works.</p>\r\n",
+    "PostedDate": "2012-11-14T23:50:48.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056432",
+    "ThreadId": "403183",
+    "Html": "If you want to run an existing task (you set it up manually on the remote computer and did not use the Task Scheduler Manage Wrapper in code to do this) be sure to put in <strong>$(Arg0)</strong> as the (only) argument.<br />\n",
+    "PostedDate": "2013-06-13T08:29:45.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

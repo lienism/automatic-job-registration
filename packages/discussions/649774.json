@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1458486",
+    "ThreadId": "649774",
+    "Html": "For a task that runs every minute, the History tab of the task editor seems to be frozen in a &quot;Loading...&quot; state.\r<br />\n<br />\nOne option is to default to getting just the first 100 history records.\r<br />\nOr provide a property that allows us to set a limit at runtime.<br />\n",
+    "PostedDate": "2016-01-08T08:40:37.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458806",
+    "ThreadId": "649774",
+    "Html": "Added property to TaskEditDialog and TaskPropertiesControl named MaxHistoryCount. It's default is -1 and that will maintain the current behavior of retrieving all items. If set to another value, it will limit the number of history items retrieved.<br />\n",
+    "PostedDate": "2016-01-11T10:39:57.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-01-11T10:40:01.11-08:00"
+  }
+]

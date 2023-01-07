@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1013911",
+    "ThreadId": "436312",
+    "Html": "My UI contains checkboxes of days, so when user setup a weekly schedule it should create a WeeklyTrigger with checked days , how to implement this case ?<br />\n",
+    "PostedDate": "2013-03-12T07:16:07.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1014044",
+    "ThreadId": "436312",
+    "Html": "You will have to step through the checkboxes and assign each one to a DaysOfTheWeek value then OR all those selected values together and assign them to the DayOfWeek property of the WeeklyTrigger. If the task already exists, you will need to retrieve it, update the trigger and the re-register it. You can see an example of this in the WeeklyTriggerUI control at <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/83275#1324283\" rel=\"nofollow\">http://taskscheduler.codeplex.com/SourceControl/changeset/view/83275#1324283</a>.<br />\n",
+    "PostedDate": "2013-03-12T09:41:08.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

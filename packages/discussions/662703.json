@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1495815",
+    "ThreadId": "662703",
+    "Html": "Hi,\r<br />\n<br />\n I am not able to understand why TriggerCollection.Contains() always returns <strong>False</strong> in case <strong>Monthly Trigger</strong> even if the trigger is present. In other trigger types the collection returns correct value. \r<br />\n<br />\nPlease see the following code used by me to determine the correctness.<br />\n<pre><code>DateTime dt = new DateTime(1992, 06, 19, 00, 00, 00);\n            TaskService ts = new TaskService();\n            TaskDefinition td = ts.NewTask();\n\n            td.Triggers.Add(new TimeTrigger(dt));// Time Trigger\n            if (td.Triggers.Contains(td.Triggers[0]))\n                Console.WriteLine(&quot;Returns Time TRigger&quot;);\n\n            td.Triggers.Add(new MonthlyTrigger { StartBoundary = dt, DaysOfMonth = new[] { 1} });// Time Trigger\n            Console.WriteLine(td.Triggers.Count);\n            if (td.Triggers.Contains(td.Triggers[1]))\n                Console.WriteLine(&quot;Returns Monthly Trigger&quot;);\n\n            Console.ReadKey();\n/////////////////////////////\nOutput\n----------------------------\nReturns Time TRigger\n2</code></pre>\n\nIt should return <strong>True</strong> in the case of Monthly Trigger also. \r<br />\n<br />\nPlease reply if i am missing anything or a way to solve this.<br />\n",
+    "PostedDate": "2017-04-26T03:10:16.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495986",
+    "ThreadId": "662703",
+    "Html": "You found a bug in how I'm comparing MonthlyTrigger. Thank you. I have fixed it and it will be in the next release.<br />\n",
+    "PostedDate": "2017-05-01T15:21:54.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496000",
+    "ThreadId": "662703",
+    "Html": "When is the next release scheduled ? \r<br />\nCan you please suggest a kind of workaround of this situation. It's a production issue and needs to provide some fix.<br />\n",
+    "PostedDate": "2017-05-02T03:15:44.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496031",
+    "ThreadId": "662703",
+    "Html": "I just pushed version 2.5.24 that contains the fix.<br />\n",
+    "PostedDate": "2017-05-02T18:51:28.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-02T18:51:38.927-07:00"
+  }
+]

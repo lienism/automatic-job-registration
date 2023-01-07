@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-08T14:58:44.46-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "______Error using RegisterTaskDefinition on Window10 Proffessional______\n\nWhen calling \"RegisterTaskDefinition\", the error I am getting is:\n\nthe task xml contains a value which is incorrectly formatted or out of range\nException from HResult:0x80041318\n\nAny help is appreciated.",
+    "LastUpdatedDate": "2016-04-08T14:58:44.46-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-08-05T07:35:28.787-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Microsoft Issue"
+    },
+    "Summary": "Error using RegisterTaskDefinition on Window10 Professional",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12169
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Without information regarding the settings, triggers, and actions you have added to the TaskDefinition, I am unable to troubleshoot your issue. Please also ensure that the account running your code has sufficient permissions to create a task. I will also need to know the OS on which you're running the code and how you are instantiating the TaskService instance.",
+      "PostedDate": "2015-08-05T20:46:52.267-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for looking into the issue. I am getting the error while running the code on Windows 10 professional only. On other windows versions it is working correctly. The code is as following:\r\n\r\npublic void CreateSchedulerTask()\n        {\n            try\n            {\n                using (TaskService taskService = new TaskService())\n                {\r\n\r\n                    bool IsNewer = taskService.HighestSupportedVersion > new Version(1, 2);\n                    //Retrieve Assembly Path\n                    string pathForExe = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, \"Program.exe\");\r\n\r\n                    //Delete taks if exists\n                    taskService.RootFolder.DeleteTask(\"SomeTask\", false);\r\n\r\n                    // Create a new task definition and assign properties\n                    TaskDefinition taskDefinition = taskService.NewTask();\r\n\r\n                    //Security\n                    taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;\n                    taskDefinition.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;\r\n\r\n                    //This property not supported in XP\n                    if (IsNewer)\n                    {\n                        taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;\n                    }\r\n\r\n                    taskDefinition.RegistrationInfo.Description = \"Keeps your software up to date. If this task is disabled or stopped, your software will not be kept up to date, meaning security vulnerabilities that may arise cannot be fixed and features may not work. This task uninstalls itself when there is no software using it.\";\r\n\r\n                    // Add a trigger that, starting every month\n                    // and Saturday and repeat every 10 minutes for the following 11 hours\n                    MonthlyTrigger monthlyTrigger = new MonthlyTrigger();\n                    monthlyTrigger.EndBoundary = DateTime.Now.AddYears(10);\n                    taskDefinition.Triggers.Add(monthlyTrigger);\r\n\r\n                    // Create an action that will launch Notepad whenever the trigger fires\n                    taskDefinition.Actions.Add(new ExecAction(pathForExe));\r\n\r\n                    // Register the task in the root folder\n                    taskService.RootFolder.RegisterTaskDefinition(\"SomeTask\", taskDefinition);\n                }\n            }\n            catch (Exception ex)\n            {\n                logger.Error(ex);\n                ServiceHelper.LogError(ex);\n            }\n        }",
+      "PostedDate": "2015-08-05T22:44:43.513-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have the same problem with that method. The program executes correctly in Windows 7 and Windows 8.1 but in Windows 10 throws this Exception: \" _A password must be supplied when specifying TaskLogonType.Password or TaskLogonType.InteractiveTokenOrPassword or TaskLogonType.S4U from another account\"_\r\n\r\nI have updated the the \"Task Scheduler Managed Wrapper\" from Nuget with last release 2.4.2 but, the problem persist.\r\n\r\nAnyone can help me? \r\n\r\nThis is the code:\r\n\r\n                 //Trigger definition\n                    DailyTrigger dailyTr = new DailyTrigger(daysInterval);\n                    dailyTr.Enabled = true;\n                    dailyTr.StartBoundary = startTaskBoundary;\n                    dailyTr.Repetition.Interval = repetitionInterval;\n                    dailyTr.Repetition.StopAtDurationEnd = true;\n                    dailyTr.Repetition.Duration = executionDurationTime;\n                    dailyTr.EndBoundary = endTaskBoundary;\n                    dailyTr.ExecutionTimeLimit = executionDurationTime.Subtract(TimeSpan.FromMinutes(1));\r\n\r\n                    //Task definition\n                    TaskDefinition taskDefinition = taskService.NewTask();\n                    taskDefinition.Settings.WakeToRun = true;\n                    taskDefinition.Settings.AllowHardTerminate = true;\n                    taskDefinition.Settings.RunOnlyIfNetworkAvailable = true;\n                    taskDefinition.Settings.StopIfGoingOnBatteries = true;\n                    taskDefinition.Settings.Priority = System.Diagnostics.ProcessPriorityClass.High;\n                    taskDefinition.Principal.UserId = Environment.UserName;\n                    taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;\n                    taskDefinition.Principal.LogonType = TaskLogonType.Password;\n                    taskDefinition.RegistrationInfo.Description = description;\n                 \n                   taskDefinition.RegistrationInfo.Author = Environment.UserName;\n                    taskDefinition.Triggers.Add(dailyTr);\n                    taskDefinition.Actions.Add(new ExecAction(Path.GetFileName(fullNameExe), null, Path.GetDirectoryName(fullNameExe)));\n                    //Registers the task to the taskFolder\n                    taskFolder.RegisterTaskDefinition(nameTask, taskDefinition,TaskCreation.CreateOrUpdate,Environment.UserName,null, TaskLogonType.S4U);",
+      "PostedDate": "2015-09-21T05:59:47.693-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-08T14:58:44.46-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

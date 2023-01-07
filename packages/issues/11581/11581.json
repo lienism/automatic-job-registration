@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "There is nothing in the Microsoft documentation on command line argument length. There is certainly nothing in the wrapper library code that would limit the length. I would suggest posting this in one of the Microsoft Forums to see if someone at MS can answer it.",
+    "ClosedDate": "2014-04-17T16:31:41.323-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I have a console application that takes input command line arguments. I have to schedule this task on Windows 8 using Win32.TaskScheduler or directly from Windows 8 Task Scheduler . The problem is whenever my command line arguments length exceeds 450 characters, i get a warning like this :\n```\n\nTask registered task \"TaskName\" , but not all specified triggers will start the task. User Action: Ensure all the task triggers are valid as configured. Additional Data: Error Value: 2147944183.\n```\n\nAnd the task does not run eventually at the run time. Is there any limit on command line arguments' length?\nBut the same thing works on windows 7 scheduler.",
+    "LastUpdatedDate": "2014-04-17T16:31:41.323-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-02-17T01:15:03.293-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Microsoft Issue"
+    },
+    "Summary": "Maximum length of Command parameters in Windows 8 scheduler",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11581
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

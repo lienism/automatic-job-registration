@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1496821",
+    "ThreadId": "663130",
+    "Html": "I need to create a task that will from time to time on different user admin accounts .\r<br />\nSo, when I try using the &quot;Principal.LogonType = TaskLogonType.Group;&quot; on my computer with Windows 8, it works fine, but when I use this on a Windows 7 professional, it gives an error on the &quot;LogonType&quot;.\r<br />\n<br />\nI just get a code from you to test this.<br />\n<pre><code>try\n            {\n                TaskService ts = new TaskService();\n                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = &quot;Run  teste &quot;;\n                td.Settings.DisallowStartIfOnBatteries = false;\n                td.Settings.ExecutionTimeLimit = TimeSpan.Zero;\n                td.Principal.GroupId = &quot;BUILTIN\\\\Administrators&quot;;\n                td.Principal.LogonType = TaskLogonType.Group;\n                td.Triggers.Add(new LogonTrigger());\n                td.Actions.Add(new ExecAction(Application.StartupPath + &quot;\\\\teste.exe&quot;, null, null));\n                ts.RootFolder.RegisterTaskDefinition(&quot;teste&quot;, td);\n\n                MessageBox.Show(&quot;Test Ok&quot;);\n            }\n            catch (Exception ex)\n            {\n                MessageBox.Show(&quot;ex: &quot; + ex.ToString());\n            }</code></pre>\n\nIf I change the &quot;TaskLogonType.Group;&quot; to another type, it doesn't give any error, but it doesn't work, because I need to run as Administrators.\r<br />\n<br />\nThe error message is:<br />\n<blockquote>\nCOMException (0x80070534):(49,8):LogonType : in RegisterTaskDefinition in C:\\Users\\dahall\\Documentos\\VisualStudio2010\\Projects\\TaskService\\TaskFolder.cs:line448 and line 391<br />\n</blockquote>\n",
+    "PostedDate": "2017-05-30T19:51:02.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496861",
+    "ThreadId": "663130",
+    "Html": "Please try registering the task with the group information and let me know if that fixes the problem:<br />\n<pre><code>// Leave all setup code the same\nts.RootFolder.RegisterTaskDefintion(&quot;teste&quot;, td, TaskCreation.CreateOrUpdate, &quot;BUILTIN\\\\Administrators&quot;, null, TaskLogonType.Group);</code></pre>\n\n",
+    "PostedDate": "2017-06-01T11:22:45.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496863",
+    "ThreadId": "663130",
+    "Html": "I tried that as well. It gives the same error.<br />\n",
+    "PostedDate": "2017-06-01T16:40:38.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496921",
+    "ThreadId": "663130",
+    "Html": "So, do you have any other idea? Or perhaps another version for me to try?<br />\n",
+    "PostedDate": "2017-06-05T05:38:19.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497002",
+    "ThreadId": "663130",
+    "Html": "I have just tested this while running under an account with Admin rights under Windows 7 (Version 6.1 Build 7601: SP1). I ran your exact code while built against the .NET 2.0 and 4.0 versions of the library. I repeatedly did not see your error.\r<br />\n<br />\nMy guess is that it then has something to do with the user permissions under which you are running while executing on Windows 7. Make sure that account has Admin rights.<br />\n",
+    "PostedDate": "2017-06-09T16:15:25.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497010",
+    "ThreadId": "663130",
+    "Html": "Yes, all accounts have Admin rights<br />\n",
+    "PostedDate": "2017-06-10T20:10:51.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497495",
+    "ThreadId": "663130",
+    "Html": "Have you run the <a href=\"https://taskscheduler.codeplex.com/releases/view/622295\" rel=\"nofollow\">Troubleshooter</a> on the offending system? That may also give you some insight to problem with permissions.<br />\n",
+    "PostedDate": "2017-07-24T07:26:53.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

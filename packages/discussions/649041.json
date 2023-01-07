@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1456687",
+    "ThreadId": "649041",
+    "Html": "First, thanks for all the work you've done on this very nice library!  I allows me to edit and monitor existing tasks very nicely.\r<br />\nI bumped into a problem with creating a new task. A click on the OK button triggers a <strong>&quot;(50,8):Command:&quot;</strong> exception. See image with more detail here: <a href=\"http://screencast.com/t/k98w6BiKDwz3\" rel=\"nofollow\">http://screencast.com/t/k98w6BiKDwz3</a>\r<br />\n<br />\neditorForm.RegisterTaskOnAccept is set to True.\r<br />\n<br />\nAny idea what could be causing this exception?<br />\n",
+    "PostedDate": "2015-12-21T16:24:07.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456693",
+    "ThreadId": "649041",
+    "Html": "That is a Microsoft native library error indicated that there is something wrong with the value supplied for the Path of an ExecAction. Check to make sure you don't have invalid characters or empty string for that value.<br />\n",
+    "PostedDate": "2015-12-21T17:46:38.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-21T20:48:48.527-08:00"
+  },
+  {
+    "Id": "1456708",
+    "ThreadId": "649041",
+    "Html": "many Thanks for the fast and accurate answer!<br />\n",
+    "PostedDate": "2015-12-21T20:48:45.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,590 @@
+[
+  {
+    "Id": 569,
+    "Title": "RunOnlyIfLogged On not implemented"
+  },
+  {
+    "Id": 2459,
+    "Title": "NullReferenceException for V1"
+  },
+  {
+    "Id": 2520,
+    "Title": "DaysInterval is always 1 in V1"
+  },
+  {
+    "Id": 2563,
+    "Title": "Unable to get Repetition Working"
+  },
+  {
+    "Id": 2715,
+    "Title": "Error enumerating v2 actions"
+  },
+  {
+    "Id": 2786,
+    "Title": "Trigger and Action message localization"
+  },
+  {
+    "Id": 2793,
+    "Title": "Repetition not working on Vista"
+  },
+  {
+    "Id": 3619,
+    "Title": "Weekdays localization"
+  },
+  {
+    "Id": 3726,
+    "Title": "Couldn't open task with a dot in the task name"
+  },
+  {
+    "Id": 3841,
+    "Title": "Help me to set last week trigger."
+  },
+  {
+    "Id": 4076,
+    "Title": "RunningTask.Name throws exception in V2"
+  },
+  {
+    "Id": 4328,
+    "Title": "FileNotFoundException in TaskService.GetTask(taskName);"
+  },
+  {
+    "Id": 4405,
+    "Title": "TaskFolder.RegisterTaskDefinition throws exception in V1"
+  },
+  {
+    "Id": 5206,
+    "Title": "Task.Run parameters not passed to action"
+  },
+  {
+    "Id": 5344,
+    "Title": "TaskEditor various inconsistencies and missing checks"
+  },
+  {
+    "Id": 5497,
+    "Title": "Unable to update the action on a v1 task"
+  },
+  {
+    "Id": 5603,
+    "Title": "COMException: Interface not registered (Exception from HRESULT: 0x80040155)"
+  },
+  {
+    "Id": 6441,
+    "Title": "TaskEditDialog not present in vb project"
+  },
+  {
+    "Id": 6465,
+    "Title": "taskscheduleditor System.NullReferenceException was unhandled on XP"
+  },
+  {
+    "Id": 6611,
+    "Title": "Task.GetRunTimes throws AccessViolationException"
+  },
+  {
+    "Id": 6612,
+    "Title": "Assembly is not strong-named"
+  },
+  {
+    "Id": 6633,
+    "Title": "Can't initialize a TaskEditDialog form"
+  },
+  {
+    "Id": 6682,
+    "Title": "TaskEditDialog Getting error if I try and edit a second time"
+  },
+  {
+    "Id": 7319,
+    "Title": "Get run times error on vista 32"
+  },
+  {
+    "Id": 7429,
+    "Title": "TaskService.Connected property has wrong value when Task scheduler service is disabled"
+  },
+  {
+    "Id": 7663,
+    "Title": "Missing WeeklyTrigger constructor"
+  },
+  {
+    "Id": 8040,
+    "Title": "Last Week - September and October"
+  },
+  {
+    "Id": 8436,
+    "Title": "Getting an E_INVALIDARG when saving a weekly trigger"
+  },
+  {
+    "Id": 8587,
+    "Title": "TaskEditorDialog does not display correctly"
+  },
+  {
+    "Id": 8619,
+    "Title": "TaskSchedulerEditor assembly reference lost after build"
+  },
+  {
+    "Id": 8620,
+    "Title": "TaskSchedulerEditor does not register properly"
+  },
+  {
+    "Id": 8667,
+    "Title": "TaskService connect didn't work| Visual Basic"
+  },
+  {
+    "Id": 8769,
+    "Title": "LogonTrigger registration causes Access Denied exception"
+  },
+  {
+    "Id": 8794,
+    "Title": "Not setting Trigger.EndBoundary throws exception in Win7"
+  },
+  {
+    "Id": 8839,
+    "Title": "System.OutOfMemoryException: Insufficient memory to continue the execution of the program."
+  },
+  {
+    "Id": 8875,
+    "Title": "Deleting a V1 task and then registering it again gives FileNotFound exception"
+  },
+  {
+    "Id": 8895,
+    "Title": "Trigger.cs WeeksOfMonth not returning LastWeek"
+  },
+  {
+    "Id": 9007,
+    "Title": "Doesn't diplay a Scheduled Task which is configured for Windows 7, Windows Server 2008R2 in the task collection"
+  },
+  {
+    "Id": 9106,
+    "Title": "Release 1.6.3 - Strong name"
+  },
+  {
+    "Id": 9560,
+    "Title": "Sign the assembly"
+  },
+  {
+    "Id": 9708,
+    "Title": "There is no running instance of the task. (Exception from HRESULT: 0x8004130B)"
+  },
+  {
+    "Id": 9711,
+    "Title": "The function attempted to use a name that is reserved for use by another transaction. (Exception from HRESULT: 0x80071A90)"
+  },
+  {
+    "Id": 9826,
+    "Title": "Uncaught exception"
+  },
+  {
+    "Id": 9851,
+    "Title": "TaskService.FindTask() Method returns a single result"
+  },
+  {
+    "Id": 9855,
+    "Title": "Editor takes a long time to load under .NET 4.0"
+  },
+  {
+    "Id": 9977,
+    "Title": "Problem with Windows XP when I try to register WeeklyTrigger"
+  },
+  {
+    "Id": 9998,
+    "Title": "Can't edit existing tasks, Exception thrown"
+  },
+  {
+    "Id": 9999,
+    "Title": "Trying to edit existing task, Exception thrown"
+  },
+  {
+    "Id": 10009,
+    "Title": "TaskEdit dialog doesn't adhere to folders"
+  },
+  {
+    "Id": 10118,
+    "Title": "CredentialsDialog.cs  this.UserName null"
+  },
+  {
+    "Id": 10123,
+    "Title": "Please delete"
+  },
+  {
+    "Id": 10137,
+    "Title": "Exception on MonthlyDOWTrigger added in Windows XP"
+  },
+  {
+    "Id": 10348,
+    "Title": "Displayed Tasks not showing correct Status nor NextRunTime"
+  },
+  {
+    "Id": 10350,
+    "Title": "how to get task from remote server"
+  },
+  {
+    "Id": 10376,
+    "Title": "If user Cancels the Password Dialog box Exception bubbles to calling application"
+  },
+  {
+    "Id": 10612,
+    "Title": "TaskDefinition does not implement IDisposable"
+  },
+  {
+    "Id": 10628,
+    "Title": "Nuget package version mismatch"
+  },
+  {
+    "Id": 10778,
+    "Title": "Unsetting a trigger's end boundary in UI does not reset the trigger's EndBoundary property"
+  },
+  {
+    "Id": 10951,
+    "Title": "my scheduler task not working properly after then"
+  },
+  {
+    "Id": 11029,
+    "Title": "Code to check the staus of scheduled task in remote machine and fire email"
+  },
+  {
+    "Id": 11090,
+    "Title": "\"Error The type 'System.Xml.Serialization.IXmlSerializable' is defined in an assembly that is not referenced.\""
+  },
+  {
+    "Id": 11187,
+    "Title": "Unable to create tasks on Windows 2008 server"
+  },
+  {
+    "Id": 11204,
+    "Title": "TaskScheduler 1.9.4 (on WindowsXP(SP3))"
+  },
+  {
+    "Id": 11226,
+    "Title": "Cannot list tasks"
+  },
+  {
+    "Id": 11315,
+    "Title": "Getting operation failed when trying to update"
+  },
+  {
+    "Id": 11330,
+    "Title": "TriggerDialog in German"
+  },
+  {
+    "Id": 11440,
+    "Title": "TaskScheduler Version seems to be incorrect on Win2012R2"
+  },
+  {
+    "Id": 11441,
+    "Title": "Opening TaskEditDialog is really slow (~20sec)"
+  },
+  {
+    "Id": 11504,
+    "Title": "Getting COMExcpetion when attempting to register changes in a Windows 8.1 PC"
+  },
+  {
+    "Id": 11549,
+    "Title": "Task.SetSecurityDescriptorSddlForm always throws NotV1SupportedException"
+  },
+  {
+    "Id": 11550,
+    "Title": "Task.SetSecurityDescriptorSddlForm and GetSecurityDescriptorSddlForm should not use AccessControlSections"
+  },
+  {
+    "Id": 11572,
+    "Title": "Weekly Wed Check is not recording a change"
+  },
+  {
+    "Id": 11576,
+    "Title": "Behavior of \"Restart if the idle state resumes\" does not match Windows Task Scheduler"
+  },
+  {
+    "Id": 11577,
+    "Title": "Checkbox for \"Start only if the following network connections is available\" is not checked when editing"
+  },
+  {
+    "Id": 11581,
+    "Title": "Maximum length of Command parameters in Windows 8 scheduler"
+  },
+  {
+    "Id": 11614,
+    "Title": "TaskEditDialog Weekly Trigger issue"
+  },
+  {
+    "Id": 11681,
+    "Title": "RegisterTaskDefinition() with TaskCreation.ValidateOnly parameter throws NullReferenceException"
+  },
+  {
+    "Id": 11700,
+    "Title": "I am not able to run  Task schedule managed wrapper"
+  },
+  {
+    "Id": 11703,
+    "Title": "Property Task.Enabled is not saved"
+  },
+  {
+    "Id": 11706,
+    "Title": "Personalize task conditions for battery use"
+  },
+  {
+    "Id": 11850,
+    "Title": "System.NullReferenceException exception in web service call task"
+  },
+  {
+    "Id": 11860,
+    "Title": "Delete found Forum Trying there first"
+  },
+  {
+    "Id": 11880,
+    "Title": "Remote windows server 2003 Task scheduling access"
+  },
+  {
+    "Id": 11900,
+    "Title": "A first chance exception of type 'System.InvalidCastException' occurred in Microsoft.Win32.TaskScheduler.dll"
+  },
+  {
+    "Id": 11937,
+    "Title": "Problem to edit task with editor"
+  },
+  {
+    "Id": 11938,
+    "Title": "System.IO.FileNotFoundException V1Interop.ITaskScheduler.Activate"
+  },
+  {
+    "Id": 11961,
+    "Title": "System.Runtime.InteropServices.COMException (0x80041319): (40,4):EndBoundary:"
+  },
+  {
+    "Id": 12019,
+    "Title": "Recently we got AccessViolationException"
+  },
+  {
+    "Id": 12031,
+    "Title": "Need to Set \"RunOnlyIfLoggedOn\" in Ver 2.0"
+  },
+  {
+    "Id": 12037,
+    "Title": "Inheritance security rules violated while overriding member"
+  },
+  {
+    "Id": 12042,
+    "Title": "Task Scheduler corrupted after using the managed wrapper to delete and re-create tasks"
+  },
+  {
+    "Id": 12057,
+    "Title": "Task.Folder return null"
+  },
+  {
+    "Id": 12088,
+    "Title": "Release 2.3.1 bug with .NET 3.5"
+  },
+  {
+    "Id": 12115,
+    "Title": "Separate out scheduler UI into user control"
+  },
+  {
+    "Id": 12117,
+    "Title": "TriggerEditDialog: DateTime out of range"
+  },
+  {
+    "Id": 12139,
+    "Title": "Windows 10 & RegistrationTrigger"
+  },
+  {
+    "Id": 12142,
+    "Title": "System.IO.FileNotFoundException when registering task under 64 bit Windows 10 Pro Insider Preview Build 10158"
+  },
+  {
+    "Id": 12154,
+    "Title": "Error using RegisterTaskDefinition on Windows 7"
+  },
+  {
+    "Id": 12169,
+    "Title": "Error using RegisterTaskDefinition on Window10 Professional"
+  },
+  {
+    "Id": 12187,
+    "Title": "Error creating TaskDefinition on Window10 Home"
+  },
+  {
+    "Id": 12198,
+    "Title": "TaskOptionsEditor"
+  },
+  {
+    "Id": 12208,
+    "Title": "RegisterChanges() fails on XP"
+  },
+  {
+    "Id": 12209,
+    "Title": "Make exceptions serializable"
+  },
+  {
+    "Id": 12225,
+    "Title": "RegisterChanges Method Exception - account name"
+  },
+  {
+    "Id": 12239,
+    "Title": "Exception when editing a Task"
+  },
+  {
+    "Id": 12250,
+    "Title": "No way to set Synchronize Across Time Zones (Universal) for DailyTrigger tasks"
+  },
+  {
+    "Id": 12255,
+    "Title": "Exception: the name provided is not a properly formed account name for v.2.5.0"
+  },
+  {
+    "Id": 12261,
+    "Title": "Error using RegisterTaskDefinition on Window10 Professional When calling \"RegisterTaskDefinition\","
+  },
+  {
+    "Id": 12293,
+    "Title": "The task has been configured with an unsupported combination of account settings and run time options."
+  },
+  {
+    "Id": 12298,
+    "Title": "Inconsistencies in Active Tasks (2.5.4)"
+  },
+  {
+    "Id": 12302,
+    "Title": "NullReferenceException when display Run Times in TaskEditDialog"
+  },
+  {
+    "Id": 12303,
+    "Title": "TaskDefinition.Actions.Count is always zero for XP"
+  },
+  {
+    "Id": 12304,
+    "Title": "Some localized time units in Polish don't work when setting \"Repeat task every:\" feature."
+  },
+  {
+    "Id": 12305,
+    "Title": "TaskDefinition.Actions.Count is still zero for XP"
+  },
+  {
+    "Id": 12309,
+    "Title": "Supports serialization to XML for 1.0 tasks"
+  },
+  {
+    "Id": 12316,
+    "Title": "Edit Trigger Dialog do not save expire date."
+  },
+  {
+    "Id": 12325,
+    "Title": "Add IsDisabled to TriggerBuilder and ActionBuilder"
+  },
+  {
+    "Id": 12326,
+    "Title": ".NET 4.0 full required since 2.5.6"
+  },
+  {
+    "Id": 12328,
+    "Title": "TaskDefinition.Actions always empty in v1 since release 2.5.0"
+  },
+  {
+    "Id": 12329,
+    "Title": "A task must have between 1 and 32 actions"
+  },
+  {
+    "Id": 12339,
+    "Title": "Get Unhandled exception in TaskEditDialog for v1 if try to change \"configure for\""
+  },
+  {
+    "Id": 12350,
+    "Title": "The system cannot find the path specified."
+  },
+  {
+    "Id": 12362,
+    "Title": "Use a Group Managed service account to run a schedule task and make it \"Run whether user is logged on or not\"?"
+  },
+  {
+    "Id": 12369,
+    "Title": "Project targeted for .NET Framework 4.5.1 won't build if TaskScheduler NuGet-package 2.5.17 is installed"
+  },
+  {
+    "Id": 12370,
+    "Title": "Access Denied Exception when creating simple planned task"
+  },
+  {
+    "Id": 12373,
+    "Title": "computername\\username Access denied"
+  },
+  {
+    "Id": 12379,
+    "Title": "TaskEventWatcher will not watch a folder unless IncludeSubfolders is true"
+  },
+  {
+    "Id": 12414,
+    "Title": "Feature Request: documentation in PDF file"
+  },
+  {
+    "Id": 12418,
+    "Title": "Editor: Trigger right-click menu items do nothing"
+  },
+  {
+    "Id": 12432,
+    "Title": "Windows 2008 R2 Server - unhandled exception"
+  },
+  {
+    "Id": 12433,
+    "Title": "DateTimePicker Issue"
+  },
+  {
+    "Id": 12436,
+    "Title": "Add framework 4.5 compilation"
+  },
+  {
+    "Id": 12440,
+    "Title": "Change password for user account"
+  },
+  {
+    "Id": 12447,
+    "Title": "Version Support"
+  },
+  {
+    "Id": 12449,
+    "Title": "TaskEditDialog okBtn_Click results in System.UnauthorizedAccessException"
+  },
+  {
+    "Id": 12450,
+    "Title": "NotV1SupportedException while creating a folder"
+  },
+  {
+    "Id": 12455,
+    "Title": ".NET Core"
+  },
+  {
+    "Id": 12462,
+    "Title": "COM exception thrown"
+  },
+  {
+    "Id": 12463,
+    "Title": "Can not create a CustomTrigger!"
+  },
+  {
+    "Id": 12464,
+    "Title": "Exception Error The current version of the native library (1.1) does not support the original or minimum version ..."
+  },
+  {
+    "Id": 12466,
+    "Title": "RegisterTask fails on windows 10 (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)"
+  },
+  {
+    "Id": 12467,
+    "Title": "Why were latest releases (2.5.24-27) deleted from nuget"
+  },
+  {
+    "Id": 12468,
+    "Title": "TaskEditDialog constructor crash in Windows 10 Enterprise version 1703"
+  },
+  {
+    "Id": 12469,
+    "Title": "Error registering task on Windows Vista"
+  },
+  {
+    "Id": 12470,
+    "Title": "COMException with RunningTask.Refresh()"
+  },
+  {
+    "Id": 12473,
+    "Title": "Unit Test not possible due to Lib"
+  },
+  {
+    "Id": 12475,
+    "Title": "Incorrect TimeSpan2 version in nuget of  TaskSchedulerEditor 2.5.28"
+  }
+]

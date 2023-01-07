@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1347570",
+    "ThreadId": "579014",
+    "Html": "Is there anyway to unit test and mock core classes in this framework without using Moles like framework? Wondering if developers has any plans to introduce Interfaces for TaskService, TaskFolder, Tasks and other core classes in this library.<br />\n",
+    "PostedDate": "2015-01-30T07:56:49.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1347918",
+    "ThreadId": "579014",
+    "Html": "As the developer, I do not have any plans to introduce a set of unit tests for this project. If you do, please contact me and I will add them.<br />\n",
+    "PostedDate": "2015-01-31T20:41:28.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:00.507-07:00"
+  }
+]

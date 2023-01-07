@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "439223",
+    "ThreadId": "211643",
+    "Html": "<p>On version 41188, I am recieving the following error message &quot;Value does not fall within the expected range.&quot; It is happening on the property &quot;enabled&quot; at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Enabled() at Microsoft.Win32.TaskScheduler.Task.get_Enabled() at ScriptMain.GetTaskList() at UserComponent.PrimeOutput(Int32 Outputs, Int32[] OutputIDs, PipelineBuffer[] Buffers) at Microsoft.SqlServer.Dts.Pipeline.ScriptComponentHost.PrimeOutput(Int32 outputs, Int32[] outputIDs, PipelineBuffer[] buffers) Background: I am running this in SSIS as a script component data source. It has been running successfully untilrecently. I have been compiling this dll, and strong typing it (requirement for SSIS). It is pulling task schedule information from multiple OS's. The task it is failing on, is on a Windows 2003 SP2 server. The job is disabled. Please let me know if I need to use a specific version or not. Thank you again for a great component.</p>\r\n<p>I&nbsp;have tested this problem in version 41280 and ran into the same issue.</p>",
+    "PostedDate": "2010-05-05T05:11:24.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "439986",
+    "ThreadId": "211643",
+    "Html": "<p>Is the script running on the same machine the task is? If so, it should not be calling into the V2 internal library. Make sure that for each new server, if not running locally, you are instantiating a new TaskService class with the server's name and user credentials that have the right to view tasks. For that version of server, the Task.Enabled property should be calling V1Interop.ITask.GetFlags method and looking for the disabled flag.</p>",
+    "PostedDate": "2010-05-06T10:18:09.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "440370",
+    "ThreadId": "211643",
+    "Html": "<p>I found the solution to the problem. The name of the scheduled task had a period it in it.</p>\r\n<p>Deploy_Ista.CC</p>\r\n<p>I renamed it to</p>\r\n<p>Deploy_Ista CC and it now works.</p>",
+    "PostedDate": "2010-05-07T08:13:48.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

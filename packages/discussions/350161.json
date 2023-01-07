@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "815951",
+    "ThreadId": "350161",
+    "Html": "<p>Dear CodePlex Users</p>\n<p>I tryed in Win XP 32bit and Win 7 that work fine. But not in XP 64bit...</p>\n<p>Maybe the dll works only on win32?</p>\n<p>There is some trick to working also in Win XP 64bit?</p>\n<p>Best Regards.</p>",
+    "PostedDate": "2012-03-27T01:53:42.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816164",
+    "ThreadId": "350161",
+    "Html": "<p>I don't have an XP64 installation to try this on. I do know that it works just fine on Win7 64.</p>",
+    "PostedDate": "2012-03-27T09:54:24.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

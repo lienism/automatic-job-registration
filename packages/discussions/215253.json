@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "452713",
+    "ThreadId": "215253",
+    "Html": "<p><span style=\"font-size:10pt;color:black\">Under 2003 Server, if you specify the UserID &quot;System&quot; along with &quot;TaskLogonType.ServiceAccount&quot;,&nbsp;it will fail with the following error.&nbsp;</span>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p><span style=\"font-size:10pt;color:black\">If you leave UserID null, it will create the Task as &quot;NT AUTHORITY\\SYSTEM&quot; which is the expected behavior.&nbsp; I like to have my UserID set to &quot;System&quot; because its going to be needed when the code is run on 2008 Server.&nbsp; But I am not sure why I am getting this error when running the code under a 2003 Server if &quot;System&quot; is set as the UserID.</span>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p><span style=\"font-size:10pt;color:black\">ts.RootFolder.RegisterTaskDefinition(&quot;Task Name&quot;, td, TaskCreation.CreateOrUpdate, &quot;<span style=\"font-size:10pt;color:blue\">SYSTEM</span></span><span style=\"font-size:10pt;color:black\">&quot;, null, TaskLogonType.ServiceAccount, null);&nbsp; <span style=\"font-size:10pt;color:red\">Fails &quot;</span></span><span style=\"color:#ff0000\">System.Runtime.InteropServices.COMException (0x80041314): The task has been configured with an unsupported combination of account settings and run time options. (Exception from HRESULT: 0x80041314&quot;</span>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p><span style=\"font-size:10pt;color:black\">\r\n<p><br>&nbsp;<span style=\"font-size:10pt;color:black\">ts.RootFolder.RegisterTaskDefinition(&quot;Task Name&quot;, td, TaskCreation.CreateOrUpdate, <span><strong><span style=\"font-size:10pt;color:blue\">null</span></strong><strong>&nbsp;</strong> <span style=\"font-size:10pt;color:black\">, null, TaskLogonType.ServiceAccount, null); <span style=\"font-size:10pt;color:teal\">Succeeds</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p>&nbsp;</p>\r\n<p>I would like to know how to install a task so it runs as local system on both 2003 Server&nbsp;and 2008 Server using the same parameters to RegisterTaskDefinition()</p>",
+    "PostedDate": "2010-06-07T15:50:31.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "455761",
+    "ThreadId": "215253",
+    "Html": "<p>Thanks for the catch. It turns out I had an inconsistency under v1 between the TaskSettings.UserId and TaskFolder.RegisterTaskDefinition property and method. I was checking for &quot;SYSTEM&quot; with the property, but not for the method. This has been corrected in the code drop 52600.</p>",
+    "PostedDate": "2010-06-15T10:57:20.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

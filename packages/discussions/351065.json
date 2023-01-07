@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "819389",
+    "ThreadId": "351065",
+    "Html": "<p>Hi David,</p>\n<p>If I edit a saved task having a Definition.Principal.LogonType of TaskLogonType.Password, where can I retrieve the user password that is associated with this task?</p>\n<p>Do I have to use password = taskEditorForm.InvokeCredentialDialog(userid) every time I save the task?</p>\n<p>Thanks, Audi</p>",
+    "PostedDate": "2012-04-03T12:39:14.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819564",
+    "ThreadId": "351065",
+    "Html": "<p>You cannot extract a password from the current user session. You must prompt the user for it somehow. Once you have it, you can store for use when you re-register the task. A task registered with InteractiveTokenOrPassword or Password must supply a password each time it is re-registered.</p>",
+    "PostedDate": "2012-04-03T21:25:58.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819827",
+    "ThreadId": "351065",
+    "Html": "<p>Thanks David!</p>",
+    "PostedDate": "2012-04-04T06:57:15.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

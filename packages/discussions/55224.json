@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "186436",
+    "ThreadId": "55224",
+    "Html": "<p style=\"margin:0in 0in 0pt\">Hello,</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"text-indent:0.5in;margin:0in 0in 0pt\">I am creating a 'MonthlyDOWTrigger' trigger, which will run on every last week (on a specified day) of every month.</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">If I set,</p>\r\n<p style=\"text-indent:0.5in;margin:0in 0in 0pt\"><span> </span>monthlyDowTrigger.WeeksOfMonth = WhichWeek.LastWeek</p>\r\n<p style=\"margin:0in 0in 0pt\">a 'System.ArgumentException' is thrown.</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">If I set,</p>\r\n<p style=\"text-indent:0.5in;margin:0in 0in 0pt\">monthlyDowTrigger.RunOnLastWeekOfMonth = True</p>\r\n<p style=\"margin:0in 0in 0pt\">the task gets register but it gets register with <b>first week and last week</b>. Ideally it should register with only last week.</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">If I set, both the properties </p>\r\n<p style=\"margin:0in 0in 0pt 0.5in\"><span> </span>monthlyDowTrigger.RunOnLastWeekOfMonth = True</p>\r\n<p style=\"margin:0in 0in 0pt 0.5in\"><span> </span>monthlyDowTrigger.WeeksOfMonth = WhichWeek.SecondWeek</p>\r\n<p style=\"margin:0in 0in 0pt\">the task gets register but it gets register with Second week and last week.</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">If I set</p>\r\n<p style=\"margin:0in 0in 0pt 0.5in\"><span> </span>monthlyDowTrigger.RunOnLastWeekOfMonth = True</p>\r\n<p style=\"margin:0in 0in 0pt 0.5in\"><span> </span>monthlyDowTrigger.WeeksOfMonth = WhichWeek.LastWeek</p>\r\n<p style=\"margin:0in 0in 0pt\">a 'System.ArgumentException' is thrown.</p>\r\n<p style=\"margin:0in 0in 0pt\">&nbsp;</p>\r\n<p style=\"margin:0in 0in 0pt\"><b><i>This is my code for creating task:</i></b></p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\"><span> </span>Dim td As TaskDefinition = ts.NewTask()</p>\r\n<p style=\"margin:0in 0in 0pt\"><span> </span>td.RegistrationInfo.Description = &quot;Trying Own Task &quot;</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\"><span> </span>// Create a<span>  </span>MonthlyDOWTrigger</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>  </span>Dim monthlyDowTrigger As MonthlyDOWTrigger = New MonthlyDOWTrigger</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>   </span>monthlyDowTrigger.StartBoundary = DateTime.Now.AddSeconds(30)</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>   </span>monthlyDowTrigger.RunOnLastWeekOfMonth = True</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>  </span>// monthlyDowTrigger.WeeksOfMonth = WhichWeek.LastWeek</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>   </span>monthlyDowTrigger.DaysOfWeek = DaysOfTheWeek.Sunday</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>   </span>monthlyDowTrigger.MonthsOfYear = MonthsOfTheYear.AllWeeks</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>        </span></p>\r\n<p style=\"margin:0in 0in 0pt\"><span>   </span>td.Triggers.Add(monthlyDowTrigger)</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">// Add an action</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\"><span> </span>td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;D:\\\\test.log&quot;, Nothing))</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">//Register a task</p>\r\n<p style=\"margin:0in 0in 0pt\">ts.RootFolder.RegisterTaskDefinition(&quot;SampleTask&quot;, td, TaskCreation.Create, Nothing, Nothing, TaskLogonType.InteractiveToken, Nothing)</p>\r\n<p style=\"margin:0in 0in 0pt\"> </p>\r\n<p style=\"margin:0in 0in 0pt\">Is there any way to register the task having trigger, which will get activated only on the last week (on specified day) of the month?</p>\r\n<p style=\"margin:0in 0in 0pt\">Thanks.</p>\r\n<p style=\"margin:0in 0in 0pt\"><span>       </span></p>\r\n",
+    "PostedDate": "2009-05-04T01:03:14.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210270",
+    "ThreadId": "55224",
+    "Html": "<p>There is an error in the Microsoft documentation for WeeksOfMonth. It states that there is a FifthWeek (0x10) and a LastWeek (0x20). Doing some testing it appears that there should not be a FifthWeek and that LastWeek should equal 0x10. I will update the code base, but as a workaround, you can set WeeksOfMonth to FifthWeek for now.</p>",
+    "PostedDate": "2009-07-08T22:11:32.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210272",
+    "ThreadId": "55224",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://taskscheduler.codeplex.com/WorkItem/View.aspx?WorkItemId=3841\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2009-07-08T22:17:34.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

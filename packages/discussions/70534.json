@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "240271",
+    "ThreadId": "70534",
+    "Html": "<p>Hi,</p>\r\n<p>I assume that the TaskService project is meant to be an example of how to use this Library so please correct me if I'm wrong before we go  much further.</p>\r\n<p>I have tried to run this example however this throws the above exception: TaskFolder Line 177 to line 180</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; public Task RegisterTaskDefinition(string Path, TaskDefinition definition, TaskCreation createType, string UserId, string password, TaskLogonType LogonType, string sddl)<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;if (v2Folder != null)<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;return new Task(this.TaskService, v2Folder.RegisterTaskDefinition(Path, definition.v2Def, (int)createType, UserId, password, LogonType, sddl));</p>\r\n<p>&nbsp;</p>\r\n<p>I'm running the project on Win7/VS2008 64bit.</p>\r\n<p>Any assistance/pointers will be welcomed.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-29T23:46:54.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240531",
+    "ThreadId": "70534",
+    "Html": "<p>Will you provide the parameters that are being used when calling this method?</p>",
+    "PostedDate": "2009-09-30T10:18:31.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240644",
+    "ThreadId": "70534",
+    "Html": "<p>None whatsoever.</p>\r\n<p>I set TestTaskService as the Startup Project, compiled and ran it as I believed it is a Winforms project.</p>\r\n<p>I can't find ay documentation on what parameters are required.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-30T14:25:32.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240675",
+    "ThreadId": "70534",
+    "Html": "<p>Can you confirm, while in the debugger, that the RegisterTaskDefinition method throwing the exception is being called from line 201 in Program.cs? Also, will you confirm that no task by the name &quot;Test&quot; exists in the root folder of the Task Scheduler and let me know if you have Adminstrator rights for the account you are in?</p>",
+    "PostedDate": "2009-09-30T15:45:00.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240682",
+    "ThreadId": "70534",
+    "Html": "<p>1: Confirmed</p>\r\n<p>2: Dunno what or where the root folder is.</p>\r\n<p>3: Yes</p>\r\n<p>The problem was fixed by:</p>\r\n<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;td.Data = &quot;Your data&quot;;<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;td.Principal.UserId = &quot;KATOOMBA\\\\Administrator&quot;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;==== Line 103 in Program.cs | changing this fixed the issue.<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;td.Principal.LogonType = TaskLogonType.InteractiveToken;<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;td.RegistrationInfo.Author = &quot;dahall&quot;;</p>\r\n<p>Seems I missed/am missing the documentation somewhere.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-30T16:03:15.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240751",
+    "ThreadId": "70534",
+    "Html": "<p>Thanks for your help. Fortunately there is not a problem with the base library, only with my test harness. An updated Program.cs in the TestTaskService project resolves the problems you experienced. You can find it in the source code drop <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/30818\">30818</a>. I had hard coded my credentials. Now it will grab the current user's so it will always work.</p>",
+    "PostedDate": "2009-09-30T22:51:29.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-05-05T12:48:30.613-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "i have paste this in console application\n```\n using (TaskService ts = new TaskService())\n      {\n         // Create a new task definition and assign properties\n         TaskDefinition td = ts.NewTask();\n         td.RegistrationInfo.Description = \"Does something\";\n\n         // Create a trigger that will fire the task at this time every other day\n         td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\n\n         // Create an action that will launch Notepad whenever the trigger fires\n         td.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\n\n         // Register the task in the root folder\n         ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\n\n         // Remove the task we just created\n         ts.RootFolder.DeleteTask(\"Test\");\n      }\n```\nit run properly but no give any solution .please solve my issue",
+    "LastUpdatedDate": "2017-12-11T21:32:29.213-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-05-04T23:31:10.217-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "I am not able to run  Task schedule managed wrapper",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11700
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "The last line in the code removes the newly created task. If you want to see the task after running this code, just remove that last line (the one with DeleteTask in it).",
+      "PostedDate": "2014-05-05T12:47:52.23-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-05-05T12:48:30.613-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-05-05T12:48:31.113-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:29.213-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

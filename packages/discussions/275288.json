@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "681967",
+    "ThreadId": "275288",
+    "Html": "\r\n<p>Hi To everyone. How to add task for Daily trigger. ie ( I want to trigger the task daily at particular time). reply ASAP.</p>\r\n",
+    "PostedDate": "2011-10-10T01:05:53.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682122",
+    "ThreadId": "275288",
+    "Html": "<p>Please check the documentation area of the project or search on DailyTrigger on the discussions. There are multiple examples.</p>",
+    "PostedDate": "2011-10-10T07:46:54.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

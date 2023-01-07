@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "828251",
+    "ThreadId": "353477",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I had checked with schtasks for rights and I manage to read task from Windows 7 desktop to Windows 7 and Windows XP using both versions of schtasks.</p>\r\n<p>When I try to use TaskService ts = new TaskService(serverName, userName, domainName, password, false) it works from 7 to 7, but if I use the same with true to read on Windows XP it give a wrong userName or Password error. Those one I had copied from the\r\n working schtasks.</p>\r\n<p>Is there additional rights required by this wrapper or do we need more steps to read Windows XP tasks from Windows 7 ?</p>\r\n<p>Sorry if it was already asked but I hadn't found out what I should do.</p>\r\n<p>Thanks in advance for any hint.</p>\r\n<p>guillaume666</p>\r\n",
+    "PostedDate": "2012-04-25T01:14:45.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828674",
+    "ThreadId": "353477",
+    "Html": "<p>Have you tried not specifying anything for the last parameter or always leaving it false? That will select the best pattern for the connection. Also&nbsp;check to make sure your Local Security Policy on both systems allows remote connections.</p>",
+    "PostedDate": "2012-04-25T15:07:27.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "829337",
+    "ThreadId": "353477",
+    "Html": "<p>Thank you for your fast reply!</p>\r\n<p>I had tried both parameters and it's true I have an \"Access denied\" permission with true. I guess there is still a right problem somewhere and I had been confused by the previous error message...</p>\r\n<p>Remote Connections are already allowed for everyone and I had added the \"run as task\" right on both computer (I had tested for everyone too).</p>\r\n<p>Is there any additional right required ?</p>\r\n<p>When I use XP schtasks executable domain isn't needed like in this wrapper, could it be a reason why it only works with it ?</p>\r\n<p>Of course UAC is turned off.</p>\r\n<p>guillaume666</p>",
+    "PostedDate": "2012-04-27T05:39:12.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "829457",
+    "ThreadId": "353477",
+    "Html": "<p>Try opening the Task Scheduler MMC on your Windows 7 machine and then select the option to \"Connect to Another Computer...\". Try different combinations of credentials until you get one that connects. If you can't connect there, it may be a limitation of some other security configuration. If you can connect there, you should be able to take the user, domain and password and plug them into the TaskService constructor.</p>",
+    "PostedDate": "2012-04-27T10:08:27.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "830228",
+    "ThreadId": "353477",
+    "Html": "<p>Thanks again,</p>\r\n<p>I guess it must be a limitation especially after reading<a title=\"this article\" href=\"http://social.technet.microsoft.com/forums/en-US/itprovistaapps/thread/bd49657a-628e-4f7d-abc0-3300f1e480c5/\"> </a><a href=\"http://social.technet.microsoft.com/forums/en-US/itprovistaapps/thread/bd49657a-628e-4f7d-abc0-3300f1e480c5/\">http://social.technet.microsoft.com/forums/en-US/itprovistaapps/thread/bd49657a-628e-4f7d-abc0-3300f1e480c5/</a></p>\r\n<p>It seems we can't go on XP from 7 and I don't have /V1 option in schtasks.</p>\r\n<p>I guess I'll have to use XP executable to work around this...</p>",
+    "PostedDate": "2012-04-30T08:27:41.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "830280",
+    "ThreadId": "353477",
+    "Html": "<p>I don't have an XP box to try this on, but I was looking at the dependencies and API calls of schtasks.exe and see that it calls WNetAddConnection2. Can someone try either using that API to connect to the XP box first, or by going to a command line and use \"NET USE \\\\&lt;server&gt; &lt;password&gt; /USER:&lt;domain\\username&gt;\" before calling the library? This is a long shot, but sometime those work.</p>",
+    "PostedDate": "2012-04-30T09:55:52.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

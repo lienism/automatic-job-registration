@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1482146",
+    "ThreadId": "657450",
+    "Html": "<pre><code>Retrieving the COM class factory for component with CLSID {0F87369F-A4E5-4CFC-BD3E-73E6154572DD} failed due to the following error: 8007007e The specified module could not be found. (Exception from HRESULT: 0x8007007E).\n\nThe exception occurred at Microsoft.Win32.TaskScheduler.TaskService.Connect() in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskService.cs:line 802</code></pre>\n\nAny idea what could be happening here? I'm assuming that the Task Service is broken on that system but in what way? Is there a way to repair it?<br />\n",
+    "PostedDate": "2016-08-26T07:37:52.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482191",
+    "ThreadId": "657450",
+    "Html": "That's a strange one. My only guess is that the registration of the COM server that host the native scheduler somehow broke. I have no idea on how to correct that other than rebuilding the system.<br />\n",
+    "PostedDate": "2016-08-27T10:26:12.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482204",
+    "ThreadId": "657450",
+    "Html": "Just a wild guess, run this in PowerShell(as admin):<br />\n<pre><code>mofcomp ([Environment]::GetFolderPath(&quot;System&quot;) + &quot;\\wbem\\SchedProv.mof&quot;)</code></pre>\n\nyou may need to run this first:<br />\n<pre><code>\nset-executionpolicy remotesigned</code></pre>\n\n",
+    "PostedDate": "2016-08-27T14:49:40.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

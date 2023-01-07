@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "704552",
+    "ThreadId": "281118",
+    "Html": "\r\n<p>the reg path &quot;SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\NetworkList\\Profiles&quot; is not exists in WinXP,while clicking the tab &quot;Conditions&quot; in editor will cause null reference exception.</p>\r\n",
+    "PostedDate": "2011-11-28T19:24:53.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "704598",
+    "ThreadId": "281118",
+    "Html": "<p>Thanks for identifying&nbsp;this bug. I'll be sure to correct it in version 1.7.1.</p>",
+    "PostedDate": "2011-11-28T23:41:27.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

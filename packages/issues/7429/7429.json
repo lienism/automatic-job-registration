@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This works as designed. If the Task Scheduler service is not running, when you try to register a task, you will get an error indicating so.",
+    "ClosedDate": "2010-11-29T15:35:17.223-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Envirinment: Windows 7 64-bit, TaskScheduler library release version 1.4.2\nRepro steps:\n1. Disable Task Scheduler service in Windows 7 through the registry\n2. Run test application and create TaskService service = new TaskService();\n3. Check service.Connected property is \"true\" though the service is really disabled\n4. Also probably some other properties has wrong values, eg. HighestSupportedVersion = 1.1, but v1TaskScheduler is null and v2 equals \"true\" and v2TaskService is NOT null.\n \nSo I didn't find a way how to detect that the service is stopped in Windows 7.",
+    "LastUpdatedDate": "2013-05-16T04:49:13.163-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-10-15T22:31:45.733-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskService.Connected property has wrong value when Task scheduler service is disabled",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7429
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

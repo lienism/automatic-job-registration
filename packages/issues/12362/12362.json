@@ -1,0 +1,66 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in 2.5.17 released 4/7/16",
+    "ClosedDate": "2016-04-08T13:02:07.637-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "These two ways are not working, here is my test code, I test it on windows server 2012R2:\n```\nusing System;\nusing System.Runtime.InteropServices;\nusing Microsoft.Win32.TaskScheduler;\n\nnamespace WrapperDemo\n{\n    internal static class Program\n    {\n        public static void Main(string[] args)\n        {\n            try\n            {\n                var action = new ExecAction(@\"C:\\PowerSlim\\test.cmd\");\n                var trigger = new DailyTrigger(1);\n                trigger.StartBoundary = DateTime.Today.AddHours(20);\n                TaskService.Instance.AddTask(\"msaTask\", trigger, action, @\"er\\zz$\", \"\", TaskLogonType.Password);\n            }\n            catch (COMException exception)\n            {\n                Console.WriteLine(exception.ToString());\n            }\n\n        }\n    }\n}\n\n```\nI got exception like following on the console output:\n\nSystem.Runtime.InteropServices.COMException (0x8007052E): The username or password is incorrect. (Exception from HRESULT: 0x8007052E)\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskService.AddTask(String path, Trigger trigger, Action action, String UserId, String Password, TaskLogonType LogonType)\n   at WrapperDemo.Program.Main(String[] args) in C:\\Users\\lhuang2\\Documents\\Visual Studio 2015\\Projects\\WrapperDemo\\WrapperDemo\\Program.cs:line 20",
+    "LastUpdatedDate": "2016-04-08T13:02:07.637-07:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-03-30T07:13:26.737-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Use a Group Managed service account to run a schedule task and make it \"Run whether user is logged on or not\"?",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 12362
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5065,
+      "FileName": "TaskScheduler.zip",
+      "DownloadUrl": ".\\5065"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Please try the assemblies in the attached zip file with the following code and let me know the results:\n```\nTaskService.Instance.AddTask(\"msaTask\", QuickTriggerType.Daily,\n   \"C:\\PowerSlim\\test.cmd\", null, \"er\\zz$\", null, TaskLogonType.Password);\n```",
+      "PostedDate": "2016-04-02T11:39:42.82-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "@dahall, I tried v4.5.2 in the attachment, it works.\nBut we need to work in .net framework 4.0, and we use NuGet to manage this library, so hope this fixing could be available soon. Thanks!",
+      "PostedDate": "2016-04-04T23:34:44.087-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I got a communication from Microsoft saying to move public projects off .NET 4.0 and compile with 4.5.2 as it loads the 4.0 assemblies. I'll go back and include a 4.0 build in the NuGet package though in 2.5.17.",
+      "PostedDate": "2016-04-07T06:41:54.747-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-08T13:02:07.637-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

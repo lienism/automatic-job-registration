@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "512912",
+    "ThreadId": "232404",
+    "Html": "\r\n<p>I'm having an issue creating a task for last week of the selected months.</p>\r\n<p>I searched the discussions and found a thread back in 2009 with a similar issue, except it dealt with FifthWeek.</p>\r\n<p>new MonthlyDOWTrigger is expecting 3 parameters.</p>\r\n<p>If I pass WhichWeek.LastWeek - I get an exception saying only one single week is allowed.</p>\r\n<p>If I pass some other week and then set RunOnLastWeekOfMonth = true - the task gets created for the last week and other week that has been passed when object was initialized.</p>\r\n<p>Basically it's not allowing me to set last week only.</p>\r\n<p>Please help.</p>\r\n",
+    "PostedDate": "2010-10-26T11:54:44.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "512955",
+    "ThreadId": "232404",
+    "Html": "\r\n<p>Thanks for finding this bug. I have corrected it in source code change set 58843 and have updated the assembly available in the download for\r\n<span id=\"x_TitleLabel\">Release 1.5 Beta 3</span>.</p>\r\n",
+    "PostedDate": "2010-10-26T13:12:10.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "513349",
+    "ThreadId": "232404",
+    "Html": "\r\n<p>Thanks dahall,</p>\r\n<p>Just to clarify, if I want to create a task that will run only on last week, do I pass WhichWeek.LastWeek to the&nbsp;MonthlyDOWTrigger?</p>\r\n<p>Or do I pass null or something else for WhichWeek and set&nbsp;RunOnLastWeekOfMonth = true?</p>\r\n<p>Thanks again!</p>\r\n",
+    "PostedDate": "2010-10-27T06:13:57.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "513537",
+    "ThreadId": "232404",
+    "Html": "\r\n<p>Well, I tried to just use WhichWeek.LastWeek when I initialize the trigger object and it worked, so I'm just going to omit using RunOnLastWeekOfMonth parameter.</p>\r\n<p>Thanks for taking care of a new compile this quick dahall!</p>\r\n",
+    "PostedDate": "2010-10-27T11:05:47.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1044586",
+    "ThreadId": "443928",
+    "Html": "Hello,\r<br />\n<br />\nWe've been using this API to manage scheduled tasks (mostly by enabling them and disabling them) on a number of remote servers during software deployments, and it works quite well the majority of the time.\r<br />\n<br />\nOccasionally, however, we run into a situation where a scheduled task gets &quot;hung&quot; (remains in a &quot;Running&quot; state perpetually, even though it's not actually doing any work). This happens most often on servers with slower connections, although it happens on faster servers as well with a decreased regularity.\r<br />\n<br />\nI've been able to recreate the situation relatively easily by creating the conditions outlined here:\r<br />\n<a href=\"http://blogs.technet.com/b/rspitz/archive/2010/11/07/scheduled-tasks-appear-hung-in-the-running-state-on-windows-server-2003-based-systems.aspx\" rel=\"nofollow\">http://blogs.technet.com/b/rspitz/archive/2010/11/07/scheduled-tasks-appear-hung-in-the-running-state-on-windows-server-2003-based-systems.aspx</a>\r<br />\n<br />\nWhile in this state, we can't stop the task (either through the Task.Stop() API call or through the Windows Scheduled Task interface) and are forced to restart the Task Scheduler service to free it up. \r<br />\n<br />\nSince the Windows interface doesn't seem to allow us to stop tasks in this condition I don't have much hope for the API, but I have to ask: Has anyone here encountered this before and found a way to deal with it and/or avoid it when using this API?<br />\n",
+    "PostedDate": "2013-05-16T08:29:50.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291059",
+    "ThreadId": "443928",
+    "Html": "The same scenario has happened to me once before.  I haven't found a solution other than the restart of service.  Mind it's only happened once so haven't given it more time, will let you know if I do.<br />\n",
+    "PostedDate": "2014-08-18T07:50:06.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

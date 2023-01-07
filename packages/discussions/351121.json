@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "819669",
+    "ThreadId": "351121",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I've succesfully used this (fantastic) library&nbsp;to schedule a&nbsp;task which correctly fired off last night as expected and all seemed well. However I've now noticed that the NextRunTime returned by the library is &quot;30/12/1899 00:00:00&quot;, whereas the\r\n value shown in Task Scheduler is &quot;11/04/2012 04:30:00&quot;.&nbsp; I've included a code snippet below which pulls back the task incase I'm doing something wrong in there, although all the other task properties seem to be correct at this stage.</p>\r\n<p>&nbsp;</p>\r\n<p>Task task = ts.GetTask(&quot;usertask-&quot; &#43; Environment.ExpandEnvironmentVariables(&quot;%username%&quot;));</p>\r\n<p>if (task != null)<br>\r\n{<br>\r\n&nbsp;LastRunTime = task.LastRunTime;<br>\r\n&nbsp;LastTaskResult = task.LastTaskResult;<br>\r\n&nbsp;NextRunTime = task.NextRunTime;<br>\r\n&nbsp;State = task.State.ToString();<br>\r\n}</p>\r\n<p>&nbsp;</p>\r\n<p>The problem only occurs after the schedule has run - i.e. when the task is first created the DateTime is read back correctly, but after Windows has run the task and updated the task, an incorrect value is returned.</p>\r\n<p>Any help or pointers would be much appreciated - I'm coding in C# using&nbsp;Visual Studio 2010, targetting .Net 4.0 on Windows 7 x64 and&nbsp;I've downloaded the 1.8.1 release of the library.</p>\r\n<p>Thanks for your time,</p>\r\n<p>Peter</p>\r\n",
+    "PostedDate": "2012-04-04T01:54:55.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819929",
+    "ThreadId": "351121",
+    "Html": "<p>If NextRunTime == new DateTime(1899,&nbsp;12,&nbsp;30) then there is no future time at which the task is scheduled to run. What trigger are you setting for the task?</p>",
+    "PostedDate": "2012-04-04T09:49:44.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "820208",
+    "ThreadId": "351121",
+    "Html": "<p>Hi,</p>\r\n<p>Thanks for your reply.</p>\r\n<p>It's a weekly trigger, and the normal Windows Task Scheduler UI correctly displays the next run time as \"11/04/2012 04:30:00\" (I'm in the UK so, DateTime(2012, 04, 11, 04, 30, 00)).</p>\r\n<p>Peter</p>",
+    "PostedDate": "2012-04-05T00:01:08.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "820590",
+    "ThreadId": "351121",
+    "Html": "<p>I have heard of this problem before on remote servers. That value is pulled directly from the COM object so I really have no way of correcting it in my library. One workaround has been the following:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>DateTime[] nrts = task.GetRunTimes(DateTime.Now, DateTime.Now.AddYears(100), 1);\r\nDateTime nrt = nrts.Length &gt; 0 ? nrts[0] : DateTime.MinValue;\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-04-05T14:37:22.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "821834",
+    "ThreadId": "351121",
+    "Html": "<p>Ok, no problem - thanks for taking the time to look at it.</p>\r\n<p>Thanks for the suggested workaround too :-)</p>\r\n<p>Peter</p>",
+    "PostedDate": "2012-04-10T00:06:31.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

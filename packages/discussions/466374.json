@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1119061",
+    "ThreadId": "466374",
+    "Html": "Hi there,\r<br />\n<br />\nI am trying to use the Task Scheduler Managed Wrapper to schedule runing one of my C# function. Is that possible to do? and how? The example shows how to schedule an exe as the following:<br />\n<pre><code>            td.Actions.Add(new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null));\n</code></pre>\n\nBut can I schedule to run one of my functions in the same C# program?\r<br />\n<br />\nThanks\r<br />\n<br />\nFeng<br />\n",
+    "PostedDate": "2013-11-06T09:25:23.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1119450",
+    "ThreadId": "466374",
+    "Html": "You can either create an executable that accepts parameters as a means to call your method or you can create a COM Handler using my template (<a href=\"https://taskscheduler.codeplex.com/releases/view/29938\" rel=\"nofollow\">https://taskscheduler.codeplex.com/releases/view/29938</a>) as an independent DLL assembly that contains your method and then use the COMHandlerAction to invoke it from the task.<br />\n",
+    "PostedDate": "2013-11-06T16:50:51.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1426190",
+    "ThreadId": "638169",
+    "Html": "is it possible return a value during the &quot;running&quot; state of scheduled task from an .exe?\r<br />\n<br />\nA sort of notification (the precentage of completion e.g.)...\r<br />\nDoes exist a way to do that in order to get that value into the Task object?<br />\n",
+    "PostedDate": "2015-05-19T03:06:22.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426419",
+    "ThreadId": "638169",
+    "Html": "There is not a way to expose anything from an .exe except for the final result code. If you need to expose in-process information, check out the COMHandlerAction which allows you to write custom code that gets run in-process as a COM object to the Task Scheduler. In the Downloads section, there is a project template to help you write one.<br />\n",
+    "PostedDate": "2015-05-19T09:10:14.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426450",
+    "ThreadId": "638169",
+    "Html": "thank you to have driven me on the right path :-)<br />\n",
+    "PostedDate": "2015-05-19T13:48:10.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426637",
+    "ThreadId": "638169",
+    "Html": "i took a look at the interface &quot;ITaskHandler&quot; and it has only these methods:<br />\n<br />\n-Pause: Called to pause the COM handler.<br />\n-Resume: Called to restart the COM handler.<br />\n-Start: Required. Called to start the COM handler.<br />\n-Stop: Required. Called to stop the COM handler.<br />\n<br />\ni would need something that should be fired continuously,  a sort of &quot;notify&quot; event.<br />\nDo you think is it possible using any &quot;workaround&quot; to simulate this behaviour?<br />\nany ideas?<br />\n",
+    "PostedDate": "2015-05-20T07:00:16.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426678",
+    "ThreadId": "638169",
+    "Html": "You will want to use the <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa381373(v=vs.85).aspx\" rel=\"nofollow\">ITaskHandlerStatus interface</a> to communicate back.<br />\n",
+    "PostedDate": "2015-05-20T11:09:41.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:59:44.87-07:00"
+  }
+]

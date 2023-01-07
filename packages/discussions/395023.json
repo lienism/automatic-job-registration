@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "910569",
+    "ThreadId": "395023",
+    "Html": "\r\n<p>Hi All,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am trying to schedule a job from a windows phone app. The flow is :</p>\r\n<p>&nbsp;</p>\r\n<p>WP7-&gt; WCF -&gt; scheduletask</p>\r\n<p>When i run the task from the wcf test stub (calling it from a asp.net page) the job is scheduled fine how ever if i make a call to my wcf service from a WP7 project i am getting a error as below :&nbsp; (i am running the task as an administrator in both\r\n cases)</p>\r\n<p>Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)).</p>\r\n<p>Please advise.</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n<p>BlackMask</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-09-10T11:55:51.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "910666",
+    "ThreadId": "395023",
+    "Html": "<p>The TaskService object, by default, uses impersonation to authorize access. If the WP7 device is not providing a valid Windows session with credentials, you will need to make sure that ASP.NET is connecting to TaskService using authorized credentials. There are some other discussions for this project around ASP.NET that may be worth looking at.</p>",
+    "PostedDate": "2012-09-10T16:17:15.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "910738",
+    "ThreadId": "395023",
+    "Html": "\r\n<p>Thanks</p>\r\n<p>BM</p>\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-09-10T22:53:18.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

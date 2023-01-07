@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-12T17:01:15.173-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nI'm creating a simple planned task like this:\n\n```\n            using (TaskService ts = new TaskService())\n            {\n                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = \"AutoRestartTest\";\n\n                LogonTrigger mainTrigger = new LogonTrigger();\n                mainTrigger.ExecutionTimeLimit = TimeSpan.FromDays(30);\n                mainTrigger.Repetition.Interval = TimeSpan.FromMinutes(1);\n\n                td.Triggers.Add(mainTrigger);\n\n                td.Actions.Add(new ExecAction(@\"C:\\example.exe\", null, null));\n\n                ts.RootFolder.RegisterTaskDefinition(@\"TestTask1\", td);\n             }\n```\n\nAnd I am getting this exception at the last line of the code:\n\nAccess Denied (Exception of HRESULT: 0x80070005 (E_ACCESSDENIED))\n\nI have created a Manifest-File to take care of this option being set to this:\n\n```\n        <requestedExecutionLevel level=\"highestAvailable\" uiAccess=\"false\" />\n```\n\nPlease help!\nWhat am I doing wrong?\n\nGreetings,\n\nTom\n\nps. I dont know why code inserted in the codeblock remains black/white.",
+    "LastUpdatedDate": "2016-04-12T17:01:15.173-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-04-11T10:09:13.417-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Access Denied Exception when creating simple planned task",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12370
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Please look over the information at https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity. My guess is that the LogonTrigger with no user specified requires higher permissions than the running process has. Please let me know if that page answers your question. Also check the Microsoft pages for more information on registering tasks. The error you're seeing is from the native Microsoft library and not this wrapper.",
+      "PostedDate": "2016-04-11T10:51:27.147-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hello,\r\n\r\nThanks for your quick reply.\r\n\r\nSadly, the link doesnt help. I want to create a planned task for the user who is running my application. The site from your link only explains different situations.\r\n\r\nIs there an example which does create a task for the current user who runs the application?\r\n\r\nThis should be the easiest use of the wrapper.\r\n\r\nGreetings,\r\n\r\nTom\r\n\r\n",
+      "PostedDate": "2016-04-12T05:52:22.047-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Okay I found out that it had to do with the fact that I'm defining a LogonTrigger without setting its \"UserId\" property. When I set it to the currently logged on user, it entered the task to the task scheduler and didnt throw the exception.\r\n\r\nI guess it has something to do with when the UserId isnt defined, in the Task-scheduler you would choose the option \"at the logon of every user\" which surely depends on user rights.",
+      "PostedDate": "2016-04-12T10:01:07.603-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That is correct. Creating a LogonTrigger without specifying a UserId value would apply that trigger to all users. It makes sense that an unprivileged account should not be able to create a task that affects other users. Thanks for documenting your solution.",
+      "PostedDate": "2016-04-12T17:01:01.063-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-12T17:01:15.173-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

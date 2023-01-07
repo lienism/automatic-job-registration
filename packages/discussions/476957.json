@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1140981",
+    "ThreadId": "476957",
+    "Html": "I've updated the version of the TaskScheduler NuGet package our code uses to 2.0.0 but now it seems like the NuGet package has added a reference in our project to a DLL called NCrontab.dll.\r<br />\n<br />\nNCrontab.dll should be removed from the NuGet package since the standalone ZIP downloaded from the Downloads page doesn't include it and doesn't seem to be required anyway.<br />\n",
+    "PostedDate": "2013-12-23T12:38:48.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1150513",
+    "ThreadId": "476957",
+    "Html": "Thank you. I have corrected this and when I post the 2.0.3 NuGet package it will be remediated.<br />\n",
+    "PostedDate": "2014-01-07T09:04:02.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:40.86-07:00"
+  }
+]

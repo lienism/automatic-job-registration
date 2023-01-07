@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "223522",
+    "ThreadId": "65702",
+    "Html": "<p>Hi,</p>\r\n<p>I'm creating&nbsp;a task that runs at&nbsp;a specific day of the week,&nbsp;at a specific time of the day.</p>\r\n<p>When creating&nbsp;this task&nbsp;on&nbsp;computer &quot;A&quot; (a server),&nbsp;from&nbsp;TaskScheduler code running on&nbsp;computer &quot;B&quot; (my laptop),&nbsp;if the two computers are in different time zones, can anyone tell me whether the task will be scheduled using Computer &quot;A&quot;'s local date/time settings, or Computer &quot;B&quot;'s local date/time settings?</p>\r\n<p>Basically,&nbsp;if my pc is in the Eastern time zone, and I schedule a task from my pc to run at 6 am on a computer in Central Standard time, will the job&nbsp;be scheduled at 6AM EST, or 6AM CST?</p>\r\n<p>Thanks for your help!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-14T07:46:30.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "223973",
+    "ThreadId": "65702",
+    "Html": "<p>You found a bug in the V2 handler for triggers! In looking at the help for ITrigger.StartBoundary I found that the string format it is looking for should specify the time zone. I did not implement it. Even if you specify a time zone in your DateTime value, it won't get interpretted right back into the COM object. I have corrected it in the code for the next release. For now, it will always use the local time so you will have to do your own time zone conversions until I update the binary. Thanks for the find!</p>",
+    "PostedDate": "2009-08-15T22:38:14.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "225502",
+    "ThreadId": "65702",
+    "Html": "<p>Great! Thanks for the info. Glad I could help, looking forward to the next build!</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-08-19T09:39:30.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

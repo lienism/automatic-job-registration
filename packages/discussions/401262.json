@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "934265",
+    "ThreadId": "401262",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>whenever I try to create tasks from an ASP.NET web app on a W2008 R2 server, I receive this exception:</p>\r\n<p><span style=\"color:#ff0000\">&nbsp;</span></p>\r\n<pre>System.Runtime.InteropServices.COMException: (39,8):Command:</pre>\r\n<p>&nbsp;</p>\r\n<p><span>The code I wrote resembles the samples I found here, and I already tried a lot of permutations of the&nbsp;<strong><em>RegisterTaskDefinition</em></strong> method, so I cannot understand what's the problem. Basically I call\r\n<em><strong>NewTask</strong></em>, add one action and one trigger, a start boundary and that's all, and finally I call\r\n<strong><em>RegisterTaskDefinition</em></strong>. I tried to call it without specifying credentials, or with my credentials, or with SYSTEM userId, with all the LogonTypes, I really tried a lot of things there, so I guess it must be something else.\r\n</span></p>\r\n<p><span>If I create a task manually from the Task Scheduler UI I have no problems, and then if I try to modify the same task from the same ASP.NET web app I'm building everything works fine, the problem is only limited to the task creation phase. The ASP.NET\r\n app impersonates the same user account I use to create and edit the tasks manually from the Task Scheduler UI.</span></p>\r\n<p><span>The very same code works fine when I use on my dev machine, which is an XP (hence using Task Scheduler 1.0).</span></p>\r\n<p><span>Any thoughts?</span></p>\r\n<p><span>Thanks</span></p>\r\n<p>Wasp</p>\r\n",
+    "PostedDate": "2012-10-30T08:17:07.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "934823",
+    "ThreadId": "401262",
+    "Html": "<p>Update: I was able to solve my problem moving from <strong><em>RegisterTaskDefinition</em></strong>&nbsp;to <strong><em>RegisterTask</em></strong>&nbsp;method (Xml definition).&nbsp;</p>",
+    "PostedDate": "2012-10-31T08:29:36.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

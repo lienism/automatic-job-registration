@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "840956",
+    "ThreadId": "357141",
+    "Html": "\r\n<p>I am unable to change the days interval value for an XP machine regardless of where I try to set the value. I am successfully setting a scheduled task but I just don't want to run the script everyday and I do want this value to be user selectable (nudDays.value)\r\n My code snippet is below:</p>\r\n<p>Dim ts As New TaskService</p>\r\n<p>Dim td As TaskDefinition = ts.NewTask&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>Dim dt As New DailyTrigger(2)</p>\r\n<p>td.RegistrationInfo.Description = &quot;pstBackup&quot;</p>\r\n<p>dt.StartBoundary = dtpTime.Value</p>\r\n<p>dt.DaysInterval = 2 'CShort(nudDays.Value)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>td.Triggers.Add(dt)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>td.Actions.Add(New ExecAction(BATFILE))&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ts.RootFolder.RegisterTaskDefinition(&quot;pstBackup&quot;, td)</p>\r\n",
+    "PostedDate": "2012-05-25T07:57:21.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848528",
+    "ThreadId": "357141",
+    "Html": "<p>Fixed in changeset 78635. Thanks for reporting this bug.</p>",
+    "PostedDate": "2012-06-13T10:25:36.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

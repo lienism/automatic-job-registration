@@ -1,0 +1,116 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-03-04T19:08:22.56-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "If I try to edit a trigger (let's say the time) of an existing scheduled task using this code:\n \n      using (var taskEditDialog = new TaskEditDialog(_tlv.Tasks[_tlv.SelectedIndex], true, false))\n      {\n        taskEditDialog.RegisterTaskOnAccept = true;\n \n        if (taskEditDialog.ShowDialog() == DialogResult.OK)\n        {\n          var t = taskEditDialog.Task;\n        }\n      }\n \nI get the following error:\n \nSystem.NullReferenceException was unhandled\n  Message=Object reference not set to an instance of an object.\n  Source=Microsoft.Win32.TaskScheduler\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n       at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n       at System.Windows.Forms.Button.WndProc(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.RunDialog(Form form)\n       at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)\n       at System.Windows.Forms.Form.ShowDialog()\n       at TaskSchedulerTest.Form1.EditTask() in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Form1.cs:line 109\n       at TaskSchedulerTest.Form1.btnEdit_Click(Object sender, EventArgs e) in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Form1.cs:line 95\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n       at System.Windows.Forms.Button.WndProc(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.Run(Form mainForm)\n       at TaskSchedulerTest.Program.Main() in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Program.cs:line 18\n       at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)\n       at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\n       at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\n       at System.Threading.ThreadHelper.ThreadStart()\n  InnerException:",
+    "LastUpdatedDate": "2013-05-16T04:49:09.847-07:00",
+    "PlannedForRelease": "Release 1.7.1",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-03-02T11:57:49.503-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Can't edit existing tasks, Exception thrown",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9998
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3275,
+      "FileName": "TaskSchedulerTest.zip",
+      "DownloadUrl": ".\\3275"
+    },
+    {
+      "FileId": 3276,
+      "FileName": "Form1.cs",
+      "DownloadUrl": ".\\3276"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "First, the third parameter of the constructor for TaskEditDialog sets the RegisterTaskOnAccept property. You could eliminate setting the property separately by simply setting the constructor's parameter to True.\r\n\r\nSecondly, I have run this code on both Win7 and XP without any problems. I would check to make sure the value of _tlv.Tasks[_tlv.SelectedIndex] is returning a valid task and that the Task.Definition.Principal does not specify LogonType that requires a password. If so, then the task cannot be automatically re-registered and needs to be done manually after getting the TaskDefinition back from the TaskEditDialog.",
+      "PostedDate": "2012-03-02T16:57:27.063-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "OK, I have update the code:\r\n  using (var taskEditDialog = new TaskEditDialog(_tlv.Tasks[_tlv.SelectedIndex], true, true))\r\n      {\r\n        if (taskEditDialog.ShowDialog() == DialogResult.OK)\r\n        {\r\n          var t = taskEditDialog.Task;\r\n        }\r\n      }\r\n\r\nNo change in behavior, same exception.\r\nThe value if the selected object is of course set, because the edit dialog show the actual Task. As soon as I edit the Trigger Time and click Ok->Ok it crashes. The scheduled task is set to run with my own account, the very same I run my code with.\r\n\r\nBTW, I just noticed that the \"Run Times\" tab in the edit dialog says:\r\nUnable to show the run times for this task.\r\nError: System.NullReferenceException: Onject reference not set to an instance of an object. at Microsoft.Win32.TaskScheduler.TaskFolder.REgisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r\n\r\n",
+      "PostedDate": "2012-03-03T09:56:10.707-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "A small update, I don't even have to change anything. Just open the TaskEdit dialog and  click OK, I get the same Exception.",
+      "PostedDate": "2012-03-03T10:02:42.477-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-03-03T10:07:48.82-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have attached a simple test program that crashes for me all the time. One thing to note is that is uses folders. What am I doing wrong that causes it to crash?\r\n",
+      "PostedDate": "2012-03-03T10:07:50.363-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-03-03T23:04:47.713-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I think your problem has something to do with how you use the 'using' statement all over and the objects are disposed before they can re-register the task and the incorrect use of the HighestSupportVersion test for systems later than XP. I have uploaded a new Form1.cs file with much simpler code using class properties that does not throw the exception. Please try and let me know if your problem still persists.",
+      "PostedDate": "2012-03-03T23:04:59.597-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Great, that seems to work better. But How can I persist the changes back to the TaskService?\r\nEdit works on the Task I have given to the TaskEditDialog, but how to save it back?",
+      "PostedDate": "2012-03-04T13:50:27.21-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Once you have a task, passing it to the TaskEditDialog with the RegisterTaskOnAccept set to true or through the third parameter on the constructor, will post the changes back to TaskService. If you need to make changes to a task outside of the editor you can call the RegisterChanges method on the task.",
+      "PostedDate": "2012-03-04T19:07:18.16-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-03-04T19:08:09.84-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-03-04T19:08:22.56-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:02.86-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:09.847-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in 2.5.8. Thanks for identifying the problem and the fix!",
+    "ClosedDate": "2015-12-21T18:15:10.533-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nI need to support first version of task and use serialization to save task data. I catch an exception \"Value cannot be null.\" when try to create task with daily trigger from saved data. \nCode to reproduce:\n```\n                using (TaskService ts = new TaskService(null, null, null, null, true))\n                {\n                    TaskDefinition td = ts.NewTask();\n                    td.Triggers.Add(new DailyTrigger(1));\n                    td.Actions.Add(new ExecAction(\"notepad.exe\"));\n                    const string taskName = \"Test\";\n                    ts.RootFolder.RegisterTaskDefinition(taskName, td);\n                    Task t = ts.GetTask(taskName);\n                    var xmlData = t.Xml;\n                    ts.RootFolder.DeleteTask(taskName);\n\n                    TaskDefinition newtd = ts.NewTask();\n\n                    //exception here\n                    newtd.XmlText = xmlData;\n                    ts.RootFolder.RegisterTaskDefinition(\"Test\", newtd);\n                }\n```\nException: Value cannot be null. Parameter name: unboundTrigger\nStackTrace\n```\n   at Microsoft.Win32.TaskScheduler.TriggerCollection.Add(Trigger unboundTrigger)\n   at Microsoft.Win32.TaskScheduler.TriggerCollection.System.Xml.Serialization.IXmlSerializable.ReadXml(XmlReader reader)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObject(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObjectProperties(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.System.Xml.Serialization.IXmlSerializable.ReadXml(XmlReader reader)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObject(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObjectFromXmlText(String xml, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.set_XmlText(String value)\n   at WinSheduleTest.Program.Main(String[] args) in c:\\Users\\AKolpako\\Documents\\Visual Studio 2013\\Projects\\WinSheduleTest\\WinSheduleTest\\Program.cs:line 31\n```\nThe error occurs only for Daily Triggers with 1 day interval.\nI guess the cause is here:\n```\n\tpublic sealed class DailyTrigger : Trigger, ICalendarTrigger, ITriggerDelay, IXmlSerializable\n\t{\n...\t\tvoid WriteMyXml(System.Xml.XmlWriter writer)\n\t\t{\n\t\t\tif (this.DaysInterval != 1)\n\t\t\t{\n\t\t\t\twriter.WriteStartElement(\"ScheduleByDay\");\n\t\t\t\twriter.WriteElementString(\"DaysInterval\", this.DaysInterval.ToString());\n\t\t\t\twriter.WriteEndElement();\n\t\t\t}\n\t\t}\n...\n\t}\n```\nI use old version of library - 2.3. Last version do not solved the issue and throw an additional exception:\n```\nException Exception has been thrown by the target of an invocation.\nInnerException: This property cannot be set on an unregistered task\nStackTrace:\n   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)\n   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)\n   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObjectProperties(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.TaskRegistrationInfo.System.Xml.Serialization.IXmlSerializable.ReadXml(XmlReader reader)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObject(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObjectProperties(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.System.Xml.Serialization.IXmlSerializable.ReadXml(XmlReader reader)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObject(XmlReader reader, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.XmlSerializationHelper.ReadObjectFromXmlText(String xml, Object obj, PropertyConversionHandler handler)\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.set_XmlText(String value)\n   at WinSheduleTest.Program.Main(String[] args) in ...\n```",
+    "LastUpdatedDate": "2017-12-11T21:32:31.41-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-12-21T07:54:40.41-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Supports serialization to XML for 1.0 tasks",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12309
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,85 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This issue only affected tasks under the V1 engine that are not found as named. An exception was thrown and not handled. Line 132 of TaskService.cs was modified to handle the exception so that GetTask will always return null if the specified task is not found.",
+    "ClosedDate": "2009-09-29T20:14:05.71-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi!\n \nit.s common practice for methods like GetTask(taskName); \nto return NULL when task wasn't found because it's expected value for situation when task is not available.\n \nThank's",
+    "LastUpdatedDate": "2013-05-16T04:49:15.097-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2009-09-23T08:17:17.423-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "FileNotFoundException in TaskService.GetTask(taskName);",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 4328
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "                var exisingTask = ts.GetTask(taskName);\r\n                if (exisingTask != null)\r\n                {\r\n                    ts.RootFolder.DeleteTask(taskName);\r\n                }",
+      "PostedDate": "2009-09-23T08:17:50.58-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I also found this problem when I tried my application on Windows XP",
+      "PostedDate": "2009-09-23T17:33:22.36-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This is the error: (as taskPath I used ---> @\"\\\"+taskName <----   theTask = backupTaskService.GetTask(@\"\\\"+nameOfTask);\r\n\r\nNo problems with Windows Vista/7\r\n\r\nSee the end of this message for details on invoking \r\njust-in-time (JIT) debugging instead of this dialog box.\r\n\r\n************** Exception Text **************\r\nSystem.IO.FileNotFoundException: The system cannot find the file specified. (Exception from HRESULT: 0x80070002)\r\n   at Microsoft.Win32.TaskScheduler.V1Interop.ITaskScheduler.Activate(String Name, Guid& riid)\r\n   at Microsoft.Win32.TaskScheduler.TaskService.GetTask(ITaskScheduler iSvc, String name)\r\n   at Microsoft.Win32.TaskScheduler.TaskService.GetTask(String taskPath)\r\n   at MailBrowserBackup.ScheduleClass.getTriggerProperties()\r\n   at MailBrowserBackup.ScheduleWnd..ctor()\r\n   at MailBrowserBackup.MainWnd.schedulerBtn_Click(Object sender, EventArgs e)\r\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\r\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r\n   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\r\n   at System.Windows.Forms.Control.WndProc(Message& m)\r\n   at System.Windows.Forms.ButtonBase.WndProc(Message& m)\r\n   at System.Windows.Forms.Button.WndProc(Message& m)\r\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n\r\n",
+      "PostedDate": "2009-09-23T17:45:21.983-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-09-24T01:02:00.397-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-09-29T20:11:52.56-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-09-29T20:14:05.71-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-07T01:30:47.437-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:09.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:15.097-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

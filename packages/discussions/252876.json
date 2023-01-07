@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "593215",
+    "ThreadId": "252876",
+    "Html": "\r\n<p>Thank you for developing this interface and all of the work that you have put in.&nbsp; I have been using the original version V1 wrapper for several years now with great success.&nbsp;</p>\r\n<p>I am now in the process of install this version into my system and I have run into a performance issue while trying to access V1 task schedule.&nbsp; My process takes a list or task and then looks them up in the scheduler to get the current status.&nbsp;\r\n At present some of the servers have 200&#43; tasks in the sechedule and doing a lookup take 1&#43; seconds per query.&nbsp;&nbsp; It appears that this is caused by scanning the entire task list for the name requested.&nbsp; I am not experencing the same performance\r\n issues with the original version.&nbsp;</p>\r\n<p>Until I get the V1 options working I am not able to test the V2 actions.</p>\r\n<p>Do you have any recommendations on how to speed up the task lookup action?</p>\r\n",
+    "PostedDate": "2011-04-06T17:50:07.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "595637",
+    "ThreadId": "252876",
+    "Html": "<p>In source code version 65722 I have optimized a couple of routines that may speed up your access. Please try and let me know. If not, please post the code you are using to do the task lookup so I can see which methods are being called.</p>\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2011-04-11T19:36:42.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

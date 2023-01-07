@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1319593",
+    "ThreadId": "571428",
+    "Html": "I am trying to set title of TriggerEditDialog, before displaying it,i,e, before calling ShowDialog().How can I set it?<br />\n",
+    "PostedDate": "2014-11-06T01:47:11.82-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1319671",
+    "ThreadId": "571428",
+    "Html": "I am able to resolve in following way.<br />\n<pre><code>TriggerEditDialog triggerDlg = new TriggerEditDialog(trigger, false);\nForm form = triggerDlg.FindForm();\nif (form !=null)\n{\n  form.Text = &quot;Edit Trigger&quot;;\n}\ntriggerDlg.ShowDialog();</code></pre>\n\n",
+    "PostedDate": "2014-11-06T07:05:00.35-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1319726",
+    "ThreadId": "571428",
+    "Html": "This is pretty complicated. You could also just set the Text property.<br />\n<pre><code>TriggerEditDialog triggerDlg = new TriggerEditDialog(trigger, false) { Text = &quot;Edit Trigger&quot; };</code></pre>\n\n",
+    "PostedDate": "2014-11-06T09:32:58.113-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-11-06T09:33:09.487-08:00"
+  }
+]

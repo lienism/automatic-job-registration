@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "592885",
+    "ThreadId": "252797",
+    "Html": "\r\n<p>Hi. &nbsp;First of all, great work. &nbsp;This code helps me a lot.</p>\r\n<p>(Sorry for my english, i know it's bad).</p>\r\n<p>Now i'm having a problem. &nbsp;I have an asp.net web forms app. &nbsp;I allow users to schedule some heavy duty tasks to be performed on not-working hours in the server. &nbsp;But currently i can only create the task; the users cannot edit the schedule.\r\n &nbsp;Any tip for do this? &nbsp;</p>\r\n<p>Thank you so much.</p>\r\n",
+    "PostedDate": "2011-04-06T09:06:29.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "593183",
+    "ThreadId": "252797",
+    "Html": "<p>There is not an ASP.NET control for editing a task in the current library. However, the TaskService object should be able to be instantiated from within ASP.NET and you could create a series of web forms to edit tasks and then you could register the updates. If you do this, please consider contributing those web forms back to this project so others can benefit from them.</p>",
+    "PostedDate": "2011-04-06T16:30:29.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

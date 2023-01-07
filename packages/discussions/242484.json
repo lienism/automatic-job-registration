@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "552238",
+    "ThreadId": "242484",
+    "Html": "\r\n<p>Is there a simple, consistent way to open the Task Scheduler itself from C# or VB.Net, no matter what OS you're on? I thought this would work on any system, but it doesn't on Windows 7, although it works on XP:</p>\r\n<p>For Each oTask As TaskScheduler.Task In ts.RootFolder.Tasks</p>\r\n<p>&nbsp;&nbsp; bTasksFound = True<br>\r\n&nbsp;&nbsp; Process.Start(&quot;explorer.exe &quot; &amp; jnFunctions.jnGetDirectoryPathPart(oTask.Path))<br>\r\n<br>\r\n&nbsp; 'Just run once<br>\r\n&nbsp; Exit For</p>\r\n<p>Next</p>\r\n<p>&nbsp;</p>\r\n<p>Start, Run commands available:</p>\r\n<p>Windows 7: &quot;task&quot;</p>\r\n<p>XP: &quot;control schedtasks&quot;</p>\r\n<p>Vista: &quot;taskschd.msc&quot;</p>\r\n<p>&nbsp;</p>\r\n<p>Any ideas for something consistent?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-01-19T15:45:03.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "552325",
+    "ThreadId": "242484",
+    "Html": "\r\n<p>I am not 100% confident, but I believe the following code should work on all versions XP and later:</p>\r\n<p>Process.Start(&quot;control.exe&quot;, &quot;schedtasks&quot;);</p>\r\n",
+    "PostedDate": "2011-01-19T20:19:11.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554603",
+    "ThreadId": "242484",
+    "Html": "\r\n<p>Just a follow-up to this, there appears to not be one command that works on all machines (which is quite dumb of Microsoft). Stuff like this baffles me. There's no reason to not have an API for this.</p>\r\n<p>That said, I simply created Select Case code based on the OS, and I call different commands for different OS. As a backup, I have an INI setting that can be configured if none of my built-in logic works.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-01-24T12:15:14.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554667",
+    "ThreadId": "242484",
+    "Html": "\r\n<p>If you will post that code, I will include it in the library in the TaskService class as a static method.</p>\r\n",
+    "PostedDate": "2011-01-24T14:08:59.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

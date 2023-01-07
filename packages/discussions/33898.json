@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "112305",
+    "ThreadId": "33898",
+    "Html": "In the previous version of Task Scheduler 1.0 wrapper on CodeProject there was a method&nbsp;SetAccountInformation() for Task object.<br>\r\nFor now I didn't find any way to specify account AND password for a given task since there is only one&nbsp;SetAccountInformation() call in TaskPrincipal.UserId property.<br>\r\nAssuming we're using Windows XP with TS 1.0 there is no way to run task under defined account.\r\n",
+    "PostedDate": "2008-08-20T05:49:34.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "115111",
+    "ThreadId": "33898",
+    "Html": "Hi, try my updated method TaskFolder.RegisterTaskDefinition(string Path, TaskDefinition definition, TaskCreation createType, string UserId, string password, TaskLogonType LogonType, string sddl) in TaskFolder.cs:<br>\r\n<br>\r\n<pre>public Task RegisterTaskDefinition(string Path, TaskDefinition definition, TaskCreation createType, string UserId,<br>                                   string password, TaskLogonType LogonType, string sddl)<br>{<br>    if (v2Folder != null)<br>    {<br>        return<br>                new Task(v2Folder.RegisterTaskDefinition(Path, definition.v2Def, (int) createType, UserId, password,<br>                                                         LogonType, sddl));<br>    }<br><br>    TaskFlags flags = definition.v1Task.GetFlags();<br><br>    IntPtr pwd;<br>    switch (LogonType)<br>    {<br>        case TaskLogonType.Group:<br>        case TaskLogonType.S4U:<br>        case TaskLogonType.None:<br>            throw new NotV1SupportedException(&quot;This LogonType is not supported on Task Scheduler 1.0.&quot;);<br>        case TaskLogonType.InteractiveToken:<br>            flags |= TaskFlags.RunOnlyIfLoggedOn;<br>            flags |= TaskFlags.Interactive;<br>            if (String.IsNullOrEmpty(UserId)) UserId = WindowsIdentity.GetCurrent().Name;<br>            definition.v1Task.SetAccountInformation(UserId, IntPtr.Zero);<br>            break;<br>        case TaskLogonType.ServiceAccount:<br>            if (String.IsNullOrEmpty(UserId)) definition.v1Task.SetAccountInformation(String.Empty, IntPtr.Zero);<br>            else definition.v1Task.SetAccountInformation(UserId, IntPtr.Zero);<br>            break;<br>        case TaskLogonType.InteractiveTokenOrPassword:<br>            pwd = Marshal.StringToCoTaskMemUni(password);<br>            definition.v1Task.SetAccountInformation(UserId, pwd);<br>            Marshal.FreeCoTaskMem(pwd);<br>            flags |= TaskFlags.Interactive;<br>            break;<br>        case TaskLogonType.Password:<br>            pwd = Marshal.StringToCoTaskMemUni(password);<br>            definition.v1Task.SetAccountInformation(UserId, pwd);<br>            Marshal.FreeCoTaskMem(pwd);<br>            break;<br>        default:<br>            break;<br>    }<br>    definition.v1Task.SetFlags(flags);<br><br>    switch (createType)<br>    {<br>        case TaskCreation.Create:<br>        case TaskCreation.CreateOrUpdate:<br>        case TaskCreation.Disable:<br>        case TaskCreation.Update:<br>            if (createType == TaskCreation.Disable) definition.Settings.Enabled = false;<br>            definition.V1Save(Path);<br>            break;<br>        case TaskCreation.DontAddPrincipalAce:<br>            throw new NotV1SupportedException(&quot;Security settings are not available on Task Scheduler 1.0.&quot;);<br>        case TaskCreation.IgnoreRegistrationTriggers:<br>            throw new NotV1SupportedException(&quot;Registration triggers are not available on Task Scheduler 1.0.&quot;);<br>        case TaskCreation.ValidateOnly:<br>            throw new NotV1SupportedException(&quot;Xml validation not available on Task Scheduler 1.0.&quot;);<br>        default:<br>            break;<br>    }<br><br>    return new Task(definition.v1Task);<br>}</pre>\r\nArcao.\r\n",
+    "PostedDate": "2008-09-01T04:18:12.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "125160",
+    "ThreadId": "33898",
+    "Html": "This has been added to the current release.\r\n",
+    "PostedDate": "2008-10-14T16:52:19.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

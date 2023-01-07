@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "749459",
+    "ThreadId": "300519",
+    "Html": "\r\n<p>TaskService ts = new TaskService(server);<br>\r\nTask t = ts.FindTask(task, true);<br>\r\nt.Enabled = enable;<br>\r\n<br>\r\nI am trying to enable / disable a task running on a Windows Server 2003 machine from Windows XP. I developed the above code on a Windows 7 box where it works. However when I copy the executable over to Windows XP, the variable &quot;t&quot; on line 3 is null. I have\r\n tried forcing version 1, but that did not seem to help.</p>\r\n<p>I also tried:</p>\r\n<p>t = ts.RootFolder.GetTasks(new Regex(task))[0];</p>\r\n<p>Which does not work either. The variable &quot;t&quot; is still null.</p>\r\n<p>Note: Server, task, and enable&nbsp;are variables from the command line arguments.</p>\r\n",
+    "PostedDate": "2012-02-09T11:41:18.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "749483",
+    "ThreadId": "300519",
+    "Html": "<p>Running this code as well produces correct results on Windows 7, and nothing on Windows XP.</p>\r\n<p>foreach (Task item in ts.RootFolder.GetTasks()) {</p>\r\n<p>&nbsp; Console.WriteLine(\"\\t\" + item.Name); <br />&nbsp; Console.WriteLine(\"\\t\" + item.Path);<br />}</p>",
+    "PostedDate": "2012-02-09T11:46:58.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "749588",
+    "ThreadId": "300519",
+    "Html": "<p>Hmmm interesting. Querying this server with schtasks produces no results either.&nbsp;</p>\r\n<p>Server name redacted:</p>\r\n<p>C:\\&gt;schtasks /s ********** /query<br />INFO: There are no scheduled tasks present in the system.</p>",
+    "PostedDate": "2012-02-09T12:11:39.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "750353",
+    "ThreadId": "300519",
+    "Html": "<p>This often is related to the current user account not having permissions to view tasks on the target system. Try specifying user credentials in the other parameters of the TaskService constructor.</p>",
+    "PostedDate": "2012-02-09T16:28:17.557-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "752360",
+    "ThreadId": "300519",
+    "Html": "<p>I thought of that as well. However in both cases I am the logged on user. On both the windows 7 box, and the XP box. Also in addition I am an administrator on both of those boxes and the 2003 server. Schtasks and TaskService both work on the Windows 7 box, but not the XP box.</p>",
+    "PostedDate": "2012-02-10T05:23:50.98-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "753666",
+    "ThreadId": "300519",
+    "Html": "<p>Logged into the 2003 Server with the same credentials as when you are logged into XP, are you able to run schtasks from the command line and get results? If so, then this has to be permissions problem with either remote access, registry access, or user access. This scenario is one that has worked for myself and many others.</p>",
+    "PostedDate": "2012-02-10T10:48:56.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "753992",
+    "ThreadId": "300519",
+    "Html": "<p>Actually I think I figured out what is going on. I ran wireshark and filtered for the 2003 server from the xp box. Both schtasks and this lib went through these same steps running from the XP box:</p>\n<p>1) query HKLM\\SOFTWARE\\Microsoft\\SchedulingAgent\\TasksFolder<br /> 2) query HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRoot<br /> 3) Then it trys to load the files located at \\Windows\\Tasks\\*</p>\n<p>However, the tasks on this server are located at \\Windows\\System32\\Tasks\\*</p>\n<p>However, running from my windows 7 box produced an altogether different wireshark trace. It is using&nbsp;<a href=\"http://en.wikipedia.org/wiki/DCE/RPC\">http://en.wikipedia.org/wiki/DCE/RPC</a>&nbsp;instead of opening the registry and files directly.</p>\n<p>Would changing the value of the&nbsp;TasksFolder fix this for the XP box?&nbsp;</p>",
+    "PostedDate": "2012-02-10T12:10:30.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "754044",
+    "ThreadId": "300519",
+    "Html": "<p>Well I went ahead and updated that registry entry. I see the tasks coming back in wireshark. However my the library still does not find the task. How odd.</p>\r\n<p>Here is what I see in Wireshark:</p>\r\n<ol>\r\n<li>SMB Trans2 Request, FIND_FIRST2, Pattern: \\Windows\\System32\\Tasks\\*</li>\r\n<li>SMB<span> </span>Trans2 Response, FIND_FIRST2, Files: . .. Microsoft SIP IVR Tester&nbsp;</li>\r\n</ol>\r\n<p>The \"SIP IVR Tester\" is the one I am looking for.</p>",
+    "PostedDate": "2012-02-10T12:23:55.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "761231",
+    "ThreadId": "300519",
+    "Html": "<p>I gave up, and used PsExec to remotely execute schtasks on the remote server.&nbsp;</p>",
+    "PostedDate": "2012-02-13T12:30:45.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

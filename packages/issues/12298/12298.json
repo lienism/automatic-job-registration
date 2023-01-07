@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-12-07T14:30:40.633-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I've noticed a difference between the list of tasks reported by the wrapper as being active versus those listed in the actual Task Scheduled in Windows.  In my specific case, Windows Task Scheduler lists 35 active task while my C# code (which uses the enumerate tasks example) only lists 18.\n\nFor what it's worth, the total number of tasks reported matches between the two methods.\n\nThank you!",
+    "LastUpdatedDate": "2015-12-07T14:30:40.633-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-12-04T15:40:07.8-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Inconsistencies in Active Tasks (2.5.4)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12298
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I think I have resolved any discrepancies and will post the code in the release 2.5.5 later today. You can get all active tasks by calling:\n```\nTaskService ts = new TaskService();\nvar allTasks = ts.FindAllTasks(x => x.IsActive);\n```",
+      "PostedDate": "2015-12-07T12:12:47.49-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-07T14:30:40.633-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

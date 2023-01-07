@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Finally figured out root cause and fixed in release 2.1.1. It was a problem with the TimeSpanPicker control.",
+    "ClosedDate": "2014-04-17T15:57:05.643-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The constructor of the TaskEditDialog takes quite long to finish. I tried to debug it seems that the constructor of the TimeSpanPickes are the problem. When creating the TimeSpanPicker some regexp is evaluated and this looks like the problem. \nSince there are a couple of TimeSpanPickes on the dialog, creating the dialog takes time...",
+    "LastUpdatedDate": "2014-04-17T15:57:05.643-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-12-02T08:56:17.9-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Opening TaskEditDialog is really slow (~20sec)",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11441
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Suggested fix applied to code base.",
+    "ClosedDate": "2008-10-14T15:33:58.523-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "This bug was reported directly from user coderanon. Thanks for finding it.\n-------\nHello, first off I really want to thank you for writing this TaskScheduler library for .NET.  It's been a huge help in my project.  I have tracked down a minor bug, though.  I've never reported a bug to an open source project before, so I apologize if I'm not doing this through the appropriate channels.  The use case is modifying and saving an existing scheduled task.\n \nExample (hope the formatting comes out right):\n \nTaskService taskServ = new TaskService();\nTask task = taskServ.RootFolder.Tasks[\"MyTask\"];\nTaskDefinition taskDef = task.Definition;\ntaskDef.Settings.Enabled = false;\ntaskServ.RootFolder.RegisterTaskDefinition(task.Name, taskDef); //NullReferenceException\n \nI've narrowed down the offending line of code to V1Save(string), near the bottom of Task.cs:\n \ninternal void V1Save(string newName)\n{\nif (v1Task != null)\n{\nthis.triggers.Bind(); //should be this.Triggers.Bind() - 'Triggers' with a capital T\n \nI've come up with the following workaround:\n \nTaskService taskServ = new TaskService();\nTask task = taskServ.RootFolder.Tasks[\"MyTask\"];\nTaskDefinition taskDef = task.Definition;\ntaskDef.Settings.Enabled = false;\nTriggerCollection dummyVar = taskDef.Triggers;  //explicitly calls property to prevent an exception\ntaskServ.RootFolder.RegisterTaskDefinition(task.Name, taskDef);\n \nJust thought I'd bring this to your attention, you don't need to reply to this email.  Thanks again.",
+    "LastUpdatedDate": "2013-05-16T04:49:16.697-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2008-10-14T15:32:56.273-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "NullReferenceException for V1",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 2459
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

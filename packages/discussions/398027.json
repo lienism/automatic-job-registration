@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "921858",
+    "ThreadId": "398027",
+    "Html": "\r\n<p>Hi,<br>\r\n<br>\r\nI create a task that should start on a given date. Everything works fine as long as i don't miss a task (for example: computer was turned off the day, that the task should have started). Maybe i am missing something in code or any other suggestions would be\r\n very appreciated. Issue currently is on win7, haven't yet tested on xp or vista machine.<br>\r\n<br>\r\nAccording to microsoft the StartWhenAvailable parameter only applies to time-based tasks where TimeTrigger (in my understanding) is a time-based task. So don't have any ideas what could be wrong.<br>\r\n<br>\r\n<a title=\"link to microsoft page describing StartWhenAvailable parameter\" href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa383524%28v=vs.85%29.aspx\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa383524%28v=vs.85%29.aspx</a><br>\r\n<br>\r\nHere is the method for creating a task.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> AddTask(<span style=\"color:blue\">string</span> name, <span style=\"color:blue\">string</span> description, DateTime date)\n        {\n            <span style=\"color:blue\">using</span> (TaskService service = <span style=\"color:blue\">new</span> TaskService())\n            {\n                TaskDefinition taskDef = service.NewTask();\n                taskDef.RegistrationInfo.Description = description;\n\n                taskDef.Settings.Enabled = <span style=\"color:blue\">true</span>;\n                taskDef.Settings.ExecutionTimeLimit = TimeSpan.Zero;\n                \n                <span style=\"color:blue\">if</span> (IsWinVistaOrHigher())\n                {\n                    taskDef.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;\n                    taskDef.Settings.StartWhenAvailable = <span style=\"color:blue\">true</span>;\n                    taskDef.Settings.RestartCount = 10;\n                    taskDef.Settings.RestartInterval = <span style=\"color:blue\">new</span> TimeSpan(1, 0, 0, 0);\n                    taskDef.Settings.Compatibility = TaskCompatibility.V2;\n\n                    taskDef.Triggers.Add(<span style=\"color:blue\">new</span> TimeTrigger(date) { StartBoundary = date.AddHours(-1), Enabled = <span style=\"color:blue\">true</span> });\n                }\n                <span style=\"color:blue\">else</span>\n                {\n                    taskDef.Settings.Compatibility = TaskCompatibility.V1;\n\n                    taskDef.Triggers.Add(<span style=\"color:blue\">new</span> DailyTrigger { StartBoundary = date.AddHours(-1), Enabled = <span style=\"color:blue\">true</span> });\n                }\n\n                taskDef.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(Environment.GetCommandLineArgs()[0]));\n\n                service.RootFolder.RegisterTaskDefinition(name, taskDef);\n            }\n        }\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-10-04T05:56:33.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922096",
+    "ThreadId": "398027",
+    "Html": "<p>Your TimeTrigger instance needs to either set the EndBoundary property or change the RestartInterval to TimeSpan.Zero (for infinite) as per the conditions on the link you provided.&nbsp;You may also want to consider looking at the DailyTrigger and not set the Restart.. properties but set an EndBoundary property for 10 days from today.</p>",
+    "PostedDate": "2012-10-04T12:55:09.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

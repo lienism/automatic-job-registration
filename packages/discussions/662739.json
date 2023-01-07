@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1495892",
+    "ThreadId": "662739",
+    "Html": "Hi \r<br />\n<br />\nWhere will you go when CodePlex is shutdown?\r<br />\n<br />\nRegards\r<br />\nDennis<br />\n",
+    "PostedDate": "2017-04-28T00:34:11.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495900",
+    "ThreadId": "662739",
+    "Html": "<a href=\"https://github.com/dahall/taskscheduler\" rel=\"nofollow\">https://github.com/dahall/taskscheduler</a>\r<br />\n<br />\nThere is an old version there that I posted to hold the URL, but the code is not current and I haven't switched over to use it as the source repository. I'm still looking for a place to move the discussions. That seems to be an important community tool so I'd like to perpetuate it.<br />\n",
+    "PostedDate": "2017-04-28T06:55:04.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-17T06:28:15.797-07:00"
+  }
+]

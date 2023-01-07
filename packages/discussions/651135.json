@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1462704",
+    "ThreadId": "651135",
+    "Html": "Hi,<br />\n<br />\nas per subject, i have a batch file that opens an exe and passes some argument, the task is created fine but will only run the batch file if i manually enter the batch file path into the Start in field.<br />\n<br />\nany ideas?<br />\n<br />\nEDIT<br />\n<br />\nfigured out the way to accomplish this was to pass through the path as the 3rd argument  in ExecAction(path + filename, null, path)<br />\n",
+    "PostedDate": "2016-02-10T07:42:08.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-10T08:02:38.987-08:00"
+  }
+]

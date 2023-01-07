@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-02-07T09:53:46.4-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Allow the current trigger to be disabled and add a function that ends the build of the current trigger and lets you start a new trigger in the fluent api.  \n\n... Once().Starting(Now.Add(TimeSpan.FromMinutes(10))).IsDisabled().AtLogin()...",
+    "LastUpdatedDate": "2016-02-07T09:53:46.4-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-01-14T23:09:16.787-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Add IsDisabled to TriggerBuilder and ActionBuilder",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12325
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Actions cannot be disabled, but I have added this for triggers in 2.5.13, due shortly.",
+      "PostedDate": "2016-01-15T09:29:59.567-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-02-07T09:53:46.4-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

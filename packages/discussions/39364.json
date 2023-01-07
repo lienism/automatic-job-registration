@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "130588",
+    "ThreadId": "39364",
+    "Html": "I can create new tasks, but I haven't been able to get repetition working.  Sample code below.  Windows 2003.  After running the code, the task appears in the Scheduled Tasks folder, but in the task's properties, Schedule tab, Advanced Schedule Options, the Repeat Task checkbox is not checked.  Am I missing something or is it broken?<br>\r\n<br>\r\n<p>        Dim ts As New TaskService<br>\r\n        Dim td As TaskDefinition = ts.NewTask<br>\r\n        td.RegistrationInfo.Description = &quot;Test&quot;<br>\r\n        Dim wt As New WeeklyTrigger()<br>\r\n        wt.DaysOfWeek = DaysOfTheWeek.Monday Or DaysOfTheWeek.Tuesday Or DaysOfTheWeek.Wednesday Or DaysOfTheWeek.Thursday Or DaysOfTheWeek.Friday Or DaysOfTheWeek.Saturday<br>\r\n        wt.StartBoundary = Now<br>\r\n        wt.Repetition.Duration = TimeSpan.FromMinutes(660)<br>\r\n        wt.Repetition.Interval = TimeSpan.FromMinutes(10)</p>\r\n<p>        Dim t As Trigger = td.Triggers.Add(wt)<br>\r\n        't.Repetition.Duration = TimeSpan.FromMinutes(660)<br>\r\n        't.Repetition.Interval = TimeSpan.FromMinutes(10)</p>\r\n<p>        td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;E:\\Temp\\Test.log&quot;, Nothing))<br>\r\n        ts.RootFolder.DeleteTask(&quot;Test&quot;)<br>\r\n        ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td)</p>\r\n",
+    "PostedDate": "2008-11-06T11:15:01.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "131493",
+    "ThreadId": "39364",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://www.codeplex.com/taskscheduler/WorkItem/View.aspx?WorkItemId=2563\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2008-11-10T13:43:09.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

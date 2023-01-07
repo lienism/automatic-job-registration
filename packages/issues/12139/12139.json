@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-07-09T18:04:55.87-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When attempting to register a RegistrationTrigger on Windows 10 (latest preview build) the wrapper (v2.3.4) blows up and throws the following exception:\n\nMicrosoft.Win32.TaskScheduler.NotV1SupportedException occurred\n\n```\nvar oneTimeTrigger = (RegistrationTrigger)taskDefinition.Triggers.Add(new RegistrationTrigger());\noneTimeTrigger.Delay = TimeSpan.FromSeconds(5);\n```",
+    "LastUpdatedDate": "2015-07-09T18:04:55.87-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-07-04T12:20:02.99-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Windows 10 & RegistrationTrigger",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12139
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Temporary workaround:\r\n\r\n```\nvar oneTimeTrigger = (TimeTrigger)taskDefinition.Triggers.Add(new TimeTrigger());\noneTimeTrigger.StartBoundary = DateTime.Now.AddSeconds(5);\n```",
+      "PostedDate": "2015-07-04T12:24:30.977-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I don't believe this is a library or OS version problem. Instead, I would guess that you entered 'true' for the last parameter (forceV1) value in the TaskService constructor forcing the library to use the old (v1) code base from Microsoft. Under V1, the RegistrationTrigger is not supported.",
+      "PostedDate": "2015-07-05T17:04:09.847-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-09T18:04:55.87-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1491182",
+    "ThreadId": "660726",
+    "Html": "Hello,\r<br />\n<br />\nI am having an issue with getting list of task (or certain task).\r<br />\nWhen running application on Server 2003 and trying to get list of all task from remote server 2008 it returns empty list of tasks. Of course, in case of finding task by name it returns null.\r<br />\nI am using .NET 4.0. \r<br />\nI tried both V1 and V2 mode but without expected results.\r<br />\n<br />\nFrom other side, all works perfectly when I try to get this list (or certain task) with Win 10 machine to the same remote Windows Server 2008.\r<br />\n<br />\nBelow is a code which I use for getting tasks.<br />\n<pre><code>    private bool RunTaskViaTaskScheduler(bool isV1 = false)\n    {\n        string password = &quot;adminUserPasswordForTaskScheduler&quot;;\n        string serverName = &quot;remote-server&quot;;\n        string login = &quot;adminUserForTaskScheduler&quot;;\n        string domain = &quot;DOMAIN&quot;;\n        string taskName = &quot;RemoteTask&quot;;\n        string tasksNames = string.Empty;\n\n        try\n        {\n            using (TaskService tasksrvc = new TaskService(serverName, login, domain, password, isV1))\n            {\n                if (tasksrvc == null)\n                {\n                    return false;\n                }\n\n                Task task = tasksrvc.FindTask(taskName);     //this line returns null\n\n                //made for testing purposes\n                foreach (Task temp in tasksrvc.AllTasks)     //this enumerator has no elements\n                {\n                    tasksNames += temp.Name + &quot;;&quot;;\n                }\n                lblInfo.Text = tasksNames;\n                \n                if (task == null)\n                {\n                    return false;\n                }\n                else\n                {\n                    //some code here    \n                }\n            }\n        }\n        catch (Exception ex)\n        {\n            lblInfo.Text = &quot;Error occurred in RunTaskViaTaskScheduler &quot; + ex.Message + ex.StackTrace;\n            return false;\n        }\n        return true;\n    }</code></pre>\n\nAny suggestion what am I doing wrong?\r<br />\n<br />\nThank you in advance<br />\n",
+    "PostedDate": "2017-01-16T07:02:04.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491257",
+    "ThreadId": "660726",
+    "Html": "Hello again,\r<br />\n<br />\nFinally, I found out what was wrong.\r<br />\nProblem was with tasks made in task scheduler on remote machine, all of them are V2 compability.\r<br />\nWhat I did was recreating those tasks with V1 compability (Create New Task -&gt; in first tab for combobox 'Configure for' choose option 'Windows Server 2003, Windows XP, or Windows 2000').\r<br />\n<br />\nDiscusion from this topic <a href=\"https://taskscheduler.codeplex.com/discussions/405210\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/405210</a> helped me with locating my mistake.\r<br />\n<br />\nHope those information will be usefull for somebody.\r<br />\n<br />\nGreetings<br />\n",
+    "PostedDate": "2017-01-18T02:10:15.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-18T07:38:54.18-08:00"
+  }
+]

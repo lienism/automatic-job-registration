@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1118693",
+    "ThreadId": "466214",
+    "Html": "sample code:<br />\n<pre><code>        using (TaskService ts = new TaskService())\n        {\n            // Create a new task definition and assign properties\n            using (TaskDefinition td = ts.NewTask())\n            {\n                td.RegistrationInfo.Description = &quot;Periodically execute HandlerLauncher.ps1 every 2 minutes.&quot;;\n                // Create a trigger that will fire the task at this time every other day\n                using (DailyTrigger dt = new DailyTrigger { DaysInterval = 1 })\n                {\n                    dt.Repetition.Duration = TimeSpan.FromDays(0);\n                    dt.Repetition.Interval = TimeSpan.FromMinutes(2);\n                    td.Triggers.Add(dt);\n\n                    string command = &quot;&quot;;\n                    command = &quot;-nologo -windowstyle hidden -command \\&quot;&amp; '&quot; + POWERSHELL_PATH + &quot;\\\\HandlerLauncher.ps1' -path '&quot; + POWERSHELL_PATH + &quot;'\\&quot;&quot;;\n                    // Create an action that will launch Notepad whenever the trigger fires\n                    td.Actions.Add(new ExecAction(&quot;%windir%\\\\system32\\\\windowspowershell\\\\v1.0\\\\powershell.exe&quot;, command, null));\n                    //td.Actions.Add(new ExecAction(&quot;C:\\\\Program Files (x86)\\\\Acer\\\\Acer SCIP\\\\runps.exe&quot;, null, null));\n\n                    // Register the task in the root folder\n                    td.Principal.UserId = String.Concat(Environment.UserDomainName, &quot;\\\\&quot;, &quot;Administrator&quot;);\n\n                    try\n                    {\n                        ts.RootFolder.RegisterTaskDefinition(@&quot;TimedPSActivator&quot;, td, TaskCreation.Create, td.Principal.UserId, &quot;password&quot;, TaskLogonType.Password);\n                    }\n                    catch (Exception e)\n                    {\n                        MessageBox.Show(&quot;task scheduler exception: &quot; + e);\n                    }\n                }\n            }\n        }\n</code></pre>\n\nMy requirement:<br />\n<pre><code>   1. I must to assign domain name/ domain administrator, and password to RegisterTaskDefiniation, but still occur problem.\n   2. Run whether the user is logged on or not\n</code></pre>\n\nHow could I modified which code? please help me to fix, thanks.<br />\n",
+    "PostedDate": "2013-11-05T21:12:25.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1119059",
+    "ThreadId": "466214",
+    "Html": "What error are you getting and what line of code is failing?<br />\n",
+    "PostedDate": "2013-11-06T09:24:43.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122230",
+    "ThreadId": "466214",
+    "Html": "First, thanks to respond quickly by Dahail.\r<br />\n<br />\nBecause we have to use &quot;Run whether user is logged on or not&quot; mode,\r<br />\nI found that it must to modified TaskRunLevel and pass RP.\r<br />\n<a href=\"http://technet.microsoft.com/en-us/library/cc722152.aspx\" rel=\"nofollow\">http://technet.microsoft.com/en-us/library/cc722152.aspx</a><br />\n",
+    "PostedDate": "2013-11-11T23:06:38.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126292",
+    "ThreadId": "466214",
+    "Html": "iversonjimmy, \r<br />\nThanks for posting. I have same requirement run task whether the user is logged on or not\r<br />\nWhere should I change the code to get work?  I have tried following, but not work. what is RP, how to pass it? thank you in advance!!!\r<br />\nFanyin<br />\n<pre><code>                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = &quot;Import Blood Loss Data&quot;;\n                td.RegistrationInfo.Author = domain + @&quot;\\&quot; + username;  \n                td.Principal.RunLevel = TaskRunLevel.Highest;\n                td.Principal.LogonType = TaskLogonType.ServiceAccount;\n                td.Principal.UserId = domain + @&quot;\\&quot; + username;</code></pre>\n\n",
+    "PostedDate": "2013-11-18T16:09:28.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126299",
+    "ThreadId": "466214",
+    "Html": "It is working now with following code\r<br />\n <a href=\"mailto:ts.RootFolder.RegisterTaskDefinition(@&quot;ImportBloodLossData&quot;,\" rel=\"nofollow\">ts.RootFolder.RegisterTaskDefinition(@\"ImportBloodLossData\",</a> td, TaskCreation.Create, td.Principal.UserId, password, td.Principal.LogonType)\r<br />\n<br />\nthis works when whether the user is logged on or not \r<br />\nThanks all!<br />\n",
+    "PostedDate": "2013-11-18T16:33:20.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1298850",
+    "ThreadId": "466214",
+    "Html": "+1 <strong>Live example</strong>. From all the good answers provided by everyone here I am now getting a better understanding of appropriate use of this topic and IMHO other programmers will definitely benifit from the knowledge sharing here. Some of the implementations that I had worked in the past could have been better implemented using this knowledge. \r<br />\n<br />\n<br />\nAny final <em>solution</em> with <strong>full source code</strong> sample application ? \r<br />\n<br />\n<em>IMHO, better samples for minimize learning curve are real applications with full source code and good patterns</em>\r<br />\n<br />\nI want execute script powershell, using Tsk scheduler and &quot;Run with highest privileges&quot; option<br />\n",
+    "PostedDate": "2014-09-03T23:45:00.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1299201",
+    "ThreadId": "466214",
+    "Html": "kiquenet: Please see the various Documentation pages for sample code, documentation and even a sample project. You can also check out the Source code area and look at the TestTaskService project code for a lot of use patterns. Let me know if you find specific deficiencies I haven't addressed.<br />\n",
+    "PostedDate": "2014-09-04T12:04:35.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

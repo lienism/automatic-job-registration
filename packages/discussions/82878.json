@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "284803",
+    "ThreadId": "82878",
+    "Html": "<p>Whenever we create a monthly schedule which is scheduled to run in January and the schedule day selected is earlier than the current date then the &quot;Next Run Time&quot;&nbsp; that is returned is invalid.</p>\r\n<p>For example if we create a task which runs on day 2 of January and my current system date is say 10 January then the Next Run Time returned is invalid.</p>\r\n<p>Moreover if we just refresh the &quot;Windows Task Scheduler&quot; the &quot;Next Run Time&quot; of such a task keeps on changing and gets incremented on every refresh.&nbsp; This problem occurs on both Windows Vista and Windows 7.</p>\r\n<p>Please help me to get a solution for this problem.</p>",
+    "PostedDate": "2010-02-02T08:12:16.983-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "284978",
+    "ThreadId": "82878",
+    "Html": "<p>After some testing, it appears that this is a problem with the native library and not this wrapper. Your only recourse is to go to Microsoft Support. However, I was able to determine that the DateTime returned is always in the past so you could check to see if the NextRunTime property returns something earlier than DateTime.Now and you will know you have a problem. If you get an answer from MS, please post it here for others.</p>",
+    "PostedDate": "2010-02-02T14:18:00.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

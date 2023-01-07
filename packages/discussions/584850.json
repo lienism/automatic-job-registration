@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1360660",
+    "ThreadId": "584850",
+    "Html": "Do you have a timeline for Windows 10 support?\r<br />\n<br />\nThe Editor is pretty broken due to this function. You could support the back level versions of the scheduler with an else for ....Major == 10.\r<br />\n<br />\ninternal static int GetOSLibraryMinorVersion()<br />\n<pre><code>    {\n        if (Environment.OSVersion.Version.Major == 6)\n        {\n            switch (Environment.OSVersion.Version.Minor)\n            {\n                case 0:\n                    return 2;\n                case 1:\n                    return 3;\n                default:\n                    return 4;\n            }\n        }\n        return 1;\n    }</code></pre>\n\n",
+    "PostedDate": "2015-03-07T12:50:13.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362526",
+    "ThreadId": "584850",
+    "Html": "What problems are you seeing and with which build of the Technical Preview?<br />\n",
+    "PostedDate": "2015-03-11T09:45:45.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363458",
+    "ThreadId": "584850",
+    "Html": "I have just run the full bank of tests on Win10 Build 9926 w/o error, including the UI components. Please note the build and the errors in your response.<br />\n",
+    "PostedDate": "2015-03-14T20:47:46.967-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416276",
+    "ThreadId": "584850",
+    "Html": "I found an issue in other place. Wrapper cannot get definition for some preinstalled  tasks.\r<br />\nFor example win 10 has next task &quot;\\Microsoft\\Windows\\CertificateServicesClient\\UserTask&quot;. When I try to get task.Definition.RegistrationInfo.Description I get an error:\r<br />\n&quot;{&quot;(1,524):WnfStateChangeTrigger:&quot;}&quot; \r<br />\nwith stackTrace:\r<br />\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition.set_XmlText(String value)\r<br />\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\r<br />\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()<br />\n",
+    "PostedDate": "2015-04-21T04:58:07.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416496",
+    "ThreadId": "584850",
+    "Html": "I have found the problems and corrected in the latest source code drop and they will be included in the next release (2.3.2). Unfortunately, the .NET runtimes do not return new values for Windows 10 and the registry values in the preview builds are inconsistent. For now, a hack will make things work but there will have to be another change once Windows 10 is released.<br />\n",
+    "PostedDate": "2015-04-21T19:00:44.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1416643",
+    "ThreadId": "584850",
+    "Html": "Thank you!\r<br />\nLet's  hope Win 10 fixes it and does not throw too many surprises in the next release. )<br />\n",
+    "PostedDate": "2015-04-22T01:57:49.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

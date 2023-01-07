@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in 2.5.22",
+    "ClosedDate": "2017-02-05T12:44:23.773-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nThe current version doesn't support 1.5 versioned tasks.\n\nThis is the error we get:\nSystem.InvalidOperationException: The current version of the native library (1.4) does not support the original or minimum version of the \".NET Framework NGEN v4.0.30319\" task (1.5/1.5).\n\nwill it be supported?\n\nThank you,\n\nAdam.",
+    "LastUpdatedDate": "2017-07-23T07:35:17.06-07:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-01-26T04:52:17.913-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Version Support",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12447
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Which version of Windows are you using? It is a pretty easy fix to add another version #, but need some detail on what it may be enabling.",
+      "PostedDate": "2017-01-26T05:49:09.333-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-01-26T05:49:50.713-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've done some research, and even the newest Windows release (Server 2016), hasn't upgraded the Task Scheduler library. It is still version 1.4. Is it possible you have created the task via XML and put 1.5 in the Task element version attribute? If so, it will not work no matter what I do in the wrapper library. The XML for an imported task should look like the following on Windows 10 or Windows Server 2016:\n```XML\n<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n   <Task xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\" version=\"1.4\">\n```\nFor each earlier version of Windows, subtract 0.1 from the version (e.g. Windows 7 == 1.2). The '1.4' you see in the sample XML must be equal to or lower than the number supported by the OS.",
+      "PostedDate": "2017-01-27T13:40:04.663-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Upon further review, I have identified a bug in the code that will, for Windows 10 systems, cause a version 1.5 to show up. I will correct in release 2.5.22 due shortly.",
+      "PostedDate": "2017-01-30T18:09:18.177-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-05T12:44:23.773-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi,\r\n\r\nI tried the newest version Release 2.5.28, changed the dll but the same exception still occur:\nwhen I run through Microsoft.Win32.TaskScheduler.Task results, some results, when checking for result.IsActive will throw the following exception:\r\n\r\n\"The current version of the native library (1.4) does not support the original or minimum version of the \\\".NET Framework NGEN v4.0.30319\\\" task (1.5/1.5)\"\r\n\r\nStack Trace:\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()\n   at Microsoft.Win32.TaskScheduler.Task.get_IsActive()\r\n\r\nExample Task:\nName of task : \".NET Framework NGEN v4.0.30319\"\nPשאי: \"\\\\Microsoft\\\\Windows\\\\.NET Framework\\\\.NET Framework NGEN v4.0.30319\"\r\n\r\n\r\n\r\n",
+      "PostedDate": "2017-07-23T07:35:17.06-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427155",
+    "ThreadId": "638617",
+    "Html": "I'dp have the following issue.\r<br />\n<br />\nIn a (webapplication) I create a taskdefinition<br />\n<pre><code>        var cmd = @&quot;restart.cmd&quot;;\n        var taskName = string.Format(&quot;restart_{0}&quot;, DateTime.Now.ToString(&quot;yyyyMMMMdd_HHmm&quot;));</code></pre>\n\nTaskDefinition td = ts.NewTask();<br />\n<pre><code>            td.RegistrationInfo.Description = taskName;\n            td.Triggers.Add(new TimeTrigger() {StartBoundary = DateTime.Now});\n            td.Actions.Add(new ExecAction(cmd, null, null));\n            td.Settings.Compatibility = TaskCompatibility.V2_1;\n            td.Settings.ExecutionTimeLimit = TimeSpan.FromMinutes(15); // also tried without this line\n            td.Principal.LogonType = TaskLogonType.InteractiveToken; // also tried without this line               \n            task = ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, @&quot;domain\\adminusername&quot;,&quot;pwd&quot;);\n            // Remove the task we just created\n            if (task != null)\n            {\n                task.Run();\n                // Remove the task we just created\n                ts.RootFolder.DeleteTask(taskName);\n            }\n</code></pre>\n\nThe website is running on windows 2012. When I close the connection to the server, do not log off, the task is not runned any more. No error message, nothing. But it simply does not run. \r<br />\n<br />\nCan there be a reason for this behaviour?\r<br />\n<br />\nWhen I stay connected to the server it will keep continue to run. \r<br />\n<br />\nThanks in advance\r<br />\n<br />\nWijnand Beke\r<br />\nThe Netherlands<br />\n",
+    "PostedDate": "2015-05-22T11:12:22.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427528",
+    "ThreadId": "638617",
+    "Html": "I guess my first question is why even use tasks? You are effectively just launching a process immediately either using a trigger or forcing the Run of the task. Seems like you are adding complexity where none is needed. If your code doesn't fully represent what you're trying to accomplish, I would offer two suggestions: 1) The TimeTrigger will only run once and you are telling it to run Now, which by the time the task is registered is a time in the past. 2) You are immediately deleting the task so if it had not run already, it won't have a chance to run. You may also consider setting the <code>td.Settings.DeleteExpiredTaskAfter</code> to something like 5 seconds so the task will run once and then delete itself.<br />\n",
+    "PostedDate": "2015-05-25T15:33:58.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

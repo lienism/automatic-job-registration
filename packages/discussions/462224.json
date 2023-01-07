@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1107671",
+    "ThreadId": "462224",
+    "Html": "I am trying to use this wrapper to schedule a task on a remote machine.  I am getting the {&quot;Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)) error.  I am running the code as an admin in an elevated state.  I remember reading before that a user trying to work with the task scheduler on a remote machine must be a member of a specific group.  I do not remember the group name.  It's not the administrators group.  Can someone help ?  I am doing this on a domain.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-10-15T06:33:17.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

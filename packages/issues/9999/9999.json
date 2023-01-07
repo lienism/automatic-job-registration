@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Duplicate",
+    "ClosedDate": "2012-03-02T16:14:32.637-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I try to edit an existing task using this code (v1.8.0):\n \n     using (var taskEditDialog = new TaskEditDialog(_tlv.Tasks[_tlv.SelectedIndex], true, false))\n      {\n        taskEditDialog.RegisterTaskOnAccept = true;\n \n        if (taskEditDialog.ShowDialog() == DialogResult.OK)\n        {\n          var t = taskEditDialog.Task;\n        }\n      }\n \nI get this error:\nSystem.NullReferenceException was unhandled\n  Message=Object reference not set to an instance of an object.\n  Source=Microsoft.Win32.TaskScheduler\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n       at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n       at System.Windows.Forms.Button.WndProc(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.RunDialog(Form form)\n       at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)\n       at System.Windows.Forms.Form.ShowDialog()\n       at TaskSchedulerTest.Form1.EditTask() in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Form1.cs:line 109\n       at TaskSchedulerTest.Form1.btnEdit_Click(Object sender, EventArgs e) in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Form1.cs:line 95\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n       at System.Windows.Forms.Control.WndProc(Message& m)\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n       at System.Windows.Forms.Button.WndProc(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\n       at System.Windows.Forms.Application.Run(Form mainForm)\n       at TaskSchedulerTest.Program.Main() in C:\\Projects\\Temp\\TaskSchedulerTest\\TaskSchedulerTest\\Program.cs:line 18\n       at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)\n       at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\n       at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\n       at System.Threading.ThreadHelper.ThreadStart()\n  InnerException:",
+    "LastUpdatedDate": "2013-05-16T04:49:09.687-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-03-02T11:59:02.023-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Trying to edit existing task, Exception thrown",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9999
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

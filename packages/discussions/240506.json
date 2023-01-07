@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "544085",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>So I'm launching the task editor dialog and playing with various scenarios - for the most part everything seems to be working as it should, however there's one critical piece that's causing me heartache.</p>\r\n<p>Most of the time folks running my app will be fine with just letting it run when logged in - however a few folks will be runngin it on Windows 2003 or 2008 and they always log off the desktop when leaving - as such I'll need the option to have them select\r\n and account/pw option.</p>\r\n<p>Ideally I'd like to launch the task editor dialog with the &quot;Run only when user is logged on&quot; for the 80/20 rule and let folks fiddle with the schedule and such all they want.&nbsp; However I'd like it if the users could choose to click the &quot;Run wheter user\r\n is logged on or not&quot; radio button and provide a login name/pw as you can when you launch the dialog directly from the windows scheduler.&nbsp; However when I do this I get a &quot;NoImplementedExcpetion&quot; thrown and the option is not saved (and the login name/pw\r\n dialog does not appear).</p>\r\n<p>Presumably the error condition means what it says and the wrapper simply didn't support that option for ShowDialog - but thought I'd check just to be sure if there's a tricky &quot;override&quot; option or the like to allow such an operation or not...</p>\r\n<p>thanks</p>\r\n<p>-J</p>\r\n",
+    "PostedDate": "2011-01-04T19:22:32.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "544091",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>as an aside - getting similiar missing implementation errors when trying the wizard - I don't see much in the way of how to use it but my simple example just looks like this:&nbsp;&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>        <span style=\"color:blue\">Dim</span> ts <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> TaskService()\r\n        <span style=\"color:blue\">Dim</span> myWizard <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> TaskSchedulerWizard\r\n\r\n        myWizard.TaskName = <span style=\"color:#a31515\">&quot;This is a test&quot;</span>\r\n        <span style=\"color:blue\">If</span> (myWizard.ShowDialog() = Windows.Forms.DialogResult.OK) <span style=\"color:blue\">Then</span>\r\n\r\n            ts.RootFolder.RegisterTaskDefinition(myWizard.TaskName, myWizard.TaskDefinition)\r\n\r\n        <span style=\"color:blue\">End</span> <span style=\"color:blue\">If</span>\r\n</pre>\r\n<pre>once you get past the &quot;Choose what triggers the task&quot; page you get a &quot;MissingMethodException was unhandled&quot; error - &quot;Void Microsoft.Win32.TaskScheduler.MonthlyTrigger..ctor()'.</pre>\r\n<pre>Doesn't matter which option you choose, same error each time.</pre>\r\n<pre>Am I missing something obvious?</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-01-04T19:46:56.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "545712",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>Sorry. I had overlooked a placeholder for some code that I never completed for this functionality. It has been added in source code drop 61872. Please try it out and let me know if it works for you.</p>\r\n",
+    "PostedDate": "2011-01-07T15:38:09.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "545779",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>Thanks!&nbsp; the wizard is now working properly - however the ShowDialog form still kicks out the &quot;NoImplementedException&quot; when I select the &quot;run whether user is logged on or not&quot; radio button.&nbsp; I wasn't sure if both issues were supposed to be fixed\r\n in the version you posted or just the wizard.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-01-07T19:26:36.193-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547468",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>I just posted an updated code drop and new assemblies which should correct both problems. Make sure to extract all the assemblies from the TaskSchedulerEditor.zip file as a few have been updated. Please let me know if everything is working.</p>\r\n",
+    "PostedDate": "2011-01-11T10:59:24.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547715",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>closer!&nbsp; It doesn't throw the NoImplementedException any longer but when I select the &quot;run whether user is logged on or not&quot; radio button and then exit the dialog after picking a user I don't ever get the dialog to provide a password, so an error is\r\n thrown: &quot;logon failure: unknown user name or bad password&quot;.&nbsp; Should it launch the dialog there (i.e. as it does in the Windows scheduler directly) or is this only supposed to work if we provide the user/pw when we create the task up front?&nbsp;</p>\r\n<p>thanks for working on this...</p>\r\n",
+    "PostedDate": "2011-01-11T19:12:01.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547748",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>The only time a logon dialog should appear is when &quot;Run whether user is logged on or not&quot; is selected and &quot;Do not store password...&quot; is not selected and the account is not a group or system account. If you are embedding the TaskPropertiesControl in your\r\n own dialog, you will need to check for those conditions and use the CredentialDialog to get the password. If you are using the TaskEditDialog, then you need to have the RegisterTaskOnAccept property set to true in order to be prompted for the password. The\r\n following is the code currently in the Ok button handler for TaskEditDialog in case you need to replicate it outside to prompt for a password.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">if</span> (RegisterTaskOnAccept)\r\n{\r\n  <span style=\"color:blue\">string</span> pwd = <span style=\"color:blue\">null</span>;\r\n  <span style=\"color:blue\">if</span> (<span style=\"color:blue\">this</span>.TaskDefinition.Principal.LogonType == TaskLogonType.InteractiveTokenOrPassword ||\r\n    <span style=\"color:blue\">this</span>.TaskDefinition.Principal.LogonType == TaskLogonType.Password)\r\n  {\r\n    pwd = InvokeCredentialDialog(<span style=\"color:blue\">this</span>.TaskDefinition.Principal.UserId);\r\n    <span style=\"color:blue\">if</span> (pwd == <span style=\"color:blue\">null</span>)\r\n      <span style=\"color:blue\">throw</span> <span style=\"color:blue\">new</span> System.Security.Authentication.AuthenticationException(Properties.Resources.UserAuthenticationError);\r\n  }\r\n  <span style=\"color:blue\">this</span>.TaskService.RootFolder.RegisterTaskDefinition(<span style=\"color:blue\">this</span>.Task.Name, <span style=\"color:blue\">this</span>.TaskDefinition, TaskCreation.CreateOrUpdate,\r\n    <span style=\"color:blue\">this</span>.TaskDefinition.Principal.UserId, pwd, <span style=\"color:blue\">this</span>.TaskDefinition.Principal.LogonType);\r\n}\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-01-11T21:02:42.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "548892",
+    "ThreadId": "240506",
+    "Html": "\r\n<p>ah, ok - I got it - I have all the paths worked out now and it's working well!&nbsp; thanks much for your work on this.</p>\r\n<p>-J</p>\r\n",
+    "PostedDate": "2011-01-13T11:39:40.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

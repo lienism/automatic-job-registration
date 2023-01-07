@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1255473",
+    "ThreadId": "548388",
+    "Html": "Hi,\r<br />\n<br />\nIs there any way to subscribe to an event that would alert me if a task state has changed? What I'm really interested in is when a task changes from stopped to running and vice-versa. I'm on Windows Server 2012 with tasks that are created manually.\r<br />\n<br />\nOn Windows 2003 I subscribed to changes in the filesystem to detect any changes to tasks. This still works in 2012 EXCEPT in the case where there is a state change: no file system changes seem to happen in this case.\r<br />\n<br />\nThanks in advance!\r<br />\n<br />\nPS. Thanks for the great library, it's otherwise everything i could possibly want =)<br />\n",
+    "PostedDate": "2014-06-11T23:27:39.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1256684",
+    "ThreadId": "548388",
+    "Html": "That would be a nice feature, but there is nothing in the native library that would support this.<br />\n",
+    "PostedDate": "2014-06-16T07:43:42.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

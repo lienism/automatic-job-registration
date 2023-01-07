@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1092101",
+    "ThreadId": "456760",
+    "Html": "Hello,\r<br />\n<br />\nthere is no example, in which way we should to include license notice, when using your great library.\r<br />\nShould it be text file in the same place as binary file, or notice in &quot;About form&quot;?\r<br />\n<br />\nWhich is the right way to be comfortable with the request &quot;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&quot; in license?\r<br />\n<br />\nTom<br />\n",
+    "PostedDate": "2013-09-12T23:41:56.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1092336",
+    "ThreadId": "456760",
+    "Html": "You may either include a link to the license or project in your &quot;About form&quot; or copy the MIT license text and include that in your project documentation.<br />\n",
+    "PostedDate": "2013-09-13T07:50:49.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

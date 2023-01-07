@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "816650",
+    "ThreadId": "350343",
+    "Html": "\r\n<p>Hi, first timer here;&nbsp;thanks for this great component!</p>\r\n<p>On Windows 7, if I create a new task, re-open it&nbsp;using the GetTask() method, and load it in the task editor, I get a null reference exception after clicking OK on the task editor dialog.</p>\r\n<p>&#65279;&#65279;&#65279;Object reference not set to an instance of an object.</p>\r\n<p>-------------------------- Technical Information Follows --------------------------</p>\r\n<p>Exception Details: ----------------------------------------</p>\r\n<p>Exception type: System.NullReferenceException <br>\r\nMessage: Object reference not set to an instance of an object. <br>\r\nSource: Microsoft.Win32.TaskScheduler <br>\r\nTarget Site: RegisterTaskDefinition <br>\r\nStack Trace: <br>\r\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) in C:\\Users\\aubang\\Downloads\\TaskScheduler\\TaskService\\TaskFolder.cs:line\r\n 248 <br>\r\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) in C:\\Users\\aubang\\Downloads\\TaskScheduler\\TaskService\\TaskFolder.cs:line 226 at Microsoft.Win32.TaskScheduler.Task.RegisterChanges() in C:\\Users\\aubang\\Downloads\\TaskScheduler\\TaskService\\Task.cs:line\r\n 821 <br>\r\nat Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e) in C:\\Users\\aubang\\Downloads\\TaskScheduler\\TaskService\\TaskEditor\\TaskEditDialog.cs:line 209</p>\r\n<p>&#65279;&#65279;&#65279;&#65279;&#65279;&#65279;Thanks for any ideas or help.</p>\r\n<p>Audi</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-03-28T09:48:54.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816666",
+    "ThreadId": "350343",
+    "Html": "<p>My guess is that you are disposing some part of the task before the dialog is able to process the changes. Check your code and if you are still having problems, feel free to post it so we can help you troubleshoot it.</p>",
+    "PostedDate": "2012-03-28T10:16:15.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816693",
+    "ThreadId": "350343",
+    "Html": "<p>Thanks for the swift reply!</p>\n<p>I noticed that if I open an existing task using the task editor with the RegisterTaskOnAccept property set to true, I get the null reference exception when I click on the OK button.</p>\n<p>If I set the RegisterTaskOnAccept property to false, I don't get the null reference exception, but noticed that if I make some edits (say, to the task Description), and click Cancel, the edits get saved. Should I be calling some method(s) here?</p>\n<p>Thanks again.</p>\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></span></span></span></span></p>",
+    "PostedDate": "2012-03-28T11:14:06.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816847",
+    "ThreadId": "350343",
+    "Html": "<p>The RegisterTaskOnAccept property controls whether the task is re-registered when the user clicks the Ok/Finish button on the form. Your changes will only be applied if the task is re-registered either by setting that property or manually calling TaskFolder.RegisterTaskDefinition. I would still guess your problem lies in the task being disposed before you enter the editor.</p>",
+    "PostedDate": "2012-03-28T15:40:57.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "817191",
+    "ThreadId": "350343",
+    "Html": "<p>David, thanks, your guess was 100% correct! :-) Everything is now working flawlessly. Thanks again and have a great day!</p>\r\n<p><span style=\"font-family: Consolas; font-size: x-small;\"><span style=\"font-family: Consolas; font-size: x-small;\">&nbsp;</span></span></p>",
+    "PostedDate": "2012-03-29T07:23:40.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

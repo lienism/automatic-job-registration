@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1107705",
+    "ThreadId": "462233",
+    "Html": "Hi,\r<br />\n<br />\nWhen I try to check the &quot;Last&quot; checkbox under Monthly-&gt;Days, I got an ArgumentException saying: &quot;Days must be in the range 1..31&quot;.\r<br />\n<br />\nThe exception is being thrown from the method: IndicesToMask(int[] indices) in Trigger.cs. The index of the &quot;last day&quot; is 99.\r<br />\n<br />\nAny idea?\r<br />\n<br />\n<br />\nThanks!\r<br />\n<br />\nBest regards,\r<br />\n<br />\nMuhaNERD<br />\n",
+    "PostedDate": "2013-10-15T07:41:21.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1108396",
+    "ThreadId": "462233",
+    "Html": "Good catch. You found a bug. I have corrected it and it will be a part of the next build and source code update.<br />\n",
+    "PostedDate": "2013-10-16T09:40:44.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

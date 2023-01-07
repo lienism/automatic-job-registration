@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "838670",
+    "ThreadId": "356474",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I am trying to use this library in my app. Here is the code I was testing:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>            <span style=\"color:blue\">Dim</span> ts <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> TaskService()\r\n            <span style=\"color:blue\">Dim</span> td <span style=\"color:blue\">As</span> TaskDefinition = ts.NewTask\r\n            td.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;Test&quot;</span>\r\n            <span style=\"color:blue\">Dim</span> dt <span style=\"color:blue\">As</span> <span style=\"color:blue\">New</span> BootTrigger\r\n            dt.Repetition.Interval = TimeSpan.FromMinutes(20)\r\n            dt.Delay = TimeSpan.FromMinutes(20)\r\n            td.Settings.Hidden = <span style=\"color:blue\">True</span>\r\n            td.Triggers.Add(dt)\r\n            td.Actions.Add(<span style=\"color:blue\">New</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#a31515\">&quot;C:\\test.log&quot;</span>, <span style=\"color:blue\">Nothing</span>))\r\n            ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;Test&quot;</span>, td)\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>It's based on the provided example. It works well in Win 7 X64, I tried it on XP 32 and it didn't work. I am not sure why it's not working. Any help would be appreciated.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-05-20T14:42:41.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838898",
+    "ThreadId": "356474",
+    "Html": "<p>You must set dt.Repetition.Duration to a value larger than the Interval under XP. You should be getting an exception that says that. Everything else looks good.</p>",
+    "PostedDate": "2012-05-21T06:27:43.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838938",
+    "ThreadId": "356474",
+    "Html": "\r\n<p>Thank you Dahall, yes I did actually, right after my post. I tried this:</p>\r\n<p>Added:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>dt.StartBoundary = DateTime.Now.AddMinutes(20)    <span style=\"color:green\">' Got from another thread with a similar issue</span>\ndt.Repetition.Duration = TimeSpan.FromDays(1)\n</pre>\r\n</div>\r\n<p>I didn't get any errors, but the task still not added! Is there anything thing else need to be defined, in order to make work under XP.</p>\r\n",
+    "PostedDate": "2012-05-21T07:45:25.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838963",
+    "ThreadId": "356474",
+    "Html": "<p>Adding 20 minutes to the StartBoundary doesn't do anything with a BootTrigger. I'd leave that out.</p>\r\n<p>You have set the Hidden property to true. If you didn't get any errors, the task may have been created and is just not visible. Under XP, you can open a Command Prompt, go to the \\Windows\\System32\\Tasks folder and look to see if the \"Test\" file exists when you do \"dir /ah\" to view hidden files.</p>",
+    "PostedDate": "2012-05-21T09:04:49.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "838991",
+    "ThreadId": "356474",
+    "Html": "<p>hi Dahall, Thanks for your replay. you're completely right. It was there but hidden. I removed the startboundary, it didn't make any difference.</p>\r\n<p>The only issue now! It's not set right. if the same code is excuted under win 7 it will be triggered at start-up and then repeated every 20 min. In XP, it only starts up and it doesn't repeat. I am not sure if this option is supported under xp, but not sure.</p>",
+    "PostedDate": "2012-05-21T09:57:32.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "840174",
+    "ThreadId": "356474",
+    "Html": "<p>This may be a subtle difference of the BootTrigger between versions.</p>",
+    "PostedDate": "2012-05-23T17:55:16.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

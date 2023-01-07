@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-06-26T13:00:09.987-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nI've tested and packaged a product for release tomorrow that includes 2.5.26 of Task Scheduler.\n\nLoading my dev environment on a different machine this morning highlighted to me that this had been deleted from nuget with 2.5.23 as the latest stable release.\n\nHave you any details on why these versions were deleted and what if any cases I should repackage my product with this older version instead?\n\nThanks,\nColum",
+    "LastUpdatedDate": "2017-06-26T13:48:20.453-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-26T01:28:15.163-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Why were latest releases (2.5.24-27) deleted from nuget",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 12467
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "The NuGet team sent me a message telling me that they had identified a trojan horse signature in those packages. I have tested those packages now against 3 separate security scanners and not found any problems. I'm escalating it with NuGet.",
+      "PostedDate": "2017-06-26T06:33:12.423-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Our Trend Micro antivirus flagged it as Trojan also. You might need it to be removed from a list somewhere.",
+      "PostedDate": "2017-06-26T11:56:56.173-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks. Good to know the erroneous engine is Trend Micro's. I'll see if I can submit it for exclusion. The NuGet versions are all now restored.",
+      "PostedDate": "2017-06-26T12:59:54.46-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-26T13:00:09.987-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "thanks for sorting so fast, much appreciated.  ",
+      "PostedDate": "2017-06-26T13:48:20.453-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

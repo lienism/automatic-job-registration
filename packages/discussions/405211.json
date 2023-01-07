@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "949743",
+    "ThreadId": "405211",
+    "Html": "\r\n<p>Is it possible to save a Task to a file to be called from later?</p>\r\n",
+    "PostedDate": "2012-11-30T15:45:04.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949756",
+    "ThreadId": "405211",
+    "Html": "\r\n<p>Yes, use the Task.Export method to write out the file and then use the TaskFolder.ImportTask method to bring it back in.</p>\r\n",
+    "PostedDate": "2012-11-30T16:46:38.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950740",
+    "ThreadId": "405211",
+    "Html": "\r\n<p>I guess I worded the question wrong.&nbsp; I want to save the Task object to a file while the code is running.&nbsp; When I try to save using the TaskSchedulerWizard object, I get an error because the Task object is null.</p>\r\n",
+    "PostedDate": "2012-12-03T12:07:34.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950896",
+    "ThreadId": "405211",
+    "Html": "\r\n<p>TaskDefinition has an Xml property which can be saved to a file and then used by the TaskFolder.ImportTask method to import and register or it can be brought into a string and used to set the same Xml property at a later time. The reason the Task object\r\n is null is because the task has not yet been registered.</p>\r\n",
+    "PostedDate": "2012-12-03T19:52:15.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

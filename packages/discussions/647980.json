@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1453624",
+    "ThreadId": "647980",
+    "Html": "Hello, i get this error when trying to create a scheduled task remotely on windows xp:<br />\n<br />\nUnable to establish existence of the account specified<br />\n<br />\nSeems to work perfectly on Win 7 devices..<br />\n<br />\nCode:<br />\n<br />\n using (TaskService ts = new TaskService(device.DeviceIp, &quot;myuser&quot;, &quot;.&quot;, &quot;mypass&quot;,true))<br />\n<br />\n(net 2.0)<br />\n<br />\nThis seems to state that i need to use V1:<br />\n<br />\n<a href=\"https://support.microsoft.com/en-us/kb/2027483\" rel=\"nofollow\">https://support.microsoft.com/en-us/kb/2027483</a><br />\n<br />\nBut i was under the impression that stating true at the end of my code forced this?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2015-11-23T14:41:19.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453739",
+    "ThreadId": "647980",
+    "Html": "I just tried using SCHTASKS and the task created correctly. When i use this wrapper i noticed that the task gets created on the remote device but fails to run. If i open the task in task manager and re enter the password then the task will run.<br />\n<br />\nHere is the string that works with schtasks:<br />\n<br />\nSCHTASKS /Create /S 10.160.8.58 ABC /U user /P pass /RU user /RP pass /SC HOURLY /TN doc /TR notepad<br />\n<br />\nand here is the c# code for the actual task creation:<br />\n<pre><code>   TaskDefinition td = ts.NewTask();\n                                            td.RegistrationInfo.Description =\n                                                &quot;Runs the deploycheck.exe&quot;;\n                                            td.Principal.LogonType = TaskLogonType.InteractiveTokenOrPassword;\n                                           \n                                            td.Actions.Add(new ExecAction(program, origArguments, @&quot;c:\\temp\\&quot;));\n\n                                            Task task = ts.RootFolder.RegisterTaskDefinition(taskName, td,\n                                                TaskCreation.Create, &quot;user&quot;, &quot;pass&quot;,\n                                                TaskLogonType.Password, null);</code></pre>\n\nThanks<br />\n",
+    "PostedDate": "2015-11-25T06:30:18.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1453752",
+    "ThreadId": "647980",
+    "Html": "Use true for the last parameter in the TaskService constructor if and only if you know that the target server is WS2003 or XP, otherwise, use false.\r<br />\n<br />\nTry this:<br />\n<pre><code>TaskService ts = new TaskService(&quot;10.160.8.58&quot;, &quot;user&quot;, &quot;userDomain&quot;, &quot;pass&quot;, false);\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = &quot;Runs the deploycheck.exe&quot;;\ntd.Actions.Add(program, origArguments, @&quot;c:\\temp\\&quot;);\nTask task = ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.Create, &quot;user&quot;, &quot;pass&quot;, TaskLogonType.Password, null);</code></pre>\n\n",
+    "PostedDate": "2015-11-25T09:31:56.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-07T14:31:28.07-08:00"
+  }
+]

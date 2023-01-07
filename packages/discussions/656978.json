@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1480573",
+    "ThreadId": "656978",
+    "Html": "Hello,\r<br />\n<br />\nI want to set Run Whether user is logged on or not.\r<br />\nBut don't want to tick &quot;Do Not Store Password.&quot; tick.\r<br />\n<br />\nPlease suggest me settings.\r<br />\n<br />\nThank you.<br />\n",
+    "PostedDate": "2016-08-08T00:42:31.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480603",
+    "ThreadId": "656978",
+    "Html": "What you're asking cannot be done. In order to run in a non-interactive session, it must have rights to logon.<br />\n",
+    "PostedDate": "2016-08-08T13:47:50.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-08-08T13:47:53.587-07:00"
+  }
+]

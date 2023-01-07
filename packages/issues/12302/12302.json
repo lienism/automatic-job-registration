@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-12-14T14:58:38.68-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I try displaying the schedule for the an __existing__ task, I see the following error in the Run Times tab.\n\nUnable to show the run times for this task.\nError: System.NullReferenceException: Object references not set to an instance of an object.\n   at Microsoft.Win32.TaskScheduler.TaskService.NewTask()\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.runTimesTab_Enter(Object sender, EventArgs e)\n\nIf I click ok, Windows display a Quit, Continue, Ignore dialog box and nothing gets saved.\n\nNote that is only happening when I try to modify an existing task. If I create a new task, the RunTimes tab gets filled correctly.",
+    "LastUpdatedDate": "2015-12-14T14:58:38.68-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-12-09T11:28:45.797-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "NullReferenceException when display Run Times in TaskEditDialog",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12302
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "In addition to my last message, I get the following stack trace when I click OK in the dialog box.\r\n\r\nSystem.NullReferenceException: Object reference not set to an instance of an object.\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)\n   at Microsoft.Win32.TaskScheduler.Task.RegisterChanges()\n   at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\r\n\r\n",
+      "PostedDate": "2015-12-09T12:54:08.693-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ok, I found the problem. It was a false alarm but a good lesson to learn.\r\n\r\nMy original code was:\r\n\r\n```\nTask myTask;\nusing (TaskService ts = new TaskService()){\n     myTask = SearchForMyTask(ts); //Returns the one I need.\n }\n// Some code here \n//Eventually\r\n\r\nusing (TaskEditDialog editorForm = new TaskEditDialog(myTask)) {           \n    editorForm.ShowDialog(this);\n}\r\n\r\n//I was running into this error because my original TaskService ts was garbage collected.\n```\nThe actual problem was \r\n\r\n__Task.RegisterChanges__() method, which calls __CreateTask__ method, which then calls __GetV2Definition__. The GetV2Definition does not check if the svc variable is valid and as a result a NullReferenceException is raised.\r\n\r\nSolution was to move the TaskService to higher scope\r\n\r\n\r\n\r\n\n",
+      "PostedDate": "2015-12-09T13:29:43.1-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-12-14T14:58:38.68-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

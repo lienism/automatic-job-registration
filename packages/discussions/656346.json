@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1478816",
+    "ThreadId": "656346",
+    "Html": "After searching this site I  am at a loss for the following issue:\r<br />\nI have downloaded the latest package(s) via Nuget.\r<br />\n<br />\nUsing the TaskBrowserDialog I keep receiving Exception type: System.IO.FileNotFoundException\r<br />\nMessage:         The system cannot find the file specified.\r<br />\n Is this dialog working in Windows 10? \r<br />\nAnyone have any examples on how to use this UI control?\r<br />\n<br />\nNOTE: tdbDialogAuto is my TaskBrowserDialog instance.<br />\n<pre><code>            using (var ts = new TaskService())\n            {\n                tbdialogAuto.TaskService = ts;\n                tbdialogAuto.SelectedPath = ts.RootFolder.Name;\n                tbdialogAuto.AllowFolderSelection = true;\n                tbdialogAuto.ShowTasks = true;\n                tbdialogAuto.ShowDialog();\n            \n        }</code></pre>\n\nAny help is appreciated.<br />\n",
+    "PostedDate": "2016-07-13T10:53:55.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479075",
+    "ThreadId": "656346",
+    "Html": "Just curious, what happens if you do not set the SelectedPath property? Does it still throw the exception? The code I have in the test harness does not include that scenario.<br />\n",
+    "PostedDate": "2016-07-15T13:40:32.46-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479076",
+    "ThreadId": "656346",
+    "Html": "Also, I add it as a component on my form and set those properties interactively in the designer. To do that, you have to add the assembly to your toolbox though.<br />\n",
+    "PostedDate": "2016-07-15T13:42:25.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479085",
+    "ThreadId": "656346",
+    "Html": "Same error without  SelectedPath property, TaskService --in fact I tried the dialog without any settings - just plain dialog from the toolbox.. \r<br />\nI did that exact same thing --added it as a component on my form (from toolbox) and set the properties interactively in the designer.\r<br />\nNo matter what I try I get the error. Exception type: System.IO.FileNotFoundException \r<br />\n<br />\nEverything else works awesome though!\r<br />\n<br />\nAny help much appreciated.<br />\n",
+    "PostedDate": "2016-07-15T15:39:38.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479187",
+    "ThreadId": "656346",
+    "Html": "Using your exact code snippet, I have successfully run this against the latest version of the library under all .NET builds without error. I even tested it forcing the V1 library without issue. Is the <code>ShowDialog</code> method the one throwing the exception or another line?<br />\n",
+    "PostedDate": "2016-07-17T22:42:43.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479190",
+    "ThreadId": "656346",
+    "Html": "I'll uninstall and reinstall from NuGet.\r<br />\n<br />\nMaybe I have a corrupt DLL<br />\n<pre><code>See the end of this message for details on invoking \njust-in-time (JIT) debugging instead of this dialog box.\n\n************** Exception Text **************\nSystem.IO.FileNotFoundException: The system cannot find the file specified. (Exception from HRESULT: 0x80070002)\n   at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Xml()\n   at Microsoft.Win32.TaskScheduler.Task.GetV2StrippedDefinition(TaskService svc, IRegisteredTask iTask)\n   at Microsoft.Win32.TaskScheduler.Task.CreateTask(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n   at Microsoft.Win32.TaskScheduler.TaskCollection.V2TaskEnumerator.&lt;&gt;c__DisplayClass1_0.&lt;.ctor&gt;b__0(Object o)\n   at System.Runtime.InteropServices.ComEnumerator`2.get_Current()\n   at Microsoft.Win32.TaskScheduler.TaskBrowserDialog.LoadChildren(TreeNode p)\n   at Microsoft.Win32.TaskScheduler.TaskBrowserDialog.LoadChildren(TreeNode p)\n   at Microsoft.Win32.TaskScheduler.TaskBrowserDialog.RefreshList()\n   at Microsoft.Win32.TaskScheduler.TaskBrowserDialog.TaskBrowserDialog_Load(Object sender, EventArgs e)\n   at System.Windows.Forms.Form.OnLoad(EventArgs e)\n   at System.Windows.Forms.Form.OnCreateControl()\n   at System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)\n   at System.Windows.Forms.Control.CreateControl()\n   at System.Windows.Forms.Control.WmShowWindow(Message&amp; m)\n   at System.Windows.Forms.Control.WndProc(Message&amp; m)\n   at System.Windows.Forms.ScrollableControl.WndProc(Message&amp; m)\n   at System.Windows.Forms.ContainerControl.WndProc(Message&amp; m)\n   at System.Windows.Forms.Form.WmShowWindow(Message&amp; m)\n   at System.Windows.Forms.Form.WndProc(Message&amp; m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n\n</code></pre>\n\n",
+    "PostedDate": "2016-07-17T23:14:53.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479192",
+    "ThreadId": "656346",
+    "Html": "I just uninstalled TaskScheduler from NuGet rebooted, re-compliled, re-installed via NuGet, added the Microsoft.Win32.TaskScheduler.dll to the VS2013 Ultimate (opened as Administrator) toolbox then added the taskBrowserDialog by dragging from the toolbox to the form. Changed the name to tbDialogAuto.  Using the exact code above the following error still occurs:<br />\n<br />\nNOTE: I'm on 64bit Dell Precision T7600 Dual (2) 6 core Xeon running Windows 10 Pro<br />\n<br />\n<a href=\"https://www.adrive.com/public/3UE5wv/TaskBrowserD_error.png\" rel=\"nofollow\">View screenshot here</a><br />\n<br />\n<a href=\"https://www.adrive.com/public/GsVXnt/TaskBrowserD_error2.png\" rel=\"nofollow\">Another screenshot here</a><br />\n",
+    "PostedDate": "2016-07-18T00:21:14.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479327",
+    "ThreadId": "656346",
+    "Html": "Looking at the stack dump, it appears you have a task in the root directory that cannot be displayed. This is why you see the error and I don't. I will add some better error handling to this class in the next release.<br />\n",
+    "PostedDate": "2016-07-19T20:12:05.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-07-20T11:12:11.52-07:00"
+  },
+  {
+    "Id": "1479353",
+    "ThreadId": "656346",
+    "Html": "You're 100% spot on sir.\r<br />\nThere was a corrupted SqmUpload task related to the Windows Media Player (CEIP) Customer Experience Improvement program. This task gets created by default and a checkbox is automatically checked as a default in the program (under privacy).\r<br />\n<br />\nI removed that crap from HKLM\\Software\\Microsoft\\WindowsNT\\CurrentVersion\\Schedule\\Taskcache\\Tree \r<br />\n<br />\nWorked perfectly after that.\r<br />\n<br />\nThanks for all your help and thanks for giving us an extensible task scheduler!<br />\n",
+    "PostedDate": "2016-07-20T03:33:23.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

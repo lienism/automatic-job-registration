@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1441935",
+    "ThreadId": "644218",
+    "Html": "I am trying to get the list of the Network Connections under the Conditions Tab.\r<br />\nHowever I am not able to find any object from the wrapper which allows me to retrieve the network connections list.\r<br />\n<br />\nAny help will be appreciated\r<br />\nThanks<br />\n",
+    "PostedDate": "2015-08-25T23:09:03.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441993",
+    "ThreadId": "644218",
+    "Html": "The class used is not exposed publicly in the library. In the Source Code, look under the TaskEditor project, Native directory and find the NetworkProfile.cs class file. This is what you need. There is a static method on the class that retrieves the list of instances.<br />\n<pre><code>foreach (var item in Microsoft.Win32.NativeMethods.NetworkProfile.GetAllLocalProfiles())\n   Console.WriteLine($&quot;Network connection {item.Name} had an ID of {item.Id}&quot;);</code></pre>\n\n",
+    "PostedDate": "2015-08-26T06:47:55.383-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:26:58.28-07:00"
+  },
+  {
+    "Id": "1442107",
+    "ThreadId": "644218",
+    "Html": "Thanks. Its working perfectly now.<br />\n",
+    "PostedDate": "2015-08-27T03:21:15.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-04-17T16:29:41.51-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nI am not sure if I should be posting this under issue, but it seems right.\n\nI would like to use your wrapper for a project of mine, but something weird is happening when I try to run it. I am using the latest version (today is 2013/06/18, using the Release 1.9.4).\n\nWhen I run this piece of code:\n\n```\nusing (TaskService ts = new TaskService())\n            {\n                TimeTrigger tt = new TimeTrigger { StartBoundary = new DateTime(2013, 6, 18, 19, 35, 00) };\n                ts.AddTask(\"TaskName\",\n                   tt,\n                   new ExecAction(\"notepad.exe\", null, null));\n                \n            }\n```\nit works perfectly fine. But if I change TimeTrigger to DailyTrigger, and nothing else, I get a compile error.\n\nThe exact error message is \"Error\t1\tThe type 'System.Xml.Serialization.IXmlSerializable' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.\"\n\n\nPlease let me know what's the reason for this.\nI am using Visual Studio 2012 Ultimate, and I created an empty project, with one Program.cs file in whose main I call this piece of code.\n\nBest regards!",
+    "LastUpdatedDate": "2014-04-17T16:29:41.51-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-06-18T10:46:44.897-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "\"Error The type 'System.Xml.Serialization.IXmlSerializable' is defined in an assembly that is not referenced.\"",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11090
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Will you post the code for how you are changing the TimeTrigger to the DailyTrigger? This may be why the error is occurring. Typically, you would need to retrieve the task, remove the TimeTrigger, add the DailyTrigger and then re-register the task. Is this what you are doing?",
+      "PostedDate": "2013-06-18T11:10:27.08-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That probably might be why it's not working.\nLike I said, in the same project, same .cs file, I just change the TimeTrigger (in the same TaskService) to DailyTrigger, like this: \r\n\r\n```\nusing (TaskService ts = new TaskService())\n            {\n                DailyTrigger tt = new DailyTrigger { StartBoundary = new DateTime(2013, 6, 18, 19, 35, 00) };\n                ts.AddTask(\"TaskName\",\n                   tt,\n                   new ExecAction(\"notepad.exe\", null, null));\n                \n            }\n```\r\n\r\nIs there somewhere an example how to do what you said?\n",
+      "PostedDate": "2013-06-19T03:04:16.887-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Each time you need to change a task, after it is created, the following code would work:\n```\n// Retrieve the task, change the trigger and re-register it\nTask t = ts.GetTask(\"TaskName\");\ntd = t.Definition;\ntd.Triggers.Clear();\ntd.Triggers.Add(new DailyTrigger { StartBoundary = new DateTime(2013, 6, 18, 19, 35, 00) });\nt.RegisterChanges();\n```",
+      "PostedDate": "2013-06-19T06:21:21.92-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I pasted this piece of code in my project, I even tried it in a new, different project, and I still get the same compile error.\r\n\r\nThe only thing I changed/added is on the second line of your code:\n```\ntd = t.Definition;\n```\r\n\r\nchanged to\n```\nTaskDefinition td = t.Definition;\n```\n(because td isn't initialized).\r\n\r\nAnd VS underlines the TaskDefinition part of that particular line.\r\n\r\n\nAm I really the only one who has this problem?",
+      "PostedDate": "2013-06-21T07:05:22.157-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I found a fix for the compile error. It needs a reference to System.Xml.dll, and then it's executing just fine.\r\n\r\nThank you for your help!",
+      "PostedDate": "2013-06-21T07:11:40.513-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-04-17T16:29:41.51-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

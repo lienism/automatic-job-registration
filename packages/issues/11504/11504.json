@@ -1,0 +1,81 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-09-04T13:54:33.047-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I've create a task using this library, that worked.\n\nNow when I use the TaskEdit dialog in the following way:\n\n```\nUsing D As New TaskEditDialog()\n\tUsing Tsk As Task = ts.GetTask(\"\\MyTasks\\Task1\")\n\t\tD.Editable = True\n\t\tD.RegisterTaskOnAccept = True\n\t\tD.Initialize(Tsk)\n\tEnd Using\nEnd Using\n```\n\nI get a COMException with __error code -2147216615 __and a message of __(45,8):Period:__. I have noticed that if I change the __Configure For__ dropdown to Windows 7, Windows Server 2008 R2 it saves.\n\nWhat am I doing wrong or does this library not support Windows 8.1 as yet?\n\nThe output from D.Task.xml is:\n```\n<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n<Task version=\"1.2\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">\n    <RegistrationInfo>\n        <Source>MyApp</Source>\n        <Author>Me</Author>\n        <Description>Collect Totals</Description>\n    </RegistrationInfo>\n    <Triggers>\n        <CalendarTrigger>\n            <StartBoundary>2013-11-12T18:00:00</StartBoundary>\n            <Enabled>true</Enabled>\n            <ScheduleByDay>\n                <DaysInterval>1</DaysInterval>\n            </ScheduleByDay>\n        </CalendarTrigger>\n    </Triggers>\n    <Settings>\n        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>\n        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>\n        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>\n        <AllowHardTerminate>true</AllowHardTerminate>\n        <StartWhenAvailable>true</StartWhenAvailable>\n        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>\n        <IdleSettings>\n            <Duration>PT10M</Duration>\n            <WaitTimeout>PT1H</WaitTimeout>\n            <StopOnIdleEnd>true</StopOnIdleEnd>\n            <RestartOnIdle>false</RestartOnIdle>\n        </IdleSettings>\n        <AllowStartOnDemand>true</AllowStartOnDemand>\n        <Enabled>true</Enabled>\n        <Hidden>true</Hidden>\n        <RunOnlyIfIdle>false</RunOnlyIfIdle>\n        <WakeToRun>true</WakeToRun>\n        <ExecutionTimeLimit>PT72H</ExecutionTimeLimit>\n        <Priority>7</Priority>\n        <RestartOnFailure>\n            <Interval>PT1M</Interval>\n            <Count>3</Count>\n        </RestartOnFailure>\n    </Settings>\n    <Actions Context=\"Author\">\n        <Exec>\n            <Command>C:\\Users\\darm\\Documents\\Visual Studio 2010\\Projects\\MyApp\\Deliverable\\Application\\Task Runner.exe</Command>\n            <Arguments>action=1</Arguments>\n        </Exec>\n    </Actions>\n    <Principals>\n        <Principal id=\"Author\">\n            <UserId>DG750\\darm</UserId>\n            <LogonType>InteractiveToken</LogonType>\n            <RunLevel>LeastPrivilege</RunLevel>\n        </Principal>\n    </Principals>\n</Task>\n```",
+    "LastUpdatedDate": "2014-09-04T13:54:33.047-07:00",
+    "PlannedForRelease": "Release 2.0.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-01-07T08:53:41.77-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Getting COMExcpetion when attempting to register changes in a Windows 8.1 PC",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11504
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3773,
+      "FileName": "TestTaskService.2.0.3.zip",
+      "DownloadUrl": ".\\3773"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I've just downloaded the latest version 2.0.3 and it still does not work. The exception is shown below:\r\n\r\n```\nSystem.Runtime.InteropServices.COMException (0x80041319): (45,8):Period:\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)\n   at Microsoft.Win32.TaskScheduler.Task.RegisterChanges()\n   at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message& m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n   at System.Windows.Forms.Button.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n\r\n\n************** Loaded Assemblies **************\nmscorlib\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/Windows/Microsoft.NET/Framework64/v2.0.50727/mscorlib.dll\n----------------------------------------\nScheduled Task Manager\n    Assembly Version: 3.0.0.3\n    Win32 Version: 3.0.0.3\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/Scheduled%20Task%20Manager.exe\n----------------------------------------\nDatabase\n    Assembly Version: 3.0.0.6\n    Win32 Version: 3.0.0.6\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/Database.DLL\n----------------------------------------\nlog4net\n    Assembly Version: 1.2.10.0\n    Win32 Version: 1.2.10.0\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/log4net.DLL\n----------------------------------------\nSystem.Windows.Forms\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Windows.Forms/2.0.0.0__b77a5c561934e089/System.Windows.Forms.dll\n----------------------------------------\nSystem\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System/2.0.0.0__b77a5c561934e089/System.dll\n----------------------------------------\nSystem.Drawing\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Drawing/2.0.0.0__b03f5f7f11d50a3a/System.Drawing.dll\n----------------------------------------\nMicrosoft.VisualBasic\n    Assembly Version: 8.0.0.0\n    Win32 Version: 8.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/Microsoft.VisualBasic/8.0.0.0__b03f5f7f11d50a3a/Microsoft.VisualBasic.dll\n----------------------------------------\nTranslationManager\n    Assembly Version: 3.0.0.3\n    Win32 Version: 3.0.0.3\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/TranslationManager.DLL\n----------------------------------------\nSystem.Configuration\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Configuration/2.0.0.0__b03f5f7f11d50a3a/System.Configuration.dll\n----------------------------------------\nSystem.Xml\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Xml/2.0.0.0__b77a5c561934e089/System.Xml.dll\n----------------------------------------\nSystem.Xml.Linq\n    Assembly Version: 3.5.0.0\n    Win32 Version: 3.5.30729.7903 built by: Win9Rel\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Xml.Linq/3.5.0.0__b77a5c561934e089/System.Xml.Linq.dll\n----------------------------------------\nSystem.Core\n    Assembly Version: 3.5.0.0\n    Win32 Version: 3.5.30729.7903 built by: Win9Rel\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Core/3.5.0.0__b77a5c561934e089/System.Core.dll\n----------------------------------------\nSystem.Data.Entity\n    Assembly Version: 3.5.0.0\n    Win32 Version: 3.5.30729.7903 built by: Win9Rel\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Data.Entity/3.5.0.0__b77a5c561934e089/System.Data.Entity.dll\n----------------------------------------\nSystem.Data\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/System.Data/2.0.0.0__b77a5c561934e089/System.Data.dll\n----------------------------------------\nSystem.Web\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/System.Web/2.0.0.0__b03f5f7f11d50a3a/System.Web.dll\n----------------------------------------\nSystem.Transactions\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/System.Transactions/2.0.0.0__b77a5c561934e089/System.Transactions.dll\n----------------------------------------\nSystem.EnterpriseServices\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/System.EnterpriseServices/2.0.0.0__b03f5f7f11d50a3a/System.EnterpriseServices.dll\n----------------------------------------\nSystem.Runtime.Serialization\n    Assembly Version: 3.0.0.0\n    Win32 Version: 3.0.4506.7903 (Win9Rel.030729-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/System.Runtime.Serialization/3.0.0.0__b77a5c561934e089/System.Runtime.Serialization.dll\n----------------------------------------\nDevExpress.XtraEditors.v12.2\n    Assembly Version: 12.2.13.0\n    Win32 Version: 12.2.13.0\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/DevExpress.XtraEditors.v12.2/12.2.13.0__b88d1754d700e49a/DevExpress.XtraEditors.v12.2.dll\n----------------------------------------\nDevExpress.Utils.v12.2\n    Assembly Version: 12.2.13.0\n    Win32 Version: 12.2.13.0\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/DevExpress.Utils.v12.2/12.2.13.0__b88d1754d700e49a/DevExpress.Utils.v12.2.dll\n----------------------------------------\nDevExpress.Data.v12.2\n    Assembly Version: 12.2.13.0\n    Win32 Version: 12.2.13.0\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/DevExpress.Data.v12.2/12.2.13.0__b88d1754d700e49a/DevExpress.Data.v12.2.dll\n----------------------------------------\nAnonymously Hosted DynamicMethods Assembly\n    Assembly Version: 0.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/mscorlib/2.0.0.0__b77a5c561934e089/mscorlib.dll\n----------------------------------------\nMicrosoft.Win32.TaskScheduler\n    Assembly Version: 2.0.0.27238\n    Win32 Version: 2.0.0.0\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/Microsoft.Win32.TaskScheduler.DLL\n----------------------------------------\nMicrosoft.Win32.TaskSchedulerEditor\n    Assembly Version: 2.0.0.27241\n    Win32 Version: 2.0.0.0\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/Microsoft.Win32.TaskSchedulerEditor.DLL\n----------------------------------------\nTimeSpan2\n    Assembly Version: 2.0.2.14660\n    Win32 Version: 2.0.2.0\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/TimeSpan2.DLL\n----------------------------------------\nGroupControls\n    Assembly Version: 1.3.8.27120\n    Win32 Version: 1.3.8.0\n    CodeBase: file:///C:/Users/darm/Documents/Visual%20Studio%202010/Projects/MXBusiness/Deliverable/Application/GroupControls.DLL\n----------------------------------------\nAccessibility\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_MSIL/Accessibility/2.0.0.0__b03f5f7f11d50a3a/Accessibility.dll\n----------------------------------------\nCustomMarshalers\n    Assembly Version: 2.0.0.0\n    Win32 Version: 2.0.50727.7905 (win9rel.050727-7900)\n    CodeBase: file:///C:/WINDOWS/assembly/GAC_64/CustomMarshalers/2.0.0.0__b03f5f7f11d50a3a/CustomMarshalers.dll\n----------------------------------------\nMicrosoft.mshtml\n    Assembly Version: 7.0.3300.0\n    Win32 Version: 7.0.3300.0\n    CodeBase: file:///C:/WINDOWS/assembly/GAC/Microsoft.mshtml/7.0.3300.0__b03f5f7f11d50a3a/Microsoft.mshtml.dll\n----------------------------------------\r\n\r\n************** JIT Debugging **************\nTo enable just-in-time (JIT) debugging, the .config file for this\napplication or computer (machine.config) must have the\njitDebugging value set in the system.windows.forms section.\nThe application must also be compiled with debugging\nenabled.\r\n\r\nFor example:\r\n\r\n<configuration>\n    <system.windows.forms jitDebugging=\"true\" />\n</configuration>\r\n\r\nWhen JIT debugging is enabled, any unhandled exception\nwill be sent to the JIT debugger registered on the computer\nrather than be handled by this dialog box.\n```",
+      "PostedDate": "2014-01-16T11:50:41.87-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fixed in 2.0.1 release\n\n** Closed by dahall 1/7/2014 1:17 PM",
+      "PostedDate": "2014-01-16T15:39:03.46-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-01-16T15:39:08.383-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I just attached a zip file. Please unzip all of it and then run TestTaskService.exe. Choose \"Editor test\" and change some of the values for the task that pops up, click Ok, and then see if there is an error. Test changing values and even the \"Configure for:\" dropdown. Let me know what you find. By the way, your error log shows that you have the 2.0.0 binaries and not the 2.0.3.",
+      "PostedDate": "2014-01-16T15:43:47.24-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-01-16T15:43:47.963-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I did a bunch of work in this area for the 2.1.1 release. Will you check and let me know if the error still appears?",
+      "PostedDate": "2014-04-17T16:27:21.503-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-09-04T13:54:33.047-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

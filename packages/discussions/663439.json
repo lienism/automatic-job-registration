@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497428",
+    "ThreadId": "663439",
+    "Html": "I am the author of AJC Sync and I have been using an earlier version of this library.  I started getting customers contacting me saying that after Windows 10 Creators update their scheduled tasks stopped running.  The solution seemed to be to edit the task directly and change the &quot;Configure for&quot; option to say &quot;Windows 10&quot;.\r<br />\n<br />\nFirstly I wonder why when you create a new task it does not default to Windows 10 but says &quot;Windows Vista Windows Server 2008&quot;.  What does the option mean anyway?\r<br />\n<br />\nI tried the latest version of this library but it is still the same.\r<br />\n<br />\nIs anyone else having this problem and is there a way to make it default to Windows 10?<br />\n",
+    "PostedDate": "2017-07-19T06:36:05.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497447",
+    "ThreadId": "663439",
+    "Html": "The library, unlike the native implementation in the &quot;Task Scheduler&quot; applet, will report the minimum library required to support the features of the task. In your case, my guess is that your task has only a few, older options, so it can be supported on Windows Vista and later regardless of which OS is used to create the task.<br />\n",
+    "PostedDate": "2017-07-20T08:15:28.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-07-20T08:15:32.28-07:00"
+  }
+]

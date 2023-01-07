@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "869493",
+    "ThreadId": "370549",
+    "Html": "\r\n<p>Hi</p>\r\n<p>I am using Windows Server 2003 from where I want to connect Window Server 2008 task scheduler in my web application. I tried to do following but wont work. It work for locally (2003) but wont for remote server (2008)</p>\r\n<p>e.g.</p>\r\n<p>TaskService m_TaskService = new TaskService(@&quot;\\\\testServer2008&quot;, &quot;testUser&quot;, &quot;testDomain&quot;, &quot;testPassword&quot;, true);</p>\r\n<p><em><span id=\"ctl00_ContentPlaceHolder1_lblErrorMessage\">Logon failure: unknown user name or bad password</span></em></p>\r\n<p>We tried different combination, but it wont work for remote server. Does I missing something? Please provide guide lines to me.</p>\r\n<p>Regards</p>\r\n<p>Ajay</p>\r\n<div style=\"width:75%; float:left; text-align:left\"><em><span id=\"ctl00_ContentPlaceHolder1_lblErrorMessage\">&nbsp;</span></em></div>\r\n",
+    "PostedDate": "2012-07-16T05:48:11.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869853",
+    "ThreadId": "370549",
+    "Html": "<p>Windows Server 2003 only has the 1.0 library locally. It will only connect to other Windows 2000 and 2003 servers. Windows Server 2003 R2 and later have the 2.0 libraries and can connect to either 1.0 or 2.0 capable servers.</p>",
+    "PostedDate": "2012-07-16T09:44:52.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870589",
+    "ThreadId": "370549",
+    "Html": "<p>Hi dahall</p>\r\n<p>I have following 2003 server</p>\r\n<p>Windows Server 2003, Standard Edition<br /> Build 3790 (Service Pack 2)</p>\r\n<p>Ajay</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-07-17T00:24:54.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "871304",
+    "ThreadId": "370549",
+    "Html": "<p>2008 can see tasks on other 2008 and 2003 servers. 2003 can only see other 2003.</p>",
+    "PostedDate": "2012-07-17T14:41:50.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

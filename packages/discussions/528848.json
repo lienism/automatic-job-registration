@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1202359",
+    "ThreadId": "528848",
+    "Html": "I have just tried to run the example from this site in my asp.net application. Connections in task service are working:<br />\n<pre><code>using (TaskService ts = new TaskService())\n            {\n                // Create a new task definition and assign properties\n                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = &quot;Does something&quot;;\n                td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n                // Add a trigger that will fire the task at this time every other day\n                DailyTrigger dt = (DailyTrigger)td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\n                dt.Repetition.Duration = TimeSpan.FromHours(4);\n                dt.Repetition.Interval = TimeSpan.FromHours(1);\n\n                // Add a trigger that will fire every week on Friday\n                td.Triggers.Add(new WeeklyTrigger\n                {\n                    StartBoundary = DateTime.Today + TimeSpan.FromHours(2),\n                    DaysOfWeek = DaysOfTheWeek.Friday\n                });\n\n                // Add an action that will launch Notepad whenever the trigger fires\n                td.Actions.Add(new ExecAction(&quot;cmd.exe&quot;, &quot;c:\\\\test.log&quot;, null));\n\n                // Register the task in the root folder\n                const string taskName = &quot;Test&quot;;\n                ts.RootFolder.RegisterTaskDefinition(taskName, td);\n            }\n</code></pre>\n\nAnd in the last row strange exception has appeared:<br />\nSystem.Runtime.InteropServices.COMException: (57,4):Task:<br />\n<br />\nPlease, help!<br />\n",
+    "PostedDate": "2014-02-04T00:31:58.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202984",
+    "ThreadId": "528848",
+    "Html": "If you call<br />\n<pre><code>t.RegisterChanges();</code></pre>\n\ninstead of calling RegisterTaskDefnition on the last row, do you get the same error?<br />\n",
+    "PostedDate": "2014-02-05T06:43:14.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206689",
+    "ThreadId": "528848",
+    "Html": "It appears there is no way to create scheduled tasks from asp.net application<br />\n",
+    "PostedDate": "2014-02-11T00:13:01.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1208386",
+    "ThreadId": "528848",
+    "Html": "There are a number of ways and a number of discussions in this forum that cover the topic. Please search and follow the answers there.<br />\n",
+    "PostedDate": "2014-02-14T06:49:19.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:10:14.577-07:00"
+  }
+]

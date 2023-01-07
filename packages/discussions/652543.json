@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1466905",
+    "ThreadId": "652543",
+    "Html": "Following results in: <br />\nThe security ID structure is invalid. (Exception from HRESULT: 0x80070539)<br />\n<pre><code>using (TaskService ts = new TaskService(serverName, userName, domain, password, false))\n{\nts.GetTask(taskFullPath).RunEx(TaskRunFlags.UserSID, 0, runAs);\n};\n</code></pre>\n\n",
+    "PostedDate": "2016-03-15T11:02:48.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466990",
+    "ThreadId": "652543",
+    "Html": "I believe this is a bug in the library. What happens if you pass an empty string into the parameter list?<br />\n<pre><code>RunEx(TaskRunFlags.UserSID, 0, runAs, &quot;&quot;);</code></pre>\n\nThis may work around the issue until I can correct, test and update the code.<br />\n",
+    "PostedDate": "2016-03-16T07:13:40.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471813",
+    "ThreadId": "652543",
+    "Html": "Fixed in version 2.5.17<br />\n",
+    "PostedDate": "2016-04-29T10:07:04.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T10:07:07.95-07:00"
+  },
+  {
+    "Id": "1472317",
+    "ThreadId": "652543",
+    "Html": "Perfect, thanks! :)<br />\n",
+    "PostedDate": "2016-05-03T11:43:33.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

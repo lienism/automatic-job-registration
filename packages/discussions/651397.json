@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1463456",
+    "ThreadId": "651397",
+    "Html": "In the page of Microsoft, it says that is 1.0 and 2.0.\r<br />\nBut in the source code, I find some version 1.1 , 1.2 and  1.3~\r<br />\nIs there any relationship with them?\r<br />\nAnd how to find out the version of a task?\r<br />\nThanks ~<br />\n",
+    "PostedDate": "2016-02-16T19:37:37.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463462",
+    "ThreadId": "651397",
+    "Html": "Version 1.1 of the library represents the 1.0 version and was on systems from Windows 98 with IE4 through Windows XP.\r<br />\n<br />\nVersion 1.2 and later represent the 2.0 version. In each OS release from Windows Vista forwards, Microsoft has added minor features and has increased the version one digit. Therefore 1.2 = Vista, 1.3 = Win7, 1.4 = Win8 and 8.1, 1.5 = Win10.\r<br />\n<br />\nThe version information for a task in the library is a little easier to determine using TaskDefinition.Settings.Compatibility to determine the minimum version of the library on which the task can be registered. You can also use the TaskDefinition.LowestSupportedVersion to determine which version of the library is the lowest version that will support the combination of properties set across the entire TaskDefinition.<br />\n",
+    "PostedDate": "2016-02-16T21:28:45.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-16T21:28:48.04-08:00"
+  }
+]

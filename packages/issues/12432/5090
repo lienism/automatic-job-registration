@@ -1,0 +1,20 @@
+System.AccessViolationException was unhandled
+  HResult=-2147467261
+  Message=Attempted to read or write protected memory. This is often an indication that other memory is corrupt.
+  Source=System.Windows.Forms
+  StackTrace:
+       at System.Windows.Forms.UnsafeNativeMethods.CallWindowProc(IntPtr wndProc, IntPtr hWnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+       at System.Windows.Forms.NativeWindow.DefWndProc(Message& m)
+       at System.Windows.Forms.Control.WndProc(Message& m)
+       at System.Windows.Forms.ComboBox.WndProc(Message& m)
+       at System.Windows.Forms.DisabledItemComboBox.WndProc(Message& m)
+       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+       at System.Windows.Forms.UnsafeNativeMethods.SendMessage(HandleRef hWnd, Int32 msg, Int32 wParam, Int32 lParam)
+       at System.Windows.Forms.ComboBox.get_SelectedIndex()
+       at System.Windows.Forms.ComboBox.OnHandleDestroyed(EventArgs e)
+       at System.Windows.Forms.Control.WmDestroy(Message& m)
+       at System.Windows.Forms.Control.WndProc(Message& m)
+       at System.Windows.Forms.ComboBox.WndProc(Message& m)
+       at System.Windows.Forms.DisabledItemComboBox.WndProc(Message& m)
+       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+  InnerException: 

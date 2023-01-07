@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1466309",
+    "ThreadId": "652356",
+    "Html": "I need to check if a folder in the Task Scheduler exists off of the root folder. Would I use this code or would you suggest something else?<br />\n<pre><code>Public Function doesTaskFolderExist(ByVal strNameOfFolder As String) As Boolean\n    Dim taskService As New TaskService\n    \n    Try\n        taskService.GetFolder(strNameOfFolder)\n        taskService.Dispose()\n        taskService = Nothing\n\n        Return True\n    Catch ex As Exception\n        taskService.Dispose()\n        taskService = Nothing\n\n        Return False\n    End Try\nEnd Function</code></pre>\n\n",
+    "PostedDate": "2016-03-09T14:42:36.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466331",
+    "ThreadId": "652356",
+    "Html": "It is so much easier. Try:<br />\n<pre><code>Return TaskService.Instance.GetFolder(strNameOfFolder) IsNot Nothing</code></pre>\n\nYou don't need to worry about disposing the TaskFolder instance that may get created since it immediately goes out of scope and the garbage collector will automatically dispose it.<br />\n<br />\nIf you know that parent folder and it exists (for example the root folder), a more efficient mode is:<br />\n<pre><code>Return TaskService.Instance.RootFolder.SubFolders.Exists(strNameOfChildFolder)</code></pre>\n\n",
+    "PostedDate": "2016-03-09T20:30:15.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-03-09T20:35:08.66-08:00"
+  },
+  {
+    "Id": "1466334",
+    "ThreadId": "652356",
+    "Html": "Yeah, the folder is a subfolder of the root folder. I need to make sure that the subfolder of the root folder exists.<br />\n<pre><code>Return TaskService.Instance.RootFolder.Exists(strNameOfChildFolder)</code></pre>\n\nThat should tell me if the subfolder of the root folder exists? Is there any possibility that the root folder may not exist? I keep getting some reports from some of my users that they keep getting file not found exceptions. Very weird.<br />\n",
+    "PostedDate": "2016-03-09T21:13:51.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466406",
+    "ThreadId": "652356",
+    "Html": "It is impossible for the root folder to 'not exist', so, yes, that line of code will always tell you if that subfolder of root exists. Please note however that subfolders are not supported at all on Windows XP/Server 2003 and earlier.<br />\n",
+    "PostedDate": "2016-03-10T07:46:50.567-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

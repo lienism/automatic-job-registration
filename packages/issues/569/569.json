@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Added to code base.",
+    "ClosedDate": "2008-10-14T15:27:42.98-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The RunOnlyIfLoggedOn flag is present, but not supported by the task class.  This setting is needed on v1.0 Task Manager to allow a task to run as a user without supplying a password.  I don't think you need this flag for the new Task Manager.\n \nI added this code in task.cs around line 622 to support this.  It is accessible via Task.Settings.RunOnlyIfLoggedOn.  On new Task Manager, this property always returns true and doesn't do anything is set.\n \n        /// <summary>\n        /// Gets or sets a Boolean value that indicates that the Task Scheduler will run the task only if the user is logged on (v1.0 only)\n        /// </summary>\n        public bool RunOnlyIfLoggedOn\n        {\n            get\n            {\n                if (v2Settings != null)\n                    return true;\n                return (v1Task.GetFlags() & V1Interop.TaskFlags.RunOnlyIfLoggedOn) == V1Interop.TaskFlags.RunOnlyIfLoggedOn;\n            }\n            set\n            {\n                if (v2Settings != null)\n                {\n                    ;\n                }\n                else\n                {\n                    V1Interop.TaskFlags flags = v1Task.GetFlags();\n                    if (value)\n                        v1Task.SetFlags(flags |= V1Interop.TaskFlags.RunOnlyIfLoggedOn);\n                    else\n                        v1Task.SetFlags(flags &= ~V1Interop.TaskFlags.RunOnlyIfLoggedOn);\n                }\n            }\n        }",
+    "LastUpdatedDate": "2013-05-16T04:49:16.847-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2008-04-14T09:44:45.19-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "RunOnlyIfLogged On not implemented",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 569
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks. Nice addition. I have added it to the code base and updated the release.",
+      "PostedDate": "2008-10-14T15:27:25.357-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2008-10-14T15:27:42.98-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:11.87-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:16.847-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

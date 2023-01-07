@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "238863",
+    "ThreadId": "70122",
+    "Html": "<p>I'm running this code on XP (so, V1), and when I try using GetTask to check for a task before I try deleting it, I get a FileNotFoundException from the low-level interop instead of null coming back. Not sure what the intended behaviour is, but peeking at the source I'm not clear if the internal exception bubbling up is the intended behaviour. I suspect returning null makes things more consistent between v2 and v1...but I know nothing about this area so I'll go with whatever you prefer :)</p>",
+    "PostedDate": "2009-09-25T09:14:42.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239088",
+    "ThreadId": "70122",
+    "Html": "<p>It's a bug. (see: http://taskscheduler.codeplex.com/WorkItem/View.aspx?WorkItemId=4328 )</p>\r\n<p>You can solve with this code that I used in my project:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>TaskService taskService = <span style=\"color:Blue\">new</span> TaskService();\r\nTaskFolder tasksFolder = taskService.GetFolder(<span style=\"color:#A31515\">@&quot;\\&quot;</span>);\r\nTaskCollection listOfTasks = tasksFolder.Tasks;\r\n\r\n<span style=\"color:Blue\">try</span>\r\n{\r\n     Task theTask = listOfTasks[nameOfTask];\r\n     <span style=\"color:Green\">//now you can use &quot;theTask&quot;</span>\r\n     <span style=\"color:Green\">//...</span>\r\n}\r\n<span style=\"color:Blue\">catch</span> (System.IO.FileNotFoundException ex) \r\n{\r\n     MessageBox.Show(ex.ToString());\r\n}<br><br></pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-26T04:04:35.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "239090",
+    "ThreadId": "70122",
+    "Html": "<p>Where &quot;nameOfTask&quot; is the name of the task that you want find.</p>\r\n<p>&nbsp;</p>\r\n<p>In Windows Vista/7 the GetTask method runs very well instead.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-26T04:07:14.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "240243",
+    "ThreadId": "70122",
+    "Html": "<p>This issue has been fixed as of code drop <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/30714\">30714</a>&nbsp;and will be in the released build 1.4.1.</p>",
+    "PostedDate": "2009-09-29T20:19:58.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

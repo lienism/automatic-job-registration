@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "958446",
+    "ThreadId": "407332",
+    "Html": "\r\n<p>If you check this option, save and re-open the schedule, this option remains unchecked.</p>\r\n",
+    "PostedDate": "2012-12-19T06:57:24.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967158",
+    "ThreadId": "407332",
+    "Html": "\r\n<p>Fixed in source release 81938. Thanks for finding this bug. It will be rolled into the next downloadable release (1.9.3?).</p>\r\n",
+    "PostedDate": "2012-12-21T10:06:23.067-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "967220",
+    "ThreadId": "407332",
+    "Html": "\r\n<p>Wow, that was swift! Thanks a lot David!</p>\r\n",
+    "PostedDate": "2012-12-21T12:27:07.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1451672",
+    "ThreadId": "647209",
+    "Html": "On version 2.5.1.0. Followed service definition would get error <br />\n<br />\nType 'Microsoft.Win32.TaskScheduler.TaskDefinition' cannot be IXmlSerializable and have DataContractAttribute attribute.<br />\n<pre><code>    [ServiceContract]\n    public interface IService1\n    {\n        [OperationContract]\n        void DoWork();\n\n        [OperationContract]\n        TaskDefinition GetTask();    //this will fail\n    }\n</code></pre>\n\nReads TaskDefinition's attributes<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Defines all the components of a task, such as the task settings, triggers, actions, and registration information.\n    /// &lt;/summary&gt;\n    [XmlRootAttribute(&quot;Task&quot;, Namespace = TaskDefinition.tns, IsNullable = false)]\n    [XmlSchemaProvider(&quot;GetV1SchemaFile&quot;)]\n    [DataContract(Name = &quot;Task&quot;, Namespace = TaskDefinition.tns)]\n    public sealed class TaskDefinition : IDisposable, IXmlSerializable\n</code></pre>\n\n",
+    "PostedDate": "2015-11-10T17:36:50.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451802",
+    "ThreadId": "647209",
+    "Html": "I believe this is the result of a bug I introduced in 2.5. I have removed it in 2.5.3 which is now available.<br />\n",
+    "PostedDate": "2015-11-11T08:20:08.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-11-11T08:20:13.14-08:00"
+  }
+]

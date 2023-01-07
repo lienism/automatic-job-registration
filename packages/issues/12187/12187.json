@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-09-01T12:25:04.61-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I try to create the TaskDefinition and see the XMlText of a System Task(SQM data sender)\n'tk.Definition.XmlText' threw an exception of type __'System.OutOfMemoryException'__ exception.\n\nexception base: \"Insufficient memory to continue the execution of the program\"\n\nStackTrace:   \n                     at Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition.get_XmlText()\n                     at Microsoft.Win32.TaskScheduler.TaskDefinition.get_XmlText()\n\nCode:\n// Get the service on the local machine\nTaskService ts = new TaskService(targetServer, userName, accountDomain, password);\n\n__Note:__ The wrapper successfully created the Task Definitions of some 70 odd system tasks before failing at this one. \nTaskName: SQM data sender\n\nI am using the latest version of the wrapper.\n\nThanks in advance\nAny help will be appreciated",
+    "LastUpdatedDate": "2015-09-01T12:25:04.61-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-08-20T12:11:32.593-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Microsoft Issue"
+    },
+    "Summary": "Error creating TaskDefinition on Window10 Home",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12187
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This error is thrown by the base Microsoft library. I can try to help, but I may not be able to do anything. If you will send the code used to create the task definition, I may be able to spot the items that could be causing the problem.",
+      "PostedDate": "2015-08-21T06:22:39.47-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "@dahall: Thanks for the reply. I just wanted to know if this was thrown by the wrapper or by the base Microsoft library. I can just skip creating the task definitions of such tasks for the time being. This exception only occured for one particular (above mentioned) task and the rest are working fine.\r\n\r\nThanks again.",
+      "PostedDate": "2015-08-22T03:22:33.193-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The exception was thrown when this wrapper calls into the COM Task Scheduler property to get the XML.",
+      "PostedDate": "2015-08-22T18:09:05.74-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-01T12:25:04.61-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

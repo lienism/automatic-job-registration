@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1107720",
+    "ThreadId": "462236",
+    "Html": "Hi guys,\r<br />\n<br />\nI have a windows service that I use for scheduling tasks with the Task Scheduler Managed Wrapper API and for hosting a web service that should communicate with a monitoring app (desktop application) for showing statuses of the tasks and to send commands to the web service (run or stop scheduled tasks manually).\r<br />\n<br />\nThe web service uses netNamedPipeBinding with duplex communication, the windows service uses the Local System account and the scheduled tasks are using also the Local System account. The interesting thing is that I can schedule the tasks but I can't run them, apparently I have some security issues.\r<br />\n<br />\nI read <a href=\"http://blogs.technet.com/b/voy/archive/2007/02/23/services-isolation-in-session-0-of-windows-vista-and-longhorn-server.aspx\" rel=\"nofollow\">this article</a>  and I think that I can't make it work. When I debug the application I don't get any errors but when I check the SecurityDescriptor for the found task (Microsoft.Win32.TaskScheduler.Task) it says that I am missing some privileges.\r<br />\n<br />\nCould someone tell me if what I try to achieve is possible and, if it is, how? How should I configure it, or what should I use to make it work?\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-10-15T08:03:55.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

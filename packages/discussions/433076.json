@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1000974",
+    "ThreadId": "433076",
+    "Html": "Hi, \r<br />\n<br />\nI want to create a schedule that will run every 1 hour in a day, but I am not able to figure out how to do that.\r<br />\n<br />\nThanks,\r<br />\n-Prashant<br />\n",
+    "PostedDate": "2013-02-13T23:26:55.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1001516",
+    "ThreadId": "433076",
+    "Html": "Assuming the task begins triggering immediately, runs indefinitely and executes a program:<br />\n<pre><code>DailyTrigger dt = new DailyTrigger();\ndt.Repetition.Duration = TimeSpan.FromHours(23);\ndt.Repetition.Interval = TimeSpan.FromHours(1);\nnew TaskService().AddTask(taskName, dt, new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null));</code></pre>\n\n",
+    "PostedDate": "2013-02-14T14:54:57.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:10:45.247-07:00"
+  },
+  {
+    "Id": "1002993",
+    "ThreadId": "433076",
+    "Html": "Thanks, It worked.\r<br />\n<br />\nI have another query. In task scheduler General Tab - I want to select radio button &quot;Run weather user is logged on or not&quot;. \r<br />\nI am getting error by trying following code:\r<br />\n<br />\nCODE:<br />\n<pre><code>TaskDefinition td = ts.NewTask();\ntd.Settings.RunOnlyIfLoggedOn = false;\n</code></pre>\n\nERROR:<br />\n<pre><code>NotV2SupportedException' was unhandled. An unhandled exception of type 'Microsoft.Win32.TaskScheduler.NotV2SupportedException' occurred in          Microsoft.Win32.TaskScheduler.dll</code></pre>\n\n",
+    "PostedDate": "2013-02-18T12:15:08.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003112",
+    "ThreadId": "433076",
+    "Html": "Yes. That setting is reserved for systems after XP. You must be on an XP or Server 2003 system.<br />\n",
+    "PostedDate": "2013-02-18T17:04:22.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003118",
+    "ThreadId": "433076",
+    "Html": "No, I am trying to run the program on Win 8 operating system.<br />\n",
+    "PostedDate": "2013-02-18T17:34:31.473-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003487",
+    "ThreadId": "433076",
+    "Html": "I was incorrect. That setting only works on XP and earlier. To do what you want on Vista and later, int the RegisterTaskDefinition method you need to supply a password and use the TaskLogonType.Password or InteractiveTokenOrPassword or you will need to use a service account (like System or Local Service) and the TaskLogonType.ServiceAccount or you can supply a normal account, use the TaskLogonType.S4U, and not access either the network or encrypted files.<br />\n",
+    "PostedDate": "2013-02-19T08:04:45.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198499",
+    "ThreadId": "433076",
+    "Html": "Hi,\r<br />\nI upgraded to latest released dll in my project.\r<br />\nWhen I am trying to run below code on Win 8.1 OS it's giving error on below bold line:\r<br />\n<br />\nCode:\r<br />\nTaskDefinition td = ts.NewTask();\r<br />\n<strong>td.Settings.RunOnlyIfLoggedOn = true;</strong>\r<br />\n<br />\nError:\r<br />\nNotV2SupportedException' was unhandled. An unhandled exception of type 'Microsoft.Win32.TaskScheduler.NotV2SupportedException' occurred in          Microsoft.Win32.TaskScheduler.dll\r<br />\n<br />\nThe error is coming before registering the task and I am passing the password and task logon type while registering only.\r<br />\nts.RootFolder.RegisterTaskDefinition(scheduleName.Text, td, TaskCreation.CreateOrUpdate, domainName + &quot;\\&quot; + userName, password, TaskLogonType.Password, null);\r<br />\n<br />\nIs there any workaround/example which I can refer to set &quot;RunOnlyIfLoggedOn&quot; property.<br />\n",
+    "PostedDate": "2014-01-26T17:42:38.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1198976",
+    "ThreadId": "433076",
+    "Html": "Please check previous posts before asking questions. This has actually been answered in two other posts. Read my response in <a href=\"https://taskscheduler.codeplex.com/discussions/84859\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/84859</a>.<br />\n",
+    "PostedDate": "2014-01-27T07:35:06.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:10:37.73-07:00"
+  },
+  {
+    "Id": "1199971",
+    "ThreadId": "433076",
+    "Html": "Thanks It worked.<br />\n",
+    "PostedDate": "2014-01-28T08:24:57.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201153",
+    "ThreadId": "433076",
+    "Html": "My task is created successfully at the defined time using daily trigger. The first time it will execute will be as per schedule but, \r<br />\nI want to start the execution of task immediately once its created and from next time it should run as per schedule.\r<br />\n<br />\nIs there any way to do that?<br />\n",
+    "PostedDate": "2014-01-30T16:43:25.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201664",
+    "ThreadId": "433076",
+    "Html": "Look at the Repetition properties under the trigger. These (Interval and Duration) will let you start at the time the trigger specifies and then repeat at a specified interval for the length of a specific duration.<br />\n",
+    "PostedDate": "2014-02-01T11:08:22.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:10:28.71-07:00"
+  },
+  {
+    "Id": "1208276",
+    "ThreadId": "433076",
+    "Html": "<a href=\"http://www.kettic.com/winforms_ui/scheduler.shtml\" rel=\"nofollow\">Outlook interface of Scheduler control</a><br />\n",
+    "PostedDate": "2014-02-14T01:29:27.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

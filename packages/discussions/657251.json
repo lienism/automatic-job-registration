@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1481446",
+    "ThreadId": "657251",
+    "Html": "I am trying to programmatically create a scheduled task that is based on a network connection event.\r<br />\n<br />\nI am working from a XML export from a working task.  Everything seems to be OK except I get variants on the following error when I call the RegisterTaskDefinitionMethod:\r<br />\n<br />\n(11,365):Subscription:&lt;QueryList&gt;&lt;Query Id=&quot;0&quot; Path=&quot;Microsoft - Windows - NetworkProfile / Operational&quot;&gt;&lt;Select Path=&quot;Microsoft - Windows - NetworkProfile / Operational&quot;&gt;*[System[Provider[@Name='Microsoft-Windows-NetworkProfile'] and EventID=10000]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;\r<br />\n<br />\nData = {System.Collections.ListDictionaryInternal}\r<br />\nHResult = -2147009896\r<br />\n<br />\nI get variants on this error regardless of how I format the XML string.  I can try the &gt; and &lt; format.  I can try the actual symbols &gt; &lt;, etc.  But basically the same error.\r<br />\n<br />\nThe query string is directly from a working task export to XML.  If I change my program to update the XML I exported and go through the Microsoft.Win32.TaskScheduler namespace and simply import the updated XML, the task is created successfully.<br />\n",
+    "PostedDate": "2016-08-18T06:01:02.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481575",
+    "ThreadId": "657251",
+    "Html": "Here's a line from my test code that works:<br />\n<pre><code>eTrigger.Subscription = &quot;&lt;QueryList&gt;&lt;Query Id=\\&quot;0\\&quot; Path=\\&quot;Security\\&quot;&gt;&lt;Select Path=\\&quot;Security\\&quot;&gt;*[System[Provider[@Name='VSSAudit'] and EventID=25]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;&quot;;</code></pre>\n\nHopefully that will help you see how to escape the string to get it entered properly.<br />\n",
+    "PostedDate": "2016-08-19T09:55:48.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

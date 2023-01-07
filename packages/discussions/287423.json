@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "730795",
+    "ThreadId": "287423",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>Two things I wanted to comment on:</p>\r\n<p>1. If calling the FindTask() method, I would expect it to return a collection of results that matched the specified name (or\r\n<span style=\"text-decoration:underline\">ideally</span> RegEx for consistency with the GetTasks() method). Instead, the\r\n<span style=\"white-space:pre\"></span>FindTask() method returns only a single Task object.</p>\r\n<p>2. Also, an extra overload on the FindTask() method would be nice -- make the searchAllFolders boolean value default to true.</p>\r\n<p>Any thoughts on either of the above points?</p>\r\n<p>Nice work on the library, by the way .. very helpful that I didn't have to write all of this.</p>\r\n<p>Cheers,</p>\r\n<p><strong>Trevor Sullivan</strong><br>\r\nhttp://twitter.com/pcgeek86<br>\r\nhttp://trevorsullivan.net&nbsp;</p>\r\n",
+    "PostedDate": "2012-01-25T14:26:23.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730892",
+    "ThreadId": "287423",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://taskscheduler.codeplex.com/workitem/9851\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2012-01-25T21:15:02.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811053",
+    "ThreadId": "287423",
+    "Html": "<p>Hi David,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Above you have mentioned that FindAllTasks method is added in 1.7.2 version however I downloaded the latest version 1.8.1 but not able to find the method FindAllTasks. Could you please let me know how to use it.<br />&nbsp;Dim ts As New TaskService<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dim t As Task = ts.FindTask(tname, True)<br /><br />Thanks in Advance</p>",
+    "PostedDate": "2012-03-15T13:08:37.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811097",
+    "ThreadId": "287423",
+    "Html": "<p>Hello,</p>\r\n<p>The <em>FindAllTasks</em>() method is an instance-level method on the <em>TaskService</em> object. You can find it in <em>TaskService.cs</em> if you browse the source control repository for version 1.8.1. See the link below, and search for the text \"<em>FindAllTasks</em>\".</p>\r\n<p><a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/75976#19442\">http://taskscheduler.codeplex.com/SourceControl/changeset/view/75976#19442</a></p>\r\n<p>Cheers,<br /><strong>Trevor Sullivan</strong><br /><a href=\"http://trevorsullivan.net\">http://trevorsullivan.net</a><br /><a href=\"http://twitter.com/pcgeek86 \">http://twitter.com/pcgeek86&nbsp;</a></p>",
+    "PostedDate": "2012-03-15T14:01:38.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811237",
+    "ThreadId": "287423",
+    "Html": "<p>Hi Trevor,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How can I use the same FindAllTasks or call FindAllTasks in vb.net language. I having issues accessing it or not sure on how to call FindAllTasks in VB.Net language. Thanks Trevor.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>Debashish</p>",
+    "PostedDate": "2012-03-15T22:11:46.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811521",
+    "ThreadId": "287423",
+    "Html": "<p>The following code lets you cycle through all tasks starting with 't'.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">For</span> <span style=\"color: blue;\">Each</span> task <span style=\"color: blue;\">In</span> ts.FindAllTasks(<span style=\"color: blue;\">New</span> System.Text.RegularExpressions.Regex(<span style=\"color: #a31515;\">\"t.*\"</span>))\r\n   <span style=\"color: green;\">'Do something with task</span>\r\n<span style=\"color: blue;\">Next</span>\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-03-16T09:38:31.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811543",
+    "ThreadId": "287423",
+    "Html": "<p>Thanks David..... I was using 1.7.1 i.e. why I was not able to see FindAllTasks method then I downloaded v 1.8.1 and it worked.</p>\r\n<p>Thanks Davide gr8 work on the scheduler.....Keep it up</p>",
+    "PostedDate": "2012-03-16T10:07:19.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811590",
+    "ThreadId": "287423",
+    "Html": "<p>Hi David,</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am able to get all the required parameters except the start time..... How can I get start time? though I can get start date.</p>",
+    "PostedDate": "2012-03-16T11:29:29.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "811643",
+    "ThreadId": "287423",
+    "Html": "<p>Not sure what you mean by start time. The next time it will run?</p>",
+    "PostedDate": "2012-03-16T13:36:52.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

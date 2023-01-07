@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "686234",
+    "ThreadId": "276408",
+    "Html": "<p>Hi All:</p>\n<p>I use this wrapper(in my winform app) well to run a remote host'scheduler from&nbsp;one win xp 32bit computer,</p>\n<p>but a error happen(</p>\n<table style=\"margin-top: 10px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\">\n<tbody>\n<tr>\n<td valign=\"bottom\"><span class=\"CodePlexPageHeader\"><strong><span style=\"color: #6d8d34; font-size: large;\">The request is not supported 0x80070032</span></strong></span></td>\n</tr>\n</tbody>\n</table>\n<p>)</p>\n<p>&nbsp;<a></a>when i&nbsp;run my winform app into a win 7 64 bit computer.</p>\n<p>any suggestion???</p>\n<p>thanks a lot.</p>\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2011-10-19T02:27:53.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686373",
+    "ThreadId": "276408",
+    "Html": "<p>Will you&nbsp;provide the code that throws this exception? That error condition can occur in a number of circumstances.</p>",
+    "PostedDate": "2011-10-19T07:17:13.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686423",
+    "ThreadId": "276408",
+    "Html": "<p>Hi dahall:</p>\n<p>thank for your reply.</p>\n<p>here is my code:</p>\n<div style=\"color: black; background-color: white;\">\n<pre style=\"padding-left: 60px;\"><div style=\"color: black; background-color: white;\"><pre><div style=\"color: black; background-color: white;\"><pre>\n    <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">class</span> EmailSenderWindowTask\n    {\n\t<span style=\"color: green;\">//remote Server        </span>\n\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">string</span> WindowSchedulerServer = System.Configuration.ConfigurationManager.AppSettings[<span style=\"color: #a31515;\">\"EmailSenderWindowSchedulerServer\"</span>];        \n\t<span style=\"color: blue;\">private</span> <span style=\"color: blue;\">string</span> WindowSchedulerName = System.Configuration.ConfigurationManager.AppSettings[<span style=\"color: #a31515;\">\"EmailSenderWindowSchedulerName\"</span>];       \n\t<span style=\"color: blue;\">private</span> DomainUser dUser = <span style=\"color: blue;\">new</span> DomainUser();        \n\t\n    \t<span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Run()\n    \t{            \t\t\n    \t       dUser.LoadByDefault();\n                    <span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(WindowSchedulerServer, dUser.Name, dUser.Domain, dUser.Password, <span style=\"color: blue;\">false</span>))             \t\t\n                     {                                 \t\t\t\n                        ts.GetTask(WindowSchedulerName).Run();\n                    }        \t\n<span style=\"white-space: pre;\">\t</span>}\n\n            <span style=\"color: blue;\">public</span> <span style=\"color: blue;\">void</span> Run(<span style=\"color: blue;\">int</span> pid)         \t\n            {             \t\t\n                    <span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(WindowSchedulerServer, dUser.Name, dUser.Domain, dUser.Password, <span style=\"color: blue;\">false</span>))             \t\t\n                    {                 \t\t\t\n                        ts.GetTask(WindowSchedulerName).Run(pid.ToString());                            \t\t\n                    }        \t\n             }\n     }\n\n\n\n\n\n        <span style=\"color: blue;\">private</span> <span style=\"color: blue;\">void</span> button2_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\n        {\n            <span style=\"color: blue;\">try</span>\n            {\n                <span style=\"color: blue;\">new</span> EmailSenderWindowTask().Run();\n                MessageBox.Show(<span style=\"color: #a31515;\">\"Test Ok\"</span>);\n            }\n            <span style=\"color: blue;\">catch</span> (Exception ex)\n            {\n                MessageBox.Show(<span style=\"color: blue;\">string</span>.Format(<span style=\"color: #a31515;\">\"Exception:{0}\"</span>, ex.Message));\n                <span style=\"color: blue;\">throw</span>;\n            }\n\n        }\n        \n</pre>\n</div>\nBTW,My window form app must set Platform target to only x86 for runn in the win 7 64bit.</pre>\n</div>\n</pre>\n</div>",
+    "PostedDate": "2011-10-19T08:36:12.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686601",
+    "ThreadId": "276408",
+    "Html": "<p>Does the TaskService constructor, the GetTask method, or the Run method throw the exception?</p>",
+    "PostedDate": "2011-10-19T15:50:50.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686771",
+    "ThreadId": "276408",
+    "Html": "<p>Hi dahall:</p>\r\n<p>ok i will try to get which throw the exception.</p>\r\n<p>I give you another exception first.</p>\r\n<p>System.Runtime.InteropServices.COMException (0x80070032): The requester is not supported ( HRESULT: 0x80070032)</p>",
+    "PostedDate": "2011-10-20T02:49:10.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686917",
+    "ThreadId": "276408",
+    "Html": "<p>Without knowing which call into the library is throwing the exception, it is almost impossible to determine the cause.</p>",
+    "PostedDate": "2011-10-20T07:56:55.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "687216",
+    "ThreadId": "276408",
+    "Html": "<p>hi dahall:</p>\r\n<p>After I test,&nbsp;the &nbsp;TaskService constructor throw this Exception.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-10-20T20:21:43.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "687413",
+    "ThreadId": "276408",
+    "Html": "<p>Sometimes this happens when the Task Scheduler service or the Windows Event Log service has not been started. This can also happen on systems that have been imaged (sys prep'd) incorrectly.</p>",
+    "PostedDate": "2011-10-21T06:26:59.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915039",
+    "ThreadId": "276408",
+    "Html": "<p>I'm experiencing exactly the same problem. Trying to create a remote task, the code runs on Win7 32Bit, the destination PC is 2003 Server. Manually I can create a task to run on another computer, all good - which likely means that my system is suitably configured. But TaskService constructor throws with 0x80070032.</p>",
+    "PostedDate": "2012-09-20T02:52:31.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1040412",
+    "ThreadId": "276408",
+    "Html": "I am having the same problem connecting to a 2003 Server\r<br />\nThe request is not supported. (Exception from HRESULT: 0x80070032)\r<br />\n<br />\nmy code is fairly simple, I'm just trying to connect at the moment <br />\n<pre><code>string strUsername = ConfigurationManager.AppSettings[&quot;Username&quot;];\n            string strPassword = ConfigurationManager.AppSettings[&quot;Password&quot;];\n            string strServer = ConfigurationManager.AppSettings[&quot;Server&quot;];\n            string strDomain = ConfigurationManager.AppSettings[&quot;Domain&quot;];\n\n            using (TaskService ts = new TaskService(strServer, strUsername, strDomain, strPassword))\n            {\n                foreach (Task task in ts.RootFolder.Tasks)\n                {\n                    string strName = task.Name;\n                }\n            }</code></pre>\n\nhas anyone found the source of this problem or a solution?\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2013-05-07T07:52:44.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1115310",
+    "ThreadId": "276408",
+    "Html": "FWIW, after trial and error I was able to connect to a 2003 server by specifying true for the forceV1 parameter and dropping the preceding backslashes from the targetServer parameter (ex. &quot;SERVERNAME&quot; instead of &quot;\\\\SERVERNAME&quot;).<br />\n",
+    "PostedDate": "2013-10-31T13:22:24.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-03T17:04:13.343-07:00"
+  },
+  {
+    "Id": "1240820",
+    "ThreadId": "276408",
+    "Html": "I found a solution for this problem. A Firewall setting needs to be set.\r<br />\n<br />\nGo to: Windows Firewall =&gt; Allowed Programs, scroll down to &quot;Remote Scheduled Task Management&quot; and check that option. In my case just checking the &quot;domain&quot; option was enough.<br />\n",
+    "PostedDate": "2014-05-02T12:52:49.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-03T17:04:06.807-07:00"
+  }
+]

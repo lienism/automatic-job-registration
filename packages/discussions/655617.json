@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1476420",
+    "ThreadId": "655617",
+    "Html": "Within a VB.NET programm i would like to update the additional arguments of an existing task on a remote PC.\r<br />\nAny idea how to perform this? \r<br />\nThanks for a hint.\r<br />\nFrank<br />\n",
+    "PostedDate": "2016-06-16T00:41:31.19-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476500",
+    "ThreadId": "655617",
+    "Html": "This works best if you have initially registered either a single Action or if you have given your action an Id. I'll show both ways:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">Using</span> ts <span style=\"color:Blue;\">As</span> <span style=\"color:Blue;\">New</span> TaskService(<span style=\"color:#A31515;\">&quot;YourRemoteServerName&quot;</span>)\n   <span style=\"color:Blue;\">Dim</span> task = ts.RootFolder.Tasks(<span style=\"color:#A31515;\">&quot;YourTaskName&quot;</span>)\n   <span style=\"color:Blue;\">If</span> task <span style=\"color:Blue;\">IsNot</span> <span style=\"color:Blue;\">Nothing</span>\n      <span style=\"color:Blue;\">Dim</span> action <span style=\"color:Blue;\">As</span> ExecAction = task.Definition.Actions(<span style=\"color:#A31515;\">&quot;YourID&quot;</span>)\n      <span style=\"color:Green;\">&#39; Dim action = task.Definition.Actions(0)</span>\n      action.Arguments = <span style=\"color:#A31515;\">&quot;new argument string&quot;</span>\n      task.RegisterChanges()\n   <span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">If</span>\n<span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">Using</span>\r\n</pre></div>",
+    "PostedDate": "2016-06-16T09:54:18.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-06-16T09:54:48.507-07:00"
+  },
+  {
+    "Id": "1476565",
+    "ThreadId": "655617",
+    "Html": "Hello Dahall,\r<br />\n<br />\nThanks for your quick reply.\r<br />\n<br />\nBut when doing so I get the following error:\r<br />\n<br />\n<strong>&quot;TaskDefinition is not a member of task&quot;.</strong>\r<br />\n<br />\nI only found\r<br />\nDim action = task.Definition.Actions[0]\r<br />\n<br />\nwas working.\r<br />\n<br />\nBut then the error is \r<br />\n<br />\n&quot;Arguments is not a member of ActionCollection&quot;\r<br />\n<br />\nSo I update to your latest version 2.5.20. But still I can't solve this compilation error.\r<br />\n<br />\nAny idea what can solve this issue? (I had exactly the same error before asking the question :-)) \r<br />\n<br />\nThanks for a hint.\r<br />\n<br />\nFrank<br />\n",
+    "PostedDate": "2016-06-17T02:12:20.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476883",
+    "ThreadId": "655617",
+    "Html": "Try edited example. VB is not my primary language so I had some syntax wrong. My apologies.<br />\n",
+    "PostedDate": "2016-06-20T12:50:37.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476937",
+    "ThreadId": "655617",
+    "Html": "Many thanks for the correction. Now it is working. But when running the executable I get the flollowing error:\r<br />\n<br />\n__&quot;Folder other than the root () was requested on a system only supporting Task Scheduler 1.0.&quot;}&quot;__\r<br />\n<br />\nThat is strange. The system is Win7 64 BIT so it should have installed Task Scheduler 2.0.\r<br />\n<br />\nAny ideas what can now causee this error?\r<br />\n<br />\nThanks for an additional hint. Best Regards<br />\n",
+    "PostedDate": "2016-06-21T05:37:05.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477161",
+    "ThreadId": "655617",
+    "Html": "Finally I found the solution. The above error message was a little bit confusing :-).\r<br />\n<br />\nThe tasks we would like to modify were not located in the root folder but in subdirectories.\r<br />\n<br />\nSo the following code is finally working:<br />\n<pre><code>Using ts As New TaskService(&quot;YourRemoteServerName&quot;)\n   Dim task = ts.GetFolder(&quot;YourSubdirectoryName&quot;).Tasks(&quot;YourTaskName&quot;)\n   If task IsNot Nothing\n      Dim action As ExecAction = task.Definition.Actions(&quot;YourID&quot;)\n      ' Dim action = task.Definition.Actions(0)\n      action.Arguments = &quot;new argument string&quot;\n      task.RegisterChanges()\n   End If\nEnd Using\n</code></pre>\n\n",
+    "PostedDate": "2016-06-24T05:40:30.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

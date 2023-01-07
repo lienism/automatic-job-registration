@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1169701",
+    "ThreadId": "500974",
+    "Html": "Hi all,\r<br />\nI made tasks (about 900 tasks) using this library.\r<br />\nwhen i tried create only one task, it runs perfectly.\r<br />\nBut when I created 900 tasks, not all tasks run. \r<br />\nI've enabled triggers and settings.\r<br />\nIf i run the task manually, it runs well, but it doesn't run as schedule.\r<br />\nsomebody can help me?<br />\n",
+    "PostedDate": "2014-01-15T10:31:07.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1170180",
+    "ThreadId": "500974",
+    "Html": "My guess is that it has something to do with re-using triggers between different tasks. The way to know for sure is to pull the XML (using the system tool Task Scheduler) for the task that works and for some that don't and compare them. If there are triggers missing or malconfigured, my guess is that you are re-using triggers or their properties between registrations. Best practice is create all task information (trigger, action, settings) and then register the task within a single context and release all references before going to the next task instance.<br />\n",
+    "PostedDate": "2014-01-15T14:43:25.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:29.283-07:00"
+  }
+]

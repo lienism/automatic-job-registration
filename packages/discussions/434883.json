@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1008277",
+    "ThreadId": "434883",
+    "Html": "Suppose that I have a folder under the root folder called &quot;MyFolder&quot;, how can I create task in this folder specifically ?<br />\n",
+    "PostedDate": "2013-02-28T08:18:46.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1008356",
+    "ThreadId": "434883",
+    "Html": "<pre><code>// Fill out a TaskDefinition as per examples and documentation\nTaskDefinition taskDef = ts.NewTask();\n// Add things to TaskDefinition like settings, triggers and actions\n\n// Get a reference to the subfolder\nTaskFolder myFolder = ts.RootFolder.SubFolders[&quot;MyFolder&quot;];\n// Register the task in the subfolder\nmyFolder.RegisterTaskDefinition(&quot;MyTask&quot;, taskDef);</code></pre>\n\n",
+    "PostedDate": "2013-02-28T10:19:41.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1009411",
+    "ThreadId": "434883",
+    "Html": "Thanks, I did it also in another way , but I think your way is more proficient. <br />\n",
+    "PostedDate": "2013-03-03T00:03:59.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

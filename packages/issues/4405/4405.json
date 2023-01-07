@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "User resolved issue by removing hyphen from name under V1.",
+    "ClosedDate": "2010-02-08T11:00:54.21-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am trying to update an existing task using the code below, this functions fine in Vista/7 but when i'm trying it out on XP it crashes citing that the file already exists. This makes sense but looking at the source code it should be trying to update the existing task instead trying to create a new one. Thanks for your assistance with this problem.\n \nUnhandled Exception: System.Runtime.InteropServices.COMException (0x80070050): The file exists. (Exception from HRESULT: 0x80070050)\n   at System.Runtime.InteropServices.ComTypes.IPersistFile.Save(String pszFileName, Boolean fRemember)\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.V1Save(String newName)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)\n   at LiquidScheduler.Program.Main(String[] args)\n \n \nTaskService lqScheduler = new TaskService();\nTaskDefinition lqTaskDefinition = lqScheduler.NewTask();\nDailyTrigger lqTrigger = new DailyTrigger();\nlqTrigger.DaysInterval = 1;\nlqTrigger.StartBoundary = DateTime.Parse(\"2009-01-01T\" + lqScheduleTime + \":00\");\nlqTaskDefinition.Triggers.Add(lqTrigger);\nExecAction lqAction = new ExecAction(Environment.CurrentDirectory+\"\\\\Liquid.exe\", lqScheduleRunCommand, Environment.CurrentDirectory);\nlqTaskDefinition.Actions.Add(lqAction);                    \nlqScheduler.RootFolder.RegisterTaskDefinition(lqTaskName, lqTaskDefinition);",
+    "LastUpdatedDate": "2013-05-16T04:49:14.95-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2009-10-06T04:40:56.33-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskFolder.RegisterTaskDefinition throws exception in V1",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 4405
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "The only time I have seen this exception is when the file is locked, hidden, or read-only. You can check this by looking in the \\Windows\\Tasks directory for a file with the name you are trying to use with a .job extension. Check the attributes. If all attributes are normal, please let me know. I have run this code on my test XP machine without problem using parameters I made up.",
+      "PostedDate": "2009-10-06T10:48:31.09-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I think i've found the problem the task name I was trying to edit had a hyphen in it, removing that seems to work as expected.",
+      "PostedDate": "2009-10-07T02:22:30.05-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-07T01:30:47.437-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-08T11:00:54.21-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:09.54-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.95-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

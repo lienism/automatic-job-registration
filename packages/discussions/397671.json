@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "920474",
+    "ThreadId": "397671",
+    "Html": "\r\n<p>How to use the&nbsp;ITaskSettings::Priority property API?: http://msdn.microsoft.com/en-us/library/windows/desktop/aa381855(v=vs.85).aspx</p>\r\n",
+    "PostedDate": "2012-10-02T03:26:11.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "920941",
+    "ThreadId": "397671",
+    "Html": "<p>This is available via the TaskDefinition.Settings.Priority property.</p>",
+    "PostedDate": "2012-10-02T16:47:32.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

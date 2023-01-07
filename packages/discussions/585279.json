@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1361281",
+    "ThreadId": "585279",
+    "Html": "I have attempted the code below, <br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  if (t != null)\n  {\n    if (!t.Enabled)\n    {\n      t.Enabled = true;\n      t.RegisterChanges();\n    }\n  }\n}\nUnfortunately the code throws an exception and says I need to use the taskfolder.registerTaskDefinition method.  We use a specific account for our tasks.  \nI have this method that appears to work, but it does not actually set the task to disabled.\nI am missing something. No errors, and the task interface says the task was set to disabled in the history, but the task is never actually set to disabled, and continues to run.\n</code></pre>\n\nstatic void enabledisableTasks(bool value)<br />\n<pre><code>    {\n        using (TaskService TS = new TaskService(td.servername))\n        {\n            foreach (TasksModified t in listTm)\n            {\n                try\n                {\n\n                    Task task = TS.GetTask(t.path);                        \n                    TaskFolder tf = TS.RootFolder;                        \n                    task.Enabled = value;\n                    tf.RegisterTaskDefinition(task.Path, task.Definition, TaskCreation.CreateOrUpdate, userid, td.password, TaskLogonType.Password,null);                      \n\n                }\n                catch (System.Security.SecurityException e)\n                {\n\n                    Console.WriteLine(string.Format(&quot;Error with accessing {0} do to error {1}&quot;, t.tname, e.Message.ToString()));\n                }\n\n            }\n        }\n    }</code></pre>\n\n```<br />\n",
+    "PostedDate": "2015-03-09T06:48:27.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362527",
+    "ThreadId": "585279",
+    "Html": "So, just to be clear, when you run the second piece of code, the task registers successfully and when you look at it via code or through the UI the task is set to NOT enabled? However, the task runs at the triggered times anyway?<br />\n",
+    "PostedDate": "2015-03-11T09:48:49.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362553",
+    "ThreadId": "585279",
+    "Html": "no, the task is still enabled via the UI and Code. but the register is successful in the history of the task.  This is what is most strange.\r<br />\nI do have administrative rights to this test environment.  AD domain admin.\r<br />\nthe task is updated according to the history, but does not register the change.\r<br />\nI have tried connecting to remote server new TaskService(servername, adminuserid,, PW) with and without the id and PW to no avail.\r<br />\nthe task shows a status of Ready, \r<br />\nand the trigger is also still at Enabled.\r<br />\nNo errors.<br />\n<ul>\n<li>&lt;Event xmlns=&quot;<a href=\"http://schemas.microsoft.com/win/2004/08/events/event\" rel=\"nofollow\">http://schemas.microsoft.com/win/2004/08/events/event</a>&quot;&gt;</li>\n<li>&lt;System&gt;\r<br />\n  &lt;Provider Name=&quot;Microsoft-Windows-TaskScheduler&quot; Guid=&quot;{DE7B24EA-73C8-4A09-985D-5BDADCFA9017}&quot; /&gt; \r<br />\n  &lt;EventID&gt;140&lt;/EventID&gt; \r<br />\n  &lt;Version&gt;0&lt;/Version&gt; \r<br />\n  &lt;Level&gt;4&lt;/Level&gt; \r<br />\n  &lt;Task&gt;140&lt;/Task&gt; \r<br />\n  &lt;Opcode&gt;0&lt;/Opcode&gt; \r<br />\n  &lt;Keywords&gt;0x8000000000000000&lt;/Keywords&gt; \r<br />\n  &lt;TimeCreated SystemTime=&quot;2015-03-11T17:16:50.183039000Z&quot; /&gt; \r<br />\n  &lt;EventRecordID&gt;323807&lt;/EventRecordID&gt; \r<br />\n  &lt;Correlation /&gt; \r<br />\n  &lt;Execution ProcessID=&quot;1484&quot; ThreadID=&quot;10676&quot; /&gt; \r<br />\n  &lt;Channel&gt;Microsoft-Windows-TaskScheduler/Operational&lt;/Channel&gt; \r<br />\n  &lt;Computer&gt;aserver.ms.ds.uhc.com&lt;/Computer&gt; \r<br />\n  &lt;Security UserID=&quot;S-1-5-18&quot; /&gt; \r<br />\n  &lt;/System&gt;</li>\n<li>\n&lt;EventData Name=&quot;TaskUpdated&quot;&gt;\r<br />\n  &lt;Data Name=&quot;TaskName&quot;&gt;\\Testtask1&lt;/Data&gt; \r<br />\n  &lt;Data Name=&quot;UserName&quot;&gt;ms\\id&lt;/Data&gt; \r<br />\n  &lt;/EventData&gt;\r<br />\n  &lt;/Event&gt;<br />\n</li>\n<li>\n&lt;Event xmlns=&quot;<a href=\"http://schemas.microsoft.com/win/2004/08/events/event\" rel=\"nofollow\">http://schemas.microsoft.com/win/2004/08/events/event</a>&quot;&gt;<br />\n</li>\n<li>&lt;System&gt;\r<br />\n  &lt;Provider Name=&quot;Microsoft-Windows-TaskScheduler&quot; Guid=&quot;{DE7B24EA-73C8-4A09-985D-5BDADCFA9017}&quot; /&gt; \r<br />\n  &lt;EventID&gt;142&lt;/EventID&gt; \r<br />\n  &lt;Version&gt;0&lt;/Version&gt; \r<br />\n  &lt;Level&gt;4&lt;/Level&gt; \r<br />\n  &lt;Task&gt;142&lt;/Task&gt; \r<br />\n  &lt;Opcode&gt;0&lt;/Opcode&gt; \r<br />\n  &lt;Keywords&gt;0x8000000000000000&lt;/Keywords&gt; \r<br />\n  &lt;TimeCreated SystemTime=&quot;2015-03-11T17:16:49.902235400Z&quot; /&gt; \r<br />\n  &lt;EventRecordID&gt;323806&lt;/EventRecordID&gt; \r<br />\n  &lt;Correlation /&gt; \r<br />\n  &lt;Execution ProcessID=&quot;1484&quot; ThreadID=&quot;12808&quot; /&gt; \r<br />\n  &lt;Channel&gt;Microsoft-Windows-TaskScheduler/Operational&lt;/Channel&gt; \r<br />\n  &lt;Computer&gt;servername.ms.ds.uhc.com&lt;/Computer&gt; \r<br />\n  &lt;Security UserID=&quot;S-1-5-18&quot; /&gt; \r<br />\n  &lt;/System&gt;</li>\n<li>&lt;EventData Name=&quot;TaskDisabled&quot;&gt;\r<br />\n  &lt;Data Name=&quot;TaskName&quot;&gt;\\Testtask1&lt;/Data&gt; \r<br />\n  &lt;Data Name=&quot;UserName&quot;&gt;ms\\id&lt;/Data&gt; \r<br />\n  &lt;/EventData&gt;\r<br />\n  &lt;/Event&gt;</li>\n</ul>\n",
+    "PostedDate": "2015-03-11T10:40:41.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366121",
+    "ThreadId": "585279",
+    "Html": "Is this the correct process, seems to me that it should work? <br />\n",
+    "PostedDate": "2015-03-17T07:56:06.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1367345",
+    "ThreadId": "585279",
+    "Html": "If the task already has been created, the Task.Enabled property does not require re-registration after. You should be able to simply call:<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  if (t != null)\n  {\n    if (!t.Enabled)\n    {\n      t.Enabled = true;\n    }\n  }\n}</code></pre>\n\n",
+    "PostedDate": "2015-03-19T13:09:38.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:14:18.227-07:00"
+  }
+]

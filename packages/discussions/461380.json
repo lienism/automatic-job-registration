@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1104465",
+    "ThreadId": "461380",
+    "Html": "Hi\r<br />\nI'm using the TaskEditDialog to create a task, but when I click on the button &quot;Change user or group&quot; I get an error saying that no locations can be found and then an exception is thrown with this message: &quot;IDsObjectPicker.Initialize failed&quot;\r<br />\nThis is my code<br />\n<pre><code>string taskDescription = &quot;Opens notepad&quot;;\nstring taskName = &quot;NotepadOpener&quot;;\n                  using (TaskService ts = new TaskService())\n                {\n                    var action = new ExecAction(&quot;notepad.exe&quot;, null, Environment.CurrentDirectory);\n\n                    MonthlyTrigger trigger = new MonthlyTrigger(1, MonthsOfTheYear.AllMonths) { DaysOfMonth = new int[0], RunOnLastDayOfMonth = true };\n\n                    TaskDefinition td = ts.NewTask();\n                    td.Actions.Add(action);\n                    td.Triggers.Add(trigger);\n                    td.Settings.StartWhenAvailable = true;\n                    td.RegistrationInfo.Description = taskDescription;\n                    td.Principal.LogonType = TaskLogonType.Password;\n\n                    TaskEditDialog editorForm = new TaskEditDialog();\n                    editorForm.Editable = true;\n                    editorForm.RegisterTaskOnAccept = true;\n                    editorForm.Initialize(ts, td);\n                    editorForm.TaskName = taskName;\n                    editorForm.ShowDialog();\n                }</code></pre>\n\nI'm using Windows 7 and I get no such error if I open Task scheduler from windows<br />\n",
+    "PostedDate": "2013-10-07T04:57:03.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1104788",
+    "ThreadId": "461380",
+    "Html": "This is a COM method that is failing when trying to launch the system dialog for finding Active Directory objects (like users and groups). My guess is that there is something peculiar about how your system is connected to your domain or workplace. Running this same code on my Windows 7 environment does not throw an exception. When you get the exception, there should be an HResult property with the result from the COM method call. If you post that value, it might help us understand why that method is failing.<br />\n",
+    "PostedDate": "2013-10-07T16:11:40.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1104873",
+    "ThreadId": "461380",
+    "Html": "Thanks for the quick response.\r<br />\nThe HRESULT is &quot;-2147024809&quot;\r<br />\nMy workstation is not a part of a domain, but I assume that shouldn't cause issues?!<br />\n",
+    "PostedDate": "2013-10-07T23:52:19.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105267",
+    "ThreadId": "461380",
+    "Html": "This error is E_INVALID_ARG. I am using another CodePlex project for the ActiveDirectory object picker dialog (<a href=\"https://adui.codeplex.com/\" rel=\"nofollow\">https://adui.codeplex.com/</a>) and it seems to be a deficiency in that library. It is a bit of code that has not been updated since 2008 and is wildly complex. I'm not sure why you're getting the error. If you are up to debugging that code and arrive at a solution, please let me know.<br />\n",
+    "PostedDate": "2013-10-08T18:25:27.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105356",
+    "ThreadId": "461380",
+    "Html": "I have seemed to fix it by changing this line in the method SelectAccount in the HelperMethods Class:\r<br />\n<br />\nCurrent:<br />\n<pre><code>dlg.AllowedObjectTypes = ObjectTypes.BuiltInGroups | ObjectTypes.Groups | ObjectTypes.Users | ObjectTypes.WellKnownPrincipals;</code></pre>\n\nNew:<br />\n<pre><code>dlg.AllowedObjectTypes = ObjectTypes.BuiltInGroups | ObjectTypes.Groups | ObjectTypes.Users | ObjectTypes.WellKnownPrincipals | ObjectTypes.Computers;</code></pre>\n\n",
+    "PostedDate": "2013-10-09T01:25:35.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1105751",
+    "ThreadId": "461380",
+    "Html": "Thanks for resolving this. I have added this change with the most recent source code update and it will get rolled out in the next release.<br />\n",
+    "PostedDate": "2013-10-09T16:03:30.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1219526",
+    "ThreadId": "461380",
+    "Html": "Is the fix integrated in the latest codes? It seems to be still different.<br />\n",
+    "PostedDate": "2014-03-05T08:31:23.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221915",
+    "ThreadId": "461380",
+    "Html": "This is fixed in the source code, but has not been compiled into a downloadable assembly for release. If you grab the latest code, you can compile it yourself. A new assembly is forthcoming.<br />\n",
+    "PostedDate": "2014-03-12T08:10:31.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:08:28.67-07:00"
+  }
+]

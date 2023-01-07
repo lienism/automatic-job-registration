@@ -1,0 +1,91 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed",
+    "ClosedDate": "2012-08-03T08:35:45.743-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Not sure if bug or me doing something funny.  \n \nOn if (this.ValidatePassword && !IsValidPassword(this.UserName.ToString(), password.ToString())) the UserName is null although it was entered.  Whould it not be userName.ToString() passed into the function ?",
+    "LastUpdatedDate": "2013-05-16T04:49:09.353-07:00",
+    "PlannedForRelease": "Release 1.8.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-04-23T01:44:35.157-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "CredentialsDialog.cs  this.UserName null",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 10118
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3351,
+      "FileName": "TaskSchedulerEditor.zip",
+      "DownloadUrl": ".\\3351"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Yes. It should be and is in my testing. The value of this.UserName is used to build the userName variable and, unless changed in the dialog prompt, should remain the same.",
+      "PostedDate": "2012-04-23T22:51:57.837-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-06-15T01:12:11.957-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It seems to me, after some tests, that if the user name is changed in dialog prompt, it's the \"userName\" which gets changed, not the this.UserName, right?\r\nAnyway, I think \"userName.ToString()\" should be correct here.",
+      "PostedDate": "2012-06-15T01:15:56.71-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Attached is a zip file with all the new compiled assemblies that contains the fix you're suggesting. Will you try it against your old code and see if the exception is still thrown?",
+      "PostedDate": "2012-06-15T08:20:49.883-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-06-15T08:21:24.367-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-08-03T08:35:33.693-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-08-03T08:35:45.743-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:02.393-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:09.353-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

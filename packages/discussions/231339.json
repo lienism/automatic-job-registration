@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "508842",
+    "ThreadId": "231339",
+    "Html": "<p>I was looking for what values can be returned through the LastTaskResult property, but I found two strange sets of error code for v1 and v2 correspondingly:&nbsp;<a href=\"http://msdn.microsoft.com/en-us/library/aa381245(v=VS.85).aspx\">IScheduledWorkItem::GetExitCode</a>&nbsp;and <a href=\"http://msdn.microsoft.com/en-us/library/aa380762(VS.85).aspx\">IRegisteredTask::LastTaskResult</a>, which actually didn't help me at all.</p>\r\n<p>Later I found <a href=\"http://msdn.microsoft.com/en-us/library/aa383604(VS.85).aspx\">Task Scheduler Error and Success Constants</a>. Unfortunately it looks like it is applicable only for Task Scheduler v2.0.</p>\r\n<p>Will you include it in next TaskScheduler library releases? I've used it&nbsp;at my side, but probably it could be useful for others.&nbsp;</p>\r\n<p>And don't you know similar codes for Task Scheduler 1.0?</p>\r\n<p>Best regards,</p>\r\n<p>Sergey</p>",
+    "PostedDate": "2010-10-18T08:17:50.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508991",
+    "ThreadId": "231339",
+    "Html": "<p>Those constants are typically used as HResults when the native COM library methods fail or succeed. Since those codes are part of the standard error codes supported by .NET, the COMExcpetion will pull that code and try and find the localized text for the error.</p>\r\n<p>Where are you needing these values? If they are useful in a specific use case, I would love to design for it and incorporate it. The LastTaskResult property is the exit code from the last running of an ExecAction.</p>",
+    "PostedDate": "2010-10-18T14:11:55.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509154",
+    "ThreadId": "231339",
+    "Html": "<p>Sorry, you are right. I got this code: SCHED_S_TASK_TERMINATED (0x00041306): The last run of the task was terminated by the user.</p>\r\n<p>as a LastTaskResult and thought other values could be useful. So yes, these values are not very&nbsp;helpful.</p>\r\n<p>But how Task Scheduler in Windows does process return codes? It diplays both: message and code. Are they hardcoded in Windows? :)</p>",
+    "PostedDate": "2010-10-18T23:27:34.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509521",
+    "ThreadId": "231339",
+    "Html": "<p>Those codes are hardcoded and I have seen them appear usually as the error code within a COMException. Your example of those codes being returned by LastTaskResult is new to me. The textual message associated with each code is also hardcoded and is part of the localized error resources within Windows.</p>",
+    "PostedDate": "2010-10-19T10:38:03.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456497",
+    "ThreadId": "231339",
+    "Html": "From all the messages discussing Task.LastTaskResult, this thread seems to be the most detailed.  But it's not very clear.<br />\n\r<br />\nThis library returns an integer (without much meaning) as the value for Task.LastTaskResult. Yet Windows task scheduler is able to display a meaningful message such as the ones shown in this <a href=\"http://screencast.com/t/OlfevgbL4hgT\" rel=\"nofollow\">image</a>. Also, the Microsoft documentation for RegisteredTask.LastTaskResult property indicates it as a STRING property.\r<br />\n<br />\nCan you clarify why the wrapper library can't provide the same useful information that the Windows Task Scheduler is providing for the Last Task Result?<br />\n",
+    "PostedDate": "2015-12-19T14:33:09.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456660",
+    "ThreadId": "231339",
+    "Html": "The Scripting library referenced translates the HRESULT value to a string. The COM library (which is what is used for this wrapper) returns an HRESULT as stated in earlier posts (<a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa380762(v=vs.85).aspx\" rel=\"nofollow\">https://msdn.microsoft.com/en-us/library/windows/desktop/aa380762(v=vs.85).aspx</a>). You can call <a href=\"https://msdn.microsoft.com/library/t8t3ykxc(v=vs.100).aspx\" rel=\"nofollow\">Marshal.GetExceptionForHR</a> and then use the Message property to get the translated system description for that HRESULT.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">string</span> errorMessage = Marshal.GetExceptionForHR(task.LastTaskResult).Message;\r\n</pre></div>",
+    "PostedDate": "2015-12-21T10:10:04.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-21T10:13:36.063-08:00"
+  },
+  {
+    "Id": "1456685",
+    "ThreadId": "231339",
+    "Html": "Thanks.<br />\n",
+    "PostedDate": "2015-12-21T16:09:40.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

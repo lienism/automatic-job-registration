@@ -1,0 +1,91 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Below is the code you should have and it works:\n \nPrivate Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click\n         If ListView1.SelectedIndices.Item(0) >= 0 Then\n                 Me.Enabled = False\n                 Dim Task1 As Task = ListView1.SelectedItems(0).Tag\n                 Task1.Enabled = Not Task1.Enabled\n                 ListView1.SelectedItems(0).SubItems(1).Text = CType(Task1.Enabled, String)\n                 Me.Enabled = True\n                 HandleButton()\n         End If\nEnd Sub\n \nPrivate Sub LoadAllTasks()\n         ListView1.Items.Clear()\n         ListView1.BeginUpdate()\n         For Each Task1 As Task In TaskService1.FindAllTasks(Nothing, False)\n                 Dim LVitem As New ListViewItem(Task1.Name)\n                 LVitem.SubItems.Add(CType(Task1.Enabled, String))\n                 LVitem.Tag = Task1\n                 ListView1.Items.Add(LVitem)\n         Next\n         ListView1.EndUpdate()\n         If ListView1.Items.Count > 0 Then\n                 ListView1.Items(0).Selected = True\n                 ListView1.Items(0).EnsureVisible()\n         End If\nEnd Sub",
+    "ClosedDate": "2014-05-12T08:09:49.863-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am using Microsoft.Win32.TaskScheduler.dll in an appliction to create and change a task. If I set the property Task.Enabled to False it will not be saved to Windows. All other information is saved properly. \n\nCode:\n\nDim Task1 As Task = CurrentTaskService.RootFolder.RegisterTaskDefinition(PathOfTask, TaskDefinition1)\nTask1.Enabled = False\nTask1.RegisterChanges()\n\nThis was working properly in build 2.0.3, but does not work in build 2.2.0.",
+    "LastUpdatedDate": "2014-05-12T08:09:49.863-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-05-07T23:38:14.42-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Property Task.Enabled is not saved",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11703
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3846,
+      "FileName": "ScheduledTasks.zip",
+      "DownloadUrl": ".\\3846"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Is the system executing the code XP or Server 2003 or are you specifying \"false\" for the last parameter (forceV1) in the TaskService constructor? To troubleshoot, I need to know which version of the native library is running.",
+      "PostedDate": "2014-05-08T10:13:31.78-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "As of version 1.8.1, under V1 systems (prior to Vista), this property will immediately set the enabled property and re-save the current task. If changes have been made to the TaskDefinition, then those changes will be saved.",
+      "PostedDate": "2014-05-08T10:15:02.1-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am using:  TaskService1 = New TaskService\r\n\r\nI found the following:\n- if 'configured for' is \"XP\", it works fine\n- if 'configured for' is \"Vista\" or 'W7', it does not work.\r\n\r\n",
+      "PostedDate": "2014-05-09T01:46:33.52-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-05-09T01:49:21.423-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please, look at the attached example. It shows all scheduled tasks in the main folder. With the toggle button it is possible to Disable or Enable a selected task.",
+      "PostedDate": "2014-05-09T01:49:22.257-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Note that this problem was not there in 2.0.3.",
+      "PostedDate": "2014-05-09T05:03:42.407-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Your code did not come through. I have done testing now on XP, Vista, Win7 and Win8 using a simple task registered similar to the one in your original message. I cannot get it to fail. How are you confirming that the task has not been disabled? Both the code (Task.Enabled) as well as the Windows Task Scheduler app show the tasks as disabled. I have noticed that the TaskDefinition.Settings.Enabled property does not get updated immediately, but other, more typical, queries are.",
+      "PostedDate": "2014-05-09T13:20:17.647-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Is there any other way to send you the example? I think this will help you to explain the problem. Or to tell me what I did wrong :-)",
+      "PostedDate": "2014-05-09T13:58:36.707-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-05-12T08:09:49.863-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

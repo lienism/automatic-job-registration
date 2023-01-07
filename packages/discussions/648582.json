@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1455372",
+    "ThreadId": "648582",
+    "Html": "My guess is that the Enabled property follows whether or not the Task object is enabled in the scheduler and the IsActive property follows whether or not the Task object is currently running.  In my case, it seems that these always match no matter the status of the Task on the server.\r<br />\n<br />\nCorrect me if I'm wrong or let me know if I should create an issue for this.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2015-12-09T20:09:49.243-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455382",
+    "ThreadId": "648582",
+    "Html": "Active tasks are enabled and at least one trigger does not have an EndBoundary or the EndBoundary is in the future or it is a TimeTrigger.<br />\n",
+    "PostedDate": "2015-12-09T22:42:26.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-09T22:42:33.633-08:00"
+  },
+  {
+    "Id": "1455453",
+    "ThreadId": "648582",
+    "Html": "Thanks for the clarification.  That makes sense.  Sorry for the dumb question.\r<br />\n<br />\nLove the work you've done on this.  Thanks again!<br />\n",
+    "PostedDate": "2015-12-10T08:07:13.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

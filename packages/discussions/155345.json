@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "362657",
+    "ThreadId": "155345",
+    "Html": "<p>I hate to ask a simple question but is there anyway to just enumerate the commands the Scheduled tasks are running? Such as the value set on the &quot;Run:&quot; property of the tasks.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-22T07:09:23.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363172",
+    "ThreadId": "155345",
+    "Html": "<p>The commands are referred to as Actions and they are available as a property of a TaskDefinition.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n   <span style=\"color:Green\">// Output all the actions for a specified task</span>\r\n   Task t = ts.GetTask(<span style=\"color:#A31515\">&quot;TaskName&quot;</span>);\r\n   <span style=\"color:Blue\">if</span> (t != <span style=\"color:Blue\">null</span>)\r\n   {\r\n      <span style=\"color:Blue\">for</span> (<span style=\"color:Blue\">int</span> i = 0; i &lt; t.Definition.Actions.Count; i++)\r\n         Console.WriteLine(<span style=\"color:#A31515\">&quot;  {0}: {1}&quot;</span>, i, t.Definition.Actions[i]);\r\n   }\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-02-23T06:57:04.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

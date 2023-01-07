@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "289555",
+    "ThreadId": "84859",
+    "Html": "<p>Hi,</p>\r\n<p>I'm trying to create a task with 'RunOnlyIfLoggedOn' property set to False.</p>\r\n<p>But while setting this property, it is throwing me an exception as &quot;Task Scheduler 2.0 (1.2) does not support setting this property. You must use an InteractiveToken in order to have the task run in the current user session.&quot;</p>\r\n<p>&nbsp;</p>\r\n<p>I'm using following code-</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"white-space:pre\"> </span>Dim taskDefinition As TaskDefinition = taskService.NewTask()</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;taskDefinition.Data = &quot;&quot;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;taskDefinition.Principal.UserId = String.Concat(Environment.UserDomainName, &quot;\\&quot;, Environment.UserName)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;taskDefinition.RegistrationInfo.Author = &quot;Pavan&quot;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;taskDefinition.RegistrationInfo.Description = &quot;&quot;</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;<span style=\"white-space:pre\"> taskDefinition.Settings.RunOnlyIfLoggedOn = False</span></p>\r\n<p>&nbsp;</p>\r\n<p>For the last statement it throws &quot;NotV2SupportedException&quot; exception...</p>\r\n<p><span style=\"white-space:pre\"><span style=\"white-space:normal\"> </span></span></p>\r\n<p>Can you please help me to solve this problem?</p>\r\n<p>Thank you.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-11T07:30:29.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "290388",
+    "ThreadId": "84859",
+    "Html": "<p>The error text has your answer, the RunOnlyIfLoggedOn property is not supported when running on systems Vista and later (2.0). By setting the LogonType to InteractiveToken, you automatically imply that the task can only run when a user is interacting with the system&nbsp;which is only possible if they are logged on. It sounds like you may want to try setting the LogonType to&nbsp;<span style=\"font-size:x-small\">InteractiveTokenOrPassword and supplying the password through the RegisterTaskDefinition method.</span></p>",
+    "PostedDate": "2010-02-12T22:37:15.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363026",
+    "ThreadId": "84859",
+    "Html": "<p>Thanks bro. That's what I was trying to do.</p>\r\n<p>One more problem is there, I'm not able to set End Date of a Task in XP.</p>\r\n<p>I'm settings it through EndBoundary property of the task, and its working fine in VISTA or Windows 7. In XP it is not giving any exception, but not even setting it.</p>\r\n<p>I'm not getting why this is happening.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-02-22T23:54:00.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363173",
+    "ThreadId": "84859",
+    "Html": "<p>Microsoft's Task Scheduler&nbsp;1.0 COM library (pre-Vista) only supports setting the date of an EndBoundary. The time information is discarded. I will add this note to the help file.</p>",
+    "PostedDate": "2010-02-23T07:01:39.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "387439",
+    "ThreadId": "84859",
+    "Html": "<p>I'm so sorry, but even if I set only date of an EndBoundary then also its not working in XP.</p>\r\n<p>Following is my code</p>\r\n<p><span style=\"white-space:pre\"> </span>&nbsp;runOnceTrigger.StartBoundary = New DateTime(Me.StartDate.Year, Me.StartDate.Month, Me.StartDate.Day, Me.StartTimeHours, Me.StartTimeMinutes, 0)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; runOnceTrigger.EndBoundary = New Date(Me.StopDate.Year, Me.StopDate.Month, Me.StopDate.Day)</p>\r\n<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; taskDefinition.Triggers.Add(runOnceTrigger)</p>\r\n<p>the End Date field of the task remains unchecked...</p>",
+    "PostedDate": "2010-02-25T06:26:46.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "402283",
+    "ThreadId": "84859",
+    "Html": "<p>Is your code or the assembly from before January 12, 2010? If so, there was a bug in the code for EndBoundary.</p>",
+    "PostedDate": "2010-02-25T09:18:59.313-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "417708",
+    "ThreadId": "84859",
+    "Html": "<p>Hi!</p>\r\n<p>I'm able to create a task which will run even if user is not logged in, but there is one more problem with this option which is coming for XP.</p>\r\n<p>If there is a task with 'Run only if logged on' option checked, then I'm not able to edit that task to uncheck this option.</p>\r\n<p>I'm passing LogonType as InteractiveTokenOrPassword and valid User name and Password too. It is not not throwing any exception but it is not modifying that task also! &nbsp;</p>",
+    "PostedDate": "2010-03-12T21:17:50.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "417713",
+    "ThreadId": "84859",
+    "Html": "<p>Hey, I got solution for this problem.</p>\r\n<p>Previously I was using TaskDefinition of the existing task, now I'm creating new TaskDefinition for that task and passing it to RegisterTaskDifinition method.</p>\r\n<p>As I'm passing TaskCreation flag as CreateOrUpdate, it just updates the existing task from Windows Task Scheduler.</p>",
+    "PostedDate": "2010-03-12T22:53:35.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "418081",
+    "ThreadId": "84859",
+    "Html": "<p>Hi! Can anyone please tell me, how could I use &quot;Do not store password&quot; option through this DLL?</p>\r\n<p><img alt=\"\"></p>",
+    "PostedDate": "2010-03-14T23:24:58.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "418834",
+    "ThreadId": "84859",
+    "Html": "<p>This is done by registering the task using the LogonType.S4U value. From a <a href=\"http://msdn.microsoft.com/en-us/magazine/cc163350.aspx\">great article on Task Scheduler 2.0</a> the author describes S4U as an&nbsp;&quot;option that provides a more secure alternative [to providing a password]. It takes advantage of a service for user (S4U) logon to run the task on behalf of the specified user, but without having to store the password. Since the Task Scheduler runs within the local system account, it can create a S4U logon session and receive a token that can not only be used for identification, but also for impersonation on the local computer. Normally a S4U token is only good for identification.&quot;</p>\r\n<p>For example:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.Create, <span style=\"color:#A31515\">@&quot;DOMAIN\\user&quot;</span>, <span style=\"color:Blue\">null</span>, TaskLogonType.S4U, <span style=\"color:Blue\">null</span>);\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-03-16T12:15:48.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723367",
+    "ThreadId": "84859",
+    "Html": "<p>I have a WCF service running under local system, I am able to create a task, but I can not run it due to security issues. I don't want to specify a domain user to run the task, is it possible to create a task and run the task as local system? when trying to specify Domain\\machineName$ as the user I get access denied error.</p>",
+    "PostedDate": "2012-01-10T13:55:03.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723442",
+    "ThreadId": "84859",
+    "Html": "<p>Yes. You just need to specify the SYSTEM account when you register the task.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"TEST\"</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount);\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-01-10T19:15:56.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723650",
+    "ThreadId": "84859",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>dahall wrote:</strong><br />\r\n<p>Yes. You just need to specify the SYSTEM account when you register the task.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"TEST\"</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount);\r\n</pre>\r\n</div>\r\n</blockquote>\r\n<p>Thank you. I have tried it, but any program I try to run I get an error message:&nbsp;</p>\r\n<p>Task Scheduler failed to start \"\\Test\" task for user \"NT AUTHORITY\\System\". Additional Data: Error Value: 2147750687. do I need&nbsp;something&nbsp;special to run applications under that account? I need to launch a .NET application (no UI) that will simply ping a service for me...&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-01-11T06:09:55.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723911",
+    "ThreadId": "84859",
+    "Html": "<p>The System account likely does not have the rights to use networking. You will need to specify an account that has the rights on the local machine to run all the aspects of whatever the task needs to execute.</p>",
+    "PostedDate": "2012-01-11T13:37:46.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724326",
+    "ThreadId": "84859",
+    "Html": "<p>got it working, there was some UI going on after all, when I took it out it worked...</p>\r\n<p>you guys did a great job on this wrapper, I need to use for 2003 too, I hope it will be fine... Thanks for all the support!!!</p>",
+    "PostedDate": "2012-01-12T08:38:20.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

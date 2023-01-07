@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "666281",
+    "ThreadId": "271153",
+    "Html": "\r\n<p>I am creating a Task on windows xp, and it works just fine. The problem is that the task doesn't get triggered.&nbsp;</p>\r\n<p>In order for it to get triggered, I have to manually open the task and &quot;set password&quot; next to the&nbsp;&quot;Run As:&quot; attribute, even that I have already supplied one at the time od creating the task.</p>\r\n<p>This is my code to create the Task:</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(name&quot;, td, TaskCreation.CreateOrUpdate, &quot;<a href=\"mailto:eramos11@slb.com\">eramos11@xyz.com</a>&quot;, &quot;lalala/*&quot;, TaskLogonType.Password );&nbsp;</p>\r\n<p>Any ideas and help will be greatly appreciated.</p>\r\n<p>Thanks</p>\r\n<p>Ed</p>\r\n",
+    "PostedDate": "2011-09-01T07:35:24.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "669421",
+    "ThreadId": "271153",
+    "Html": "<p>Try setting the TaskLogonType to InteractiveTokenOrPassword instead of Password.</p>",
+    "PostedDate": "2011-09-08T16:08:03.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

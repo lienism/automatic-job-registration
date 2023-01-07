@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Works as expected",
+    "ClosedDate": "2015-11-07T10:34:33.76-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "We need to set the Synchronize Across Time Zones value to false so the task is not affected by DST changes.  The option is mentioned as Universal in this documentation:\n\nhttps://technet.microsoft.com/en-us/library/cc748841.aspx\n\nThe comments at the bottom discuss how it was renamed in the UI from Univeral to Synchronize Across Time Zones.  Is this something that could be made available thru the C# API?\n\nGreat project - keep up the good work.",
+    "LastUpdatedDate": "2015-11-07T10:34:33.76-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-11-02T15:12:26.603-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "No way to set Synchronize Across Time Zones (Universal) for DailyTrigger tasks",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12250
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is accomplished via the DateTime value passed in. See the SpecifyKind method (https://msdn.microsoft.com/en-us/library/system.datetime.specifykind(v=vs.110).aspx).",
+      "PostedDate": "2015-11-06T09:00:24.727-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This doesn't seem to be working.  \r\n\r\nnew DailyTrigger(1) {  StartBoundary = DateTime.SpecifyKind(DateTime.Today.AddHours(6), DateTimeKind.Utc), Enabled = true  },\nnew DailyTrigger(1) {  StartBoundary = DateTime.SpecifyKind(DateTime.Today.AddHours(10), DateTimeKind.Local), Enabled = true  },\r\n\r\nBoth of these triggers have the Synchronize Across Time Zones checked.  Is there something I am missing here?  I would assume the 1st (UTC) would have it checked it while the 2nd would have it unchecked.",
+      "PostedDate": "2015-11-06T13:52:08.89-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I figured it out - it has to be Unspecified rather than UTC or Local.  It works as expected.",
+      "PostedDate": "2015-11-06T13:54:58.31-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-11-07T10:34:33.76-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

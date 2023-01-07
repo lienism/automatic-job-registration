@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "547547",
+    "ThreadId": "241346",
+    "Html": "\r\n<p>TaskSchedulerEditor.DLL references different version of TaskScheduler.DLL. I don't normally download the betas of this, but is that normal?</p>\r\n<p>Thanks... Jeff</p>\r\n",
+    "PostedDate": "2011-01-11T12:56:29.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "547569",
+    "ThreadId": "241346",
+    "Html": "\r\n<p>Thanks for the catch. For some reason it didn't pull that upload when I updated it earlier. It is corrected now. I would definitely pull the betas as the only part that is really beta is the editor which is in its own DLL. The main TaskScheduler.dll is totally\r\n production ready and will include minor bug fixes at each release.</p>\r\n",
+    "PostedDate": "2011-01-11T13:26:39.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

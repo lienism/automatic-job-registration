@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1349796",
+    "ThreadId": "579666",
+    "Html": "I am trying to list all the tasks and the associated account that is running the task.   I got the list of tasks just fine.\r<br />\nI am trying to obtain the userid of the context the task runs under is eluding me?\r<br />\nany suggestions?\r<br />\nI see Task.GetAccessControl() but I am not able to obtain the owner or userid?<br />\n",
+    "PostedDate": "2015-02-06T10:14:00.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350014",
+    "ThreadId": "579666",
+    "Html": "I think you are looking for one of two things: 1) The user account under which the task was created - in which case use Task.Definition.RegistrationInfo.Author or 2) The user account under which the task runs - in which case use Task.Definition.Principal.ToString() (which will pull either UserId or GroupId property based on logon type).<br />\n",
+    "PostedDate": "2015-02-07T15:47:58.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-02-07T15:48:02.187-08:00"
+  },
+  {
+    "Id": "1350080",
+    "ThreadId": "579666",
+    "Html": "Thanks, I spent a better part of the day looking in the tasksecurity class.  LOL.  I went and looked at your source code for the interface and was able to identify the task.definition class.<br />\nJust getting familiar with the wrapper.\r<br />\n<br />\nI would like to extend a big thanks for this work.<br />\nNow on to figuring out how to change the password for the Task.\r<br />\n<br />\nI know peeps like to see code, that is how we learn.  Simple stuff so far, but just in case someone else runs into this.<br />\n<pre><code>   class Program\n    {\n        static void Main()\n        {\n\n            using (TaskService ts = new TaskService(&quot;wtxwt0017&quot;))\n            {\n                EnumTaskFolders(ts.RootFolder);\n\n            }\n\n\n\n        }\n\n        public static void EnumTaskFolders(TaskFolder taskFolder)\n        {\n            foreach (Task task in taskFolder.Tasks)\n            {\n                listTasks(task);\n\n            }\n            Console.ReadLine();\n        }\n\n        public static void listTasks(Task t)\n        {\n            \n            string userid = t.Definition.Principal.ToString();       \n\n            Console.WriteLine(string.Format(&quot;task name = {0} , userid - {1}&quot;, t.Name, userid));\n        }\n\n       \n    }\n    \n}</code></pre>\n\n",
+    "PostedDate": "2015-02-08T07:06:24.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1350289",
+    "ThreadId": "579666",
+    "Html": "The only way to change the password for a task is to re-register the task.<br />\n",
+    "PostedDate": "2015-02-09T07:38:24.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

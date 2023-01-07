@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1222154",
+    "ThreadId": "538834",
+    "Html": "Hi,\r<br />\n<br />\nI am tring to access task hosted at Europe located server but my code is running on US located server. I am geeting Last Run Time values correct for the task but Next Run time is geeting convert as per EST (US) timezone. Which is past date than last run time !!!\r<br />\n<br />\nHow to get the correct Next Run Time (as per Windows Task Scheduler showing on Europe Server)?\r<br />\n<br />\nPlease help! <br />\n",
+    "PostedDate": "2014-03-12T17:15:58.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222390",
+    "ThreadId": "538834",
+    "Html": "Interesting. Can you tell me what version of Windows you are running locally and on the remote server? In trying to troubleshoot, it will help me to know if this is a V1 vs. V2 problem or not. Also, if I understood correctly, you are getting the correct next run time value when you use the system Windows Task Scheduler tool. If that is right, what steps are you taking to connect and then discover that value?<br />\n",
+    "PostedDate": "2014-03-13T08:33:32.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222411",
+    "ThreadId": "538834",
+    "Html": "Hi,<br />\n<br />\nWindows Version for both the servers is Windows Server R2. <br />\nYes, I am getting the correct next run time value when you use the system Windows Task Scheduler tool, but when I am using below code it to get the Next Run time it is converting as per EST (US) timezone.<br />\n<br />\nTaskScheduler.Task task;<br />\n//some code here to initilize task object.<br />\ntask.NextRunTime.ToString();<br />\n<br />\nResult:<br />\n<br />\nLast Run Time\t<br />\n3/13/14 4:30 PM<br />\n<br />\nNext Run Time<br />\n3/13/14 11:40 AM<br />\n<br />\nNext Run Time is showing as per (EST) it should be 3/13/14 4:40 PM. In Windows Task Schdule on Europe server it is showing Next Run Time =  3/13/14 4:40 PM.<br />\n<br />\nPlease help!<br />\n",
+    "PostedDate": "2014-03-13T08:59:43.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222765",
+    "ThreadId": "538834",
+    "Html": "Just to be clear, when you get the time using the Windows Task Scheduler tool, are you connecting to the remote server using the system tool on your local machine? Similarly, are you running the code to connect to the remote server from your local machine? I'm trying to make sure the code is being called in the same way before troubleshooting.<br />\n",
+    "PostedDate": "2014-03-14T06:51:30.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1222819",
+    "ThreadId": "538834",
+    "Html": "Hi,\r<br />\n<br />\nTo get time of task from Windows Task Scheduler of Europe server, i am doing Remote Desktop Connection and I can see Next Run Time as per Europe timining.\r<br />\n<br />\nBut When I am running above code from my US Server and tring to get Next Run Time (of task from Windows Task Scheduler of Europe server) using below code I am getting, Next Run Time converted into EST timing.\r<br />\n<br />\nTaskScheduler.Task task;\r<br />\n //some code here to initilize task object.\r<br />\n task.NextRunTime.ToString();\r<br />\n \r<br />\n<br />\nWould that help you to troubleshoot? Let me know for more information.<br />\n",
+    "PostedDate": "2014-03-14T08:53:35.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223486",
+    "ThreadId": "538834",
+    "Html": "That helps. Will you try and connect to the server in Europe from your local instance of the Windows Task Scheduler tool (Actions | Connect to Another Computer) and then see if the time zone for next run time is incorrect? The reason I'm asking is that I am only pulling the value directly from the native library and need to know if the library or my wrapper is causing the problem.<br />\n",
+    "PostedDate": "2014-03-17T06:03:55.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223494",
+    "ThreadId": "538834",
+    "Html": "I tried to connect to Europe server using remote desktop connection and the Next Run Time in task scheduler is showing correct. But while pulling Bext Run Time using code it is showing incorrect (in EST).<br />\n",
+    "PostedDate": "2014-03-17T06:26:01.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1223729",
+    "ThreadId": "538834",
+    "Html": "I understand. However, I'm asking you to connect to the European server using the local Windows Task Scheduler tool. It will then use the same native call to get the next run time remotely that my library is using. If they both return the same time, then I know the problem is in the native library. By doing what you have done, you are always calling the library locally (which I know works consistently).<br />\n",
+    "PostedDate": "2014-03-17T17:06:14.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:08:23.24-07:00"
+  }
+]

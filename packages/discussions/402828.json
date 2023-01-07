@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "940190",
+    "ThreadId": "402828",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I am getting an exception while creating a task using RegisterTaskDefinition. The stacktrace is as follows:</p>\r\n<p>FUNCTION: Void RegisterTaskDefinition(Scheduler.Schedule, Microsoft.Win32.TaskScheduler.TaskDefinition, Microsoft.Win32.TaskScheduler.TaskCreation)ErrorDescriptionForBug: System.Runtime.InteropServices.COMException, Cannot create a file when that file already\r\n exists. (Exception from HRESULT: 0x800700B7)ErrorStackTrace: &nbsp; &nbsp;at Scheduler.TaskSchedulerManager.RegisterTaskDefinition(Schedule schedule, TaskDefinition taskDefinition, TaskCreation taskCreation)</p>\r\n<p>.</p>\r\n<p>.</p>\r\n<p>We create tasks in sub folder (Folder2) as shown below:</p>\r\n<p>Root Folder:</p>\r\n<p><span style=\"white-space:pre\">&nbsp;</span><span style=\"white-space:pre\"> </span>\r\nFolder1</p>\r\n<p><span style=\"white-space:pre\">&nbsp;</span><span style=\"white-space:pre\"> </span>\r\nFolder2</p>\r\n<p>After looking around i found that this exception occurs when Folder1 and Folder2 are not present in the system32\\Tasks folder.</p>\r\n<p>But we have no additional code for creating it as well. &nbsp;In the RegisterTaskDefinition method we pass the&nbsp;path as 'Folder1\\\\Folder2' and they get created automatically if they are not present. &nbsp;</p>\r\n<p>One scenario in which the folder is not getting creating is when there is quota applied to the system installation drive. &nbsp;But i checked the available space after quota being applied and it is more than 1GB. &nbsp;Still the folder is not getting created.</p>\r\n<p>&nbsp;</p>\r\n<p>I tried to use the TaskFolder.CreateFolder() method but once the folder is created it fails for the subsequent calls saying that cannot create a file that already exists. &nbsp; Directory.Exists() always returns false even if the folders are present.</p>\r\n<p>Is there any other option which can be used here?</p>\r\n",
+    "PostedDate": "2012-11-12T01:18:43.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "940342",
+    "ThreadId": "402828",
+    "Html": "<p>I would call the TaskService.GetFolder method and handle the FileNotFoundException as an indicator that the folder does not exist. I would then create it if necessary and handle those errors specifically.</p>",
+    "PostedDate": "2012-11-12T08:02:16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

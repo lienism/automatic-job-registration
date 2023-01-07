@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "927368",
+    "ThreadId": "399586",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I'm running into an issue: Two systems, both Win 7 x64...</p>\r\n<p>Machine 1: When a the project is compiled against the .Net v4 framework and iterating through a list of events I've queried, both the DisplayName and FormatDescription return NULL.... Switch the .Net version to 3.5 and they behave as expected...</p>\r\n<p>&nbsp;</p>\r\n<p>Machine 2: Has none of these symptoms, it will work properly when compiled with either version.</p>\r\n<p>&nbsp;</p>\r\n<p>Has anyone else encountered this problem?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>&nbsp;</p>\r\n<p>Kk</p>\r\n",
+    "PostedDate": "2012-10-16T06:40:20.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "927422",
+    "ThreadId": "399586",
+    "Html": "<p>This is only a guess as I cannot verify it: The TaskSchedulerEditor assembly is compiled against .NET 3.5. Is it possible that on Machine 1, you only have the .NET&nbsp;3.5 library installed and on Machine 2 you have both 3.5 and 4 installed? I would check along that line of thinking.</p>",
+    "PostedDate": "2012-10-16T07:38:03.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

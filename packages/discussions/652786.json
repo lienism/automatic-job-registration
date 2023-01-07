@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1467598",
+    "ThreadId": "652786",
+    "Html": "how can I use a Group Managed service account to run a schedule task and make it &quot;Run whether user is logged on or not&quot;?\r<br />\n<a href=\"https://technet.microsoft.com/en-us/library/hh831782.aspx\" rel=\"nofollow\">https://technet.microsoft.com/en-us/library/hh831782.aspx</a> this is some thing about Group Managed service accounts, \r<br />\nI tried several ways:\r<br />\n. use AddTask directly<br />\n<pre><code>    TaskService.Instance.AddTask(&quot;Test&quot;, new MST.DailyTrigger { DaysInterval = 1 },\n                                    new MST.ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, &quot;c:\\\\program files\\\\&quot;), &quot;myDomain\\\\testMSA$&quot;, null, TaskLogonType.None);</code></pre>\n\nonly TaskLogonType.None can AddTask successfully, but the task is &quot;Run only when user is logged on&quot;\r<br />\n<br />\n. RegisterTaskDefinition<br />\n<pre><code>MyTask.Folder.RegisterTaskDefinition(MyTask.Name, MyTask.Definition,\n                            TaskCreation.CreateOrUpdate, &quot;rmad\\\\testMSA$&quot;, null, TaskLogonType.None);</code></pre>\n\nTaskLogonType.InteractiveToken and TaskLogonType.None can AddTask successfully, but the task is &quot;Run only when user is logged on&quot;\r<br />\n<br />\n. change Principal<br />\n<pre><code>MyTask.Definition.Principal.UserId = &quot;rmad\\\\testMSA$&quot;;\nMyTask.Definition.Principal.LogonType = TaskLogonType.None;\nMyTask.Folder.RegisterTaskDefinition(MyTask.Name, MyTask.Definition);</code></pre>\n\nonly TaskLogonType.InteractiveToken can AddTask successfully, but the task is &quot;Run only when user is logged on&quot;\r<br />\nat the same time, when I assigned TaskLogonType.None and TaskLogonType.Group, I got error &quot;Value does not fall within the expected range&quot;\r<br />\n<br />\nIn short, I can create a schedule task using Group Managed service accounts to run, but just can't make the task &quot;Run whether user is logged on or not&quot;<br />\n",
+    "PostedDate": "2016-03-22T02:20:11.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468223",
+    "ThreadId": "652786",
+    "Html": "Can you use the system &quot;Task Scheduler&quot; applet to create a task using a Group Managed Service Account? If so, then export the XML and then copy it into your response. I should then be able to tell you how to do it programmatically using the library.<br />\n",
+    "PostedDate": "2016-03-28T08:29:56.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468280",
+    "ThreadId": "652786",
+    "Html": "Hi dahall, thinks for your reply. I use the following Powershell commands to create a schedule task with GMSA on a windows server 2012R2 machine:<br />\n<pre><code>$action = New-ScheduledTaskAction  &quot;C:\\PowerSlim\\test.cmd&quot;\n$trigger = New-ScheduledTaskTrigger -At 20:43 -Daily\n$principal = New-ScheduledTaskPrincipal -UserID er\\zz$ -LogonType Password\nRegister-ScheduledTask msaTask –Action $action –Trigger $trigger –Principal $principal</code></pre>\n\nthen the xml of &quot;msaTask&quot; is like below:<br />\n<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;\n&lt;Task version=&quot;1.3&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;\n  &lt;RegistrationInfo /&gt;\n  &lt;Triggers&gt;\n    &lt;CalendarTrigger&gt;\n      &lt;StartBoundary&gt;2016-03-29T20:43:00&lt;/StartBoundary&gt;\n      &lt;Enabled&gt;true&lt;/Enabled&gt;\n      &lt;RandomDelay&gt;P0DT0H0M0S&lt;/RandomDelay&gt;\n      &lt;ScheduleByDay&gt;\n        &lt;DaysInterval&gt;1&lt;/DaysInterval&gt;\n      &lt;/ScheduleByDay&gt;\n    &lt;/CalendarTrigger&gt;\n  &lt;/Triggers&gt;\n  &lt;Principals&gt;\n    &lt;Principal id=&quot;Author&quot;&gt;\n      &lt;UserId&gt;er\\zz$&lt;/UserId&gt;\n      &lt;LogonType&gt;Password&lt;/LogonType&gt;\n      &lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;\n    &lt;/Principal&gt;\n  &lt;/Principals&gt;\n  &lt;Settings&gt;\n    &lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;\n    &lt;DisallowStartIfOnBatteries&gt;true&lt;/DisallowStartIfOnBatteries&gt;\n    &lt;StopIfGoingOnBatteries&gt;true&lt;/StopIfGoingOnBatteries&gt;\n    &lt;AllowHardTerminate&gt;true&lt;/AllowHardTerminate&gt;\n    &lt;StartWhenAvailable&gt;false&lt;/StartWhenAvailable&gt;\n    &lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;\n    &lt;IdleSettings&gt;\n      &lt;Duration&gt;PT10M&lt;/Duration&gt;\n      &lt;WaitTimeout&gt;PT1H&lt;/WaitTimeout&gt;\n      &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;\n      &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;\n    &lt;/IdleSettings&gt;\n    &lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;\n    &lt;Enabled&gt;true&lt;/Enabled&gt;\n    &lt;Hidden&gt;false&lt;/Hidden&gt;\n    &lt;RunOnlyIfIdle&gt;false&lt;/RunOnlyIfIdle&gt;\n    &lt;DisallowStartOnRemoteAppSession&gt;false&lt;/DisallowStartOnRemoteAppSession&gt;\n    &lt;UseUnifiedSchedulingEngine&gt;false&lt;/UseUnifiedSchedulingEngine&gt;\n    &lt;WakeToRun&gt;false&lt;/WakeToRun&gt;\n    &lt;ExecutionTimeLimit&gt;PT72H&lt;/ExecutionTimeLimit&gt;\n    &lt;Priority&gt;7&lt;/Priority&gt;\n  &lt;/Settings&gt;\n  &lt;Actions Context=&quot;Author&quot;&gt;\n    &lt;Exec&gt;\n      &lt;Command&gt;C:\\PowerSlim\\test.cmd&lt;/Command&gt;\n    &lt;/Exec&gt;\n  &lt;/Actions&gt;\n&lt;/Task&gt;</code></pre>\n\n",
+    "PostedDate": "2016-03-28T22:55:44.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468323",
+    "ThreadId": "652786",
+    "Html": "I thought you needed a trigger that fires at logon?<br />\n<br />\nTo accomplish what you have in your PowerShell example:<br />\n<pre><code>var action = new ExecAction(&quot;C:\\PowerSlim\\test.cmd&quot;);\nvar trigger = new DailyTrigger(DateTime.Today.AddHours(20));\nTaskService.Instance.AddTask(&quot;msaTask&quot;, trigger, action, &quot;er\\zz$&quot;, &quot;&quot;, TaskLogonType.Password);</code></pre>\n\n-or-<br />\n<pre><code>TaskService.Instance.AddTask(&quot;msaTask&quot;, QuickTriggerType.Daily,\n   &quot;C:\\PowerSlim\\test.cmd&quot;, null, &quot;er\\zz$&quot;, &quot;&quot;, TaskLogonType.Password);</code></pre>\n\n",
+    "PostedDate": "2016-03-29T07:50:35.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468397",
+    "ThreadId": "652786",
+    "Html": "these tow ways are not working, here is my test code, I test it on windows server 2012R2:<br />\n<pre><code>using System;\nusing System.Runtime.InteropServices;\nusing Microsoft.Win32.TaskScheduler;\n\nnamespace WrapperDemo\n{\n    internal static class Program\n    {\n        public static void Main(string[] args)\n        {\n            try\n            {\n                var action = new ExecAction(@&quot;C:\\PowerSlim\\test.cmd&quot;);\n                var trigger = new DailyTrigger(1);\n                trigger.StartBoundary = DateTime.Today.AddHours(20);\n                TaskService.Instance.AddTask(&quot;msaTask&quot;, trigger, action, @&quot;er\\zz$&quot;, &quot;&quot;, TaskLogonType.Password);\n            }\n            catch (COMException exception)\n            {\n                Console.WriteLine(exception.ToString());\n            }\n\n        }\n    }\n}\n</code></pre>\n\nI got exception like following on the console output:\r<br />\n<br />\nSystem.Runtime.InteropServices.COMException (0x8007052E): The username or password is incorrect. (Exception from HRESULT: 0x8007052E)\r<br />\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskService.AddTask(String path, Trigger trigger, Action action, String UserId, String Password, TaskLogonType LogonType)\r<br />\n   at WrapperDemo.Program.Main(String[] args) in C:\\Users\\lhuang2\\Documents\\Visual Studio 2015\\Projects\\WrapperDemo\\WrapperDemo\\Program.cs:line 20<br />\n",
+    "PostedDate": "2016-03-29T23:43:01.173-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468437",
+    "ThreadId": "652786",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/12362\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2016-03-30T07:13:28.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T10:05:36.883-07:00"
+  },
+  {
+    "Id": "1468781",
+    "ThreadId": "652786",
+    "Html": "Please check the link to the created issue (from previous post). I have posted some code and test assemblies for you to test.<br />\n",
+    "PostedDate": "2016-04-02T11:39:57.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469124",
+    "ThreadId": "652786",
+    "Html": "Hi dahall, I tried, your assemblies work well.<br />\n",
+    "PostedDate": "2016-04-05T19:21:32.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469322",
+    "ThreadId": "652786",
+    "Html": "Thanks. I'll get this out shortly as 2.5.17.<br />\n",
+    "PostedDate": "2016-04-07T06:39:24.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T10:05:38.503-07:00"
+  }
+]

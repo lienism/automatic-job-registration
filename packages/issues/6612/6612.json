@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See notes for source code drop 48250. The file is included so you can strongly name the assembly in your own build.",
+    "ClosedDate": "2010-07-01T15:24:18.583-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Since there is a .snk key file in the project, I assume this is planned for the final release but I just wanted to make sure this didn't get missed :-)",
+    "LastUpdatedDate": "2013-05-16T04:49:13.777-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-06-27T06:52:24.323-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Assembly is not strong-named",
+    "Type": {
+      "Name": "Task",
+      "Id": 2
+    },
+    "VoteCount": 1,
+    "Id": 6612
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

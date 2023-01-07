@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "265729",
+    "ThreadId": "77722",
+    "Html": "<p>I'm trying to write some code to monitor scheduled tasks on a remote server (Windows Server 2003). I have it as a scheduled task on another server.</p>\r\n<p>I found that the NextRunTime in the Task object isn't getting reset properly after the task runs when the task is setup to run only once a day. If an Interval is set, 5 minutes, 1 hour, whatever, then the problem doesn't occur. If I run the same code on the remote server itself, then the issue doesn't occur. After some time (8 or 9 hours) then the NextRunDate is reported correctly by the Task object. Note than on the remote server, the next run time in the Scheduled Tasks object is always correct.</p>\r\n<p>For example, I have a task on server Remote1 named EndOfDay that is setup to run at 10:30 PM once a day. After the EndOfDay job has successfully run, for the next few hours (8 or 9), the my Task Monitor running on server Remote2 sees the original NextRunTime and reports that the EndOfDay hasn't run.</p>\r\n<p>Again, this only happens when I'm monitoring from a remote server and when the task is setup to run once a day.</p>\r\n<p>FYI, The server I'm monitoring is running on CET (Central European Time) and the server I'm monitoring from is on Eastern Time.</p>\r\n<p>Steve</p>",
+    "PostedDate": "2009-12-10T07:30:00.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "266459",
+    "ThreadId": "77722",
+    "Html": "<p>I am inclined to believe this is a problem with the native libraries. Can you tell&nbsp;me which Windows version the code runs from and if you are forcing it to a lower version in the TaskService constructor? I think your best option is to write some native C++ code to test the native libary of the appropriate version. If that exhibits the same behavior, then you should report it to Microsoft. Let me know if you need help putting that code together. There is also good sample code for V1 and V2 libraries in the Microsoft samples.</p>",
+    "PostedDate": "2009-12-11T14:25:45.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

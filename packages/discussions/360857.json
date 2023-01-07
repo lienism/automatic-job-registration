@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "853320",
+    "ThreadId": "360857",
+    "Html": "\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n<p>On Windows Vista and Windows 7, the&nbsp;Trigger dialog allows the Monthly-&gt;On setting to have more than one checked value for the x day of week in a month.&nbsp;If more than one value for the x day&nbsp; (like Monday) of week (first, second, third, fourth,\r\n or last ) is checked, an application error is returned reporting &quot;Only a single week can be set with Task Scheduler 1.0.&quot;.</p>\r\n<p>On Windows XP (32 bit SP3 and 64-bit SP2) only one checkbox can be selected for the x day of the week for the month and does not expose the application error.</p>\r\n",
+    "PostedDate": "2012-06-25T12:55:30.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "853835",
+    "ThreadId": "360857",
+    "Html": "\r\n<p>This bug was already reported and is fixed in release 1.8.3 due shortly. I am close to posting the source code that has the fix.</p>\r\n",
+    "PostedDate": "2012-06-26T07:49:31.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "853873",
+    "ThreadId": "360857",
+    "Html": "<p>Thanks David!</p>",
+    "PostedDate": "2012-06-26T08:41:12.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "854492",
+    "ThreadId": "360857",
+    "Html": "<p>Hi David,</p>\r\n<p>Looks like this is a regression. I've updated my source with the latest download, and the exception \"Only a single week can be set with Task Scheduler 1.0.\"&nbsp;is still thrown eventhough I'm on a Windows 7 machine. I tried using the&nbsp;file Trigger.cs&nbsp;in commit&nbsp;74464 and the exception is gone.</p>\r\n<p>Thanks, Audi</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-06-27T10:22:35.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "854528",
+    "ThreadId": "360857",
+    "Html": "\r\n<p>Putting the &nbsp;following line code in the WeeksOfMonth property outside of the&nbsp;IF statement&nbsp;seems to be causing the issue:</p>\r\n<p>v1TriggerData.Data.monthlyDOW.V2WhichWeek = value;</p>\r\n<p>If I use the code in 74464 for the WeeksOfMonth property, the exception goes away.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-27T11:18:43.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "855547",
+    "ThreadId": "360857",
+    "Html": "<p>Update:</p>\r\n<p>If I use the code in 74464 for the WeeksOfMonth property, the exception goes away (on Windows 7), but gets the following exception on Win XP:</p>\r\n<p>Value does not fall within the expected range.</p>\r\n<p>-------------------------- Technical Information Follows --------------------------&nbsp;</p>\r\n<p>Exception Details:</p>\r\n<p>----------------------------------------</p>\r\n<p>Exception type: System.ArgumentException</p>\r\n<p>Message:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Value does not fall within the expected range.</p>\r\n<p>Source:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Microsoft.Win32.TaskScheduler</p>\r\n<p>Target Site:&nbsp;&nbsp;&nbsp;&nbsp; SetTrigger</p>\r\n<p>&nbsp;</p>\r\n<p>Stack Trace:</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger&amp; Trigger)</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData()</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.Bind(ITask iTask)</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TriggerCollection.Add(Trigger unboundTrigger)</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.triggerNewButton_Click(Object sender, EventArgs e)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Control.OnClick(EventArgs e)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Button.OnClick(EventArgs e)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)</p>\r\n<p>&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</p>",
+    "PostedDate": "2012-06-29T10:26:09.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "856442",
+    "ThreadId": "360857",
+    "Html": "<p>Try source code version 78863.</p>",
+    "PostedDate": "2012-07-02T10:14:17.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "856495",
+    "ThreadId": "360857",
+    "Html": "<p>Thanks David! Problems fixed, both in Win 7 and Win XP. Really appreciate it.</p>",
+    "PostedDate": "2012-07-02T12:29:02.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

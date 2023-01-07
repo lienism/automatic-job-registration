@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "128178",
+    "ThreadId": "38637",
+    "Html": "I've wrote a simple code to list all tasks on servers of Win2003 &amp; Win2008, at first, they all work perfectly. But when I specify the targetServer parameter to a Win2003 server, the list becomes empty.<br>\r\nThe problem is the SetTargetComputer method of ITaskScheduler, according to the MSDN, the server name must be in UNC format, but if I set the targetServer parameter in UNC format, Win2008 fails.<br>\r\n<br>\r\nIs it a good idea to add some test code to add the &quot;\\\\&quot; prefix to targetServer parameter if needed to prevent this problem.\r\n",
+    "PostedDate": "2008-10-27T20:16:24.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "129046",
+    "ThreadId": "38637",
+    "Html": "I changed the constructor per your suggestion and also check for the reverse condition to ensure that V2 machines don't use the &quot;\\\\&quot;. Code and release have been updated.\r\n",
+    "PostedDate": "2008-10-30T14:35:35.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

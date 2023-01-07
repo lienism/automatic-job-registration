@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1436875",
+    "ThreadId": "642231",
+    "Html": "I have a few people experiencing an issue in my program in which people are reporting a program exception/crash when the program attempts to execute the RegisterTaskDefinition() function.\r<br />\n<br />\nThe following is my code...<br />\n<pre><code>Dim taskService As New TaskService\n\n' Where all of my task setup code is. It's too long to mention here so I won't.\n\ntaskService.RootFolder.RegisterTaskDefinition(&quot;System Restore Checkpoint by System Restore Point Creator&quot;, newTask, TaskCreation.CreateOrUpdate, &quot;NT AUTHORITY\\System&quot;, vbNullString, TaskLogonType.InteractiveToken, vbNullString)</code></pre>\n\nHow is the RegisterTaskDefinition() causing an exception on the RootFolder in the Task Scheduler? The RootFolder should always exist so I shouldn't have a problem with this code yet it has some issues on some people's computers. What's going on here?<br />\n",
+    "PostedDate": "2015-08-01T15:03:48.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437468",
+    "ThreadId": "642231",
+    "Html": "First of all, SYSTEM cannot be the user when InteractiveToken is used since SYSTEM cannot run interactively. Please check the documentation on this site to see how to correctly call RegisterTaskDefinition using the SYSTEM account.\r<br />\n<br />\nIf, after making that change, you still experience the error, please let me know which OS versions are running and the status of the account connecting to the TaskService (admin, user, etc.).<br />\n",
+    "PostedDate": "2015-08-05T20:42:56.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:29:18.573-07:00"
+  },
+  {
+    "Id": "1437641",
+    "ThreadId": "642231",
+    "Html": "So something like this instead?<br />\n<pre><code>taskService.RootFolder.RegisterTaskDefinition(&quot;System Restore Checkpoint by System Restore Point Creator&quot;, newTask, TaskCreation.CreateOrUpdate, &quot;NT AUTHORITY\\System&quot;)</code></pre>\n\n",
+    "PostedDate": "2015-08-06T16:44:19.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1437742",
+    "ThreadId": "642231",
+    "Html": "No. See <a href=\"http://taskscheduler.codeplex.com/wikipage?title=TaskSecurity#system\" rel=\"nofollow\">http://taskscheduler.codeplex.com/wikipage?title=TaskSecurity#system</a>.<br />\n",
+    "PostedDate": "2015-08-07T12:19:03.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:29:20.21-07:00"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "736780",
+    "ThreadId": "290532",
+    "Html": "\r\n<p>I'm creating tasks with the following code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n                {\r\n                    <span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt;= sTasks.GetUpperBound(0); i&#43;&#43;)\r\n                    {\r\n                        <span style=\"color:blue\">string</span> taskName = sTasks[i, 0];\r\n                        <span style=\"color:blue\">if</span> (ts.FindTask(sTasks[i, 0]) == <span style=\"color:blue\">null</span>)\r\n                        {\r\n                            <span style=\"color:blue\">#region</span> Create Scheduled Task\r\n                            <span style=\"color:green\">// Create a new task definition and assign properties</span>\r\n                            TaskDefinition td = ts.NewTask();\r\n                            td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n                            <span style=\"color:green\">// Add an action to execute the Batch File</span>\r\n                            td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(sTasks[i, 1], <span style=\"color:blue\">null</span>, <span style=\"color:#a31515\">&quot;C:\\\\Configuration\\\\Infrastructure\\\\Test Runs\\\\Standard&quot;</span>));\r\n\r\n                            <span style=\"color:green\">// Create a Trigger</span>\r\n                            TimeTrigger tTrigger = (TimeTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> TimeTrigger());\r\n                            tTrigger.StartBoundary = DateTime.Today &#43; TimeSpan.Parse(<span style=\"color:#a31515\">&quot;00:00:00&quot;</span>);\r\n\r\n                            <span style=\"color:green\">// Un-Hidden</span>\r\n                            td.Settings.Hidden = <span style=\"color:blue\">false</span>;\r\n\r\n                            <span style=\"color:green\">// Register the task in the root folder</span>\r\n                            ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n                            <span style=\"color:blue\">#endregion</span>\r\n                        }\r\n\r\n                    }\r\n                }\r\n</pre>\r\n</div>\r\n<p>On an XP machine, when I use the following code and click on the <strong>Run Times\r\n</strong>tab, the task is being deleted:</p>\r\n<pre>TaskEditDialog editorForm = <span style=\"color:blue\">new</span> TaskEditDialog(task, <span style=\"color:blue\">true</span>, <span style=\"color:blue\">true</span>);\r\neditorForm.ShowDialog();</pre>\r\n<p>This also causes on occasion for the Action Program/Script field to overwrite with C:\\WINDOWS\\system32\\rundll32.exe.</p>\r\n",
+    "PostedDate": "2012-02-02T06:41:42.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "736793",
+    "ThreadId": "290532",
+    "Html": "<p>Follow these steps to overwrite the Action Details and 'Hide' the task in XP:</p>\r\n<ol>\r\n<li>Run the above code to create the task.</li>\r\n<li>ShowDialog();<ol>\r\n<li>Change Trigger to Daily and click OK to register the task.</li>\r\n</ol></li>\r\n<li>ShowDialog(); again<ol>\r\n<li>Click Run Times tab and click OK</li>\r\n</ol></li>\r\n</ol>\r\n<p>NOTE: The task in XP has been Hidden and the Action Program/Script has been overwritten with C:\\WINDOWS\\system32\\rundll32.exe</p>",
+    "PostedDate": "2012-02-02T06:55:34.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737115",
+    "ThreadId": "290532",
+    "Html": "<p>You found a bug. I believe I have corrected it in build <a id=\"ChangeSetLink0\" style=\"font-weight: bold;\" title=\"View change set 74563\" href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/changes/74563\">74563</a>. Thank you.</p>",
+    "PostedDate": "2012-02-02T11:08:23.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "737307",
+    "ThreadId": "290532",
+    "Html": "<p>Thanks for the quick update.&nbsp; I've compiled and deployed.&nbsp; Works great.</p>",
+    "PostedDate": "2012-02-02T13:10:09.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

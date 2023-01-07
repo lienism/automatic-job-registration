@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1475733",
+    "ThreadId": "655405",
+    "Html": "I am trying to use the following code to update the user password on a task<br />\n<pre><code>ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td, TaskCreation.CreateOrUpdate, &quot;User&quot;, &quot;NewPassword&quot;, TaskLogonType.Password)</code></pre>\n\nBut right now I have to add every action, trigger, description, etc.\r<br />\n<br />\nIs there a way to update just the user credentials without having to reassign every property of the task?<br />\n",
+    "PostedDate": "2016-06-10T06:48:54.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476166",
+    "ThreadId": "655405",
+    "Html": "<pre><code>var td = ts.RootFolder.Tasks[&quot;Test&quot;];\n// then call the method as you have above</code></pre>\n\n",
+    "PostedDate": "2016-06-14T07:56:44.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476205",
+    "ThreadId": "655405",
+    "Html": "Thank you!<br />\n<br />\nSo, my code looks like this<br />\n<pre><code>  Using ts As New TaskService()\n   Dim td = ts.RootFolder.Tasks(&quot;TEST&quot;)\n  ts.RootFolder.RegisterTaskDefinition(&quot;TEST&quot;, td, TaskCreation.CreateOrUpdate, &quot;User&quot;, &quot;NewPassword&quot;, TaskLogonType.Password)\n</code></pre>\n\nThe td variable in my RegisterTaskDefiniton function gets an errors that says:<br />\nValue type of 'Task' cannot be converted to 'TaskDefinition'<br />\n",
+    "PostedDate": "2016-06-14T11:58:04.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1476497",
+    "ThreadId": "655405",
+    "Html": "I apologize. The corrected code would be:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">Using</span> ts <span style=\"color:Blue;\">As</span> <span style=\"color:Blue;\">New</span> TaskService()\n   <span style=\"color:Blue;\">Dim</span> task = ts.RootFolder.Tasks(<span style=\"color:#A31515;\">&quot;TEST&quot;</span>)\n   <span style=\"color:Blue;\">If</span> task <span style=\"color:Blue;\">IsNot</span> <span style=\"color:Blue;\">Nothing</span>\n      ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;TEST&quot;</span>, task.TaskDefinition, TaskCreation.CreateOrUpdate, <span style=\"color:#A31515;\">&quot;User&quot;</span>, <span style=\"color:#A31515;\">&quot;NewPassword&quot;</span>, TaskLogonType.Password)\n   <span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">If</span>\n<span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">Using</span>\r\n</pre></div>",
+    "PostedDate": "2016-06-16T09:27:23.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-06-16T09:27:30.853-07:00"
+  }
+]

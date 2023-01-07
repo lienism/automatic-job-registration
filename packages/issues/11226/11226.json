@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This library does not hard code the location of the tasks. It relies on the operating system to provide all task related information through the Task Scheduler APIs and COM objects.",
+    "ClosedDate": "2013-08-27T22:06:38.547-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "My tasks are located in C:\\Windows\\System32\\Tasks and not C:\\Windows\\Tasks is there anyway to change the default folder location of \"\\\" so my tasks can be located?",
+    "LastUpdatedDate": "2013-08-27T22:06:38.547-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-08-27T01:15:23.483-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Microsoft Issue"
+    },
+    "Summary": "Cannot list tasks",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11226
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

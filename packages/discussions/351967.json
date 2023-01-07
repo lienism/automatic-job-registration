@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "822624",
+    "ThreadId": "351967",
+    "Html": "<p>Hi David,</p>\n<p>I'm seeing a couple of issues:</p>\n<p>(1) Visual Studio 10 requires that a definition for the operator != must also be defined. I tried adding:</p>\n<p>public static bool operator !=(SystemTime s1, SystemTime s2)<br />{<br />&nbsp;&nbsp; return (s1.Year != s2.Year ||&nbsp;s1.Month != s2.Month&nbsp;|| s1.Day != s2.Day&nbsp;|| s1.Hour != s2.Hour&nbsp;|| s1.Minute != s2.Minute&nbsp;||&nbsp; s1.Second != s2.Second&nbsp;|| s1.Milliseconds != s2.Milliseconds);<br />}</p>\n<p>(2) Visual Studio 10 complains about&nbsp;the keyword&nbsp;\"public\" in the constructor&nbsp;static public SystemTime(). I tried modifying it to:</p>\n<p>static SystemTime()<br />{<br />&nbsp;&nbsp;&nbsp;MinValue = new SystemTime(1601, 1, 1);<br />&nbsp;&nbsp;&nbsp;MaxValue = new SystemTime(30827, 12, 31, 23, 59, 59, 999);<br />}</p>\n<p>It now compiles, but if I click on the Run Times tab, it throws an exception (something about unpresentable date format out of range).</p>\n<p>Thanks, Audi</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2012-04-11T14:41:02.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822744",
+    "ThreadId": "351967",
+    "Html": "<p>Fixed in 77410. Thanks for the catch. That's what I get for not testing changes before checking in. :)</p>",
+    "PostedDate": "2012-04-11T22:36:14.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

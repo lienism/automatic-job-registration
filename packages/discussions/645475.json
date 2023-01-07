@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1445939",
+    "ThreadId": "645475",
+    "Html": "I'm trying to figure out the best way to add new tasks that are painless for the user but I'm running into an issue with my code where the Task Name can't be changed<br />\n<br />\nHere is my code:<br />\n<pre><code>Public Sub newTask()\n\n        Dim td As TaskDefinition = _tskSrvc.NewTask\n        td.RegistrationInfo.Description = &quot;&quot;\n\n        td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;c:\\test.log&quot;))\n\n        ' Register the task in the root folder\n        _rootFolder.RegisterTaskDefinition(&quot;New Task Service Monitor Task&quot;, td)\n\n        Dim dlg As New TaskEditDialog(_rootFolder.Tasks(&quot;New Task Service Monitor Task&quot;), True, True)\n        If dlg.ShowDialog() = vbCancel Then\n\n            _rootFolder.DeleteTask(&quot;New Task Service Monitor Task&quot;)\n\n        End If\n\n    End Sub</code></pre>\n\nBut when the dialog box pops up I would like the user to be able to change the Task name but even with the task as editable it does not allow for this. Is there anyway to over this? Thanks<br />\n",
+    "PostedDate": "2015-09-25T11:28:24.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446058",
+    "ThreadId": "645475",
+    "Html": "There is not a simple way to do it. The only way I know how is to get the TaskDefinition from one task, delete the one with the original name, and then re-register a task with the new name and the TaskDefinition pulled off the old task.<br />\n",
+    "PostedDate": "2015-09-26T22:09:17.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1446185",
+    "ThreadId": "645475",
+    "Html": "So I worked on the code a bit and so far the best way I came up with was this:<br />\n<pre><code>    Public Sub newTask()\n\n        ' Create a new task definition and assign properties\n        Dim td As TaskDefinition = _tskSrvc.NewTask\n        td.RegistrationInfo.Description = &quot;&quot;\n\n        ' Add an action (shorthand) that runs Notepad\n        td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;c:\\test.log&quot;))\n\n        ' Register the task in the root folder\n        _rootFolder.RegisterTaskDefinition(&quot;THISISNTANEWTASK&quot;, td)\n\n        Dim dlg As New TaskEditDialog(_rootFolder.Tasks(&quot;THISISNTANEWTASK&quot;), True, True)\n        _rootFolder.DeleteTask(&quot;THISISNTANEWTASK&quot;)\n        dlg.TaskName = InputBox(&quot;Please enter name of Task&quot;)\n\n        If dlg.ShowDialog() = vbOK Then\n\n            _rootFolder.RegisterTaskDefinition(dlg.TaskName, dlg.TaskDefinition)\n\n        End If\n\n    End Sub</code></pre>\n\nHope this helps somebody else.<br />\n",
+    "PostedDate": "2015-09-28T06:52:12.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-11-09T11:05:45.76-08:00"
+  }
+]

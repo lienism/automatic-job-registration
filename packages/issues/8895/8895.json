@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2011-07-05T12:57:19.577-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I think that, in Trigger.cs:\n\t\t/// <summary>\n\t\t/// Gets or sets the weeks of the month during which the task runs.\n\t\t/// </summary>\n\t\t[DefaultValue(0)]\n\t\tpublic WhichWeek WeeksOfMonth\n\t\t{\n\t\t\tget\n\t\t\t{\n\t\t\t\tif (v2Trigger != null)\n\t\t\t\t\treturn (WhichWeek)((V2Interop.IMonthlyDOWTrigger)v2Trigger).WeeksOfMonth;\n\t\t\t\telse if (v1Trigger != null)\n\t\t\t\t\treturn v1TriggerData.Data.monthlyDOW.V2WhichWeek;\n\t\t\t\telse\n\t\t\t\t\treturn (unboundValues.ContainsKey(\"WeeksOfMonth\") ? (WhichWeek)unboundValues[\"WeeksOfMonth\"] : WhichWeek.FirstWeek);\n\t\t\t}\nShould be:\n\t\t/// <summary>\n\t\t/// Gets or sets the weeks of the month during which the task runs.\n\t\t/// </summary>\n\t\t[DefaultValue(0)]\n\t\tpublic WhichWeek WeeksOfMonth\n\t\t{\n\t\t\tget\n\t\t\t{\n                if (v2Trigger != null)\n                {\n                    if ((bool)((V2Interop.IMonthlyDOWTrigger)v2Trigger).RunOnLastWeekOfMonth)\n                        return WhichWeek.LastWeek;\n                    return (WhichWeek)((V2Interop.IMonthlyDOWTrigger)v2Trigger).WeeksOfMonth;\n                }\n                else if (v1Trigger != null)\n                    return v1TriggerData.Data.monthlyDOW.V2WhichWeek;\n                else\n                    return (unboundValues.ContainsKey(\"WeeksOfMonth\") ? (WhichWeek)unboundValues[\"WeeksOfMonth\"] : WhichWeek.FirstWeek);",
+    "LastUpdatedDate": "2013-05-16T04:49:11.397-07:00",
+    "PlannedForRelease": "Release 1.6.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-07-04T22:01:48.68-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Trigger.cs WeeksOfMonth not returning LastWeek",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8895
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is acutually how the native library deals with it. However, I believe your idea is more consistent with reality so I have added it in the 1.6.3 release with a slight modification.",
+      "PostedDate": "2011-07-05T12:56:57.267-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-07-05T12:57:19.577-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:04.55-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:11.397-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

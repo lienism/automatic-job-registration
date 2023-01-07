@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "503554",
+    "ThreadId": "229963",
+    "Html": "<p>Hello everyone!</p>\r\n<p>Is there any way to detect if current user has access to the Windows Task Scheduler?</p>\r\n<p>I was testing my code on Windows Server 2003. I created one Local User and logged in with that user. Using this user account I was not able to go to the Scheduled Tasks directory. When I tried to create a task through code, I received 0x80070005 (E_ACCESSDENIED) exception code. So I just wanna block such users from creating tasks.</p>\r\n<p>Thank you!</p>",
+    "PostedDate": "2010-10-07T04:22:51.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "504549",
+    "ThreadId": "229963",
+    "Html": "<p>A <a href=\"http://technet.microsoft.com/en-us/library/cc785125(WS.10).aspx\">TechNet article</a> states: &quot;By default, to schedule a task, you must be a member of the Administrators, Backup Operators, or Server Operators group on the local computer. By default, when creating a scheduled task, you cannot enter a user who belongs to a group that has more rights than the group you belong to. For example, if you are a member of the Backup Operators group on the local computer, you cannot specify a member of the Administrators group when creating a scheduled task.&quot;</p>\r\n<p>You should be able to check to see if the current user is a member of those groups to determine access.</p>",
+    "PostedDate": "2010-10-08T14:43:12.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "507662",
+    "ThreadId": "229963",
+    "Html": "<p>Thank you dahall! Now I get how to get rid of this issue..</p>",
+    "PostedDate": "2010-10-15T03:26:06.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "507681",
+    "ThreadId": "229963",
+    "Html": "<p>There is one more small issue that I have found.&nbsp; I tried to find the reason, but I didn't find anything. So I'm discussing that issue in this discussion.</p>\r\n<p>I added one task on 10th Oct with following triggers -</p>\r\n<p>&nbsp;&nbsp;&nbsp; At 12:00 AM every Sunday, Saturday of every week, starting 10/8/2010</p>\r\n<p>&nbsp;&nbsp;&nbsp; At 12:00 AM every Monday, Tuesday, Wednesday, Thursday, Friday of every week, starting 10/8/2010</p>\r\n<p>&nbsp;&nbsp;&nbsp; At 5:00 PM every Monday, Tuesday, Wednesday, Thursday, Friday of every week, starting 10/8/2010</p>\r\n<p>I was checking the task on Tuesday, 12th Oct and it was showing a wrong Next Run Time result i.e. <strong>10/16/2010 12:00:00 AM</strong>. (But task was running properly at expected next run time.)</p>\r\n<p>I think this is a bug in Windows Task Scheduler 2.0 and it is using only first trigger from the list to calculate next run time. Do you have any idea?</p>\r\n<p>Thank you!</p>",
+    "PostedDate": "2010-10-15T04:05:28.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508993",
+    "ThreadId": "229963",
+    "Html": "<p>It is a known bug and there is a hotfix. See this <a href=\"http://support.microsoft.com/kb/950035\">TechNet article</a>.</p>",
+    "PostedDate": "2010-10-18T14:18:01.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "510468",
+    "ThreadId": "229963",
+    "Html": "<p>Thanks dahall!</p>",
+    "PostedDate": "2010-10-21T05:50:28.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

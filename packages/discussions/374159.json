@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "874148",
+    "ThreadId": "374159",
+    "Html": "\r\n<p><span>We have tasks listed in a folder on our Windows Server 2008 R2, and can loop through tasks, however, items aren't showing correct information.</span></p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>NextRunTime; <span style=\"color:green\">// it's showing 12/30/1899 12:00:00 AM</span>\r\n\r\nStatus <span style=\"color:green\">// it's showing 'Ready' even while its 'Running' on Task Scheduler</span>\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p><br>\r\n<span>Our setup:</span><br>\r\n<span>Task Scheduler &gt; Reports &gt; DailyExcelReport1</span><br>\r\n<span>Task Scheduler &gt; Reports &gt; DailyExcelReport2</span><br>\r\n<span>Task Scheduler &gt; Reports &gt; DailyExcelReport3</span><br>\r\n<span>and so on...</span><br>\r\n<br>\r\n<span>To access it via code:</span><br>\r\n<br>\r\n<span></span></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> State = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n<span style=\"color:blue\">var</span> NextRunTime;\r\n\r\n<span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> taskService = <span style=\"color:blue\">new</span> TaskService(<span style=\"color:#a31515\">&quot;servername&quot;</span>, <span style=\"color:#a31515\">&quot;username&quot;</span>, <span style=\"color:#a31515\">&quot;DOMAIN&quot;</span>, <span style=\"color:#a31515\">&quot;password1&quot;</span>))\r\n{\r\n  <span style=\"color:blue\">if</span> (taskService.Connected)\r\n  {\r\n    <span style=\"color:blue\">var</span> tasks = taskService.GetFolder(<span style=\"color:#a31515\">&quot;Reports&quot;</span>).Tasks;�\r\n    <span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">var</span> task <span style=\"color:blue\">in</span> tasks)\r\n    {\r\n      State = task.State.ToString(); <span style=\"color:green\">// it's showing 'Ready' even while its 'Running' on Task Scheduler</span>\r\n      NextRunTime = task.NextRunTime; <span style=\"color:green\">// it's showing 12/30/1899 12:00:00 AM</span>\r\n    }\r\n  }\r\n}\r\n</pre>\r\n</div>\r\n<span>On the Task Scheduler:</span><br>\r\n<br>\r\n<span>Details for DailyExcelReport Task --</span><br>\r\n<span>Weekly; At 7:00 am every Mon, Tues, Wed, Thurs, Fri; Status: enabled</span><br>\r\n<br>\r\n<span>Any ideas?</span><br>\r\n<br>\r\n<span>Thanks,</span><br>\r\n<span>-rob</span>\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-18T10:51:14.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "889844",
+    "ThreadId": "374159",
+    "Html": "<p>bump</p>",
+    "PostedDate": "2012-07-24T10:40:03.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895243",
+    "ThreadId": "374159",
+    "Html": "<p>Found the problem... I had assigned permissions to C:\\Tasks, but on this machine the Tasks are stored at C:\\Windows\\System32\\Tasks -- once I assigned the folder the correct permissions, then it worked. &nbsp;Sorry for the wild goose chase.</p>",
+    "PostedDate": "2012-08-03T09:29:08.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

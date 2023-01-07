@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2009-06-10T20:55:32.523-07:00",
+    "CommentCount": 0,
+    "Custom": "Microsoft bug",
+    "Description": "Hi,\n \nIt's a minor issue.  I can create a task with a dot in the task name but I can't read the task.  I got the System.ArgumentException \"Value does not fall within expected range.\"\n \nCut here ===============================\n \n// My dot name task\nstring taskName = @\"notepad.exe\";\n \n// Get the service on the local machine\nTaskService ts = new TaskService();\n \n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\n \n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\n \n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(taskName, \"c:\\\\test.log\", null));\n \n// Register the task in the root folder\nTask task = ts.RootFolder.RegisterTaskDefinition(taskName, td);\n \ntry\n{\n    task = ts.GetTask(task.Name);\n}\ncatch (ArgumentException ex)\n{\n    Console.WriteLine(ex.Message);\n}\n \nCut here ===============================\n \nThe error come from ITaskScheduler.\n \nITask Activate([In, MarshalAs(UnmanagedType.LPWStr)] string Name, [In] ref System.Guid riid);\n \nThe cast from string(@\"notepad.exe\") to UnmanagedType.LPWStr doesn't look to work well.\n \nBy the way, your library is great!",
+    "LastUpdatedDate": "2013-05-16T04:49:15.603-07:00",
+    "PlannedForRelease": "Release 1.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2009-06-10T07:03:09.47-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Couldn't open task with a dot in the task name",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 3726
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I try this C++ code and I got the same error :\r\n\r\nhttp://msdn.microsoft.com/en-us/library/aa446855(VS.85).aspx\r\n\r\nCut here =========================\r\n\r\n  ITask *pITask;\r\n  LPCWSTR lpcwszTaskName;\r\n  lpcwszTaskName = L\"notepad.exe\";\r\n  hr = pITS->Activate(lpcwszTaskName,\r\n                      IID_ITask,\r\n                      (IUnknown**) &pITask);\r\n\r\nCut here =========================\r\n\r\nThe error is E_INVALIDARG.",
+      "PostedDate": "2009-06-10T07:37:32.847-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have verified that this is a bug with the Task Scheduler 1.0 native COM library and not with this wrapper specifically. You can create and delete tasks with a period, but cannot activate them (load them). I have also tested this with the 2.0 native COM library and can verify that it does work. If you can use the 2.0 library (for Vista and newer versions of Windows) then you will be fine. I thought that maybe I could include some code that would check for periods and change them to something else, but then other code using the native library would not be able to discover the task using the name they expect. I'm inclined to leave it the way it is since it does appropriately return the error that an argument was not valid.",
+      "PostedDate": "2009-06-10T20:54:33.307-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-06-10T20:55:32.523-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-07T01:31:31.437-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:10.323-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:15.603-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

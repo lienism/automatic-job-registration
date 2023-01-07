@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "913531",
+    "ThreadId": "395793",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I just found this library and the configuration is great. Unfortunately I get an exception in my Taskservice: Exception from HRESULT: 0x80070522. Any idea?</p>\r\n<p>Here is the code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n            {\r\n                <span style=\"color:blue\">var</span> taskDefinition = GetBackupTaskDefinition(ts, taskName);\r\n                <span style=\"color:blue\">if</span> (taskDefinition == <span style=\"color:blue\">null</span>)\r\n                    taskDefinition = ts.NewTask();\r\n                <span style=\"color:blue\">else</span>\r\n                {\r\n                    taskDefinition.Actions.Clear();\r\n                    taskDefinition.Triggers.Clear();\r\n                }\r\n                taskDefinition.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;backuplandreg&quot;</span>;\r\n                taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n                <span style=\"color:blue\">if</span>(HandlerSettings.BackupCycle == 0)<span style=\"color:green\">//Every day</span>\r\n                {\r\n                   <span style=\"color:blue\">var</span> trigger = <span style=\"color:blue\">new</span> DailyTrigger { DaysInterval = 1 };\r\n                    trigger.StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(Convert.ToInt16(HandlerSettings.BackupTime));\r\n                    taskDefinition.Triggers.Add(trigger);\r\n                }\r\n                <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span>(HandlerSettings.BackupCycle == 1)<span style=\"color:green\">//Every week</span>\r\n                {\r\n                   <span style=\"color:blue\">var</span> trigger = <span style=\"color:blue\">new</span> WeeklyTrigger();\r\n                    trigger.DaysOfWeek = GetDay();\r\n                    trigger.StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(14.3);\r\n                   taskDefinition.Triggers.Add(trigger);\r\n                }\r\n                <span style=\"color:blue\">else</span> <span style=\"color:blue\">if</span>(HandlerSettings.BackupCycle == 2)<span style=\"color:green\">//Every Month</span>\r\n                {\r\n                    <span style=\"color:blue\">var</span> trigger = <span style=\"color:blue\">new</span> MonthlyTrigger();\r\n                    trigger.DaysOfMonth = <span style=\"color:blue\">new</span> <span style=\"color:blue\">int</span>[GetFirstDayOfMonth(GetDay()).Day];\r\n                    trigger.StartBoundary = DateTime.Today &#43;\r\n                                            TimeSpan.FromHours(Convert.ToInt16(HandlerSettings.BackupTime));\r\n                    taskDefinition.Triggers.Add(trigger);\r\n                }\r\n\r\n                <span style=\"color:blue\">string</span> actionString = <span style=\"color:#a31515\">&quot;C:\\\\test2.bat {0} {1} {2} {3} {4}&quot;</span>;\r\n                <span style=\"color:blue\">var</span> action =\r\n                    <span style=\"color:blue\">new</span> ExecAction(\r\n                        String.Format(actionString, DataSettings.Database,\r\n                                      HandlerSettings.BackupDirectory.Remove(HandlerSettings.BackupDirectory.LastIndexOf(&quot;\\\\&quot;),1), DataSettings.Host, DataSettings.Port,\r\n                                      DataSettings.UserName), <span style=\"color:blue\">null</span>);\r\n                \r\n                taskDefinition.Actions.Add(action);\r\n\r\n               TaskFolder taskFolder = ts.RootFolder.SubFolders.FirstOrDefault(f =&gt; f.Name == <span style=\"color:#a31515\">&quot;MyTaskFolder&quot;</span>)?? ts.RootFolder.CreateFolder(<span style=\"color:#a31515\">&quot;MyTaskFolder&quot;</span>);\r\n\r\n                taskFolder.RegisterTaskDefinition(taskName, taskDefinition);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>Actually the exception is already thrown in the TaskService. I am running my project on a Win7 64bit Version.</p>\r\n<p>Thanks in advance</p>\r\n",
+    "PostedDate": "2012-09-17T05:58:23.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "914137",
+    "ThreadId": "395793",
+    "Html": "<p>At which line&nbsp;in the code is the exception thrown?</p>",
+    "PostedDate": "2012-09-18T08:07:33.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915769",
+    "ThreadId": "395793",
+    "Html": "<p>The error code suggests that \"A required privilege is not held by the client\". I would therefore check to make sure that the account you have connected the TaskService with have sufficient privileges to create tasks. There are some other articles in this discussion area that discuss privileges and some links to Microsoft documentation on the same.</p>",
+    "PostedDate": "2012-09-21T09:14:04.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

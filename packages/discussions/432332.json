@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "997951",
+    "ThreadId": "432332",
+    "Html": "HI,\r<br />\n<br />\nI thought that the library could detect the version of the target server but it rather checks the machine that's running the program with Library. Imagine that from a Win7 PC I want to query a Windows 2003 server without me forcing v1 but rather checking the target OS. Do you plan to add that kind of &quot;detection&quot;?\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2013-02-07T07:27:04.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "998095",
+    "ThreadId": "432332",
+    "Html": "There are a number of methods to determine the version of a remote OS. The library version on them is easy to determine: If Windows 2003 or earlier, it will only support V1.<br />\n",
+    "PostedDate": "2013-02-07T10:28:30.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

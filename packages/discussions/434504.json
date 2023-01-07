@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1006770",
+    "ThreadId": "434504",
+    "Html": "After some tests, I've found that creating a scedule in Windows Vista+ when the system language has interesting calendars, it fails with a COM Exception refering to StartBoundary with a bad GregorianUS date.<br />\n<br />\nLet's say the example of having a GregorianUS date, 26/02/2013, now we change it to ArabicSA date and it will be ##/##/14## (# is a number), and then schtasks will not accept the date.<br />\n<br />\nThe text conversion of dates between calendars is different on most times, however, sould the DateTime variables values of diferent calendars change? The answer is NO. The only thing that will change is the ToString way to work and format the text of the time contained.<br />\n<br />\nSince schtasks only accepts GregorianUS dates, why not simply change the values assigned and bounded of StartBoundary and EndBoundary properties in Trigger.cs? The only thing needed is change ToString(V2BoundaryDateFormat) to ToString(V2BoundaryDateFormat, CultureInfo.CreateSpecificCulture(&quot;en-US&quot;))<br />\n<br />\nLines to be changed are 252, 373 and 646 in the Trigger.cs file, after this everything Works OK.<br />\n<br />\nTo test the error, date time system format can be changed to Arabic, then only add a task that contains a daily schedule for example. After the changes to Trigger.cs there are no errors.<br />\n<br />\nPosted this as error, don't know if it's right...!<br />\n",
+    "PostedDate": "2013-02-26T01:04:29.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006996",
+    "ThreadId": "434504",
+    "Html": "Thanks for solving this problem. I have incorporated your suggested changes into the code and will be testing them as part of the next release (1.9.4).<br />\n",
+    "PostedDate": "2013-02-26T08:07:00.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007158",
+    "ThreadId": "434504",
+    "Html": "Excelent!<br />\n<br />\nAnd congrats for this Project, very usefull!<br />\n",
+    "PostedDate": "2013-02-26T11:35:10.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007276",
+    "ThreadId": "434504",
+    "Html": "In case you are using your modified code for your project, I have already found some other related code changes. First, there is a line in Task.cs that is similar to those in Trigger.cs that needs a similar change. For every DateTime.Parse call (usually paired to the ToString calls in properties), you also need to also add the CultureInfo parameter.<br />\n",
+    "PostedDate": "2013-02-26T15:39:48.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007285",
+    "ThreadId": "434504",
+    "Html": "Good to know. Thinking on wait unill next release hehe :D<br />\n",
+    "PostedDate": "2013-02-26T16:06:37.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1015818",
+    "ThreadId": "436744",
+    "Html": "Hi ,<br />\nany one have idea of how to run the task schedular in load balancing Environment. <br />\n<br />\nis it possible to run the Taskschedular in load balancing envirronment.since i need to make my server high availability.<br />\nplease help me out.<br />\n",
+    "PostedDate": "2013-03-15T03:32:28.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1016014",
+    "ThreadId": "436744",
+    "Html": "The library is not thread safe so you will need to manage thread compartmentalization on your own and create a new instance of the TaskService in each thread.<br />\n",
+    "PostedDate": "2013-03-15T10:04:58.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1027932",
+    "ThreadId": "436744",
+    "Html": "Hi dahall,<br />\n<pre><code>         thanks for the reply. </code></pre>\n\n",
+    "PostedDate": "2013-04-09T08:52:42.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

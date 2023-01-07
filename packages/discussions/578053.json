@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1343230",
+    "ThreadId": "578053",
+    "Html": "Hi Dhall, pls tell me how to add FullDateTimePicker in winforms, I added but the winform designer shows error, \r<br />\n<br />\nAlso kindly tell me how to hide the &quot;Check box &quot; Showing &quot;Synchronize across Time zone&quot;<br />\n",
+    "PostedDate": "2015-01-19T05:51:27.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1343336",
+    "ThreadId": "578053",
+    "Html": "Not sure why you would get an error when adding to your form. I have tried this in C# and VB under .NET 2.0 and 4.0 without errors. If you'll tell me the error, I may be able to help more.\r<br />\n<br />\nTo remove the &quot;Synchronize across Time zone&quot; check box, simply set the UTCPrompt property to an empty string.<br />\n",
+    "PostedDate": "2015-01-19T12:31:20.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-26T08:42:01.34-08:00"
+  }
+]

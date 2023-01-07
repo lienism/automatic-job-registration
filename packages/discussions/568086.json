@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1307120",
+    "ThreadId": "568086",
+    "Html": "Hi,\r<br />\n<br />\nI am trying to change schedule of any task by using UI library but it is not working as expected. It changes the time available in settings sections of Edit trigger but it does not change &quot;for a duration of: &quot;in advanced settings section of edit trigger. Please help on this issue.\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-09-22T12:23:40.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307415",
+    "ThreadId": "568086",
+    "Html": "Let me know if this documentation doesn't answer your question: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples</a><br />\n",
+    "PostedDate": "2014-09-23T06:53:08.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307508",
+    "ThreadId": "568086",
+    "Html": "Hi,\r<br />\n<br />\nThanks for quick reply. I am opening dialog using &quot;TaskEditDialog&quot; from my code. When I open edit trigger from the opened dialog then it is not saving &quot;for a duration of: &quot; setting in advanced settings section of trigger. Please help to resolve the issue.\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-09-23T10:38:47.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307563",
+    "ThreadId": "568086",
+    "Html": "See the first example &quot;Using the editor&quot; code on this page: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=Examples</a>. Make sure you are either setting the RegisterTaskOnAccept property to true before launching the dialog or you are re-registering the task when the user hits OK.<br />\n",
+    "PostedDate": "2014-09-23T14:19:32.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307595",
+    "ThreadId": "568086",
+    "Html": "Hi,\r<br />\n<br />\nIt is working fine with all values in drop down &quot;for a duration of: &quot; except for &quot;Indefinitely&quot;. When I am selecting &quot;Indefinitely&quot; then some how it is not able to maintain the value. Could you please suggest if I am missing some property?\r<br />\n<br />\nThanks in advance.<br />\n",
+    "PostedDate": "2014-09-23T16:51:09.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307806",
+    "ThreadId": "568086",
+    "Html": "I have done this on Windows 8.1, XP and 7 without a problem. In my code, I'm setting the RegisterTaskOnAccept property of the TaskEditDialog to true and have a DailyTrigger that can set and unset the Trigger.Repetition.Duration to any value, including TimeSpan.Zero (Indefinitely), over and over using the UI. Will you post the code you are using to create the initial task and call the TaskEditDialog? I think it may be something with how you are calling the library.<br />\n",
+    "PostedDate": "2014-09-24T09:07:58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1246011",
+    "ThreadId": "545520",
+    "Html": "i want assign security  when  task schedule execute need  please contact administrator  means enter login Id and password  or how to assign security administrator for the schedule task.\r<br />\nsir please  send me soon as par your  suitable solution.<br />\n",
+    "PostedDate": "2014-05-15T23:47:23.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246490",
+    "ThreadId": "545520",
+    "Html": "See other posts and documentation for information about access rights and the Task Scheduler.<br />\n",
+    "PostedDate": "2014-05-17T10:12:47.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:05:28.613-07:00"
+  }
+]

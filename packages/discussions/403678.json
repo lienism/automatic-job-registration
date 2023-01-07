@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "943556",
+    "ThreadId": "403678",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I'm working in VB2010 not in C# but I hope someone can help me with my problem.</p>\r\n<p>I'm currently playing with this library to create scheduled tasks in Windows and now I have a question.</p>\r\n<p>I've created a Form with 7 CheckBoxes (Mon - Fri) and my goal is to add only the checked days to the DaysOfWeek setting.</p>\r\n<p>So for example, if I check the CheckBox1 (Sunday) and CheckBox6 (Friday) I want that the DaysofWeek setting should be wt.DaysOfWeek = DaysOfTheWeek.Sunday Or DaysOfTheWeek.Friday</p>\r\n<p>Can anybody help me with that?&#65279;</p>\r\n<p>Thank you very much in advance,</p>\r\n<p>Corpy</p>\r\n",
+    "PostedDate": "2012-11-18T07:41:03.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943928",
+    "ThreadId": "403678",
+    "Html": "\r\n<p>Here is some code I use</p>\r\n<div style=\"background-color:white; color:black\">\r\n<pre>                <span style=\"color:blue\">Dim</span> wt <span style=\"color:blue\">As</span> WeeklyTrigger = <span style=\"color:blue\">DirectCast</span>(td.Triggers.Add(<span style=\"color:blue\">New</span> WeeklyTrigger()), WeeklyTrigger)\r\n                wt.StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(8)\r\n                wt.DaysOfWeek = DaysOfTheWeek.Monday <span style=\"color:blue\">Or</span> DaysOfTheWeek.Tuesday <span style=\"color:blue\">Or</span> DaysOfTheWeek.Wednesday <span style=\"color:blue\">Or</span> DaysOfTheWeek.Thursday <span style=\"color:blue\">Or</span> DaysOfTheWeek.Friday\r\n                wt.Repetition.Duration = TimeSpan.FromHours(12)\r\n                wt.Repetition.Interval = TimeSpan.FromMinutes(5)\r\n                wt.Enabled = <span style=\"color:blue\">True</span>\r\n<div style=\"color:black; background-color:white\"><pre>\r\n                wt = <span style=\"color:blue\">DirectCast</span>(td.Triggers.Add(<span style=\"color:blue\">New</span> WeeklyTrigger()), WeeklyTrigger)\r\n                wt.StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(8)\r\n                wt.DaysOfWeek = DaysOfTheWeek.Saturday <span style=\"color:blue\">Or</span> DaysOfTheWeek.Sunday\r\n                wt.Repetition.Duration = TimeSpan.FromHours(12)\r\n                wt.Repetition.Interval = TimeSpan.FromMinutes(15)\r\n                wt.Enabled = <span style=\"color:blue\">True</span>\r\n</pre>\n</div>\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-19T05:42:38.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944633",
+    "ThreadId": "403678",
+    "Html": "\r\n<p>Thank you very much, I'll try it :-)</p>\r\n",
+    "PostedDate": "2012-11-20T08:13:28.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

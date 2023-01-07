@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1123767",
+    "ThreadId": "468764",
+    "Html": "So this is what I am doing <br />\n<pre><code>using (TaskService ts = new TaskService())\n        {\n            if (ts.Connected)\n            {         \n                    Task task = ts.FindTask(&quot;RunAppTask&quot;);\n             }\n        }</code></pre>\n\nThis works fine on local Win7 machine but returns null for task on server 2008.<br />\n<br />\nI can see &quot;RunAppTask&quot; in side Library under a Folder when I open Task Scheduler on server.<br />\nts,Connected is always true.<br />\n<br />\nWhat am I missing? Do I have to add special permissions?<br />\n",
+    "PostedDate": "2013-11-14T21:41:09.247-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1124140",
+    "ThreadId": "468764",
+    "Html": "You may need to run the program as Administrator. UAC can cause this problem.<br />\n",
+    "PostedDate": "2013-11-15T10:48:20.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1125195",
+    "ThreadId": "468764",
+    "Html": "ok. I see how to get this done in an desktop application but, this code is in an asp.net web application that is hosted on IIS. How can I get it working there?<br />\n",
+    "PostedDate": "2013-11-17T04:43:10.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126049",
+    "ThreadId": "468764",
+    "Html": "There are a number of other discussion threads addressing permissions and IIS. Please do a search at the Discussions home page.<br />\n",
+    "PostedDate": "2013-11-18T07:47:58.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

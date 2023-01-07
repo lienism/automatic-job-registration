@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed logic in 2.1.0",
+    "ClosedDate": "2014-04-17T15:58:29.817-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When creating a new Showing the TaskEditor with an existing TaskDefinition the \"Configure for:\" shows an empty ComboBox. \nThe TaskDefinition Settings say it is Compatible with V2_2 but the TaskServer itself (remote Win2012R2) says HighestSupportedVersion V1. This only seems to be a problem when connecting remotely. I tried the TestClient localy on the server and everything looks fine.",
+    "LastUpdatedDate": "2014-04-17T15:58:29.817-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-12-02T08:50:18.62-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskScheduler Version seems to be incorrect on Win2012R2",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11440
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "641122",
+    "ThreadId": "264838",
+    "Html": "\r\n<p><em>User savor wrote the following:</em></p>\r\n<p><em></em>I'm trying to enable/disable scheduled task through ASP application like this:</p>\r\n<p>TaskEditDialog editorForm = new TaskEditDialog(ts.RootFolder.Tasks[taskName], true, true);<br>\r\neditorForm.Task.Enabled = true;</p>\r\n<p>but it doesn't enable the task; am I missing something?&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2011-07-12T08:20:59.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641128",
+    "ThreadId": "264838",
+    "Html": "<p>For an ASP application, you cannot use the Windows Forms available in the TaskSchedulerEditor assembly (like TaskEditDialog). You should use the TaskScheduler assembly by itself.</p>\r\n<p>To enable a task you only need a few lines of code:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>Task t = ts.GetTask(taskName);\r\n<span style=\"color: blue;\">if</span> (t != <span style=\"color: blue;\">null</span>)\r\n{\r\n  t.Enabled = <span style=\"color: blue;\">true</span>;\r\n  t.RegisterChanges();\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-07-12T08:25:49.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641154",
+    "ThreadId": "264838",
+    "Html": "<p>Thanks i just tried that however&nbsp; on the line</p>\r\n<p>&nbsp;</p>\r\n<p>t.RegisterChanges(); I get following exception:</p>\r\n<p><span style=\"color: #ff0000;\">Trigger.Repetition.Interval must be less than Trigger.Repetition.Duration under Task Scheduler 1.0.</span></p>\r\n<p>&nbsp;</p>\r\n<p>here is what i'm doing:</p>\r\n<p><span style=\"color: #008000;\">TaskService ts&nbsp; = new TaskService(ConfigurationManager.AppSettings[\"server1\"],</span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ConfigurationManager.AppSettings[\"userName1\"],</span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ConfigurationManager.AppSettings[\"domain\"],</span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ConfigurationManager.AppSettings[\"password1\"], false);</span></p>\r\n<p><span style=\"color: #008000;\">&nbsp;Microsoft.Win32.TaskScheduler.Task t = (Microsoft.Win32.TaskScheduler.Task)ts.GetTask(taskName);</span></p>\r\n<p><span style=\"color: #008000;\">&nbsp;</span> <span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp; if (t != null)</span><br /> <span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br /> <span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t.Enabled = false;</span><br /> <span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t.RegisterChanges();</span><br /> <span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br /><span style=\"color: #008000;\">&nbsp;&nbsp;&nbsp;</span></p>",
+    "PostedDate": "2011-07-12T09:10:25.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641814",
+    "ThreadId": "264838",
+    "Html": "<p>I believe you are using an older version of the library that had a bug. Please make sure you are using the 1.6.2 release.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2011-07-13T10:20:00.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "642721",
+    "ThreadId": "264838",
+    "Html": "<p>I try to disable an existing schedule in Task Scheduler using these lines of code:</p>\r\n<p>using (TaskService ts = new TaskService())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task task = ts.GetTask(\"TaskName\");<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; task.Enabled = false;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; task.RegisterChanges();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>However, it givers an error at line task.RegisterChanges().</p>\r\n<p>COM exception was handled.</p>\r\n<p>The task has been configured with an unsupported combination of account settings and run time options. (Exception from HRESULT: 0x80041314).</p>\r\n<p>This scheduled runs under my user account.</p>\r\n<p>Can you give me some ideas?</p>",
+    "PostedDate": "2011-07-14T18:52:53.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643100",
+    "ThreadId": "264838",
+    "Html": "<p>What version of Windows are you using? If Vista or later, will you export the XML for the task and post it so I can see the properties you have set that may be causing the error?</p>",
+    "PostedDate": "2011-07-15T12:27:40.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643229",
+    "ThreadId": "264838",
+    "Html": "<p>Hi,</p>\r\n<p>I use Windows XP. It can work when I run these lines of code in Windows 7, but cannot in Windows XP with td.Principal.LogonType = TaskLogonType.InteractiveToken;</p>\r\n<p>By  the way, in Windows 7, I can not set td.Settings.RunOnlyIfLoggedOn =  false; with any td.Principal.LogonType. Can you give me how to create a  task in Windows 7 ( or all version of Windows) that can run when users  log off, because I need the task can run when they log off.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2011-07-16T01:28:12.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643856",
+    "ThreadId": "264838",
+    "Html": "<p>You are correct, TaskLogonType.InteractiveToken only works on Vista and later. TaskDefinition.Settings.RunOnlyIfLoggedOn is only available if you force version 1 or are on XP and earlier.</p>\r\n<p>However, I know of no way to trigger a task when the user logs <em>off</em> using the Task Scheduler.</p>",
+    "PostedDate": "2011-07-18T11:43:26.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

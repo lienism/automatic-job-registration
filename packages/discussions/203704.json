@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "413836",
+    "ThreadId": "203704",
+    "Html": "<p>&nbsp;I am trying to update the action on a v1 task definition but cannot work out how to do it.</p>\r\n<p>You cannot do:<br>ExistingTask.Definition.Actions.Clear();<br>because you get the message:<br>There can be only a single action and it cannot be removed.</p>\r\n<p>You cannot do:<br>ExistingTask.Definition.Actions[0] = new ExecAction(...<br>because the left side is read only.</p>\r\n<p>You cannot change the parts of the action by:<br>ExistingTask.Definition.Actions[0].SomePropertyToChange</p>\r\n<p>So how do I replace/change the action on an existing task?</p>",
+    "PostedDate": "2010-03-03T13:22:11.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413974",
+    "ThreadId": "203704",
+    "Html": "<p>Let me start by apologizing. The way this works currently is just bad design and I'll look at a way to resolve it in the next release. To make it work for now you can use a method like this one:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">void</span> UpdateFirstAction(Task t, Action action)\r\n{\r\n   <span style=\"color:Blue\">if</span> (t.TaskService.HighestSupportedVersion &gt;= <span style=\"color:Blue\">new</span> Version(1, 2))\r\n      t.Definition.Actions.RemoveAt(0);\r\n   t.Definition.Actions.Add(action);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>ActionCollection.Add will actually replace the current action under V1. Under V2, it will add a second action so you really should put a version conditional in before the call like I have done in the method.</p>\r\n<p>I'll post a message to this discussion when I have implemented a more intuitive design.</p>",
+    "PostedDate": "2010-03-03T22:35:55.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413975",
+    "ThreadId": "203704",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://taskscheduler.codeplex.com/WorkItem/View.aspx?WorkItemId=5497\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2010-03-03T22:37:19.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414332",
+    "ThreadId": "203704",
+    "Html": "<p>Thanks for that I've got it working now.</p>",
+    "PostedDate": "2010-03-04T13:01:17.203-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

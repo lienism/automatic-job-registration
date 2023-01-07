@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1162958",
+    "ThreadId": "494698",
+    "Html": "Current codebase targets .NET Framework 2.0. Are you planning to add 4.0/4.5 specific builds? Or should we just get the source and build it ourselves?<br />\n",
+    "PostedDate": "2014-01-13T16:44:30.84-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1165518",
+    "ThreadId": "494698",
+    "Html": "I have not planned on it, but am open to it. Are you aware of a simple way to create different builds of the same code base against different .NET versions?<br />\n",
+    "PostedDate": "2014-01-14T08:49:48.287-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1179089",
+    "ThreadId": "494698",
+    "Html": "Yes, there is a simple way. Create a copy of the project file, change TargetFrameworkVersion, add new project to a solution and create new build configurations.<br />\n",
+    "PostedDate": "2014-01-18T18:34:06.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1181696",
+    "ThreadId": "494698",
+    "Html": "Thanks. I have updated the solution with new projects for both the base library and the editor library targeting the .NET 4 runtime. I believe the .NET 4.5 and 4.51 libraries use the same base libraries as 4.0 so I shouldn't need to create separate builds for those as well. Is that your understanding? If not, then I will likely find another way to do this using MSBuild as having a separate project for every framework iteration seems very inefficient.<br />\n",
+    "PostedDate": "2014-01-19T12:43:39.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:22.093-07:00"
+  },
+  {
+    "Id": "1201492",
+    "ThreadId": "494698",
+    "Html": "In my experience, it's often unnecessary to create multiple project files to perform <a href=\"http://msdn.microsoft.com/en-us/library/hh264223.aspx\" rel=\"nofollow\">multi-targeting</a>.  Instead, we let <a href=\"http://blogs.msdn.com/b/msbuild/archive/2006/11/15/multi-targeting-how-does-it-work.aspx\" rel=\"nofollow\">MSBuild</a> do the work for us.  \r<br />\n<pre><code>msbuild MySolution.sln /ToolsVersion:2.0 /t:Rebuild /p:Configuration=Release\nmsbuild MySolution.sln /ToolsVersion:3.5 /t:Rebuild /p:Configuration=Release\nmsbuild MySolution.sln /ToolsVersion:4.0 /t:Rebuild /p:Configuration=Release\nmsbuild MySolution.sln /ToolsVersion:12.0 /t:Rebuild /p:Configuration=Release</code></pre>\n\nThe &quot;12.0&quot; isn't a typo.  MSBuild used to be part of the .NET Framework.  It now ships with Visual Studio.  In VS2013, it's called <a href=\"http://msdn.microsoft.com/en-us/library/hh162058.aspx\" rel=\"nofollow\">MSBuild 12.0</a>.<br />\n",
+    "PostedDate": "2014-01-31T13:20:38.577-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:24.417-07:00"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "712539",
+    "ThreadId": "283038",
+    "Html": "<p>On Windows XP the execution of a console application is always hidden.</p>\n<p>I have set the 'Hidden' field in Settings to 'false', but to no effect.</p>\n<p>Is this line correct: v1Task.SetFlags(flags &amp;= ~V1Interop.TaskFlags.Hidden);</p>\n<p>without the \"~\" it seems to work for now.</p>\n<p><span style=\"font-size: 9.5pt; color: black;\"><br /> </span></p>",
+    "PostedDate": "2011-12-15T00:14:07.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712836",
+    "ThreadId": "283038",
+    "Html": "<p>\"Hidden\" has to do with the task listing itself, not the executing task. Other than the command line, there is not a way to signal a task to run as hidden.</p>",
+    "PostedDate": "2011-12-15T10:33:05.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713112",
+    "ThreadId": "283038",
+    "Html": "<p>If you check the source code it says:</p>\r\n<p>/// &lt;summary&gt;<br />/// The task is hidden. When the task begins execution, it runs in a hidden window.<br />/// &lt;/summary&gt;<br />Hidden = 0x200,</p>\r\n<p>This supports my theory.</p>\r\n<p>MS documentation is unclear: http://msdn.microsoft.com/en-us/library/aa381283%28v=VS.85%29.aspx what is hidden.</p>\r\n<p>The thing is that with Task Scheduler 1.6.4 (and Hidden=false) the console window is hidden and with 1.7 (and Hidden=false) it is not hidden on the same machine. I only change the dlls. 1.6.4 is release compiled and 1.7 is debug compiled.</p>\r\n<p>Any hints?</p>",
+    "PostedDate": "2011-12-16T01:31:24.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713288",
+    "ThreadId": "283038",
+    "Html": "<p>That comment in the source code on the Hidden flag is incorrect. It has been updated to match the Microsoft documentation.</p>\n<p>I checked the source code history and nothing related to that flag has changed between those releases. I can't say why you're seeing a different behavior.</p>",
+    "PostedDate": "2011-12-16T09:02:03.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

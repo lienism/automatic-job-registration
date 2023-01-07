@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1306238",
+    "ThreadId": "567851",
+    "Html": "Hi,<br />\n<br />\nI have the following scenario:<br />\n<ul>\n<li>Windows 8, 7 and Vista</li>\n<li>Computer: PC1234</li>\n<li>User: John</li>\n<li>\nAdmin: Admin<br />\n</li>\n</ul>\nMy application requires admin rights, so if my app is started from John, it runs as Admin.<br />\n<br />\nIf run the code to add a task to the task scheduler, the task is added for Admin and not for John.<br />\n<br />\nSo I tried the following code to add the task for John:<br />\n<pre><code>using (TaskService ts = new TaskService())\n            {\n\n                var task = ts.FindTask(&quot;TEST&quot;);\n                if (task != null)\n                    ts.RootFolder.DeleteTask(&quot;TEST&quot;);\n\n                                 TaskDefinition td = ts.NewTask();\n                    td.RegistrationInfo.Description = &quot;Daily shutdown&quot;;\n\n                    // Create a trigger that will fire the task at this time every other day\n                    var now = DateTime.Now;\n                    var timeSpan = TimeSpan.Parse(ConvertedValue as string);\n                    var dateTime = new DateTime(now.Year, now.Month, now.Day, timeSpan.Hours, timeSpan.Minutes, 0);\n                    td.Triggers.Add(new DailyTrigger { DaysInterval = 1, StartBoundary = dateTime });\n\n                    td.Actions.Add(new ExecAction(&quot;shutdown&quot;, &quot;/s&quot;, null));\n\n                    td.Settings.ExecutionTimeLimit = TimeSpan.FromMinutes(15); // also tried without this line\n                    td.Principal.RunLevel = TaskRunLevel.LUA; // also tried Highest\n                    td.Principal.LogonType = TaskLogonType.S4U; // also tried without this line\n                    td.Principal.UserId = @&quot;PC1234\\John&quot;; // also tried without this line\n\n                    // Register the task in the root folder\n                    var folder = ts.RootFolder.CreateFolder(&quot;Testfolder&quot;); // also tried directly to add the task to RootFolder\n                    folder.RegisterTaskDefinition(&quot;TEST&quot;, td, TaskCreation.CreateOrUpdate, @&quot;PC1234\\John&quot;);\n                \n\n            }</code></pre>\n\nIf I remove the &quot;PC1234\\John&quot;, everything is working without an error, but the task is added for Admin. If I add the user name, I got the access denied exception.<br />\n<br />\nAs you can see, I tried all suggestions from this forum, to fix this (custom folder, execution time, etc.).<br />\n<br />\nHow can I fix this? I searched the whole forum, but all tips are not working.<br />\n<br />\nBest regards,<br />\nSascha<br />\n<br />\nEDIT: I got it. With TaskLogonType.InteractiveToken it is working.<br />\n",
+    "PostedDate": "2014-09-19T02:16:39.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1306344",
+    "ThreadId": "567851",
+    "Html": "Glad you got it. Another options is to remove the 3 lines where you set td.Principal properties and then supply all the parameters to the RegisterTaskDefinition method, including the password and the S4U logon type.<br />\n",
+    "PostedDate": "2014-09-19T06:59:27.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

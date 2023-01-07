@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "708217",
+    "ThreadId": "281990",
+    "Html": "\r\n<p>I current have the following code to access the TaskEditDialog</p>\r\n<p>Microsoft.Win32.TaskScheduler.TaskEditDialog dlg = new Microsoft.Win32.TaskScheduler.TaskEditDialog(task, true, true);<br>\r\ndlg.ShowDialog();&nbsp;&nbsp;</p>\r\n<p>however if the user clicks on the &quot;Conditions&quot; tab it throws a System.Security.SecurityException with the following message&nbsp;&nbsp;</p>\r\n<p>System.Security.SecurityException: Requested registry access is not allowed.<br>\r\n&nbsp;&nbsp; at System.ThrowHelper.ThrowSecurityException(ExceptionResource resource)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.RegistryKey.OpenSubKey(String name, Boolean writable)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.RegistryKey.OpenSubKey(String name)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.NetworkProfile.GetAllLocalProfiles()<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.conditionsTab_Enter(Object sender, EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.OnEnter(EventArgs e) ...</p>\r\n<p>&nbsp;</p>\r\n<p>The code works, without throwing an exception if I am running my program as Administrator, but as this is part of a larger project I am unable to enforce this issue.</p>\r\n<p>I am currently using Windows 7. Is there any way to get round this problem?</p>\r\n",
+    "PostedDate": "2011-12-06T09:18:32.627-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "708324",
+    "ThreadId": "281990",
+    "Html": "<p>You have identified a bug which I have fixed in the code drop 72934 and will be released with the 1.7.1 download.</p>",
+    "PostedDate": "2011-12-06T11:19:46.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "708730",
+    "ThreadId": "281990",
+    "Html": "<p>Thanks for the speedy reply, but unfortunately it does not fix the issue I am experiencing. I have installed the source code, set a breakpoint and it is hitting an exception on NetworkProfiles line 93 in the public static NetworkProfile[] GetAllLocalProfiles() method.</p>\r\n<p>&nbsp;</p>\r\n<p>I put a try-catch around this method, identical to your fix in the constructor and it seems to fix the issue, however I am unsure whether that would be the best solution for the problem.</p>\r\n<p>&nbsp;</p>\r\n<p>Also, I have noticed on the conditions tab (if I have that try-catch in place) that if I select \"start this task only if computer is idle for\" checkbox, but do not change the value in the time combi list it won't save the option.</p>",
+    "PostedDate": "2011-12-07T04:13:20.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "708966",
+    "ThreadId": "281990",
+    "Html": "<p>Can you tell me what the behavior is on this system when clicking the \"Conditions\" tab using the system \"Task Scheduler\" application in \"Start Menu | Accessories | System Tools\"? That will help me know how I should update the library.</p>",
+    "PostedDate": "2011-12-07T12:05:23.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709041",
+    "ThreadId": "281990",
+    "Html": "<p>I just made some big changes to the code and checked it in. Will you try the new code and tell me if you still experience problems?</p>",
+    "PostedDate": "2011-12-07T14:18:04.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709189",
+    "ThreadId": "281990",
+    "Html": "<p>Thanks, the new code seems to fix the problem I was experiencing with the exceptions with the registry access.</p>\r\n<p>&nbsp;</p>\r\n<p>I am still having problems with it not saving a changed state to the \"start task only if computer idle for\" checkbox unless the combo box has been changed on the conditions tab.</p>",
+    "PostedDate": "2011-12-08T00:53:35.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709484",
+    "ThreadId": "281990",
+    "Html": "<p>The system library defaults the value of the IdleDuration to 10 minutes and the value of the WaitTimeout to 1 hour. If you leave those two values as the default, then the checkbox will not show they have been set. I have looked at ways to capture that it is set, but not defaulting, and have come up empty.</p>",
+    "PostedDate": "2011-12-08T12:31:18.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "709742",
+    "ThreadId": "281990",
+    "Html": "<p>Fair enough. Thanks for the help getting this sorted.</p>",
+    "PostedDate": "2011-12-09T00:28:40.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

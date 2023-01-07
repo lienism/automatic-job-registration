@@ -1,0 +1,116 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed with source code release 60274.",
+    "ClosedDate": "2010-11-29T12:46:59.75-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "************** Exception Text **************\nSystem.MissingMethodException: Method not found: 'Void Microsoft.Win32.TaskScheduler.WeeklyTrigger..ctor()'.\n   at System.ComponentModel.ReflectPropertyDescriptor.SetValue(Object component, Object value)\n   at System.Windows.Forms.RadioButton.PerformAutoUpdates(Boolean tabbedInto)\n   at System.Windows.Forms.RadioButton.set_Checked(Boolean value)\n   at Microsoft.Win32.TaskScheduler.TriggerEditDialog.set_Trigger(Trigger value)\n   at Microsoft.Win32.TaskScheduler.TriggerEditDialog..ctor(Trigger trigger, Boolean supportV1Only)\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.triggerEditButton_Click(Object sender, EventArgs e)\n   at System.Windows.Forms.Control.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnClick(EventArgs e)\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\n   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\n   at System.Windows.Forms.Control.WndProc(Message& m)\n   at System.Windows.Forms.ButtonBase.WndProc(Message& m)\n   at System.Windows.Forms.Button.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n \n \nWindows 7, C#, latest code version. To reproduce:\nCreate programmatically DailyTrigger for a new task and call TaskEditDialog for this task. The exception above is shown when you try edit the Daily trigger. The same exception is shown when you add a new trigger on the same screen and try to change to Daily or Weekly. You can bypass the exception but the trigger stays the One Time one.",
+    "LastUpdatedDate": "2013-05-16T04:49:13.013-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-11-24T16:14:47.067-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Missing WeeklyTrigger constructor",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 7663
+  },
+  "FileAttachments": [
+    {
+      "FileId": 2458,
+      "FileName": "Microsoft.Win32.TaskScheduler.60274.zip",
+      "DownloadUrl": ".\\2458"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I am unable to reproduce this. Can you send me the code that you have used to create the error?",
+      "PostedDate": "2010-11-24T21:43:19.993-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-11-24T21:43:55.933-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "First, file versions, just in case:\r\nMicrosoft.Win32.TaskScheduler.dll - 10/26/2010\r\nMicrosoft.Win32.TaskSchedulerEditor.dll - 7/4/2010\r\n\r\nThe code is:\r\n\t\tTaskService ts = new TaskService();\r\n\r\n\t\tTaskDefinition td = ts.NewTask();\r\n\t\ttd.RegistrationInfo.Description = m_TaskName;\r\n\r\n\t\ttd.Actions.Add(new ExecAction(m_AppName, m_Parameter, m_Dir));\r\n\r\n\t\t// Register the task in the ADSC folder\r\n\t\tTaskFolder ADSFolder = FolderExist(ts.RootFolder, \"ADSC\");\r\n\t\tif (ADSFolder == null)\r\n\t\t\tADSFolder = ts.RootFolder.CreateFolder(\"\\\\ADSC\");\r\n\t\tADSFolder.RegisterTaskDefinition(m_TaskName, td);\r\n\r\n\t\t// Retrieve the task, change the trigger and re-register it\r\n\t\tTask t = ADSFolder.Tasks[m_TaskName];\r\n\t\ttd = t.Definition;\r\n\t\tDailyTrigger dTrigger = (DailyTrigger)td.Triggers.Add(new DailyTrigger(1));\r\n\t\tdTrigger.StartBoundary = DateTime.Today;\r\n\t\tdTrigger.EndBoundary = DateTime.Today + TimeSpan.FromDays(36500);// Hundred years is enough :-)\r\n\t\tADSFolder.RegisterTaskDefinition(m_TaskName, td);\r\n\r\n\t\t// Offer to edit task for time etc.\r\n\t\tt = ADSFolder.Tasks[m_TaskName];\r\n\t\t// Edit task and re-register if user clicks Ok\r\n\t\tTaskEditDialog editorForm = new TaskEditDialog();\r\n\t\teditorForm.Editable = true;\r\n\t\teditorForm.Initialize(t);\r\n\t\tif (editorForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)\r\n\t\t\tADSFolder.RegisterTaskDefinition(taskName, editorForm.TaskDefinition);",
+      "PostedDate": "2010-11-26T07:06:35.3-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "BTW, if there is a workaround, I'd gladly take it :-)",
+      "PostedDate": "2010-11-26T15:30:04.323-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-11-27T14:34:46.71-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Will you try your code against the assemblies in the attached file? They are the most recent builds from the checked in source. Let me know if you have the problem. I am not able to reproduce it. Also, let me know if you are using Visual Studio 2010.",
+      "PostedDate": "2010-11-27T14:34:48.86-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Dahall,\r\n\r\nThanks for your efforts. I'll try your code Monday. For now just telling that I use VS 2008 for C# and use my code with your library in COM environment called from an old-fashioned C++.\r\n\r\n-Anna",
+      "PostedDate": "2010-11-27T19:11:01.597-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Dahall,\r\n\r\nWhatever were the changes for the last build they did the trick: no error :-). Thanks!\r\n\r\n-Anna",
+      "PostedDate": "2010-11-29T07:43:45.18-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "David,\r\n\r\nI assume that the source code available for the download corresponds to the latest dll's that you have suggested me to try. Is that correct?\r\n\r\n-Anna",
+      "PostedDate": "2010-11-29T08:02:11.71-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "One more question: which Visual Studio do you use to build your code?",
+      "PostedDate": "2010-11-29T08:25:51.417-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "These assemblies are from a build of the last source code upload. I use Visual Studio 2010 to do the builds. I need to do some further testing of the changes to the editor before releasing this build but you should be able to use it as there will not be any major changes. Glad this worked for you.",
+      "PostedDate": "2010-11-29T12:45:32.2-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-11-29T12:46:59.75-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:07.113-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:13.013-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

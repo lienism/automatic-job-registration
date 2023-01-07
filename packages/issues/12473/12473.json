@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-08-05T10:26:47.923-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "In a project where i am using the TaskScheduler Lib i cannot create an Unit test becuase of the CS0433 error\n\nThe type <type> exists in both DLLs\n\nThis is because i need to fake the System.dll but cannot, because your lib is implementing the IReadOnlyCollection and IReadOnlyList with the same namespace..\n\nIs there any way to fix this issue?",
+    "LastUpdatedDate": "2017-08-05T10:26:47.923-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-07-24T05:11:44.743-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Unit Test not possible due to Lib",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12473
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Those interfaces are only defined in the builds for the library that are compiled with versions of the .NET framework that do not yet support them (pre 4.5). In the .zip file, or the NuGet package, use the 4.5.2 compiled version of the library and you will not find those interfaces implemented.",
+      "PostedDate": "2017-07-24T07:16:41.1-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-08-05T10:26:47.923-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

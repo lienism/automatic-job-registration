@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1355060",
+    "ThreadId": "581658",
+    "Html": "I see long delays and high CPU utilization in the constructor for the TaskEditDialog. Has anyone else experienced this problem?\r<br />\n<br />\nIn some cases the dialog  takes 15 to 30 seconds to return from the constructor using release code.<br />\n",
+    "PostedDate": "2015-02-23T18:36:43.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355424",
+    "ThreadId": "581658",
+    "Html": "See <a href=\"http://taskscheduler.codeplex.com/discussions/428736\" rel=\"nofollow\">http://taskscheduler.codeplex.com/discussions/428736</a>. Try compiling your app as X86 and make sure you're using the assembly for the right version of .NET.<br />\n",
+    "PostedDate": "2015-02-24T15:56:51.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:02:32.443-07:00"
+  }
+]

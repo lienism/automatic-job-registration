@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1471534",
+    "ThreadId": "654080",
+    "Html": "Hello I try to run my application on end-user PC, windows 7, net fram. 4.0\r<br />\n<br />\nwhen the app try to app the TaksEditDialog show a exption with the message:\r<br />\n&quot;Could not load file or assembly 'TimeSpan2, Version=2.1.3.0...'&quot;\r<br />\n<br />\nI 'm using the version 2.1.4.0 of these dll, it is in execute path.\r<br />\n<br />\nSome idea?\r<br />\n<br />\nRegards!<br />\n",
+    "PostedDate": "2016-04-27T14:37:14.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471547",
+    "ThreadId": "654080",
+    "Html": "I met this problem at past, I solved it by using the Nuget Management to specify TimeSpan2 2.1.3 instead of 2.1.4 (VS2015 has this feature).<br />\nHope this helpful.<br />\n",
+    "PostedDate": "2016-04-27T22:51:47.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471549",
+    "ThreadId": "654080",
+    "Html": "OMG I'm using VS2012, how can resolve it? <br />\n",
+    "PostedDate": "2016-04-27T23:14:43.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471559",
+    "ThreadId": "654080",
+    "Html": "Maybe you can modify the configure file manually, but it is definitely not safe.<br />\nI met this problem when I use 2.5.17, If you are use 2.5.17, you can try to upgrade to 2.5.19. Maybe it will be solved. <br />\n",
+    "PostedDate": "2016-04-28T00:57:56.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T09:52:11.453-07:00"
+  },
+  {
+    "Id": "1471615",
+    "ThreadId": "654080",
+    "Html": "Hello thanks for your help, I updated to 2.5.19 and now it work ok, buuuuut.... Now I have error when try to GetTast() on WIndows XP, say cannot find file expecified, any idea?\r<br />\n<br />\nRegards!<br />\n",
+    "PostedDate": "2016-04-28T09:01:00.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471721",
+    "ThreadId": "654080",
+    "Html": "Post some demo source code will be helpful to find out the issue.<br />\n",
+    "PostedDate": "2016-04-29T00:24:12.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471803",
+    "ThreadId": "654080",
+    "Html": "I solve it In XP, when GetTask() if the task not exist generate error, therefore with tryCath I create the task and continue jejeje<br />\n<pre><code>try\n{\nTask t = ts.GetTast(name);\nif(t !=null)\nNewTask();\n}\ncatch\n{\n//genare error because is XP and the task not exists\nNewTask();//bla bla bla\n}</code></pre>\n\n",
+    "PostedDate": "2016-04-29T09:07:38.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T09:52:28.083-07:00"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-01-12T07:45:21.333-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nI try to Schedule a task using the C# 2.0\nhere is my code:\n\n```\nusing(TaskService taskService=new TaskService()) {\n\t\t\t\t\t\tTaskDefinition taskDefinition=taskService.NewTask();\n\t\t\t\t\t\ttaskDefinition.RegistrationInfo.Description=\"Delete Soundeyes IDX\";\n\t\t\t\t\t\tDateTime dateStart=Helper.DateHelper.DayBegin(DateTime.Now.AddDays(1)).AddHours(4); //4 AM the next day\n\t\t\t\t\t\tTimeTrigger trigger=new TimeTrigger(dateStart);\n\t\t\t\t\t\ttrigger.EndBoundary=DateTime.MaxValue;\n\t\t\t\t\t\ttaskDefinition.Triggers.Add(trigger);\n\t\t\t\t\t\ttaskDefinition.Settings.AllowDemandStart=true;\n\t\t\t\t\t\ttaskDefinition.Settings.AllowHardTerminate=true;\n\t\t\t\t\t\ttaskDefinition.Settings.DeleteExpiredTaskAfter=new TimeSpan(1, 0, 0);\n\t\t\t\t\t\ttaskDefinition.Settings.Enabled=true;\n\t\t\t\t\t\ttaskDefinition.Settings.MultipleInstances=TaskInstancesPolicy.StopExisting;\n\t\t\t\t\t\ttaskDefinition.Settings.Priority=System.Diagnostics.ProcessPriorityClass.BelowNormal;\n\t\t\t\t\t\ttaskDefinition.Actions.Add(\n\t\t\t\t\t\t\tnew ExecAction(\n\t\t\t\t\t\t\t\tApplication.ExecutablePath\n\t\t\t\t\t\t\t\t, string.Format(\n\t\t\t\t\t\t\t\t\t\"/path:\\\"{0}\\\" /date:\\\"{1}\\\"\"\n\t\t\t\t\t\t\t\t\t, ctrl_srcPath.Text\n\t\t\t\t\t\t\t\t\t, Helper.DateHelper.FormatToPath(ctrl_date.Value)\n\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\t\t, null\n\t\t\t\t\t\t\t)\n\t\t\t\t\t\t);\n\t\t\t\t\t\ttry {\n\t\t\t\t\t\t\ttaskService.RootFolder.RegisterTaskDefinition(\"SeIdxDel\", taskDefinition);\n\t\t\t\t\t\t}\n\t\t\t\t\t\tcatch(Exception exception) {\n\t\t\t\t\t\t\tMessageBox.Show(exception.Message, \"Error while scheduling task\", MessageBoxButtons.OK, MessageBoxIcon.Error);\n\t\t\t\t\t\t}\n```\n\nException raises with \"System.Runtime.InteropServices.COMException (0x80041319): (40,4):EndBoundary:\" message.\nI got the same exception if define or not the endBoundary into the trigger\nendBoundary is not added in xmltext of the taskDefinition.\n\n```\n<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n<Task version=\"1.2\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">\n  <RegistrationInfo>\n    <Description>Delete Soundeyes IDX</Description>\n  </RegistrationInfo>\n  <Triggers>\n    <TimeTrigger>\n      <StartBoundary>2015-01-10T04:00:00</StartBoundary>\n      <Enabled>true</Enabled>\n    </TimeTrigger>\n  </Triggers>\n  <Settings>\n    <MultipleInstancesPolicy>StopExisting</MultipleInstancesPolicy>\n    <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>\n    <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>\n    <AllowHardTerminate>true</AllowHardTerminate>\n    <StartWhenAvailable>false</StartWhenAvailable>\n    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>\n    <IdleSettings>\n      <Duration>PT10M</Duration>\n      <WaitTimeout>PT1H</WaitTimeout>\n      <StopOnIdleEnd>true</StopOnIdleEnd>\n      <RestartOnIdle>false</RestartOnIdle>\n    </IdleSettings>\n    <AllowStartOnDemand>true</AllowStartOnDemand>\n    <Enabled>true</Enabled>\n    <Hidden>false</Hidden>\n    <RunOnlyIfIdle>false</RunOnlyIfIdle>\n    <WakeToRun>false</WakeToRun>\n    <ExecutionTimeLimit>PT72H</ExecutionTimeLimit>\n    <DeleteExpiredTaskAfter>PT1H</DeleteExpiredTaskAfter>\n    <Priority>7</Priority>\n  </Settings>\n  <Actions>\n    <Exec>\n      <Command>D:\\dev\\soundeyes\\SeIdxDel\\bin\\Debug\\SeIdxDel.EXE</Command>\n      <Arguments>/path:\"D:\\SERecord\" /date:\"2015\\01\\09\"</Arguments>\n    </Exec>\n  </Actions>\n</Task>\n```\n0x80041319 COM code, says: SCHED_E_MISSINGNODE - 0x80041319 - The task XML is missing a required element or attribute.\n[TEXT](http://msdn.microsoft.com/en-us/library/windows/desktop/aa383604(v=vs.85).aspx)\n\nCan someone can help me ?\nThanx",
+    "LastUpdatedDate": "2015-01-12T07:45:21.333-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-01-09T08:15:45.92-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "System.Runtime.InteropServices.COMException (0x80041319): (40,4):EndBoundary:",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11961
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "In order to use the \"DeleteExpiredTaskAfter\" property, you have to define an EndBoundary that is a definite time.",
+      "PostedDate": "2015-01-10T15:12:14.533-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi,\r\n\r\nThanx for your answer. You right, EndBoundary is mandatory if i use DeleteExpiredTaskAfter.\nI defined EndBoundary to DateTime.MaxValue, i think that causes problem\n",
+      "PostedDate": "2015-01-12T00:45:43.62-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-01-12T07:45:21.333-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

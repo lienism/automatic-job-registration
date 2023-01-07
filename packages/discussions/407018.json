@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "957041",
+    "ThreadId": "407018",
+    "Html": "\r\n<p>&#65279;&#65279;&#65279;Interestingly, the &#65279;&#65279;&#65279;64-bit version of our application runs fine, even if user is logged out!</p>\r\n<p>A couple of our customers using the 32-bit version of our application on Windows 7 machines are complaining that they need to be logged in all the time in&nbsp; order for their scheduled tasks to run successfully.</p>\r\n<p>Is this &quot;by design&quot; or a bug in Task Scheduler 2.0?</p>\r\n<p>Our configuration:<br>\r\nOS: Windows 7 64-bit<br>\r\n&#65279;&#65279;Option: &quot;Run only when user is logged on&quot; is NOT checked<br>\r\nApplication is not accessing any remote servers...only local resources</p>\r\n<p>Thanks, Audi</p>\r\n",
+    "PostedDate": "2012-12-17T08:24:42.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "957235",
+    "ThreadId": "407018",
+    "Html": "\r\n<p>I have not seen this problem before. I would check the event log to see if the 32bit task is reporting errors in the execution or the launch. That will tell you if the action, trigger or task is failing.</p>\r\n",
+    "PostedDate": "2012-12-17T13:20:29.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "958444",
+    "ThreadId": "407018",
+    "Html": "\r\n<p>Thanks David. I've examined the task history, and it's saying that the task completed successfully -- no errors, but no output! Looks like the 32-bit application has problem accessing input data when logged out, but not&nbsp;with the 64-bit version.</p>\r\n",
+    "PostedDate": "2012-12-19T06:52:58.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "963214",
+    "ThreadId": "407018",
+    "Html": "\r\n<p>Check some of the internet comments on Wow64 which governs how 32&nbsp;& 64 bit compilations of .NET applications behave differently on 64 bit OSes.</p>\r\n",
+    "PostedDate": "2012-12-20T12:17:00.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "963261",
+    "ThreadId": "407018",
+    "Html": "\r\n<p>Will do...thanks David! Have a merry and safe X'mas!</p>\r\n",
+    "PostedDate": "2012-12-20T12:29:00.633-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

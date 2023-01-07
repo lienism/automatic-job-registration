@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1487124",
+    "ThreadId": "659067",
+    "Html": "I would like to know whether it is possible to determine whether there's a way to know the task scheduler is being triggered by schedule or triggered by user other than referring to the task's history?<br />\n",
+    "PostedDate": "2016-10-30T07:56:15.4-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487156",
+    "ThreadId": "659067",
+    "Html": "Not that I'm aware of. The same engine launches both with the same process information. The only place I've seen any record of a User launched task is in the history.<br />\n",
+    "PostedDate": "2016-10-31T07:05:13.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-11-07T20:10:24.867-08:00"
+  }
+]

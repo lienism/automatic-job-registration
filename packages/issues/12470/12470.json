@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-07-12T03:39:20.61-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I want check task state and i write code\n```\nRunningTask rt = task.Run();\ndo\n{\n\tThread.Sleep(1000);\n} while (rt.State == TaskState.Running);\n```\nHowever, I have infinite loop, because state is not updated (running always). When I change cycle body to \n```\ndo\n{\n\tThread.Sleep(1000);\n\trt.Refresh(); // COMException here\n} while (rt.State == TaskState.Running);\n```\nCode fires exception if state change from Running to Unknown.\n\nIt is correct behaviour?\n\nP.S. In the end, i write  first cycle version with \n```\nwhile (task.State == TaskState.Running);\n```\nand I do not have problems.",
+    "LastUpdatedDate": "2017-07-12T03:39:20.61-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-07-05T02:15:50.8-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "COMException with RunningTask.Refresh()",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12470
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Please provide the details of the COMException. I suspect that in the second you are waiting, the task ends, changes it state, and then invalidates the COM object interface pointer, thus causing the exception.\r\n\r\nAnother option is to use TaskEventWatcher.",
+      "PostedDate": "2017-07-05T07:14:46.983-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "An unhandled exception of type 'System.Runtime.InteropServices.COMException' occurred in Microsoft.Win32.TaskScheduler.dll\nHRESULT: 0x8004130B\r\n\r\nThanks for TaskEventWatcher, I will try it.\r\n\r\nOT: How soon you move this project on github?",
+      "PostedDate": "2017-07-06T03:39:37.787-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "As I suspected that error code is SCHED_E_TASK_NOT_RUNNING: There is no running instance of the task. That confirms my suspicion I shared with you. I think you are much safer using TaskEventWatcher. There is an example in the Documentation area for using it.\r\n\r\nI have already started moving to GitHub (https://github.com/dahall/TaskScheduler). The code is there as is most of the documentation. I haven't closed this site yet as I haven't found a solution for migrating the Discussions area.",
+      "PostedDate": "2017-07-06T05:43:16.163-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-12T03:39:20.61-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

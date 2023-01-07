@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "133172",
+    "ThreadId": "40129",
+    "Html": "<p>Is possible to determine that specific property of the task is not defined?</p>\r\n<p>For example, Task 'test' was never run.</p>\r\n<p><strong>Task.LastRunTime</strong> returns '1899-12-13 0:00:00' instead of null value or exception.<br>\r\n<strong>Task.LastTaskResult</strong> returns '1' instead of null or exception.</p>\r\n<p>Maybe these properties should be nullable or exception should be thrown.</p>\r\n<p></p>\r\n",
+    "PostedDate": "2008-11-17T09:35:01.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "133578",
+    "ThreadId": "40129",
+    "Html": "I have updated Task.cs so that the LastRunTime property will return DateTime.MinValue if the task was never run. This should minimize breaking the existing code base and makes the return value for either 1.0 or 2.0 version tasks the same. Previously, 1.0 tasks returned DateTime.MinValue but 2.0 tasks returned the COM DATE structure that equated to '1899-12-30 0:00:00'. I'll include this in the next release as this has the potential to break existing code if developers were checking for that strange 1899 date. The LastRunTime can then be checked to see if the LastTaskResult value is valid.\r\n",
+    "PostedDate": "2008-11-18T23:37:53.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "134752",
+    "ThreadId": "40129",
+    "Html": "<p>Thanks for reply. I will use this feature.<br>\r\nI have some questions about specific flags returned by v1 <strong>ITask::GetFlags()</strong> method.</p>\r\n<p><strong>TASK_FLAG_DELETE_WHEN_DONE</strong><br>\r\nThis flag seems to be missing in your class. Maybe it is possible to combine it with TaskSettings.DeleteExpiredTaskAfter.</p>\r\n<p><strong>TASK_FLAG_SYSTEM_REQUIRED<br>\r\n</strong>The description of this flag in MSDN  says &quot;The work item causes the system to be resumed, or awakened, if the system is running on battery power. This flag is supported only on systems that support resume timers.&quot;</p>\r\n<p>You implemented it as <strong>TaskPrincipal.LogonType</strong>. Is it correct? I think that it should be returned by <strong>TaskSettings.WakeToRun</strong> property.</p>\r\n<p>public TaskLogonType LogonType<br>\r\n{<br>\r\nget<br>\r\n{<br>\r\nif (v2Principal != null)<br>\r\nreturn v2Principal.LogonType;<br>\r\nif ((v1Task.GetFlags() &amp; V1Interop.TaskFlags.Interactive) == V1Interop.TaskFlags.Interactive)<br>\r\nreturn TaskLogonType.InteractiveToken;<br>\r\nelse if ((v1Task.GetFlags() &amp; V1Interop.TaskFlags.SystemRequired) == V1Interop.TaskFlags.SystemRequired)<br>\r\nreturn TaskLogonType.ServiceAccount;<br>\r\nthrow new NotV1SupportedException();<br>\r\n}<br>\r\n}</p>\r\n<p><strong>TASK_FLAG_INTERACTIVE</strong><br>\r\nThere are no such property in the TaskSettings class.<br>\r\nAccording to MSDN TASK_LOGON_INTERACTIVE_TOKEN_OR_PASSWORD (IPrincipal::LogonType) and TASK_FLAG_INTERACTIVE (ITask::GetFlags) are different but Task Scheduler Wrapper thinks that they are the same (see source code fragment above).</p>\r\n",
+    "PostedDate": "2008-11-24T06:05:02.52-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "136335",
+    "ThreadId": "40129",
+    "Html": "<p>I implement TASK_DELETE_WHEN_DONE into DeleteExpiredTaskAfter property. To set this flag simply set the property to value greater or equal to&nbsp;TimeSpan.FromSeconds(1). If the TASK_DELETE_WHEN_DONE is not set, it return TimeSpan.Zero otherwise&nbsp;TimeSpan.FromSeconds(1) for V1 and something greater or equal to&nbsp;TimeSpan.FromSeconds(1).</p>\r\n<pre>public TimeSpan DeleteExpiredTaskAfter<br>{<br>    get<br>    {<br>        if (v2Settings != null)<br>            return Task.StringToTimeSpan(v2Settings.DeleteExpiredTaskAfter);<br>        return (v1Task.GetFlags() &amp; V1Interop.TaskFlags.DeleteWhenDone) == V1Interop.TaskFlags.DeleteWhenDone<br>                   ? TimeSpan.FromSeconds(1)<br>                   : TimeSpan.Zero;<br>    }<br>    set<br>    {<br>        if (v2Settings != null)<br>            v2Settings.DeleteExpiredTaskAfter = Task.TimeSpanToString(value);<br>        else<br>        {<br>            V1Interop.TaskFlags flags = v1Task.GetFlags();<br>            if (value &gt;= TimeSpan.FromSeconds(1))<br>                v1Task.SetFlags(flags |= V1Interop.TaskFlags.DeleteWhenDone);<br>            else<br>                v1Task.SetFlags(flags &amp;= ~V1Interop.TaskFlags.DeleteWhenDone);<br>        }<br>    }<br>}</pre>\r\n",
+    "PostedDate": "2008-11-30T03:14:40.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "137194",
+    "ThreadId": "40129",
+    "Html": "<p>Thanks for the catch on the <strong>TASK_FLAG_SYSTEM_REQUIRED</strong> flag. I have corrected it in the code, removing it from the LogonType property and applying it to the WakeOnRun property.</p>\r\n<p>I also incorporated Arcao's code around DeleteWhenDone. Also a nice catch.</p>\r\n<p>On the interactive flag, there is disparity between the two versions and my implementation was the closest I could come to mapping the two together. If you have a better way, please post your code.</p>\r\n",
+    "PostedDate": "2008-12-03T02:29:03.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

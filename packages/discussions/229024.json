@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "499995",
+    "ThreadId": "229024",
+    "Html": "<p>Hi Guys,</p>\r\n<p>&nbsp;</p>\r\n<p>Im using the latest version of Task Scheduler 1.5 B3. Im trying to read out trough asp.net VB the scheduled tasks of some remote windows 2003 SP2 servers.</p>\r\n<p>This is the script i use</p>\r\n<p>&nbsp;</p>\r\n<p>Dim ts As New TaskService(&quot;\\\\&quot; &amp; Computer, Username, , Password)</p>\r\n<p>For Each Task In ts.RootFolder.Tasks</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; Label1.Text = &quot;|&quot; &amp; Task.Name &amp; &quot;|&quot; &amp; Task.State</p>\r\n<p>Next</p>\r\n<p>&nbsp;</p>\r\n<p>Im getting the following error:</p>\r\n<p><em>Object reference not set to an instance of an object</em></p>\r\n<p>[NullReferenceException: Object reference not set to an instance of an object.]    Microsoft.Win32.TaskScheduler.V2TaskEnumerator..ctor(TaskFolder folder, IRegisteredTaskCollection iTaskColl) +57    Microsoft.Win32.TaskScheduler.TaskCollection.GetEnumerator() +106    Systeem_Info._Default.retrieveTask(ManagementScope scope, DataTable dt, String Computer) in Default.aspx.vb:124    Systeem_Info._Default.Page_Load(Object sender, EventArgs e) in Default.aspx.vb:53    System.Web.UI.Control.OnLoad(EventArgs e) +91    System.Web.UI.Control.LoadRecursive() +74    System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +2207</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-29T07:09:57.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "510041",
+    "ThreadId": "229024",
+    "Html": "<p>Check first that <strong>ts</strong> has been instantiated correctly and then that <strong>ts.RootFolder</strong> also is valid before your <strong>For Each</strong> call and respond appropriately. The error you are getting implies that one of those two variables does not have an object associated with it.</p>",
+    "PostedDate": "2010-10-20T10:15:51.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

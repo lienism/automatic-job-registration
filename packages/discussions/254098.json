@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "598118",
+    "ThreadId": "254098",
+    "Html": "\r\n<p>Is there any way to get the Task Scheduler Managed Wrapper to recognize Windows Integrated Security?&nbsp; I'm writing a Windows Forms based UI that will allow tasks across multiple servers to be enabled and disabled quickly and easily, and I'd like to be\r\n able to access TaskScheduler methods under the user's rights without asking the user to re-enter her own password.</p>\r\n",
+    "PostedDate": "2011-04-15T11:14:21.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "598155",
+    "ThreadId": "254098",
+    "Html": "<p>Sorry, but no. I tried to get this to work, but the base COM library does not support the use of tokens and, for good reason, you can't pull a password out of a token. I have seen groups used under V2 as a mechanism to do this successfully but then you loose the identity of the user making the request. You could put the user in as the author and not the principal.</p>",
+    "PostedDate": "2011-04-15T12:04:37.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

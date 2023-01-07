@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Unknown resolution",
+    "ClosedDate": "2015-02-17T08:46:05.647-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Can you help me, I just got this error on Windows XP Pro (SP3)\n\nSystem.IO.FileNotFoundException: The system cannot find the file specified. (Exception from HRESULT: 0x80070002)\n   at Microsoft.Win32.TaskScheduler.V1Interop.ITaskScheduler.Activate(String Name, Guid& riid)\n   at Microsoft.Win32.TaskScheduler.TaskService.GetTask(ITaskScheduler iSvc, String name)\n   at Microsoft.Win32.TaskScheduler.TaskService.GetTask(String taskPath)\n   at SmartShare.schedulemanager.ScheduleSleep(Int32 idleSetting)\n   at SmartShare.My.MyApplication.MyApplication_Startup(Object sender, StartupEventArgs e)",
+    "LastUpdatedDate": "2015-02-17T08:46:05.647-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-12-08T22:00:02.45-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "System.IO.FileNotFoundException V1Interop.ITaskScheduler.Activate",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11938
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "What is the name of your task? Win XP treats tasks as files but it manipulates the filename. This error often occurs when the name of task, once manipulated, gets into a cycle where the manipulation conflicts with the name. It can also occur when the user account used to construct the TaskService instance does not have permissions on the C:\\Windows\\Tasks folder.",
+      "PostedDate": "2014-12-09T07:19:24.407-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Were you able to resolve your issue?",
+      "PostedDate": "2015-01-26T08:43:50.557-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-02-17T08:46:05.647-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

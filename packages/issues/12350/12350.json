@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-07T06:45:30.073-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nAfter some changes library cannot get data from remote server. \nDetails: I use win7 and try to get state of task on win2003. TaskService is used with forceV1=true.\nCode to reproduce:\n```\n            using (TaskService ts = new TaskService(targetServer2003, user, domain, pwd, true ))\n            {\n                List<TaskState> taskList = new List<TaskState>();\n                foreach (Task task in ts.RootFolder.Tasks)\n                    taskList.Add(task.State);// error occurs  here\n            }\n```\nError:\n```\nThe system cannot find the path specified. (Exception from HRESULT: 0x80070003)\n\n   at Microsoft.Win32.TaskScheduler.V1Interop.ITaskScheduler.Activate(String Name, Guid& riid)\n   at Microsoft.Win32.TaskScheduler.TaskService.GetTask(ITaskScheduler iSvc, String name)\n   at Microsoft.Win32.TaskScheduler.Task.V1Reactivate()\n   at Microsoft.Win32.TaskScheduler.Task.get_State()\n   at TestRemoteConnectionTo2003.Program.Main(String[] args) in c:\\users\\akolpako\\documents\\visual studio 2015\\Projects\\TestRemoteConnectionTo2003\\TestRemoteConnectionTo2003\\Program.cs:line 18\n   at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)\n   at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\n   at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\n   at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\n   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)\n   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\n   at System.Threading.ThreadHelper.ThreadStart()\n```\nThe bug had appeared after changes in TaskService.cs. After adding the next line:\nname = name.TrimStart('\\\\');\n```\n\t\tinternal static V1Interop.ITask GetTask(V1Interop.ITaskScheduler iSvc, string name)\n\t\t{\n\t\t\tname = name.TrimStart('\\\\');\n\t\t\tif (string.IsNullOrEmpty(name))\n\t\t\t\tthrow new ArgumentNullException(nameof(name));\n\t\t\ttry\n\t\t\t{\n\t\t\t\treturn iSvc.Activate(name, ref ITaskGuid);\n\t\t\t}\n\t\t\tcatch (System.UnauthorizedAccessException)\n\t\t\t{\n\t\t\t\t// TODO: Take ownership of the file and try again\n\t\t\t\tthrow;\n\t\t\t}\n\t\t\tcatch (System.ArgumentException)\n\t\t\t{\n\t\t\t\treturn iSvc.Activate(name + \".job\", ref ITaskGuid);\n\t\t\t}\n\t\t\tcatch { throw; }\n\t\t}\n```\nSome time method is called with path argument instead of name. (For example when you are reading a status). It can lead to an error. \nPath  that leads to the error:\n![Image](http://i68.tinypic.com/15i50mx.png)",
+    "LastUpdatedDate": "2016-04-07T06:45:30.073-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-02-26T02:34:48.813-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "The system cannot find the path specified.",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12350
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "For status reading that can be fixed in Task.cs if we use Name instead of path:\n```\n\t\tinternal void V1Reactivate()\n\t\t{\n\t\t\tV1Interop.ITask iTask = TaskService.GetTask(TaskService.v1TaskScheduler, Name);\n\t\t\tif (iTask != null)\n\t\t\t\tv1Task = iTask;\n\t\t}\n```",
+      "PostedDate": "2016-02-26T02:39:53.99-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. This will be fixed in 2.5.15.",
+      "PostedDate": "2016-02-26T08:39:36.4-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Code was released last night. Please test and let me know if this issue is resolved.",
+      "PostedDate": "2016-03-10T07:48:03.737-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-07T06:45:30.073-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

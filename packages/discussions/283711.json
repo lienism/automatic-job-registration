@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "715325",
+    "ThreadId": "283711",
+    "Html": "<p>hello,</p>\n<p>i'm running my tasks under domain accounts,</p>\n<p>how can i change the password for an existing task? i don't want to create new task and get the old one definition(replace).</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>Best,</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2011-12-21T01:13:23.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715677",
+    "ThreadId": "283711",
+    "Html": "<p>I believe the following will work:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   <span style=\"color: green;\">// Get an instance of the task</span>\r\n   Task t = ts.GetTask(taskName);\r\n   <span style=\"color: green;\">// Get the task's definition</span>\r\n   <span style=\"color: blue;\">var</span> td = t.Definition;\r\n   <span style=\"color: green;\">// Register the task using new credentials</span>\r\n   ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, newUserName, newUserPassword, TaskLogonType.Password);\r\n}\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-12-21T12:03:24.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

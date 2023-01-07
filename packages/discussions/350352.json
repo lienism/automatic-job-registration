@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "816687",
+    "ThreadId": "350352",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>I am facing a weird problem while using the library. &nbsp;I&nbsp;randomly receive a 'COM Exception: Interface not registered'&nbsp; exception while trying to update the tasks.</p>\r\n<p>I can successfully create a task and perform other operations but the update process is causing it throw the COM Exception and i m not sure why.</p>\r\n<p>The only difference between the 'Add' and the 'Edit' operations is that the 'Edit' operation is performed on a thread because i have multiple tasks which are to edited and updated simultaneously.</p>\r\n<p>Please help me.</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-03-28T11:01:14.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816848",
+    "ThreadId": "350352",
+    "Html": "<p>All calls to the library must exist on the same thread. This is a wrapper for a COM library that must be initialized and instantiated on each thread.</p>",
+    "PostedDate": "2012-03-28T15:41:43.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816958",
+    "ThreadId": "350352",
+    "Html": "<p>Thanks for your reply.</p>\r\n<p>Actually this was possible with the older version of this library. &nbsp;I used to update the tasks on threads and it succeeded at that time.</p>\r\n<p>The older version that we used earlier was 1.5.0</p>",
+    "PostedDate": "2012-03-28T23:31:15.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "817227",
+    "ThreadId": "350352",
+    "Html": "<p>The library is not designed to work on multiple threads. The instance of the TaskService should be in the same thread as the one you use to create new thread definitions and register those definitions. One option for working around this is to use the XML from the thread definition to make changes and then pass it back to your primary thread for registration. Another is to just create another instance of the TaskService in each thread.</p>",
+    "PostedDate": "2012-03-29T08:14:08.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "817537",
+    "ThreadId": "350352",
+    "Html": "<p>Got the problem!</p>\r\n<p>Actually i was doing the same thing as you mentioned i.e the task service object was being initialized and used on different threads. &nbsp;Now i will choose to create new instance of task service for each thread.</p>\r\n<p>Thanks for your reply and such a great library.</p>",
+    "PostedDate": "2012-03-29T21:47:17.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

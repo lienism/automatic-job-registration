@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "218261",
+    "ThreadId": "64175",
+    "Html": "<p>I created some controls that I'm actually quite happy with inside the new TaskEditor project.</p>\r\n<ul>\r\n<li><strong>TimeSpanPicker</strong> - Allow for complete roundtrip textual selection and direct input for TimeSpan values. All driven by a TimeSpan extension supporting Parse and ToString with formatting.</li>\r\n<li><strong>DropDownCheckList</strong> - Allows for the selection of enumerated and integer values from a drop down and will update the text accordingly.</li>\r\n<li><strong>ObjectPicker</strong> - A dialog that internally calls the DsObjectPicker COM object to display the selection dialog for users and groups.</li>\r\n</ul>\r\n<p>I tried to keep the files simple so others could more easily reuse the controls. Enjoy!</p>",
+    "PostedDate": "2009-08-01T01:39:45.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

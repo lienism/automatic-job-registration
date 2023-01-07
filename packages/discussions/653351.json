@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1469396",
+    "ThreadId": "653351",
+    "Html": "Hey there,\r<br />\n<br />\nFirst of all, thanks for making this Wrapper. It's amazing.\r<br />\n<br />\nI need to change desktop background every day based on time user picks. If machine is not working I need this task to start after user logs on at some point.\r<br />\n<br />\nThis is the code that I have at the moment :<br />\n<pre><code>using (TaskService taskSer = new TaskService())\n            {\n                TaskDefinition td = taskSer.NewTask();\n                DailyTrigger dt = new DailyTrigger();\n                dt.StartBoundary = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, startHour.Hours, startHour.Minutes, startHour.Seconds);\n\n                taskSer.AddTask(&quot;Task&quot;, dt, new ExecAction(execPath));\n\n                td.Settings.StartWhenAvailable = true;\n                td.Settings.Compatibility = TaskCompatibility.V2_3;\n                td.Settings.RestartInterval = TimeSpan.Zero;\n            }</code></pre>\n\nHowever, when I go to Task Scheduler, Settings tab, checkbox for starting the task after missing it, is not checked.\r<br />\n<br />\nHow can I set &quot;StartWhenAvailable&quot; checkbox marked through the code ?\r<br />\n<br />\nI did check Discussions and only found <a href=\"https://taskscheduler.codeplex.com/discussions/398027\" rel=\"nofollow\">one</a> topic which covered this question, but it doesn't apply to me as I tried already to set RestartInterval to TimeInterval.Zero. I need this task to be infinite, so I'm not sure how would I set EndBoundry in that case ? \r<br />\n<br />\nThanks,\r<br />\nS. M.<br />\n",
+    "PostedDate": "2016-04-07T15:28:58.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469483",
+    "ThreadId": "653351",
+    "Html": "Close, but you mixed the quick model (using AddTask) with the full control model (which uses TaskDefinition and RegisterTaskDefinition). Your corrected code would be:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nTaskDefinition td = TaskService.Instance.NewTask();\n<span style=\"color:Green;\">// Setup and add trigger</span>\nDailyTrigger dt = <span style=\"color:Blue;\">new</span> DailyTrigger();\ndt.StartBoundary = <span style=\"color:Blue;\">new</span> DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, startHour.Hours,\n    startHour.Minutes, startHour.Seconds);\ntd.Triggers.Add(dt);\n<span style=\"color:Green;\">// Setup and add action</span>\ntd.Actions.Add(execPath);\n<span style=\"color:Green;\">// Add settings</span>\ntd.Settings.StartWhenAvailable = <span style=\"color:Blue;\">true</span>;\ntd.Settings.Compatibility = TaskCompatibility.V2_3;\ntd.Settings.RestartInterval = TimeSpan.Zero;\n<span style=\"color:Green;\">// Register definition</span>\nTaskService.Instance.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;Task&quot;</span>, td);\r\n</pre></div>",
+    "PostedDate": "2016-04-08T09:50:33.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-08T11:45:25.917-07:00"
+  },
+  {
+    "Id": "1469493",
+    "ThreadId": "653351",
+    "Html": "Thank you so much dahall !\r<br />\n<br />\nI realized my mistake as well now :) \r<br />\n<br />\nI'm sure this topic will be of use to someone else too.\r<br />\n<br />\nMarked as answer. <br />\n",
+    "PostedDate": "2016-04-08T11:47:14.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

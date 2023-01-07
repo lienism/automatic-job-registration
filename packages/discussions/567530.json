@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1305083",
+    "ThreadId": "567530",
+    "Html": "Hello,\r<br />\n<br />\nI am using Windows 7 computer, .NET 4.0 application running as administrator.\r<br />\n<br />\nNow the process is running using MyUserAccount and from this account I can connect to computer MyRemoteComputer using the Task Scheduler GUI that comes with Windows 7 and I can create Windows 7 compatible tasks (&gt;v1) using the GUI.\r<br />\n<br />\nNow if I use new TaskService(MyRemoteComputer) it fails with an access denied exception. If I call TaskService(MyRemoteComputer,MyUserAccount,MyDomain,MyPassword, false) same thing. If however I cange false to true (so force v1) it works!\r<br />\n<br />\nI can also call TaskService(MyRemoteComputer,null,null,null,true) and that works as well so it is not an issue with credentials as you can see it is successfully creating a v1 task remotely, so why will it not allow v2 given that MyRemoteComputer is WIndows 7 and I can do this via the GUI?<br />\n",
+    "PostedDate": "2014-09-16T01:20:21.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305310",
+    "ThreadId": "567530",
+    "Html": "Look in the Documentation area for information on connecting and how permissions work with UAC and within containers like ASP.NET. I think you may find your answer there.<br />\n",
+    "PostedDate": "2014-09-16T12:14:23.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305392",
+    "ThreadId": "567530",
+    "Html": "Hello, I had a look however I am not using IIS, I have a WPF application, and the process is not being interrupted by UAC definitely.<br />\n<br />\nAlso it works if I forcev1.<br />\n<br />\nSo I can't see any reason why it would allow connection forced as v1 but not as newer? I have looked at the documentation, what reason can there possibly be to only allow legacy connection? Especially as I can remote to computer using the GUI and create tasks that send emails manually, I clearly have permission so why is your code giving me an access denied exception?<br />\n<br />\nSystems supports version 1.3 btw<br />\n",
+    "PostedDate": "2014-09-16T16:34:44.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305614",
+    "ThreadId": "567530",
+    "Html": "Have you tried launching the process using the &quot;Run as Administrator&quot; for either the actual .EXE or launching Visual Studio that way and then running your process? Let me know what errors you see when you run it that way.<br />\n",
+    "PostedDate": "2014-09-17T08:20:13.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305615",
+    "ThreadId": "567530",
+    "Html": "V1 and V2 have completely different connection models at the core Microsoft library level. This wrapper library hides those differences. The forceV1 parameter literally forks the code to run a V1 connection routine.<br />\n",
+    "PostedDate": "2014-09-17T08:21:46.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1305759",
+    "ThreadId": "567530",
+    "Html": "<strong>dahall wrote:</strong><br />\n<blockquote>\nHave you tried launching the process using the &quot;Run as Administrator&quot; for either the actual .EXE or launching Visual Studio that way and then running your process? Let me know what errors you see when you run it that way.<br />\n</blockquote>\nYes I had done, but I found what the issue is today.\r<br />\n<br />\nThe McAfee firewall that we are using seems to block v2 requests from my code! It allows v1 fine but not newer!\r<br />\n<br />\nIf I disable the firewall (or create a rule) then it works, so this is interesting why McAfee will allow v1 connection but not v2!\r<br />\n<br />\nAnyway at least I now know the problem thanks!<br />\n",
+    "PostedDate": "2014-09-17T16:58:02.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1366561",
+    "ThreadId": "567530",
+    "Html": "I have seen that if forceV1 is true, then the Server service in the client needs to be running, else it gives a &quot;network path not found...&quot; error.\r<br />\n<br />\nBut if forceV1 is false, Server service dependency is not there?\r<br />\n<br />\nCan you pls confirm this and why is so?\r<br />\n<br />\nAlso, how to dynamically determine what value to use in forcev1?<br />\n",
+    "PostedDate": "2015-03-18T01:14:53.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1367377",
+    "ThreadId": "567530",
+    "Html": "Thashiznets: V1 runs as a local process that acts on remote files. V2 runs as a COM+ service that passes messages back and forth via the network. This likely is the reason the firewall behaves differently between the two.\r<br />\n<br />\nkoushikc: I think this relates to my response above about how the two versions interact over the network. To dynamically determine which to use I would start with V2 and then try V1 if it fails. Since XP and Server 2003 are now out of support, it is a rarer case that a system will only support V1.<br />\n",
+    "PostedDate": "2015-03-19T16:40:37.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:13:58.727-07:00"
+  }
+]

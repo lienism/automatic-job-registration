@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "587475",
+    "ThreadId": "251456",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>&nbsp;</p>\r\n<p>Can anyone help?</p>\r\n<p>&nbsp;</p>\r\n<p>I am attempting to change the Enabled property of a task. I get the task and sure enough it is set to True. I try and set it to false and i get the error.</p>\r\n<p>&nbsp;</p>\r\n<p>Here is my method and error, basically task is the correct object.</p>\r\n<p>&nbsp;</p>\r\n<pre style=\"font-family:Consolas; font-size:13; color:black; background:white\">&nbsp;<span style=\"color:blue\">public</span>&nbsp;<span style=\"color:blue\">void</span>&nbsp;DisableTask(<span style=\"color:blue\">string</span>&nbsp;name)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:blue\">var</span>&nbsp;task&nbsp;=&nbsp;<span style=\"color:blue\">this</span>.GetTask(name,&nbsp;<span style=\"color:blue\">this</span>.GetDefaultFolder());\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:blue\">try</span>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task.Enabled&nbsp;=&nbsp;<span style=\"color:blue\">false</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:blue\">catch</span>&nbsp;(<span style=\"color:#2b91af\">Exception</span>&nbsp;e)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:blue\">throw</span>;\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\r\n \r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))<br><br><br>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.set_Enabled(Boolean value)<br>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Task.set_Enabled(Boolean value)<br>&nbsp;&nbsp; at<br><br><br></pre>\r\n",
+    "PostedDate": "2011-03-28T02:52:37.543-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "587677",
+    "ThreadId": "251456",
+    "Html": "<p>Sounds like a permissions problem. Please see <a href=\"http://taskscheduler.codeplex.com/discussions/247469\">http://taskscheduler.codeplex.com/discussions/247469</a>&nbsp;for some further detail on what permissions need to be in place.</p>",
+    "PostedDate": "2011-03-28T09:14:43.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

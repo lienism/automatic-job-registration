@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1466864",
+    "ThreadId": "652529",
+    "Html": "How do  I activate this using this API, I was able to successfully create a working schedule but unable to activate this.\r<br />\n<br />\n<img src=\"http://i63.tinypic.com/15foutu.png\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2016-03-15T04:52:13.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466876",
+    "ThreadId": "652529",
+    "Html": "Use the TaskLogonType.S4U value when registering the task.<br />\n",
+    "PostedDate": "2016-03-15T06:48:30.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-03-18T10:00:17.737-07:00"
+  },
+  {
+    "Id": "1467208",
+    "ThreadId": "652529",
+    "Html": "Hi dahall, thanks for the info, but how do i do that, can you give me an example? Thanks, appreciate the help.<br />\n",
+    "PostedDate": "2016-03-17T15:46:45.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1467300",
+    "ThreadId": "652529",
+    "Html": "<pre><code>ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td, TaskCreation.CreateOrUpdate,\n   null, null, TaskLogonType.S4U, null);</code></pre>\n\n",
+    "PostedDate": "2016-03-18T09:59:21.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-03-18T10:00:18.737-07:00"
+  },
+  {
+    "Id": "1469012",
+    "ThreadId": "652529",
+    "Html": "Thanks! Apologies for the late reply, it worked.<br />\n",
+    "PostedDate": "2016-04-04T18:59:29.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469083",
+    "ThreadId": "652529",
+    "Html": "Would this work in Task Scheduler version 1.0 as well ? <br />\n",
+    "PostedDate": "2016-04-05T09:14:44.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469321",
+    "ThreadId": "652529",
+    "Html": "You'd have to try. v1 was created so long before major part of the authentication mechanisms in the current Windows Server, I cannot predict its behavior.<br />\n",
+    "PostedDate": "2016-04-07T06:38:22.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

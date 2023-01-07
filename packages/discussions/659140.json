@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1487297",
+    "ThreadId": "659140",
+    "Html": "Is there a property that gives a unique ID for a specific task? Specifically of type Microsoft.Win32.TaskScheduler.Task.<br />\n<pre><code>Using ts As New TaskService()\n\n            Dim taskArr As IEnumerable(Of Task) = ts.AllTasks\n\n            For Each task As Task In taskArr\n                              'Get unique ID here. Does something like the following exist?\n                               Console.WriteLine(task.GetUniqueID())\n            Next\n\nEnd Using</code></pre>\n\nMy goal is to go through the tasks and save the information to a database with a unique identifier. That way if the task name changes or any other information about it, I can still connect it with my table in the database.\r<br />\n<br />\nIs this possible?<br />\n",
+    "PostedDate": "2016-11-02T13:48:33.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487338",
+    "ThreadId": "659140",
+    "Html": "There is not a Guid or other ID tied to each registered task. What does have to be unique is the Path property. You could either use that or create a hash of it.<br />\n",
+    "PostedDate": "2016-11-03T08:45:37.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-11-07T20:10:17.82-08:00"
+  }
+]

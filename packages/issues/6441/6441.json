@@ -1,0 +1,90 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See comments for resolution. User needed to add missing reference.",
+    "ClosedDate": "2010-06-15T10:32:25.257-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I've downloaded the 1.5.3804.17314 version.  I've added as a reference to my project.  I was trying to use the example code on the examples page.  The TaskEditDialog class is not exposed in a VB project, I cannot speak as to its availability in a C# project.  I tested with vs2005 and vs2008 express.",
+    "LastUpdatedDate": "2013-05-16T04:49:14.223-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-06-04T07:42:06.913-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEditDialog not present in vb project",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 6441
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I quickly check a C# project, it is also not present.",
+      "PostedDate": "2010-06-04T07:51:47.393-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The class is marked as public and should be visible to you. I have checked and it is visible in the TestTaskService project. Have you added the Microsoft.Win32.TaskSchedulerEditor.dll as reference along with the Microsoft.Win32.TaskScheduler.dll?",
+      "PostedDate": "2010-06-04T09:09:56.733-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I didn't realize I needed the \"taskscheduleditor\" too.  Amazing how it looks OK now that that reference is added as well :-)",
+      "PostedDate": "2010-06-04T09:52:59.2-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Is the editor supposed to work on XP?  I got past the reference issue tested on my win7 box, but on XP...\r\nWith the following code:\r\n        Const TaskName As String = \"Test\"\r\n\r\n        'play with task editor\r\n        Using ts As TaskService = New TaskService\r\n            'set up task\r\n            Dim TmTrigger As New TimeTrigger\r\n            TmTrigger.StartBoundary = DateTime.Now + TimeSpan.FromMinutes(1)\r\n            TmTrigger.Enabled = True\r\n            Dim Action As New ExecAction(\"notepad.exe\", \"c:\\test.log\", \"c:\\\")\r\n            Dim t As Task\r\n            t = ts.AddTask(TaskName, TmTrigger, Action)\r\n\r\n            Dim EditorForm As New TaskEditDialog()\r\n\r\n            EditorForm.Editable = True\r\n            EditorForm.Initialize(t)\r\n            If EditorForm.ShowDialog = Windows.Forms.DialogResult.OK Then\r\n                ts.RootFolder.RegisterTaskDefinition(TaskName, EditorForm.TaskDefinition)\r\n            End If\r\n        End Using\r\n\r\non the \"EditorForm.Initialize(t)\" line I get the following exception.\r\n\r\nSystem.NullReferenceException was unhandled\r\n  Message=\"Object reference not set to an instance of an object.\"\r\n  Source=\"Microsoft.Win32.TaskScheduler\"\r\n  StackTrace:\r\n       at Microsoft.Win32.TaskScheduler.TaskService.ShouldSerializeUserName()\r\n       at Microsoft.Win32.TaskScheduler.TaskService.get_UserName()\r\n       at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.set_TaskDefinition(TaskDefinition value)\r\n       at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.set_Task(Task value)\r\n       at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.Initialize(Task task)\r\n       at Microsoft.Win32.TaskScheduler.TaskEditDialog.Initialize(Task task)\r\n       at taskschedplay.Form1.btnCreate_Click(Object sender, EventArgs e) in C:\\Visual Studio Projects\\ben\\taskschedplay\\taskschedplay\\Form1.vb:line 45\r\n       at System.Windows.Forms.Control.OnClick(EventArgs e)\r\n       at System.Windows.Forms.Button.OnClick(EventArgs e)\r\n       at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r\n       at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\r\n       at System.Windows.Forms.Control.WndProc(Message& m)\r\n       at System.Windows.Forms.ButtonBase.WndProc(Message& m)\r\n       at System.Windows.Forms.Button.WndProc(Message& m)\r\n       at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\r\n       at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\r\n       at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n       at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\r\n       at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)\r\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\r\n       at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\r\n       at System.Windows.Forms.Application.Run(ApplicationContext context)\r\n       at Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.OnRun()\r\n       at Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.DoApplicationModel()\r\n       at Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.Run(String[] commandLine)\r\n       at taskschedplay.My.MyApplication.Main(String[] Args) in 17d14f5c-a337-4978-8281-53493378c1071.vb:line 81\r\n       at System.AppDomain._nExecuteAssembly(Assembly assembly, String[] args)\r\n       at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\r\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\r\n       at System.Threading.ThreadHelper.ThreadStart_Context(Object state)\r\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\r\n       at System.Threading.ThreadHelper.ThreadStart()\r\n\r\nAt first I thought it was because I was using vs2005, so I installed on a fresh virtual XP box vs2008 express, I get the same error.\r\n\r\n",
+      "PostedDate": "2010-06-04T12:37:50.657-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-06-15T10:32:22.027-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "See comments for resolution. User needed to add missing reference.\r\n\r\n\n\n** Closed by dahall 6/15/2010 10:32 AM",
+      "PostedDate": "2010-06-15T10:32:23.273-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "See comments for resolution. User needed to add missing reference.",
+      "PostedDate": "2010-06-15T10:32:23.85-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-06-15T10:32:25.257-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:08.663-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.223-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

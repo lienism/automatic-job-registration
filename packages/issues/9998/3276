@@ -1,0 +1,131 @@
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
+using Microsoft.Win32.TaskScheduler;
+
+namespace TaskSchedulerTest
+{
+	public partial class Form1 : Form
+	{
+		// scheduled tasks
+		private TaskListView _tlv = new TaskListView();
+		private TaskService taskService = new TaskService();
+		private TaskFolder taskFolder;
+		private bool v2;
+
+		private const string FolderName = "My Folder";
+
+		public Form1()
+		{
+			InitializeComponent();
+			v2 = taskService.HighestSupportedVersion > new Version(1, 1);
+			taskFolder = taskService.RootFolder;
+			if (v2)
+			{
+				try
+				{
+					taskFolder = taskService.GetFolder(FolderName);
+				}
+				catch (FileNotFoundException fex)
+				{
+					taskFolder = taskFolder.CreateFolder(FolderName);
+				}
+			}
+		}
+
+		private void btnNew_Click(object sender, EventArgs e)
+		{
+			using (var taskSchedulerWizard = new TaskSchedulerWizard())
+			{
+				var newTaskDefinition = taskService.NewTask();
+				newTaskDefinition.Actions.Add(new ExecAction("notepad.exe", "", null));
+				taskSchedulerWizard.Initialize(taskService, newTaskDefinition);
+				taskSchedulerWizard.RegisterTaskOnFinish = !v2;
+
+				taskSchedulerWizard.AvailablePages = TaskSchedulerWizard.AvailableWizardPages.IntroPage |
+					//TaskSchedulerWizard.AvailableWizardPages.ActionSelectPage |
+				  TaskSchedulerWizard.AvailableWizardPages.SecurityPage |
+				  TaskSchedulerWizard.AvailableWizardPages.SummaryPage |
+				  TaskSchedulerWizard.AvailableWizardPages.TriggerPropertiesPage |
+				  TaskSchedulerWizard.AvailableWizardPages.TriggerSelectPage;
+
+				if (taskSchedulerWizard.ShowDialog() != DialogResult.OK) return;
+				if (v2)
+					taskFolder.RegisterTaskDefinition(taskSchedulerWizard.TaskName, taskSchedulerWizard.TaskDefinition);
+				_tlv.Tasks = taskFolder.Tasks;
+			}
+		}
+
+		private void btnEdit_Click(object sender, EventArgs e)
+		{
+			EditTask();
+		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			DeleteTask();
+		}
+
+		private void EditTask()
+		{
+			if (_tlv.SelectedIndex == -1)
+				return;
+
+			using (var taskEditDialog = new TaskEditDialog(_tlv.Tasks[_tlv.SelectedIndex], true, true))
+			{
+				if (taskEditDialog.ShowDialog() == DialogResult.OK)
+				{
+					var t = taskEditDialog.Task;
+				}
+			}
+		}
+
+		private void DeleteTask()
+		{
+			if (_tlv.SelectedIndex == -1)
+				return;
+
+			if (MessageBox.Show(this, "Are you sure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				taskFolder.DeleteTask(_tlv.Tasks[_tlv.SelectedIndex].Name);
+				_tlv.Tasks = taskFolder.Tasks;
+			}
+		}
+
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			try
+			{
+				//panel1.Visible = OSInfo.MajorVersion < 6;
+				_tlv.Dock = DockStyle.Fill;
+				_tlv.Tasks = taskFolder.Tasks;
+				_tlv.ContextMenuStrip = contextMenuStrip1;
+				_tlv.TaskSelected += new EventHandler<TaskListView.TaskSelectedEventArgs>(tlv_TaskSelected);
+				_tlv.MouseDoubleClick += new MouseEventHandler(_tlv_MouseDoubleClick);
+				_tlv.DoubleClick += new EventHandler(_tlv_DoubleClick);
+				panelTasks.Controls.Add(_tlv);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, string.Format("There seems to be a problem with a scheduled task. Error message is:{0} If this error continues, please go to Windows Control Panel and verify that all scheduled tasks are valid.", ex.Message),
+				  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		void _tlv_DoubleClick(object sender, EventArgs e)
+		{
+			EditTask();
+		}
+
+		void _tlv_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			EditTask();
+		}
+
+		void tlv_TaskSelected(object sender, TaskListView.TaskSelectedEventArgs e)
+		{
+			btnDeleteTask.Enabled = true;
+			btnEditTask.Enabled = true;
+		}
+	}
+}

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-03-07T07:52:37.127-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nCan include a Framework 4.5 version compilation? \n\nI have some references errors in 4.5.2 version.\n\nThanks",
+    "LastUpdatedDate": "2017-03-07T07:52:37.127-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-11-23T01:26:24.053-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Add framework 4.5 compilation",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12436
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "What errors are you getting? Microsoft recommends not distributing builds against 4.5 as there are a number of bug fixes in 4.5.2 and it should be fully compatible.",
+      "PostedDate": "2017-01-27T11:36:58.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-03-07T07:52:37.127-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

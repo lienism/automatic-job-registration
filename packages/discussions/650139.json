@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1459580",
+    "ThreadId": "650139",
+    "Html": "Is it possible to run a task when a system boots up with admin rights?\r<br />\n<br />\nGreat library!!!\r<br />\n<br />\nThanks!\r<br />\nChristian<br />\n",
+    "PostedDate": "2016-01-17T15:24:38.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459680",
+    "ThreadId": "650139",
+    "Html": "Yes. You will need to connect to the TaskService with admin rights and then register a task with a BootAction with either a TaskLogonType that takes an admin account and password or a S4U or ServiceAccount value.<br />\n",
+    "PostedDate": "2016-01-18T10:11:34.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-01-18T10:11:36.473-08:00"
+  },
+  {
+    "Id": "1459681",
+    "ThreadId": "650139",
+    "Html": "Thanks! Very helpful!<br />\n",
+    "PostedDate": "2016-01-18T10:13:50.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

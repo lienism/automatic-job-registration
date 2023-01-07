@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "910470",
+    "ThreadId": "394994",
+    "Html": "\r\n<p>I have used the Task Scheduler Managed Wrapper to schedule tasks successfully, but now I need to have my daily tasks not run on select days of the year such as holidays.&nbsp; Is there a way to leverage this need with the Wrapper without having to delete&nbsp;already\r\n scheduled daily tasks just prior to the holiday and re-add them after?</p>\r\n",
+    "PostedDate": "2012-09-10T09:00:10.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "910665",
+    "ThreadId": "394994",
+    "Html": "<p>There is no \"exception\" trigger function that will prohibit execution of a scheduled task. Two thoughts on how to do this more manually:</p>\r\n<ol>\r\n<li>Instead of scheduling using a single DailyTrigger, you could use 12 separate MonthlyTrigger for each month and then specify the days that year that are not known holidays. You would need to update the trigger list each year though and make sure to set an expiration date for each trigger&nbsp;for the end of year.</li>\r\n<li>Have a script that will go out just before each holiday and set the task's Enabled property to false and then set it back to true at the end of the holiday.</li>\r\n</ol>\r\n<p>I wish I had a better answer.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-09-10T16:14:46.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "910886",
+    "ThreadId": "394994",
+    "Html": "\r\n<div>\r\n<p>Thank you dahall. I considered that approach as well.</p>\r\n<p></p>\r\n<p>I have decided to approach this problem from the opposite angle. I am going to add the “exception” logic to my Agent application. The Agent will still be launched daily, but will shut itself down on holiday runs after writing a “shutdown reason” to log.\r\n I feel this approach will be much less code intensive and easier to maintain. I’m “kinda” surprised that MS didn’t think of this scenario when they were writing the Task Scheduler.</p>\r\n<p></p>\r\n<p>I need to provide my user with a GUI anyway allowing them to specify which days of the year are exceptions. So it should work out well.</p>\r\n<p></p>\r\n<p>Thanks again for responding.</p>\r\n</div>\r\n",
+    "PostedDate": "2012-09-11T06:06:19.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

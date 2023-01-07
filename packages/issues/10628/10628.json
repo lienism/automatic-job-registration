@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed today with download version 1.9.1 and update to NuGet.",
+    "ClosedDate": "2012-11-29T12:44:13.897-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I just downloaded the latest packages from Nuget:Task Scheduler Managed Wrapper UI LibraryTask Scheduler Managed WrapperTimeSpan Helper LibraryWindows Forms Aero-Wizard ControlWinForms Group ControlsWhen I compile, I get:Assembly 'Microsoft.Win32.TaskSchedulerEditor, Version=1.9.0.23358, Culture=neutral, PublicKeyToken=7be0d908c369d1a5' uses 'GroupControls, Version=1.3.5.20798, Culture=neutral, PublicKeyToken=3726d9da21b6ac8f' which has a higher version than referenced assembly 'GroupControls, Version=1.3.5.14280, Culture=neutral, PublicKeyToken=3726d9da21b6ac8f'And sure enough, the current Group Control package in Nuget has version 1.3.5.14280Can you please sync the Nuget packages version?Thanks,/M",
+    "LastUpdatedDate": "2013-05-16T04:49:08.43-07:00",
+    "PlannedForRelease": "Release 1.9.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-11-26T13:33:11.62-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Nuget package version mismatch",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10628
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I had already found this and will be correcting it with the 1.9.1 version push in the next few days. Sorry for the error.",
+      "PostedDate": "2012-11-27T09:26:08.877-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Great, hope you'll also take care of the Aero version inconsistency?\r\n\r\nIf I (from Nuget) install Task Scheduler Managed Wrapper UI, it will install the Aero components automatically. However, Nuget will find a newer Aero component and prompt me to update, which isn't possible, it will fail on saying it can't match any dependency to the TS Editor component.\r\n\r\nIf I , on the other and first install the latest Aero component, TSMW will fail saying \"Already referencing a newer version of 'AeroWizard'.\"\r\n\r\nIn short, a complete version mess.\r\n\r\nMay I suggest that you skip the auto build version increment \".*\" in your AssemblyInfo.cs files in all your related projects and set them manually instead? That would most likely solve these issues.\r\n\r\nThanks.\n",
+      "PostedDate": "2012-11-27T14:10:56.97-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-11-29T12:43:45.847-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-11-29T12:44:13.897-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:01.213-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:08.43-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

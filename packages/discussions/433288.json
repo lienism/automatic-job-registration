@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1001899",
+    "ThreadId": "433288",
+    "Html": "Is there a way to filter a TaskEventLog, or to loop through it in descending date order?  Some tasks have a huge number of history entries, so it takes a long time to go through them all.  In most cases, we're only interested in entries from the last week or to.<br />\n",
+    "PostedDate": "2013-02-15T09:20:28.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1002022",
+    "ThreadId": "433288",
+    "Html": "The TaskEventLog constructor allows you specify a start time, as task name and a machine name as filters. \r<br />\n<br />\nFor even fewer entries, you can also use the CorrelatedTaskEventLog which collects all events for a single trigger into a single record. It has a similar constructor. See the HomePanel.cs file in the TestTaskService project for an example of how to use it in a BackgroundWorkerThread.<br />\n",
+    "PostedDate": "2013-02-15T13:19:04.867-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003485",
+    "ThreadId": "433288",
+    "Html": "I don't see an option to include a start time, though that sound like exactly what I need.  I see only two overloads, one to specify the TaskPath, and one to specify MachineName and TaskPath.  Is the date option in a recent version?<br />\n",
+    "PostedDate": "2013-02-19T07:57:57.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1003715",
+    "ThreadId": "433288",
+    "Html": "Yes. It was either 1.9.1 or 1.9.2.<br />\n",
+    "PostedDate": "2013-02-19T15:54:10.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

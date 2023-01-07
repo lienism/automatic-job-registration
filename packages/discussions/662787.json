@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1495999",
+    "ThreadId": "662787",
+    "Html": "<strong>TriggerCollection.Add(Trigger t)</strong> adds the Trigger but sets the StartBoundary to Current DateTime instead of using the StartBoundary of <strong>t</strong>. <br />\n<br />\nThe issue is reproduced while trying to Add the Trigger fetched from the Task.<br />\n<br />\nBelow is the code used to reproduce it.<br />\n<pre><code>static void Main(string[] args)\n        {\n            DateTime dt = new DateTime(1992, 06, 19, 00, 00, 00);\n            TaskService ts = new TaskService();\n\n            // Delete the task only for Demo exe.\n            if(ts.FindTask(&quot;New Task&quot;) != null)\n                ts.RootFolder.DeleteTask(&quot;New Task&quot;);\n            //Below comments mentions the scenario of the User which I have tried to replicate in this demo exe.\n            //USer creates a new Task with some action and sets 1 trigger.\n            TaskDefinition td = ts.NewTask();\n            Trigger t1 = new TimeTrigger(dt);\n            td.Triggers.Add(t1);// Time Trigger\n            td.Actions.Add(@&quot;C:\\WINDOWS\\system32\\notepad.exe&quot;);\n            ts.RootFolder.RegisterTaskDefinition(&quot;New Task&quot;, td, TaskCreation.Create, @&quot;UserName&quot;, &quot;Password&quot;, TaskLogonType.Password);\n            Console.WriteLine(&quot;Time TRigger saved&quot;);\n            ts = null;\n\n            //Now user feels to add 1 more trigger to the Task or also edit the existing Trigger.\n            TaskService ts1 = new TaskService();\n            Task Curr_task = ts1.FindTask(&quot;New Task&quot;);\n\n            \n            if (Curr_task != null)\n            {\n                Trigger t1_new = Curr_task.Definition.Triggers[0];\n                //USer's new Trigger\n                Trigger t2 = new MonthlyTrigger { StartBoundary = dt, DaysOfMonth = new[] { 1 } };\n\n                //Clear triggerList..\n                Curr_task.Definition.Triggers.Clear();\n\n                //Add trigger t1_new and also add trigger t2 to TriggerCollection.\n                //Now the trigger below for the sake of simplification has been added manually.\n                //Add Trigger 1\n                Curr_task.Definition.Triggers.Add(t1_new);// Here StartBoundary changes to the DateTime.Now\n                Console.WriteLine(Curr_task.Definition.Triggers[0].ToString());\n                //Add Trigger 2\n                Curr_task.Definition.Triggers.Add(t2);// Time Trigger\n                Console.WriteLine(Curr_task.Definition.Triggers[1].ToString());\n            }\n            Console.ReadKey();\n        }\n////////////////////////////////////////////\nOUTPUT\n---------------------------\nTime TRigger saved\nAt 3:38 PM on 5/2/2017\nAt 12:00 AM on day 1 of every month, starting 6/19/1992.</code></pre>\n\nI want to add the old trigger defined by the user to the Task again. But always it sets the <strong>StartBoundary</strong> to <strong>Current datetime</strong> of the system.<br />\n<br />\nPlease correct me if something is wrong here.<br />\n",
+    "PostedDate": "2017-05-02T03:13:02.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496033",
+    "ThreadId": "662787",
+    "Html": "This &quot;feature&quot; is to work around a problem with Windows 7 and later where trying to register a trigger with a StartBoundary in the past throws an error on registration. Tell me what you are trying to accomplish and maybe I can suggest a workaround.<br />\n",
+    "PostedDate": "2017-05-02T19:00:29.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-17T06:27:52.133-07:00"
+  },
+  {
+    "Id": "1496078",
+    "ThreadId": "662787",
+    "Html": "I am fetching a Task with &quot;n&quot; number of Triggers, and wanting to add 1 more Trigger in the Task that becomes &quot;n+1&quot;. So to achieve this I fetch the Task and get all the details in the TEmp_Task. Then, to the actual Task defined, I remove all the &quot;n&quot; number of Triggers and add the new &quot;n+1&quot; number of Triggers to it.\r<br />\n<br />\nWhen I fetch all the Triggers from the original Task, I use the below line of code that changed the StartBoundary. Basically I create the list in my application. But for the sake of simplification I have mentioned only 1 Task.<br />\n<pre><code>Trigger t1_new = Curr_task.Definition.Triggers[0];</code></pre>\n\nNow for the workaround, I am using <br />\n<pre><code>Trigger t1_new = (Trigger)Curr_task.Definition.Triggers[0].Clone();</code></pre>\n\nNow using the above code I get the orignal StartBoundary and not the CurrentDate.\r<br />\n<br />\nIf there's a better then please suggest. \r<br />\n<br />\nAlso very much Thankfull to you that Clone() is available in the Trigger class. <br />\n",
+    "PostedDate": "2017-05-04T03:58:45.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496097",
+    "ThreadId": "662787",
+    "Html": "If you are just adding a single new trigger to an existing task, you can just do the following:<br />\n<pre><code>Task t = ts.GetTask(taskName);\nif (t == null) return;\ntd.Triggers.Add(new IdleTrigger()); // or any other kind of trigger\nt.RegisterChanges();</code></pre>\n\n",
+    "PostedDate": "2017-05-04T07:56:38.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-17T06:27:48.497-07:00"
+  }
+]

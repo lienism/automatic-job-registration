@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1052516",
+    "ThreadId": "445919",
+    "Html": "Hey ho all ... \r<br />\nfirst of all, i'm new in c# and my english is very poor :(\r<br />\n<br />\nSo now my question .. \r<br />\nI'm creating a Task with the following Code<br />\n<pre><code>td.RegistrationInfo.Description = &quot; Some Text which describes my task&quot;;\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\n\nTimeTrigger tt = new TimeTrigger();\nDateTime d1 = DateTime.Now;\nDateTime d2 = d1.AddHours(2);\nTimeSpan interval = d2 - d1;\n\ntt.StartBoundary = d1;\ntt.EndBoundary = d2.AddDays(1);\ntd.Triggers.Add(tt);\ntd.Settings.DisAllowStartIfOnBatteries = false;\ntd.Settings.DeleteExpiredTasksAfter = interval;\n\n\ntd.Actions.Add(new ExecAction(&quot;Notepad&quot;,null));\n\nts.RootFolder.RegisterTaskDefinition(@&quot;Definition Example&quot;, td, TaskCreation.Create, HttpContext.Current.User.Identity.Name, null);</code></pre>\n\nNow my Task will be created but there is a issue with the Expiration Time / NextRunTIme\r<br />\nThe Task will be created like the following example:\r<br />\nName = &quot;Example&quot;\r<br />\nStatus = &quot;Ready&quot;\r<br />\nTriggers = At 10:36 on 04.06.2013 - Trigger expires at 05.06.2013 12:36:00\r<br />\nNext RunTime = &quot;05.06.2013 14:36:00&quot;\r<br />\n<br />\nHow can i set the Next Runtime correct?\r<br />\nIn my Scenario i think the next Runtime should be set to 04.06.2013 10.36.00 and not to the next day 2 hours after the expiration ... \r<br />\nAny Hint? Tips? Tricks?\r<br />\n<br />\nKind regards,\r<br />\nKai<br />\n",
+    "PostedDate": "2013-06-04T01:39:44.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057295",
+    "ThreadId": "445919",
+    "Html": "With a <code>TimeTrigger</code>, the <code>EndBoundary</code> really doesn't mean anything as the <code>StartBoundary</code> defines when the task will execute. For a <code>TimeTrigger</code>, <code>NextRunTime</code> will return <code>DateTime.MinDate</code> if the <code>StartBoundary</code> has already passed. To delete the task immediately after all triggers have executed, set the value to <code>TimeSpan.FromSeconds(1)</code>. <code>StartBoundary</code> is set to <code>DateTime.Now</code> by default.<br />\n<br />\nI would rewrite your code to the following:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\ntd.RegistrationInfo.Description = <span style=\"color:#A31515;\">&quot;Some Text which describes my task&quot;</span>;\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\n\ntd.Triggers.Add(<span style=\"color:Blue;\">new</span> TimeTrigger());\ntd.Settings.DisAllowStartIfOnBatteries = <span style=\"color:Blue;\">false</span>;\ntd.Settings.DeleteExpiredTasksAfter = TimeSpan.FromSeconds(1);\n\ntd.Actions.Add(<span style=\"color:Blue;\">new</span> ExecAction(<span style=\"color:#A31515;\">&quot;Notepad&quot;</span>, <span style=\"color:Blue;\">null</span>));\n\nts.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">@&quot;Definition Example&quot;</span>, td, TaskCreation.Create, HttpContext.Current.User.Identity.Name, <span style=\"color:Blue;\">null</span>);\r\n</pre></div>",
+    "PostedDate": "2013-06-15T14:29:52.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059649",
+    "ThreadId": "445919",
+    "Html": "Thank you dahall for your code.\r<br />\nBut this is not usefull for my scenario :(\r<br />\n<br />\nI have to set a starttime\r<br />\nSo just a example:<br />\n<pre><code>Programm start creating a task\nThe task will be generated to run in 30 minutes\nafter 1 day the task have to be removed automaticaly </code></pre>\n\nIf i use your code example it realy works, but just for tasks that will be run direkt after creation<br />\n",
+    "PostedDate": "2013-06-21T06:56:18.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059698",
+    "ThreadId": "445919",
+    "Html": "The StartTime property defines when a TimeTrigger will run. For your example of starting the task in 30 minutes use:<br />\n<pre><code>td.Triggers.Add(new TimeTrigger(DateTime.Now + TimeSpan.FromMinutes(30)));</code></pre>\n\n",
+    "PostedDate": "2013-06-21T09:26:07.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1061941",
+    "ThreadId": "445919",
+    "Html": "<strong>dahall wrote:</strong><br />\n<blockquote>\nThe StartTime property defines when a TimeTrigger will run. For your example of starting the task in 30 minutes use:<br />\n<pre><code>td.Triggers.Add(new TimeTrigger(DateTime.Now + TimeSpan.FromMinutes(30)));</code></pre>\n\n</blockquote>\nThank you dahal.\r<br />\nI've modified my code but still the same issue :(\r<br />\nI think the best way is to show the whole source ...<br />\n<pre><code>TaskDefinition td = ts.NewTask();\ntd.RegistrationInformation = &quot;Reboot initiated by: &quot; + ddlAgentFQDN.Items[i].Text;\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\ntd.RegistrationInfo.Author = HttpContext.Current.User.Identity.Name;\n\ntd.Settings.DisallowStartIfOnBattery = false;\ntd.Settings.DeleteExpiredTaskAfter = TimeSpan.FromSeconds(1);\n\nif (ts.HighestSupportedVersion &gt;= new Version(1,2))\n{\ntd.Settings.RestartInterval = new TimeSpan(0,0,0);\ntd.Settings.RestartCount = 0;\n}\ntd.Settings.WakeToRun = true;\n\nTimeTrigger tt = new TimeTrigger(DateTime.Now + TimeSpan.FromMinutes(3));\nDateTime executionEnd = DateTime.Now.AddMonths(1);\ntt.EndBoundary = executionEnd;\nString Notification = tbMMReason.Text + &quot; Reboot initiated by User: &quot;+HttpContext.Current.User.Identity.Name;\ntd.Triggers.Add(tt);\ntd.Actions.Add(new ExecAction(&quot;shutdown&quot;, &quot; -r -f -t 240 -m \\\\\\\\&quot; + ddlAgenFQDN.Items[i].Text + &quot; -d P:0:0 -c \\&quot;&quot; +Notification + &quot;\\&quot;&quot;,null));\nts.RootFOlder.RegisterTaskDefinition(@&quot;MMWebGen_&quot; + ddlAgentFQDN.Items[i].Text,td,TaskCreation.CreateOrUpdate,&quot;&lt;username&gt;&quot;,&quot;&lt;password&gt;&quot;,TaskLogonType.Password,null);</code></pre>\n\nSo the Task will be created but it will have the following trigger / values:\r<br />\nName = MMWebgenRebot_System\r<br />\nStatus= Ready\r<br />\nTriggers:At 2:22PM on 6/27/2013 - Trigger Expires at 7/27/2013 2:20:13PM\r<br />\nNext Runtime: 7/27/2013 2:20:14PM<br />\n",
+    "PostedDate": "2013-06-27T05:38:42.113-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1061957",
+    "ThreadId": "445919",
+    "Html": "Hello dahal,\r<br />\n<br />\nI'm so stupid .... OMG :(\r<br />\n<br />\nIt's working right now.\r<br />\nThe &quot;NextRunTime&quot; will show the time when the Task will be removed.\r<br />\n<br />\nWhatever ... thank you for your support.\r<br />\n<br />\nKind regards .... \r<br />\nKai<br />\n",
+    "PostedDate": "2013-06-27T06:31:13.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

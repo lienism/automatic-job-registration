@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "134762",
+    "ThreadId": "40631",
+    "Html": "<p>What about method to get task by it's path?</p>\r\n<p>For example, TaskService.GetTask takes full path (/folder1/subfolder2/taskName) and returns Task object? Is it reasonable? =)</p>\r\n",
+    "PostedDate": "2008-11-24T06:42:58.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "137198",
+    "ThreadId": "40631",
+    "Html": "I have added a GetTask method to TaskService that will allow you to get a task by name. This will get rolled out in the next release. You can find the code posted already.\r\n",
+    "PostedDate": "2008-12-03T02:31:40.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

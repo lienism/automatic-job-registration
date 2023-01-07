@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "810682",
+    "ThreadId": "348695",
+    "Html": "<p>Hi,</p>\n<p>Anybody can show me the sample code of the below:</p>\n<p>1. How do I create a task that only run with a particular user account?</p>\n<p>2. How do I delete a task that was created with a particular user account?</p>\n<p>3. How do I update a task that was created with a particular user account?</p>\n<p>Thanks.</p>",
+    "PostedDate": "2012-03-15T00:58:23.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "810941",
+    "ThreadId": "348695",
+    "Html": "<p><span style=\"font-family: 'Segoe UI','sans-serif'; color: black; font-size: 10pt;\">You must connect to the server using the TaskService constructor specifying either the account or an account with Administrator privileges. This will let you create, delete or update a task using that account. To create or update a task that will run as a specific user, you must provide that user&rsquo;s information in the RegisterTaskDefinition method.</span></p>\r\n<p><span style=\"font-family: 'Segoe UI','sans-serif'; color: black; font-size: 10pt;\">\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: green;\">// Get the service on the local machine using a domain account</span>\r\n<span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(<span style=\"color: blue;\">null</span>, userName, userDomain, userPassword))\r\n{\r\n  <span style=\"color: green;\">// Create a new task definition and assign properties</span>\r\n  TaskDefinition td = ts.NewTask();\r\n  td.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Does something\"</span>;\r\n  td.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger { DaysInterval = 2 });\r\n  td.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, <span style=\"color: #a31515;\">\"c:\\\\test.log\"</span>, <span style=\"color: blue;\">null</span>));\r\n  ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test\"</span>, td, TaskCreation.CreateOrUpdate, userDomain + \"\\\\\" + userName, userPassword, TaskLogonType.Password);\r\n  \r\n  <span style=\"color: green;\">// Retrieve the task and modify it</span>\r\n  Task t = ts.GetTask(<span style=\"color: #a31515;\">\"Test\"</span>);\r\n  t.TaskDefinition.Triggers[0].StartBoundary = DateTime.Today.AddDays(4);\r\n  ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test\"</span>, t.TaskDefinition, TaskCreation.CreateOrUpdate, userDomain + \"\\\\\" + userName, userPassword, TaskLogonType.Password);\r\n\r\n  <span style=\"color: green;\">// Remove the task we just created</span>\r\n  ts.RootFolder.DeleteTask(<span style=\"color: #a31515;\">\"Test\"</span>);\r\n}\r\n</pre>\r\n</div>\r\n</span></p>",
+    "PostedDate": "2012-03-15T09:24:39.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "812325",
+    "ThreadId": "348695",
+    "Html": "<p>Hi,</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2012-03-18T23:06:22.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

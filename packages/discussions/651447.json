@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1463577",
+    "ThreadId": "651447",
+    "Html": "Hello,\r<br />\n<br />\nfirst of course thanks for your effort.\r<br />\n<br />\nI'm using your wrapper inside of a custom .NET 2.0 library. When updating the wrapper dll from 2.3.4 to 2.5.14 (both .NET 2.0 versions) and using the custom .NET 2.0 library in a .NET 4.0 Client WPF project, which is using the class System.Collections.Specialized.NotifyCollectionChangedEventArgs, I get an conflict that the type 'NotifyCollectionChangedEventArgs' exists both in your wrapper and .NET.\r<br />\n<br />\nError\tCS0433\tThe type 'NotifyCollectionChangedEventArgs' exists in both 'Microsoft.Win32.TaskScheduler, Version=2.5.14.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae' and 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'\r<br />\n<br />\nI'm not sure if this is a configuration problem on my side or an unwanted behaviour of the wrapper. Maybe someone dealed with that issue as well and have a simple solution (other than switching my custom library to .NET 4.0).\r<br />\n<br />\nCrayjin<br />\n",
+    "PostedDate": "2016-02-18T00:30:46.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463647",
+    "ThreadId": "651447",
+    "Html": ".NET 2.0 does not natively include NotifyCollectionChangedEventArgs. To allow for this library to have a consistent experience across .NET versions, I reverse engineered that class and included it in the 2.0 build only. My recommendation would be to deploy the .NET 4.0 build of this library when deploying with your 4.0 WPF project.<br />\n",
+    "PostedDate": "2016-02-18T11:29:41.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-18T11:29:47.047-08:00"
+  },
+  {
+    "Id": "1464050",
+    "ThreadId": "651447",
+    "Html": "Okay, thank you for your advice.<br />\n",
+    "PostedDate": "2016-02-23T01:22:36.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

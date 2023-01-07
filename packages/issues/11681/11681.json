@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in latest code drop",
+    "ClosedDate": "2014-04-22T19:58:51.553-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I noticed a strange error today when attempting to use the RegisterTaskDefinition() method from the TaskFolder class.  If I use this overload:\n\n```\nRegisterTaskDefinition(string path, TaskDefinition definition, TaskCreation creationOption, string UserName)\n```\n\nThen I get a NullReferenceException.  The portion of the stacktrace that shows where the problem is as follows:\n\n```\nSystem.NullReferenceException was unhandled\n  HResult=-2147467261\n  Message=Object reference not set to an instance of an object.\n  Source=Microsoft.Win32.TaskScheduler\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n       at Microsoft.Win32.TaskScheduler.Task.CreateTask(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n       at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n       at MYAPPLIATION.GUI.SchedulingManager.addTaskButton_Click(Object sender, EventArgs e) in MYAPPLICATION\\GUI\\SchedulingManager.cs:line 175\n```\n\nIf I remove the TaskCreation enum option and the username to use the overload that is only Name & Definition, then there are no issues.  The option that I'm using is TaskCreation.ValidateOnly option since I  don't want to actually register the task just yet.",
+    "LastUpdatedDate": "2014-04-23T12:25:59.52-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-04-22T13:58:58.19-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "RegisterTaskDefinition() with TaskCreation.ValidateOnly parameter throws NullReferenceException",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11681
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for taking a look!  I looked at the diff to take a look at the changes in both documentation & code, but am a little bit confused.  Are you saying if using ValidateOnly it returns null if it DOES validate successfully, or if it fails to validate?  I'm hoping it's the latter, but just want to be 100% sure.",
+      "PostedDate": "2014-04-23T08:56:58.463-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "If you are using the library, it is very, very hard to create an invalid TaskDefinition, so I'm not sure why you would need to validate anyway. There is a rich validation method (Validate) on the TaskDefinition class that will tell you exactly what your issues are.\r\n\r\nAnyway, to answer your question, if there is a validation problem when registering using the ValidateOnly flag, it will throw an exception. If there is NOT a validation problem, then it will return 'null'. It cannot return a Task because one is not created.",
+      "PostedDate": "2014-04-23T09:51:30.113-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for the info.  I actually didn't really want to validate, I just was looking for a method to create a task object to send to the TaskSchedulerEditor UI that was not registered, but 99% of it is already pre-populated.  I then wanted to use the definition from the TaskSchedulerEditor as the one that actually gets registered.  Now that I'm typing this out I just thought of a much better way to handle this anyway, but I'm glad that's fixed either way!",
+      "PostedDate": "2014-04-23T10:39:51.62-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You can do that by passing the TaskDefinition to the TaskEditDialog instead of the Task, setting RegisterTaskOnAccept to false and then handling the registration yourself after the user edits the task.",
+      "PostedDate": "2014-04-23T12:25:59.52-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

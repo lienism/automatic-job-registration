@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "780954",
+    "ThreadId": "328338",
+    "Html": "\r\n<p>First, I want to say what a great help this project is.&nbsp; It has saved me a lot of hassles.</p>\r\n<p>Maybe I just don't know the right way to do this, but my intention is to register a disabled task to be enabled at a later time.&nbsp; My code calls RootFolder.RegisterTaskDefinition and immediately sets Enabled on the returned Task object to false.&nbsp;\r\n This works fine on my Windows 7 development machine, but on my Server 2003 test system the task remains enabled.&nbsp; I assume it has something to do with the difference between Task Scheduler versions, but I don't know what.</p>\r\n<p>Is this the best way to register a disabled task?&nbsp; Is there a bug in the wrapper?</p>\r\n<p>... Jim Hansen<br>\r\nCanyon Country Consulting</p>\r\n",
+    "PostedDate": "2012-02-19T12:20:50.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "782727",
+    "ThreadId": "328338",
+    "Html": "<p>This may be classified as a bug given that it performs different on V1 vs. V2. For your problem on Server 2003, until I get a fix in place, call Task.RegisterChanges() after setting the Enabled property.</p>\n<p>You also, for consistency sake, may consider using the Task.Definition.Settings.Enabled property instead as this is a property that will take effect when you register the task instead of trying to do it after registering.</p>",
+    "PostedDate": "2012-02-19T19:50:34.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "783795",
+    "ThreadId": "328338",
+    "Html": "<p>Perfect! That solves my problem.</p>\r\n<p>I had overlooked the Enabled property in Settings and that is really what I need anyway.&nbsp; So, bug though it may be, I am set.</p>\r\n<p>Thanks for the prompt reply and the fine work.</p>\r\n<p>...Jim</p>",
+    "PostedDate": "2012-02-20T05:03:58.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

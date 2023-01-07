@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1319901",
+    "ThreadId": "571496",
+    "Html": "I am trying to create task in remote computer running on Windows 7 from client computer running Windows 7.   Is it possible? When I tried to do this I get following exception.\r<br />\n<br />\nSystem.UnauthorizedAccessException was unhandled\r<br />\nMessage=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\r<br />\n<br />\nAs per this MSDN link, <a href=\"http://technet.microsoft.com/en-us/library/cc766266.aspx\" rel=\"nofollow\">http://technet.microsoft.com/en-us/library/cc766266.aspx</a> , one can create task remotely connected to computers running Windows Server® 2008, Windows Vista®, Windows Server 2003, Windows XP, or Windows 2000.<br />\n",
+    "PostedDate": "2014-11-06T23:56:50.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320058",
+    "ThreadId": "571496",
+    "Html": "You need to be in a domain and need to be a member of the Administrators group on the remote computer. Try doing it using the &quot;Connect to a remote computer&quot; menu item in the &quot;Task Scheduler&quot; system app.<br />\n",
+    "PostedDate": "2014-11-07T08:25:49.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1320790",
+    "ThreadId": "571496",
+    "Html": "I also tried option 'Connect to another computer' option from task scheduler by specifying remote machine name and credentials. I got error 'Task scheduler service is not available. Verify that service is running'. I found task scheduler services at both end up and running. What could be the issue?<br />\n",
+    "PostedDate": "2014-11-11T00:20:46.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427986",
+    "ThreadId": "571496",
+    "Html": "While creating a remote task, I am getting error message &quot;(18,8):LogonType:&quot;. What could be the issue? I am using logon type 'TaskLogonType.S4U' to create the task. Please help.<br />\n",
+    "PostedDate": "2015-05-28T23:41:10.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428065",
+    "ThreadId": "571496",
+    "Html": "This is usually either that the account used when creating the TaskService object doesn't have rights to create the task with an S4U user, you haven't supplied a username in the RegisterTaskDefiniton method, or there is a combination of settings on the task's definition that can't be run interactively.<br />\n",
+    "PostedDate": "2015-05-29T13:55:28.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:58:35.51-07:00"
+  }
+]

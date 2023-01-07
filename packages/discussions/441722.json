@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1036305",
+    "ThreadId": "441722",
+    "Html": "Hi. Thanks for great wrapper. I couldnt set 24h format for time display on triggerEditDialog. How can i do this?<br />\n",
+    "PostedDate": "2013-04-26T13:54:22.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036326",
+    "ThreadId": "441722",
+    "Html": "I look sourcecode. I saw<br />\n<pre><code>switch (value)\n                    {\n                        case FullDateTimePickerTimeFormat.ShortTime:\n                            dateTimePickerTime.Format = DateTimePickerFormat.Custom;\n                            dateTimePickerTime.CustomFormat = System.Threading.Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortTimePattern;\n                            dateTimePickerTime.Visible = true;\n                            break;\n                        case FullDateTimePickerTimeFormat.Hidden:\n                            //dateTimePickerTime.Value = dateTimePickerTime.Value.Date;\n                            dateTimePickerTime.Visible = false;\n                            break;\n                        case FullDateTimePickerTimeFormat.LongTime:\n                        default:\n                            dateTimePickerTime.Format = DateTimePickerFormat.Custom;\n                            dateTimePickerTime.CustomFormat = System.Threading.Thread.CurrentThread.CurrentUICulture.DateTimeFormat.LongTimePattern;\n                            dateTimePickerTime.Visible = true;\n                            break;\n                    }</code></pre>\n\nand i added my application<br />\n<pre><code>\nDim ci As CultureInfo\n            ci = CType(Thread.CurrentThread.CurrentUICulture.Clone(), CultureInfo)\n            ci.DateTimeFormat.LongTimePattern = &quot;HH:mm:ss&quot;\n            ci.DateTimeFormat.ShortTimePattern = &quot;HH:mm&quot;\n            Thread.CurrentThread.CurrentUICulture = ci</code></pre>\n\nBut I think your code need to use  CurrentCulture . not CurrentUICulture\r<br />\n<br />\nit's ok for me now.<br />\n",
+    "PostedDate": "2013-04-26T14:45:59.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1037214",
+    "ThreadId": "441722",
+    "Html": "In looking at the documentation for CurrentCulture, I think you are correct. I will make the change and include it in the next release.<br />\n",
+    "PostedDate": "2013-04-29T09:24:16.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

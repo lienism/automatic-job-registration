@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "611400",
+    "ThreadId": "257300",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I have developed an application in VS 2008 which uses this dll. The application runs fine and scheudles job programmatically on win 7. But when&nbsp;I deploy same application on Win server 2008, the task is not scheudled. neither an exception is thrown.\r\n Please help me.</p>\r\n<p>Regards,</p>\r\n<p>Suchi</p>\r\n",
+    "PostedDate": "2011-05-11T20:44:11.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "611900",
+    "ThreadId": "257300",
+    "Html": "<p>Check the following posts to see if they answer your question:</p>\n<ul>\n<li>\n<h2 class=\"NoMargin Inline\"><a id=\"ThreadTitleLink\" class=\"ThreadLink\" href=\"http://taskscheduler.codeplex.com/discussions/250891\">Windows Server 2008R2 No Tasks Being Listed</a></h2>\n</li>\n<li>\n<h2 class=\"NoMargin Inline\"><a id=\"ThreadTitleLink\" class=\"ThreadLink\" href=\"http://taskscheduler.codeplex.com/discussions/247469\">Can't create task on Windows Server 2008</a></h2>\n</li>\n<li>\n<h2 class=\"NoMargin Inline\"><a id=\"ThreadTitleLink\" class=\"ThreadLink\" href=\"http://taskscheduler.codeplex.com/discussions/217188\">Unable to create a task</a></h2>\n</li>\n</ul>",
+    "PostedDate": "2011-05-12T11:53:04.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

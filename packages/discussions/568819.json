@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1309723",
+    "ThreadId": "568819",
+    "Html": "I have C# code that starts a task, but I need to know when that task is complete.  The information I need is on the history tab of the task scheduler.  It will show &quot;Task Completed&quot; in the task category column.  Is this possible to get through code?<br />\n<br />\n[EDIT]<br />\nNever mind, TaskService.State works just fine.  <br />\n",
+    "PostedDate": "2014-10-01T13:55:01.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-02T10:48:23.6-07:00"
+  }
+]

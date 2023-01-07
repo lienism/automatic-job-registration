@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1473233",
+    "ThreadId": "654588",
+    "Html": "Hello!\r<br />\n<br />\nHow can I deactivate a Task? I can not find the property to do that.\r<br />\n<br />\nThank you for your help and for your work!<br />\n",
+    "PostedDate": "2016-05-12T03:14:23.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473324",
+    "ThreadId": "654588",
+    "Html": "I don't totally understand what &quot;deactivate &quot; mean.<br />\nBut Microsoft.Win32.TaskScheduler.Task has a property &quot;Enable&quot;, and you can assign false to disable the task.<br />\nIs this helpful to solve you problem?<br />\n",
+    "PostedDate": "2016-05-12T18:04:58.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-13T07:14:49.023-07:00"
+  },
+  {
+    "Id": "1473351",
+    "ThreadId": "654588",
+    "Html": "Yes! That was. Thank you very much!<br />\n",
+    "PostedDate": "2016-05-13T02:33:42.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

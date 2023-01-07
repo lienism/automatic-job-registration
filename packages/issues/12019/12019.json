@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-07-09T18:05:36.593-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi! Recently we've got the following exception. It happened one time and we cannot reproduce it.\n\nSystem.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.AccessViolationException: Attempted to read or write protected memory. This is often an indication that other memory is corrupt.\n   at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Definition()\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()\n\n\nWe run our WPF application on Win7, .Net 3.5.",
+    "LastUpdatedDate": "2015-07-09T18:05:36.593-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-02-19T06:13:11.43-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Recently we got AccessViolationException",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12019
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I've just gone through the code and cannot find a place where there is even a memory allocation or deallocation related to that code. The particular line is even within a \"try\" clause. My only guess (and sorry to push this off but I really can't see anything that would lead to that exception) is that it has something to do with Microsoft's internal library. That particular method call (IRegisteredTask.get_Definition) is a call into one of Microsoft's COM objects. It would not be surprising given the complexity of that result (ITaskDefinition) and I could see a corner case in creating the return object. I'll leave this issue open for a few months in case you are able to narrow the problem down though.",
+      "PostedDate": "2015-02-19T08:21:28.75-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-09T18:05:36.593-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

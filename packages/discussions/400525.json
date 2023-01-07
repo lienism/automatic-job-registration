@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "931336",
+    "ThreadId": "400525",
+    "Html": "\r\n<p>I am trying to get the fields from the Actions of a task, but I'm not finding how to access them.</p>\r\n<p>Here is a small code sample:</p>\r\n<pre><span>Dim</span>&nbsp;Actions&nbsp;<span>As</span>&nbsp;Microsoft.Win32.TaskScheduler.<span>ActionCollection</span>&nbsp;=&nbsp;myTask.Definition.Actions\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>For</span>&nbsp;<span>Each</span>&nbsp;act&nbsp;<span>As</span>&nbsp;Microsoft.Win32.TaskScheduler.<span>Action</span>&nbsp;<span>In</span>&nbsp;Actions\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>If</span>&nbsp;act.ActionType&nbsp;=&nbsp;Microsoft.Win32.TaskScheduler.<span>TaskActionType</span>.Execute&nbsp;<span>Then</span>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dim</span>&nbsp;args&nbsp;<span>As</span>&nbsp;<span>String</span>&nbsp;=&nbsp;???</pre>\r\n<p>I have an Execute Action, and I want to get the arguments for the execute action, or the path, etc.</p>\r\n<p>On the Email action, I would like to get the from, to, etc. &nbsp;How do I access those fields.</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-23T14:21:58.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "931354",
+    "ThreadId": "400525",
+    "Html": "<p>Sorry, that was too easy</p>\r\n<p>dim ea as ExecAction = act</p>\r\n<p>Thanks,</p>",
+    "PostedDate": "2012-10-23T14:50:53.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

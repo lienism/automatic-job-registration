@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1481392",
+    "ThreadId": "657230",
+    "Html": "<blockquote>\nDe opgegeven naam is geen juist samengestelde accountnaam.<br />\nThe name provided is not correct compound account name. (This is a translation from Dutch)<br />\n<br />\nThe exception occurred at System.Security.Principal.WindowsIdentity.KerbS4ULogon(String upn, SafeAccessTokenHandle&amp; safeTokenHandle)<br />\nat System.Security.Principal.WindowsIdentity..ctor(String sUserPrincipalName, String type)<br />\nat System.Security.Principal.WindowsIdentity..ctor(String sUserPrincipalName)<br />\nat Microsoft.Win32.TaskScheduler.User..ctor(String userName) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\User.cs:line 32<br />\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 409<br />\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 373<br />\n</blockquote>\nand<br />\n<blockquote>\n(14,8):UserId:<br />\n<br />\nThe exception occurred at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)<br />\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 430<br />\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 373<br />\n</blockquote>\nWhat triggered this issue was me simply calling RegisterChanges() on an existing task after changing a couple of task settings.<br />\n",
+    "PostedDate": "2016-08-17T12:46:15.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481393",
+    "ThreadId": "657230",
+    "Html": "For example...<br />\n<pre><code>Dim taskServiceObject As New TaskScheduler.TaskService()\nDim taskObject As TaskScheduler.Task = taskServiceObject.GetTask(&quot;my task&quot;)\n\nIf taskObject IsNot Nothing Then\n  If taskObject.Definition.Settings.MultipleInstances &lt;&gt; TaskScheduler.TaskInstancesPolicy.Parallel Then\n    task.Definition.Settings.MultipleInstances = TaskScheduler.TaskInstancesPolicy.Parallel\n    task.RegisterChanges()\n    task.Dispose()\n  End If\nEnd If\n\ntaskServiceObject.Dispose()</code></pre>\n\nSome users reported the above exceptions. I have had to implement a work around for the issue.<br />\n",
+    "PostedDate": "2016-08-17T12:53:00.91-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481649",
+    "ThreadId": "657230",
+    "Html": "And another bug...<br />\n<pre><code>The exception occurred at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 430\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\TaskFolder.cs:line 373</code></pre>\n\nAnd here's my code...<br />\n<pre><code>Dim taskService As New TaskService()\nDim newTask As TaskDefinition = taskService.NewTask\nDim logonTriggerDefinition As LogonTrigger = New LogonTrigger()\n\nIf delayed = True Then\n  logonTriggerDefinition.Delay = New TimeSpan(0, 0, delayTimeInMinutes, 0, 0)\nEnd If\n\nDim exePathInfo As New IO.FileInfo(Application.ExecutablePath)\nnewTask.Actions.Add(New ExecAction(exePathInfo.FullName, &quot;-myargument&quot;, exePathInfo.DirectoryName))\nexePathInfo = Nothing\n\nnewTask.Triggers.Add(logonTriggerDefinition)\nnewTask.Principal.RunLevel = TaskRunLevel.Highest\nnewTask.RegistrationInfo.Description = &quot;My Task&quot;\nnewTask.Principal.LogonType = TaskLogonType.InteractiveToken\n\nWith newTask.Settings\n  .Compatibility = TaskCompatibility.V2\n  .AllowDemandStart = True\n  .DisallowStartIfOnBatteries = False\n  .RunOnlyIfIdle = False\n  .StopIfGoingOnBatteries = False\n  .AllowHardTerminate = False\n  .ExecutionTimeLimit = Nothing\nEnd With\n\ntaskService.RootFolder.RegisterTaskDefinition(&quot;My Task&quot;, newTask)\n\nnewTask.Dispose()\ntaskService.Dispose()\n\nnewTask = Nothing\ntaskService = Nothing</code></pre>\n\n",
+    "PostedDate": "2016-08-20T08:27:43.363-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481668",
+    "ThreadId": "657230",
+    "Html": "What versions of Windows can this run on?<br />\n",
+    "PostedDate": "2016-08-20T13:37:34.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481684",
+    "ThreadId": "657230",
+    "Html": "Windows 10 is the OS that some of these people are having issues on.<br />\n",
+    "PostedDate": "2016-08-20T20:09:16.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481789",
+    "ThreadId": "657230",
+    "Html": "My guess is that neither one of these are bugs, they expose limitations of the library. <code>ITaskFolder.RegisterTaskDefinition</code> is a picky method in the native library. This wrapper does all it can to provide preventative measures and better errors where possible. The first thing I'd look into is the rights of the user running the library. The exception itself is a better indicator of the problem than the stack.\r<br />\n<br />\n<code>RegisterChanges</code> has some prerequisites as well. If the task was previously registered with <code>TaskLogonType.InteractiveTokenOrPassword</code> or <code>TaskLogonType.Password</code>, you cannot use the method as you would need to resupply the password.<br />\n",
+    "PostedDate": "2016-08-22T09:01:44.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481795",
+    "ThreadId": "657230",
+    "Html": "Yeah well, I figured out a way around the issue. I just delete the task and recreate it from scratch instead of trying to modify an existing task.<br />\n",
+    "PostedDate": "2016-08-22T09:53:26.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

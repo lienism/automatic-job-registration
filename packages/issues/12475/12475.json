@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Corrected in 2.6+ builds",
+    "ClosedDate": "2017-09-22T09:47:58.657-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "TaskSchedulerEditor references TimeSpan2 2.1.6 but its nuget describe dependency as 2.1.5 and this cause error on nugets update:\n\nUnable to resolve dependencies. 'TimeSpan2 2.1.6' is not compatible with 'TaskSchedulerEditor 2.5.28 constraint: TimeSpan2 (= 2.1.5)'.\t\n\nCould you please fix TimeSpan2 version to 2.1.6 in the nuget\n\nThank you",
+    "LastUpdatedDate": "2017-09-22T09:47:58.657-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-08-16T11:09:19.77-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Incorrect TimeSpan2 version in nuget of  TaskSchedulerEditor 2.5.28",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12475
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is intentional as TimeSpan2 2.1.6 was released only to include Dutch translations and TSMW Editor does not support Dutch so there was no need to upgrade. On the next release of TSMW, all dependencies will be updated.",
+      "PostedDate": "2017-08-17T16:45:54.063-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-09-22T09:47:58.657-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

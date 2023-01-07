@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "783601",
+    "ThreadId": "330811",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;I have some troubles using refresh method of task class and state property.<br>\r\nUsing this code on WIN 2003 SERVER the job state&nbsp;never changes its value:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>currentJob = t.Run(b.Arguments)\r\n\r\nlogMgr.Debug(<span style=\"color:#a31515\">&quot; job state: &quot;</span> &amp; currentJob.State &amp; <span style=\"color:#a31515\">&quot; Lastrun: &quot;</span> &amp; currentJob.LastRunTime)\r\nThreading.Thread.Sleep(1000)\r\n\r\n<span style=\"color:blue\">While</span> t.State = TaskState.Running <span style=\"color:blue\">Or</span> t.LastRunTime.CompareTo(d) &lt; 0\r\n  Threading.Thread.Sleep(2000)<br><br>  currentJob.Refresh()<br>  logMgr.Debug(<span style=\"color:#a31515\">&quot; job state: &quot;</span> &amp; currentJob.State &amp; <span style=\"color:#a31515\">&quot; last run time: &quot;</span> &amp; currentJob.LastRunTime)\r\n<span style=\"color:blue\">End</span> <span style=\"color:blue\">While</span></pre>\r\n</div>\r\n<p>Now I use the following workaround but I would like to know if someone has a similar&nbsp;issue with refresh() method.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">While</span> t.State = TaskState.Running <span style=\"color:blue\">Or</span> t.LastRunTime.CompareTo(d) &lt; 0\r\n  Threading.Thread.Sleep(2000)\r\n  t = s.FindTask(b.JobName)\r\n  logMgr.Debug(<span style=\"color:#a31515\">&quot; job state: &quot;</span> &amp; t.State &amp; <span style=\"color:#a31515\">&quot; last run time: &quot;</span> &amp; t.LastRunTime)\r\n<span style=\"color:blue\">End</span> <span style=\"color:blue\">While</span>\r\n\r\n</pre>\r\n</div>\r\n<p>thanks,</p>\r\n<p>F.</p>\r\n",
+    "PostedDate": "2012-02-20T02:54:21.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "787980",
+    "ThreadId": "330811",
+    "Html": "<p>The RunningTask.Refresh method is not supported under V1 of the Task Scheduler (pre Vista systems). In doing some research, I found a problem in the V1 code which I have corrected. The Microsoft help on IScheduledWorkItem::GetStatus states that this does not return the state dynamically under V1. I have updated the code so that I am refetching the interface before returning the state. Version 1.8.1 should have the fix in place.</p>",
+    "PostedDate": "2012-02-20T23:11:22.74-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "794773",
+    "ThreadId": "330811",
+    "Html": "<p>Good. Thank you very much.</p>",
+    "PostedDate": "2012-02-22T05:39:13.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

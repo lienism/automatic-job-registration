@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "700452",
+    "ThreadId": "280066",
+    "Html": "\r\n<p>I can't find it in the doc or samples or even on the discussions.&nbsp; Can someone tell me what method to use to check if the task exists already?</p>\r\n",
+    "PostedDate": "2011-11-18T14:44:54.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "700523",
+    "ThreadId": "280066",
+    "Html": "<p>Use the TaskService.GetTask method. You can find an example in the Documention in both the simple and&nbsp;complex examples.</p>",
+    "PostedDate": "2011-11-18T23:37:51.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "702020",
+    "ThreadId": "280066",
+    "Html": "<p>dahall:</p>\r\n<p>Thank you for your response.&nbsp; I found out that if I just tell the app to keep doing it (like creating a new one) it just overwrites what is already there which is fine in my case.&nbsp; Thanks for your help!</p>",
+    "PostedDate": "2011-11-22T14:16:58.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

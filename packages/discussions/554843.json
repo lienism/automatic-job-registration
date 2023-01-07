@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1279987",
+    "ThreadId": "554843",
+    "Html": "Hello,\r<br />\nI am writing an application that uses taskscheduler and  when I run it on Windows Server 2012, the program that is being run from scheduler is unable to access files that it is using (a SecurityException is being thrown). This problem doesn't occur on earlier versions of Windows(Windows 7, Vista, XP). Does TaskScheduler need some specific rights or options to handle these kinds of tasks on Windows Server 2012? <br />\n",
+    "PostedDate": "2014-08-01T06:35:09.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1280032",
+    "ThreadId": "554843",
+    "Html": "Windows 8 and Server 2012 run the same updated library from Microsoft. There are some new security considerations. Check the following links for more information. If I had to guess, it sounds like the account used to run the task (either by setting it during registration or the one used to connect to the TaskService instance) does not have the rights to the file or the executable is not being run in Administrator mode so UAC is getting in the way. There are other discussion threads about both with answers.<br />\n<ul>\n<li><a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=vs.85).aspx</a></li>\n<li><a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/ee695875(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/ee695875(v=vs.85).aspx</a></li>\n</ul>\n",
+    "PostedDate": "2014-08-01T08:15:05.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

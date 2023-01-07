@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "418790",
+    "ThreadId": "205132",
+    "Html": "<p><span style=\"font-size:x-small\">\r\n<p>Trying to create\\instantiate a TaskService object but not able to without providing a user id and password, I should mention also that a web application is pulling the task scheduler data via a WCF Service. Both the web application and the WCF service are hosted on the same server within IIS. I guess my question is can I instantiate the object in this scenario without providing a user id and password? The web service provides interface\\contract to retrieve the data from the task scheduler.</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int i = 0; i &lt; ts.RootFolder.Tasks.Count; i++)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// do somthing....</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>Web App &lt;--&gt; WCF Service &lt;--&gt; Task Scheduler</p>\r\n<p>&nbsp;</p>\r\n</span></p>",
+    "PostedDate": "2010-03-16T10:49:29.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "418840",
+    "ThreadId": "205132",
+    "Html": "<p>Your web app and WCF service are each running in the context of some local or domain account. That account's token is the one being used when you instantiate a TaskService without a username and password so it must have the security permission to access local system resources like the Task Scheduler. If you find another solution, please post it here.</p>",
+    "PostedDate": "2010-03-16T12:27:22.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

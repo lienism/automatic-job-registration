@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1066092",
+    "ThreadId": "449439",
+    "Html": "Hi there\r<br />\n<br />\nI'm working on a ASP.Net application which allows users to schedule certain tasks. So far I have created a GUI to configurate the triggers provided by this library and the tasks can be added to the Windows Task Scheduler without any problems.\r<br />\nSo far I did not experience any access denied problems like in earlier discussions.\r<br />\n<br />\nThe problem appears when Task Scheduler tries to run the job:\r<br />\n<br />\n<em>Task Scheduler failed to start &quot;\\482800F0-63BE-4730-A509-73AA554521C9&quot; task for user &quot;IIS APPPOOL\\ASP.NET v4.0&quot;. Additional Data: Error Value: 2147943645.</em>\r<br />\n<br />\nWhen I change the user account of the task manually (in Task Scheduler GUI) to my domain user account, the action gets executed as expected. Obviously it's a problem with the special account type of IIS application pools.\r<br />\n<br />\nThis is the code to create the task:<br />\n<pre><code>TaskDefinition taskDef = taskService.NewTask();\ntaskDef.Principal.UserId = WindowsIdentity.GetCurrent().Name;\ntaskDef.Principal.LogonType = TaskLogonType.InteractiveToken;\n\ntaskService.RootFolder.RegisterTaskDefinition(TaskPlanerFolder + this.ID, taskDef);</code></pre>\n\nAs the documentation says InteractiveToken requires an interactive logon of the user, so my first idea was to change the last line to:<br />\n<pre><code>taskDef.Principal.LogonType = TaskLogonType.ServiceAccount;</code></pre>\n\nas the virtual identity of the IIS application pool is like the NetworkService account.\r<br />\n<br />\nThis will result in a COMException like\r<br />\n<em>The task XML contains a value which is incorrectly formatted or out of range.</em> \r<br />\n<br />\nThe only difference in the task XML is the lack of this line:\r<br />\n<em>&lt;LogonType&gt;InteractiveToken&lt;/LogonType&gt;</em>\r<br />\n<br />\nAny suggestions how I can add the task without using a different user account? The ASP.NET application must not be granted admin rights, and the scheduled application does require any other permissions than connecting to a SQL Server.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2013-07-09T05:46:30.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1066105",
+    "ThreadId": "449439",
+    "Html": "_\r<br />\n _\r<br />\n \r<br />\nBy the way thats the complete Xml:<br />\n<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;\n&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;\n  &lt;RegistrationInfo&gt;\n    &lt;Source&gt;&lt;/Source&gt;\n    &lt;Author&gt;ViewOnly&lt;/Author&gt;\n    &lt;Description&gt;Task von ViewOnly&lt;/Description&gt;\n  &lt;/RegistrationInfo&gt;\n  &lt;Triggers&gt;\n    &lt;CalendarTrigger id=&quot;C8F0CCC2-AF76-4CAB-92F2-C3DF6F87BC3C&quot;&gt;\n      &lt;StartBoundary&gt;2013-07-09T11:47:34&lt;/StartBoundary&gt;\n      &lt;Enabled&gt;true&lt;/Enabled&gt;\n      &lt;ScheduleByWeek&gt;\n        &lt;DaysOfWeek&gt;\n          &lt;Wednesday /&gt;\n          &lt;Friday /&gt;\n        &lt;/DaysOfWeek&gt;\n        &lt;WeeksInterval&gt;1&lt;/WeeksInterval&gt;\n      &lt;/ScheduleByWeek&gt;\n    &lt;/CalendarTrigger&gt;\n  &lt;/Triggers&gt;\n  &lt;Principals&gt;\n    &lt;Principal&gt;\n      &lt;UserId&gt;S-1-5-82-794271414-2547205055-1060673776-2579641347-304524694&lt;/UserId&gt;\n      &lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;\n    &lt;/Principal&gt;\n  &lt;/Principals&gt;\n  &lt;Settings&gt;\n    &lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;\n    &lt;DisallowStartIfOnBatteries&gt;true&lt;/DisallowStartIfOnBatteries&gt;\n    &lt;StopIfGoingOnBatteries&gt;true&lt;/StopIfGoingOnBatteries&gt;\n    &lt;AllowHardTerminate&gt;true&lt;/AllowHardTerminate&gt;\n    &lt;StartWhenAvailable&gt;false&lt;/StartWhenAvailable&gt;\n    &lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;\n    &lt;IdleSettings&gt;\n      &lt;Duration&gt;PT10M&lt;/Duration&gt;\n      &lt;WaitTimeout&gt;PT1H&lt;/WaitTimeout&gt;\n      &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;\n      &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;\n    &lt;/IdleSettings&gt;\n    &lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;\n    &lt;Enabled&gt;true&lt;/Enabled&gt;\n    &lt;Hidden&gt;false&lt;/Hidden&gt;\n    &lt;RunOnlyIfIdle&gt;false&lt;/RunOnlyIfIdle&gt;\n    &lt;WakeToRun&gt;false&lt;/WakeToRun&gt;\n    &lt;ExecutionTimeLimit&gt;PT72H&lt;/ExecutionTimeLimit&gt;\n    &lt;Priority&gt;7&lt;/Priority&gt;\n  &lt;/Settings&gt;\n  &lt;Actions&gt;\n    &lt;Exec&gt;\n      &lt;Command&gt;notepad.exe&lt;/Command&gt;\n      &lt;Arguments&gt;&lt;/Arguments&gt;\n    &lt;/Exec&gt;\n  &lt;/Actions&gt;\n&lt;/Task&gt;</code></pre>\n\n",
+    "PostedDate": "2013-07-09T06:19:03.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1068692",
+    "ThreadId": "449439",
+    "Html": "See information in post <a href=\"https://taskscheduler.codeplex.com/discussions/84859\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/84859</a>.<br />\n",
+    "PostedDate": "2013-07-15T15:01:42.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

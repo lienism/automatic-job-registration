@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427207",
+    "ThreadId": "638636",
+    "Html": "Imagine this code...<br />\n<pre><code>Function checkIfTaskFolderExists(folder As String) As Boolean\n    Dim taskService As New TaskService\n\n    If taskService.GetFolder(folder) IsNot Nothing Then\n        Return True\n    Else\n        Return False\n    End If\nEnd Function\n\nIf checkIfTaskFolderExists(&quot;myTaskFolder&quot;) = True Then\n    debug.writeline(&quot;the task folder exists&quot;)\nElse\n    debug.writeline(&quot;the task folder doesn't exist&quot;)\nEnd If</code></pre>\n\nBut it doesn't work, an exception is thrown instead if you check for a task folder that doesn't exist. I don't understand why you would throw an exception instead of returning a Null Object that you could then check with an InNot Nothing check.<br />\n",
+    "PostedDate": "2015-05-22T18:47:12.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427526",
+    "ThreadId": "638636",
+    "Html": "This wrapper attempts to map to the Microsoft base library wherever possible. This is one of those instances. Changing at this point, after almost a decade of a released product, would constitute a breaking change. I agree that the pattern you suggest is preferable.<br />\n",
+    "PostedDate": "2015-05-25T15:24:36.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:59:37.427-07:00"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "572271",
+    "ThreadId": "247607",
+    "Html": "\r\n<p>I'm a little simple minded right now, trying to absorb so much information about the swelling technologies, and have forgotten more than I know.&nbsp; So, here's my problem:&nbsp; When I add references to the assemblies, and try to consume the controls in\r\n my application they appear fine on the form.&nbsp; I compile and get the following issue:</p>\r\n<p>Error&nbsp;5&nbsp;The type or namespace name 'TaskListView' does not exist in the namespace 'Microsoft.Win32.TaskScheduler' (are you missing an assembly reference?).&nbsp;</p>\r\n<p>So, to ensure that the classes are properly installed on my machine, I'm requesting an installer for the libraries (TaskScheduler &amp; TaskEditor) with help files included.&nbsp; Is this possible, and, while waiting for an installer, could someone point\r\n me in the right direction to get this working.&nbsp; I'm quite excited about being able to schedule my application into windows task scheduler, and would really appreciate any help at this time.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-02-25T10:46:29.86-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572344",
+    "ThreadId": "247607",
+    "Html": "<p>You simply need to add the TaskSchedulerEditor.dll assembly as a reference along with the TaskScheduler.dll assembly. Both assemblies&nbsp;are separate downloads as this was a request from users that only use the non-UI portion of the library.</p>\n<p>I'm not aware of any namespace conflicts, so please submit an issue if this is the case.&nbsp;There is considerable documentation on this and library use on the documentation tab as well as in the help file.&nbsp;As you review these comments, I appreciate it if you would review and potentially change your rating comment.</p>\n<p>I'll see what I can come up with for an installer with the 1.6 release.</p>",
+    "PostedDate": "2011-02-25T13:26:10.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "584085",
+    "ThreadId": "247607",
+    "Html": "<p>For the 1.6 release, the libraries are all available through NuGet, a Visual Studio add-in for installing and managing components.</p>",
+    "PostedDate": "2011-03-21T17:16:33.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

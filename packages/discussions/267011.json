@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "649335",
+    "ThreadId": "267011",
+    "Html": "<p>I am only hours into this, and from my playing around with the API, I have a few questions.</p>\n<p>1. Can I rename a folder?<br />2. If I cannot,&nbsp;if I create a new folder with the proper name, can I then move the tasks&nbsp;from the badname folder to the goodname folder.</p>\n<p>I only ask this because I've been experimenting and now I'm trying to organize.</p>\n<p>Thanks.</p>",
+    "PostedDate": "2011-07-28T20:20:02.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649975",
+    "ThreadId": "267011",
+    "Html": "<p>I know of no way to rename a folder or move items with simple API. As you suggested, you can create a new folder and then open each task in the old folder and then register it in the new folder and then delete the one in the old folder.</p>",
+    "PostedDate": "2011-07-30T08:23:31.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "650032",
+    "ThreadId": "267011",
+    "Html": "<p>Thanks again!</p>",
+    "PostedDate": "2011-07-30T12:48:48.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

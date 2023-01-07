@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "949741",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>Is it possible to take a TaskDefinition made with the Task Scheduler Wizard on a Windows 7/2008 R2 machine and make it so it is also compatible with Server 2003?</p>\r\n",
+    "PostedDate": "2012-11-30T15:42:37.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949757",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>Yes. Disallow the addition of any trigger and action types not supported under V1 and then don't tell it to RegisterTaskOnFinish. Once the wizard is complete, you will have a TaskDefinition. Set its Settings.Compatibility to V1. You can then register this\r\n TaskDefinition by connecting a TaskService instance to the WS2003 machine and calling the TaskService.RootFolder.RegisterTaskDefinition method.</p>\r\n",
+    "PostedDate": "2012-11-30T16:51:11.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951306",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>When I do this I get a null error on</p>\r\n<p>V1Interop.TaskFlags flags = definition.v1Task.GetFlags();</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-12-04T10:39:49.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951473",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>Try creating the TaskService with the forceV1 parameter set to true and pass this into the TaskSchedulerWizard.Initialize() method. Then don't change the Settings.Compatibility property.</p>\r\n",
+    "PostedDate": "2012-12-04T19:44:38.223-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954158",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>Here is how I am trying to convert it, still gives me a Null error:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;TaskService ts = new TaskService(txtServerName.Text, logon[1], logon[0], logon[2], true);</p>\r\n<p>EditorForm.TaskDefinition.Settings.Compatibility = TaskCompatibility.V1;<br>\r\n<br>\r\nTaskSchedulerWizard tempEditorForm = new TaskSchedulerWizard(ts, EditorForm.TaskDefinition, false);</p>\r\n",
+    "PostedDate": "2012-12-10T12:50:19.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954266",
+    "ThreadId": "405210",
+    "Html": "\r\n<p>You only need the following:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>TaskService ts = <span style=\"color:blue\">new</span> TaskService(txtServerName.Text, logon[1], logon[0], logon[2], <span style=\"color:blue\">true</span>);\r\nTaskSchedulerWizard tempEditorForm = <span style=\"color:blue\">new</span> TaskSchedulerWizard(ts);\r\n<span style=\"color:blue\">if</span> (tempEditorForm.ShowDialog() == DialogResult.OK)\r\n{\r\n   <span style=\"color:green\">// You can use tempEditorForm.TaskDefinition here to modify however you want<br>   // You must register it to make it take effect<br>   // You do not need to change the Compatibility property</span>\r\n}\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-12-10T18:51:31.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363128",
+    "ThreadId": "405210",
+    "Html": "How to dynamically decide what to use for a remote computer ? forceV1=true or false?<br />\n",
+    "PostedDate": "2015-03-13T06:56:38.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1363202",
+    "ThreadId": "405210",
+    "Html": "If a server's version is Windows Server 2003 R2 or earlier or XP or earlier (major version &lt;= 5) then you should force V1 (= true).<br />\n",
+    "PostedDate": "2015-03-13T10:03:23.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-13T10:03:27.853-07:00"
+  }
+]

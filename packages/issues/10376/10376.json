@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in 1.8.4",
+    "ClosedDate": "2012-08-28T10:31:24.463-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm setting up a Scheduled Task where I was the user to supply their own credentials and I want the task to be \n            TaskLogonType.Password\n \nBut if the user cancels that dialog box after pressing ok on the Main TaskEditDialog, then a Null password exception bubbles out to the calling application.\n \nI downloaded the source to investigate and saw a couple of small tweaks to be made, but I'm not sure about how to make them available.\n \nIn TaskEditDialog.CS\n \n        private DialogResults InvokeCredentialDialog(string userName)\n        {\n \n            CredentialsDialog dlg = new CredentialsDialog(EditorProperties.Resources.TaskSchedulerName,\n                EditorProperties.Resources.CredentialPromptMessage, userName);\n            dlg.Options |= CredentialsDialogOptions.Persist;\n            dlg.ValidatePassword = true;\n            DialogResults dr = new DialogResults();\n \n            dr.Result = dlg.ShowDialog(this.ParentForm);\n \n            if (dr.Result == DialogResult.OK)\n            {\n                dr.Password = dlg.Password;\n            }\n            else\n            {\n                dr.Password = null;\n            }\n            return dr;\n        }\n \n        private void okBtn_Click(object sender, System.EventArgs e)\n        {\n            if (this.TaskDefinition.Actions.Count == 0)\n            {\n                MessageBox.Show(EditorProperties.Resources.TaskMustHaveActionsError, null, MessageBoxButtons.OK, MessageBoxIcon.Error);\n                return;\n            }\n \n            if (this.TaskDefinition.Settings.DeleteExpiredTaskAfter != TimeSpan.Zero && !ValidateOneTriggerExpires())\n            {\n                MessageBox.Show(EditorProperties.Resources.Error_TaskDeleteMustHaveExpiringTrigger, null, MessageBoxButtons.OK, MessageBoxIcon.Error);\n                return;\n            }\n \n            bool okToSave = true;\n \n            if (RegisterTaskOnAccept)\n            {\n                if (this.Task != null)\n                    this.Task.RegisterChanges();\n                else\n                {\n                    string user = this.TaskDefinition.Principal.ToString();\n                    string pwd = null;\n                    TaskFolder fld = this.TaskService.GetFolder(this.TaskFolder);\n                    if (this.TaskDefinition.Principal.LogonType == TaskLogonType.InteractiveTokenOrPassword || this.TaskDefinition.Principal.LogonType == TaskLogonType.Password)\n                    {\n                        if (InvokeCredentialDialog(user).Result == System.Windows.Forms.DialogResult.OK)\n                        {\n                            fld.RegisterTaskDefinition(this.taskPropertiesControl1.TaskName, this.TaskDefinition, TaskCreation.CreateOrUpdate,\n                                user, pwd, this.TaskDefinition.Principal.LogonType);\n                        }\n                        else\n                        {\n                            okToSave = false;\n                        }\n                    }\n                }\n            }\n            if (okToSave)\n            {\n                this.DialogResult = DialogResult.OK;\n                Close();\n            }\n        }\n \nand added this class\n \n        private class DialogResults\n        {\n            public DialogResult Result { get; set; }\n            public String Password { get; set; }\n        }",
+    "LastUpdatedDate": "2013-05-16T04:49:08.74-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-07-25T21:37:15.593-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "If user Cancels the Password Dialog box Exception bubbles to calling application",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10376
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

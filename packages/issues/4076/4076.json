@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Thanks for finding a bug in the RunningTaskCollection iterator. In my testing I had focused on the enumerator class and failed to find a problem in calling the iterator. I have corrected the problem in the code &#40;TaskCollection.cs&#59; line 413&#41; and will roll it out in my next release.",
+    "ClosedDate": "2009-08-22T19:46:49.743-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "If you try to get the Name of a RunningTask in V2, an exception is thrown.  See the sample code below.  Based on the call stack, the Task thinks it is a V1 task instead of a V2 task.\n \nTaskService service = new TaskService();\nRunningTaskCollection tasks = service.GetRunningTasks(true);\nfor (int taskIndex = 0; taskIndex < tasks.Count; ++taskIndex)\n{\n    RunningTask task = tasks[taskIndex];\n    String taskName = task.Name; // throws exception!!!\n \n    // do something real here\n}\n \nThis occurred running on Windows Server 2008.  It is not a problem traversing the tasks via TaskFolder, only when accesssed via GetRunningTasks.",
+    "LastUpdatedDate": "2013-05-16T04:49:15.247-07:00",
+    "PlannedForRelease": "Release 1.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2009-08-21T16:36:57.053-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "RunningTask.Name throws exception in V2",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 4076
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

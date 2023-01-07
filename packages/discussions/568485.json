@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1308546",
+    "ThreadId": "568485",
+    "Html": "I'm having some issues trying to configure the run-as user and settings for a new task.  Say I want to create a task that runs as SYSTEM, what would the properties look like for this?  Also, if I wanted to run this as a domain service account, how would I configure that?  You examples page only seems to have an example of an interactive user logon.\r<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-09-26T22:48:12.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1308637",
+    "ThreadId": "568485",
+    "Html": "Try looking at this examples page: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity</a><br />\n",
+    "PostedDate": "2014-09-27T11:54:16.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

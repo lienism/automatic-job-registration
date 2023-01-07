@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "619225",
+    "ThreadId": "259237",
+    "Html": "\r\n<p>Hi, task explained in title of theme.</p>\r\n<p>In another API it looks like this:</p>\r\n<p>trigger = new DailyTrigger(startIntervalHours, startIntervalMinutes);<br>\r\ntrigger.DurationMinutes = (endIntervalHours * 60 &#43; endIntervalMinutes)<br>\r\n- (startIntervalHours * 60 &#43; startIntervalMinutes);</p>\r\n<p>After looking in previous posts I didn't find out how to do such by your's API.</p>\r\n<p>How to create daily trigger that starts everyday at specified time is very simple:</p>\r\n<p>var trigger = new DailyTrigger();<br>\r\ntrigger.DaysInterval = 1;<br>\r\ntrigger.StartBoundary = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, dailyHours, dailyMinutes, 0);</p>\r\n<p>But previous task does me frustrate.</p>\r\n<p>Thanks for help.</p>\r\n",
+    "PostedDate": "2011-05-27T03:39:42.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619486",
+    "ThreadId": "259237",
+    "Html": "<p>I think this is what you are looking for:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><div style=\"color: black; background-color: white;\"><pre>DailyTrigger dt = <span style=\"color: blue;\">new</span> DailyTrigger(); <span style=\"color: green;\">// DaysInterval = 1 is default</span>\r\ndt.StartBoundary = DateTime.Today + <span style=\"color: blue;\">new</span> TimeSpan(dailyHours, dailyMinutes, 0);\r\ndt.Repetition.Duration = TimeSpan.FromMinutes(minutesBetweenRuns * numberOfRuns);\r\ndt.Repetition.Interval = TimeSpan.FromMinutes(minutesBetweenRuns);\r\n</pre>\r\n</div>\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-05-27T11:31:46.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

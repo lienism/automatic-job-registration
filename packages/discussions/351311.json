@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "820348",
+    "ThreadId": "351311",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Awesome work on this project. Do you think it would be possible to create a version of the Task Editor Control that has only a&nbsp;dependence&nbsp;on the TaskScheduler Library and not the others?</p>\r\n",
+    "PostedDate": "2012-04-05T05:56:11.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "820592",
+    "ThreadId": "351311",
+    "Html": "<p>Those libraries are used for various pieces of the editor and wizard controls. You could always use something like ILMerge if you wanted to create a single file.</p>",
+    "PostedDate": "2012-04-05T14:39:05.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822246",
+    "ThreadId": "351311",
+    "Html": "<p>Hi,</p>\r\n<p>Yes I did try that but there are multiple errors about Duplicate types. I have not been able to find a way around that error.</p>\r\n<p>If anyone has the answer to the ILMerge issue, please do let me know.</p>",
+    "PostedDate": "2012-04-10T23:10:59.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822461",
+    "ThreadId": "351311",
+    "Html": "If you do not need language localization, the following ILMerge command line will work (you may need to adjust the keyfile directory):<br />\n<pre><code>&quot;\\Program Files (x86)\\Microsoft\\ILMerge\\ILMerge.exe&quot; /t:library /targetplatform:v4 /keyfile:..\\..\\..\\..\\TaskService.snk /xmldocs /log:ts.log /union /out:ts.dll Microsoft.Win32.TaskScheduler.dll Microsoft.Win32.TaskSchedulerEditor.dll TimeSpan2.dll GroupControls.dll CubicOrange.Windows.Forms.ActiveDirectory.dll AeroWizard.dll</code></pre>\n\nIf you need the editor resources to be localized, then you will need to look into more complicated ILMerge processing.<br />\n",
+    "PostedDate": "2012-04-11T09:17:27.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-20T21:04:08.937-07:00"
+  }
+]

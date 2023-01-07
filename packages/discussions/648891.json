@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1456287",
+    "ThreadId": "648891",
+    "Html": "Is there an Event that gets raised when the process that I start via a Task gets stopped?\r<br />\n<br />\nCurrently I use <br />\n<pre><code>var processlist = Process.GetProcesses();\n\nforeach(var theprocess in processlist)\n {\n          if (theprocess.ProcessName != &quot;DEMO&quot;)\n                 continue;\n\n          theprocess.WaitForExit();\n          break;\n }</code></pre>\n\nto enum all processes and If I find my started program I wait for Exit. Is there a better way?<br />\n",
+    "PostedDate": "2015-12-17T07:32:22.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456345",
+    "ThreadId": "648891",
+    "Html": "In fact, a brand new feature does allow this. Try the following:<br />\n<pre><code>private TaskEventWatcher watcher;\n\n// Create and configure a new task watcher for the task folder\nprivate void SetupWatcher(Task task)\n{\n   if (task != null)\n   {\n      // Set up a watch over the supplied task.\n      watcher = new TaskEventWatcher(task);\n\n      // Assign a SynchronizingObject to a local UI class to synchronize the events in this thread.\n      watcher.SynchronizingObject = this;\n\n      // Only watch for task events that indicate success (102), failure (103), or termination (111)\n      watcher.Filter.EventIds = new int[] { 102, 103, 111 };\n\n      // Assign an event handler for when events are recorded\n      watcher.EventRecorded += Watcher_EventRecorded;\n      \n      // Start watching the task by enabling the watcher\n      watcher.Enabled = true;\n   }\n}\n\n// Cleanup and release the task watcher\nprivate void TearDownWatcher()\n{\n   if (watcher != null)\n   {\n      // Unhook the event\n      watcher.EventRecorded -= Watcher_EventRecorded;\n      // Stop watching for events\n      watcher.Enabled = false;\n      // Initiate garbage collection for the watcher\n      watcher = null;\n   }\n}\n\n// Do something when task events occur\nprivate void Watcher_EventRecorded(object sender, TaskEventArgs e)\n{\n   DoSomething(e.TaskName);\n}</code></pre>\n\n",
+    "PostedDate": "2015-12-17T16:31:06.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456368",
+    "ThreadId": "648891",
+    "Html": "Hi,\r<br />\n<br />\nthanks for the answer.\r<br />\n<br />\nI adapted it and created different watchers and EventRecorded handlers for each Event that I care, but non gets fired. I commented the deletion of the Task out and in the history in Task Scheduler I saw that the 102 Event is logged there, but my handler never got called.\r<br />\n<br />\nAndré<br />\n",
+    "PostedDate": "2015-12-18T02:46:07.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456659",
+    "ThreadId": "648891",
+    "Html": "Sometimes with these event handlers, there can be threading problems. I have posted a sample project just for task watching in the documentation for <a href=\"https://taskscheduler.codeplex.com/wikipage?title=EventSamples#watcher\" rel=\"nofollow\">Task Events</a>. Look there for some further hints on how to get this working in your code and post back here if you are unable to resolve your issue. I have confirmed that it works by building the project posted in the documentation.<br />\n",
+    "PostedDate": "2015-12-21T10:01:44.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

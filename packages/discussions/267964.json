@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "653390",
+    "ThreadId": "267964",
+    "Html": "\r\n<p>Subject says it all. imported via add library package reference.</p>\r\n<p>VS 2010 VB.net project</p>\r\n<p>i can create a LogonTrigger and add it to a task, but the delay property gives a 'delay' is not a member of Microsoft.Win32.TaskScheduler.Trigger error.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                    td = taskService.NewTask()\r\n                    td.RegistrationInfo.Description = currentPublication &#43; <span style=\"color:#a31515\">&quot;Sync Task : scheduled task to fire sql replication.&quot;</span>\r\n                    td.RegistrationInfo.Author = <span style=\"color:#a31515\">&quot;XXXXXX&quot;</span>\r\n                    td.RegistrationInfo.<span style=\"color:blue\">Date</span> = Now\r\n                    tLTrigger = <span style=\"color:blue\">New</span> LogonTrigger\r\n                    'tLTrigger.Delay = TimeSpan.FromMinutes(5)\r\n                    tLTrigger.Enabled = <span style=\"color:blue\">False</span>\r\n                    tLTrigger.ExecutionTimeLimit = TimeSpan.Zero\r\n                    tLTrigger.Repetition.Duration = TimeSpan.Zero\r\n                    tLTrigger.Repetition.Interval = TimeSpan.FromMinutes(15)\r\n                    td.Triggers.Add(tLTrigger)\r\n                    td.Settings.RunOnlyIfNetworkAvailable = <span style=\"color:blue\">True</span>\r\n                    td.Settings.NetworkSettings.Name = networkName\r\n                    td.Settings.NetworkSettings.Id = networkRegGUID\r\n                    td.Settings.StartWhenAvailable = <span style=\"color:blue\">True</span>\r\n                    td.Settings.StopIfGoingOnBatteries = <span style=\"color:blue\">False</span>\r\n                    td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(2)\r\n                    td.Settings.Compatibility = TaskCompatibility.V2\r\n                    td.Settings.MultipleInstances = TaskInstancesPolicy.IgnoreNew\r\n\r\n                    td.Actions.Add(<span style=\"color:blue\">New</span> ExecAction(syncBatchPath &#43; <span style=\"color:#a31515\">&quot;\\sync&quot;</span> &#43; currentPublication &#43; <span style=\"color:#a31515\">&quot;Merge.bat&quot;</span>))\r\n                    taskService.GetFolder(syncFolderName).RegisterTaskDefinition(currentPublication &#43; <span style=\"color:#a31515\">&quot;Sync&quot;</span>, td, TaskCreation.Create, replicationID, replicationPW, TaskLogonType.Password)\r\n\r\nversion 1.6.4219.15519 of the Microsoft.Win32.TaskScheduler dll.</pre>\r\n<pre>any help would be great.</pre>\r\n<pre>nathan</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-08-05T12:59:16.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653477",
+    "ThreadId": "267964",
+    "Html": "<p>LogonTrigger, under V2 (Win Vista and later), does have a Delay property. Please confirm you are using a later OS version. If you are, please post the exact text from the exception.</p>",
+    "PostedDate": "2011-08-05T16:38:50.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653511",
+    "ThreadId": "267964",
+    "Html": "<p>windows 7 ultimate x64 - visual studio professional -&nbsp; .net 4 windows application</p>\r\n<p>VS info</p>\r\n<p>Microsoft Visual Studio 2010<br />Version 10.0.30319.1 RTMRel<br />Microsoft .NET Framework<br />Version 4.0.30319 RTMRel</p>\r\n<p>Installed Version: Professional</p>\r\n<p>intellisense does not have the Delay property. all other properties are listed.</p>\r\n<p>there is a compile error of (from error list)-</p>\r\n<p>Error&nbsp;1&nbsp;'Delay' is not a member of 'Microsoft.Win32.TaskScheduler.Trigger'.&nbsp;C:\\Users\\Gamer\\documents\\visual studio 2010\\Projects\\WindowsApplication1\\WindowsApplication1\\Form1.vb&nbsp;8&nbsp;9&nbsp;WindowsApplication1</p>\r\n<p>thats the only error i get</p>",
+    "PostedDate": "2011-08-05T18:34:06.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653552",
+    "ThreadId": "267964",
+    "Html": "<p>I'm not a VB expert, but I think you only need to force the type of the tLTrigger variable:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">Dim</span> tLTrigger <span style=\"color: blue;\">As</span> LogonTrigger = <span style=\"color: blue;\">New</span> LogonTrigger()\r\n</pre>\r\n</div>\r\n<p>Or, you need to cast the tLTrigger variable to a LogonTrigger before calling the Delay property. It appears that right now it is the parent class Trigger which does not have that property.</p>",
+    "PostedDate": "2011-08-05T23:30:25.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653686",
+    "ThreadId": "267964",
+    "Html": "<p>I should have cast it as a logontrigger instead of the standard trigger.</p>\r\n<p>thanks much that worked</p>",
+    "PostedDate": "2011-08-06T07:44:14.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

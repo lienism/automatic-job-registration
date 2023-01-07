@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "996224",
+    "ThreadId": "431916",
+    "Html": "Hi David,\r<br />\n<br />\nIn one of our test machines running 64-bit Windows 7 Pro, selecting the Run with highest privileges option causes an Access denied error:\r<br />\n<br />\nAccess denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)) at\r<br />\n<br />\nMicrosoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\r<br />\n  at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r<br />\n  at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)\r<br />\n  at ...\r<br />\n<br />\n<br />\nThe error originates from a call to the RegisterChanges() method (see last line):\r<br />\n<br />\npublic void RegisterChanges()\r<br />\n{\r<br />\nif (this.Definition.Principal.LogonType == TaskLogonType.InteractiveTokenOrPassword || this.Definition.Principal.LogonType == TaskLogonType.Password)\r<br />\n   throw new System.Security.SecurityException(&quot;Tasks which have been registered previously with stored passwords must use the TaskFolder.RegisterTaskDefinition method for updates.&quot;);\r<br />\n<br />\nTaskService.GetFolder(System.IO.Path.GetDirectoryName(this.Path)).RegisterTaskDefinition(this.Name, this.Definition);\r<br />\n}\r<br />\n<br />\nSettings:\r<br />\nRun whether user is logged on or not. Do not store password\r<br />\nRun with highest privileges\r<br />\n<br />\nI did run icalcs to set write permissions to the tasks folder (c:\\windows\\system32\\tasks), to no avail.\r<br />\n<br />\nThanks, Audi<br />\n",
+    "PostedDate": "2013-02-04T09:15:36.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996311",
+    "ThreadId": "431916",
+    "Html": "Just to confirm, if you run the exact same code and do not set the Run with Highest Privileges option, it will register successfully?<br />\n",
+    "PostedDate": "2013-02-04T12:18:21.427-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996314",
+    "ThreadId": "431916",
+    "Html": "Yes, it will register successfully when the Run with Highest Privileges option is not set.<br />\n",
+    "PostedDate": "2013-02-04T12:21:26.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996316",
+    "ThreadId": "431916",
+    "Html": "Check out the conditions for <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa380747(v=vs.85).aspx\" rel=\"nofollow\">IPrincipal::RunLevel</a> and let me know if they apply to your use case. I suspect this may be the problem.<br />\n",
+    "PostedDate": "2013-02-04T12:26:49.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996776",
+    "ThreadId": "431916",
+    "Html": "Thanks David. On the &quot;problematic&quot; machine, the E_ACCESSDENIED error is raised regardless of the type of user -- administrators, administrator groups, non-administrators, etc. I thought the issue is related to the following link (but after performing the &quot;fix&quot;, the issue still persists):\r<br />\n<br />\n<a href=\"http://social.technet.microsoft.com/Forums/eu/winserverGP/thread/67734412-bb17-42d5-80ff-0edf3147c169\" rel=\"nofollow\">http://social.technet.microsoft.com/Forums/eu/winserverGP/thread/67734412-bb17-42d5-80ff-0edf3147c169</a>\r<br />\n<br />\nInterestingly, if I schedule a task within our application with the &quot;Run with highest privileges&quot; option unchecked, and then open the same task using the built-in Windows Task Scheduler, I'm able to set the &quot;Run with highest privileges&quot; option from there!\r<br />\n<br />\nI'm out out ideas why the following call is raising an access denied error:\r<br />\n<br />\nTaskService.GetFolder(System.IO.Path.GetDirectoryName(this.Path)).RegisterTaskDefinition(this.Name, this.Definition); \r<br />\n<br />\nThanks, Audi<br />\n",
+    "PostedDate": "2013-02-05T08:46:55.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "996964",
+    "ThreadId": "431916",
+    "Html": "Is UAC turned on and are you running the executable &quot;as Administrator&quot;?<br />\n",
+    "PostedDate": "2013-02-05T15:02:17.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "997306",
+    "ThreadId": "431916",
+    "Html": "David -- you're the man!!! Yes UAC is turned on, and running our executable &quot;as Administrator&quot; did the trick!\r<br />\n<br />\nThank you so much for your help! I really appreciate it.\r<br />\n<br />\nAudi :-)<br />\n",
+    "PostedDate": "2013-02-06T06:57:18.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

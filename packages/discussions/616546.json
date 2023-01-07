@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1399206",
+    "ThreadId": "616546",
+    "Html": "First of all Thanks for the great work here!\r<br />\n<br />\nI created a schedule successfully, The user could see the program run. I need this to run in the background as this is a technical application that a standard user should not see.\r<br />\n<br />\nCan anyone advise how i would go about doing this.\r<br />\n<br />\nNOTE: Junior developer in first year of employment so have a limited knowledge just now\r<br />\n<br />\nThanks in advance,<br />\n",
+    "PostedDate": "2015-04-02T15:13:13.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1399367",
+    "ThreadId": "616546",
+    "Html": "If you want the program to run in the user's space, then it must be run interactively within their account (like it is now). To run it minimized, you can launch it from a minimized cmd window or a PowerShell script. The cmd window line would be &quot;cmd.exe&quot; for the executable and arguments would be &quot;/Q /E:ON /C start /MIN app.exe&quot;.<br />\n",
+    "PostedDate": "2015-04-02T16:53:58.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:12:46.483-07:00"
+  }
+]

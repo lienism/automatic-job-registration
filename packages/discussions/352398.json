@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "824218",
+    "ThreadId": "352398",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I tried to schedule the task via ASP.NET application running in IIS 7.5 in Windows 2008 R2 environment.</p>\r\n<p>The error message is</p>\r\n<p><em></p>\r\n<h2>Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))</h2>\r\n<strong><span style=\"font-family:Arial,Helvetica\">\r\n<p>Description:</p>\r\n<strong>\r\n<p>&nbsp;</p>\r\n</strong>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.\r\n<br>\r\n<br>\r\n<strong>Exception Details: </strong>System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\r\n<br>\r\n<br>\r\nASP.NET is not authorized to access the requested resource. Consider granting access rights to the resource to the ASP.NET request identity. ASP.NET has a base process identity (typically {MACHINE}\\ASPNET on IIS 5 or Network Service on IIS 6) that is used if\r\n the application is not impersonating. If the application is impersonating via &lt;identity impersonate=&quot;true&quot;/&gt;, the identity will be the anonymous user (typically IUSR_MACHINENAME) or the authenticated request user.\r\n<br>\r\n<br>\r\nTo grant ASP.NET access to a file, right-click the file in Explorer, choose &quot;Properties&quot; and select the Security tab. Click &quot;Add&quot; to add the appropriate user or group. Highlight the ASP.NET account, and check the boxes for the desired .</span></strong></em><span style=\"font-family:Arial,Helvetica\"></span>\r\n<p></p>\r\n<p><span style=\"font-family:Arial,Helvetica\"><span style=\"font-family:Arial,Helvetica\">I went to C:\\Windows\\System32\\Tasks folder to give full permission to&nbsp;Network Service(the application pool that run the web application) but still having the same error\r\n above.&nbsp; I also given full access to Everyone group but still not able to schedule.</span></span></p>\r\n<p></p>\r\n<p><span style=\"font-family:Arial,Helvetica\"><span style=\"font-family:Arial,Helvetica\"><span style=\"font-family:Arial,Helvetica\">&nbsp;</span></span></span>Anybody having the same error?</p>\r\n<p>Thanks.</p>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-04-15T23:53:53.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "824330",
+    "ThreadId": "352398",
+    "Html": "<p>Hi,</p>\r\n<p>I have managed to resolve this issue.</p>\r\n<p>Just create the TaskDefinition td = ts.NewTask() without assigning the user id and password.</p>",
+    "PostedDate": "2012-04-16T03:53:32.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869527",
+    "ThreadId": "352398",
+    "Html": "<p>Hi</p>\r\n<p>TaskService ts = new TaskService();<br />Version ver = ts.HighestSupportedVersion;<br />bool newVer = (ver &gt;= new Version(1, 2));<br />TaskFolder tf = ts.RootFolder;</p>\r\n<p>&nbsp;</p>\r\n<p>This might works?</p>\r\n<p>Ajay</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-07-16T06:12:39.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

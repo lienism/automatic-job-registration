@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Unknown resolution",
+    "ClosedDate": "2015-02-17T08:47:07.46-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "hi,\n\nwhen i tried to connect a remote server(windows 2003) using the line,\n\nMicrosoft.Win32.TaskScheduler.TaskService _taskservice = new Microsoft.Win32.TaskScheduler.TaskService(servername, username, domain, Password);\n\nit is throwing multiple errors like \"The request is not supported. (Exception from HRESULT: 0x80070032)\" and sometimes with the code 0x80070006\n\nis it possible to connect to windows server 2003 through Microsoft.win32.taskscheduler? because 2003 server doesnt have GUI for Task Scheduler.\n\ncan anyone please help me on this..",
+    "LastUpdatedDate": "2015-02-17T08:47:07.46-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-09-24T06:13:28.917-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Remote windows server 2003 Task scheduling access",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11880
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Please look at the documentation here (https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Documentation#remote) for information on the security considerations for connecting to 2003 servers at the bottom.",
+      "PostedDate": "2014-09-24T08:29:45.207-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "hi dahall,[0A][0A]       i am able to connect windows 2008 server but while i am trying for 2003 server, it is throwing these errors.[0A]      and also there is no RemoteScheduled Tasks management service running on the 2003 server.",
+      "PostedDate": "2014-09-29T00:17:05.733-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "On the link I provided, please read those sections specific to XP or 2003.",
+      "PostedDate": "2014-09-29T07:08:15.283-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "yes, i read that section. on my server, firewall is not enabled.\nso it must access right.",
+      "PostedDate": "2014-09-29T23:52:00.137-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Check to make sure file and print sharing is on and that the permissions on the \\Windows\\Tasks directory allow you access.",
+      "PostedDate": "2014-10-01T05:26:29.547-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Were you able to resolve this issue? If not, please let me know the errors you're seeing and the line or lines of code associated with them. If so, please let me know how or if my suggestions worked for you. Thank you.",
+      "PostedDate": "2014-10-22T23:04:21.05-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-02-17T08:47:07.46-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

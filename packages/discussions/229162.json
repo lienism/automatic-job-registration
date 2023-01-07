@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "500540",
+    "ThreadId": "229162",
+    "Html": "<p>Hi Guys</p>\r\n<p>I have a requirement to fire&nbsp;eamil (notification) to the user's email (saved with task) when any schedule task run.</p>\r\n<p>Now I am thinking of saving user's email in the Comment (Description) of the task and as I am calling a .net console application whenever the task run I can grab that user's email from Descirption and sends the email? I want to know are their any other good ways of saving the email with the task so we can fire it from another application which will be running when the schedule task runs</p>\r\n<p>Thanks</p>\r\n<p>Nouman</p>",
+    "PostedDate": "2010-09-30T07:35:58.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "508986",
+    "ThreadId": "229162",
+    "Html": "<p>My only other suggestion is to create a customer task handler that is triggered that has the intelligence to pull the email from any location, including the Description or a more secure location. You can find an example project off the home page for this library.</p>",
+    "PostedDate": "2010-10-18T14:04:53.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

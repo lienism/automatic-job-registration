@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "648408",
+    "ThreadId": "266756",
+    "Html": "\r\n<p>Greetings, I have created code to retrieve a certain scheduled task and I am trying to return the DaysOfWeek that are set.</p>\r\n<p>I know how to get the Trigger type of the targeted scheduled task - and determine whether it is weekly or daily...</p>\r\n<p>MessageBox.Show(t.Definition.Triggers[0].TriggerType.ToString());</p>\r\n<p>MessageBox.Show(t.Definition.Triggers[0].GetType().ToString());</p>\r\n<p>But hitting a wall retrieving the DaysOfWeek once I determine the Trigger is weekly.</p>\r\n<p>Any help would be greatly appreciated.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-07-27T10:31:58.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "648539",
+    "ThreadId": "266756",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre>WeeklyTrigger wt = t.Definition.Triggers[0] <span style=\"color: blue;\">as</span> WeeklyTrigger;\r\n<span style=\"color: blue;\">if</span> (wt != <span style=\"color: blue;\">null</span>)\r\n   <span style=\"color: blue;\">return</span> wt.DaysOfWeek;\r\n</pre>\r\n</div>\r\n<p>Each trigger is actually specialized into a class that exposes the unique properties of that kind of trigger. <em>Trigger</em> is an abstract class from which all the trigger specializations are derived. <em>WeeklyTrigger</em> and <em>DailyTrigger</em> are two such specializations. By casting the abstract trigger to the appropriate specialization you can access the properties.</p>",
+    "PostedDate": "2011-07-27T13:29:29.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

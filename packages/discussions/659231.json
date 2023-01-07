@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1487504",
+    "ThreadId": "659231",
+    "Html": "Hello,\r<br />\n<br />\nAll DateTimePickers on the form some time show time in incorrect format. That depends on current regional settings. If regional settings use a 24 hour clock form translates the time into 12 hour format without AM/PM notations. And it is impossible to set a time for PM preriod.<br />\n",
+    "PostedDate": "2016-11-07T06:33:44.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487506",
+    "ThreadId": "659231",
+    "Html": "<img src=\"http://i65.tinypic.com/25tuxbk.jpg\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2016-11-07T06:47:36.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487544",
+    "ThreadId": "659231",
+    "Html": "When you pull up the equivalent trigger editor from the Windows &quot;Task Scheduler&quot; applet (Windows-R, &quot;Taskschd.msc&quot;), does it have the same limitations? I'm using the same .NET control.<br />\n",
+    "PostedDate": "2016-11-07T20:09:34.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487546",
+    "ThreadId": "659231",
+    "Html": "Also, if you can. please provide the precise regional settings that cause the problem. Can I just set the 24 hour clock option with any language to get the result you've found?<br />\n",
+    "PostedDate": "2016-11-07T21:15:56.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487572",
+    "ThreadId": "659231",
+    "Html": "Windows &quot;Task Scheduler&quot; doesn't have this limitation. <img src=\"http://i68.tinypic.com/sn2lv4.png\" alt=\"Image\" />\r<br />\nI noticed that your control has custom format. If I try to change it to &quot;Time&quot; format time will be displaed right. <br />\n",
+    "PostedDate": "2016-11-08T04:30:22.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487575",
+    "ThreadId": "659231",
+    "Html": "The issue is reprodusible when regional settings use 24 hour time format that does not display leading zero. For example:\r<br />\n <img src=\"http://i67.tinypic.com/35b6yx1.png\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2016-11-08T04:43:07.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488324",
+    "ThreadId": "659231",
+    "Html": "Thank you for the detail. I am working to resolve it for the next release.<br />\n",
+    "PostedDate": "2016-11-18T07:26:26.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488325",
+    "ThreadId": "659231",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/12433\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2016-11-18T07:28:00.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

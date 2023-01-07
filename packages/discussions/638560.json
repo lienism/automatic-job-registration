@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1427007",
+    "ThreadId": "638560",
+    "Html": "i'm trying to schedule a com object implementing ITaskHandler interface<br />\ni've download your template project &quot;COMTask&quot;<br />\n<br />\nRegistering the task with this code everything works well<br />\n<pre><code>TaskService  ts = new TaskService();\n\nTaskDefinition comTd = ts.NewTask();\ncomTd.RegistrationInfo.Description = &quot;my first schedule on a COM object&quot;;\n\nwt = new DailyTrigger();\nwt.StartBoundary = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 14, 0, 0, 0, DateTimeKind.Local);\nwt.Repetition.Interval = TimeSpan.FromMinutes(100);\ncomTd.Triggers.Add(wt);\n             \nComHandlerAction cha = new ComHandlerAction(new Guid(&quot;{CE7D4428-8A77-4c5d-8A13-5CAB5D1EC734}&quot;), &quot;mydata&quot;);\ncomTd.Actions.Add(cha);\n            \nts.RootFolder.RegisterTaskDefinition(&quot;My COM TAsk&quot;, comTd);\n</code></pre>\n\nnow i'd like to implement <strong>ITaskHandlerStatus</strong> interface in order to get the percentage of completion.<br />\n<br />\ni've noticed that in your project, <br />\ninto the file <strong>&quot;TaskHandlerBase.cs&quot;</strong> there is this interface &quot;decorated&quot; with a different &quot;GUID&quot; (different from the other one on the ITaskHandler interface) <br />\n<br />\nso what does it mean? i have to register another COMtask with this guid?<br />\nis not sufficent implement this interface(<strong>ITaskHandlerStatus</strong>) into the com object i've already registered?<br />\n<br />\ni've not understood well how to do<br />\n<br />\nat first i thought to add the <strong>ITaskHandlerStatus</strong> interface to you COMTask class and implement its methods<br />\n<br />\n<br />\nyour class<br />\n<pre><code>public class MyCOMTask : TaskHandlerBase</code></pre>\n\nto <br />\n<pre><code>public class MyCOMTask : TaskHandlerBase, ITaskHandlerStatus</code></pre>\n\nbut if so, i don't understand the meaning of the second &quot;GUID&quot; <br />\n",
+    "PostedDate": "2015-05-21T23:39:42.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427104",
+    "ThreadId": "638560",
+    "Html": "The <code>ITaskHanderStatus</code> interface is exposed through the <code>StatusHandler</code> property of <code>TaskHandlerBase</code>. Suppose you had a task that needed to write information to a log file every few seconds and terminate after 100 entries. You would create a Timer instance inside your <code>TaskHandlerBase</code> inherited class and then have a method like the following that would be called when that Timer's Elapsed event was called:<br />\n<pre><code>const int maxWrites = 100;\nint writeCount = 0;\n\nvoid timer_Elapsed(object sender, ElapsedEventArgs e)\n{\n  if (writeCount &lt; maxWrites)\n  {\n    try\n    {\n      using (StreamWriter wri = File.AppendText(file))\n        wri.WriteLine(&quot;Log entry {0}&quot;, DateTime.Now);\n\n      this.StatusHandler.UpdateStatus((short)(++writeCount / maxWrites), string.Format(&quot;Log file started at {0}&quot;, lastWriteTime));\n    }\n    catch { }\n  }\n\n  if (writeCount &gt;= maxWrites)\n  {\n    timer.Enabled = false;\n    writeCount = 0;\n    this.StatusHandler.TaskCompleted(0);\n  }\n}</code></pre>\n\n",
+    "PostedDate": "2015-05-22T07:46:58.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:32:37.893-07:00"
+  }
+]

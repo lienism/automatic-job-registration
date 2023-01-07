@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1314052",
+    "ThreadId": "569982",
+    "Html": "I made the experience that it is possible to connect to the Task Service of a client which has firewall on and &quot;Allow Remote Task...&quot; deactivated.\r<br />\n<br />\nIt is very simple. I created the following code to be able to handle XP machines I couldnt connect the &quot;normal way&quot;. Always getting &quot;...not supported&quot;. Then by &quot;accident&quot; I started this code against a 2008SP2 Client with firewall on and &quot;Allow Remote Task...&quot; deactivated:\r<br />\n<br />\nts = new TaskService();\r<br />\nts.TargetServer = &lt;ip addres of machine&gt;.\r<br />\n<br />\nAfter filling up the ip address it gets connected to the machine. Well it looks like it doesnt fully support everything. Sometimes tasks are schduled and dont run automatically. But I am able to define tasks, monitoring them and start them when they need a little bit extra help.\r<br />\n<br />\n<br />\nHope this helps someone running into the firewall problem.<br />\n",
+    "PostedDate": "2014-10-16T10:22:38.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:21.487-07:00"
+  }
+]

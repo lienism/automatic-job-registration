@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1494579",
+    "ThreadId": "662189",
+    "Html": "Hi,\r<br />\n<br />\nI've encounter WnfStateChangeTrigger error while trying to access task's Definition property in windows server 2016\r<br />\n<img src=\"http://i68.tinypic.com/t6x861.png\" alt=\"Image\" />\r<br />\n<br />\nXML property from the task's object\r<br />\n&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;\r<br />\n&lt;Task version=&quot;1.5&quot; xmlns=&quot;<a href=\"http://schemas.microsoft.com/windows/2004/02/mit/task\" rel=\"nofollow\">http://schemas.microsoft.com/windows/2004/02/mit/task</a>&quot;&gt;\r<br />\n  &lt;RegistrationInfo&gt;<br />\n<pre><code>&lt;Date&gt;2015-02-09T10:54:13.9629482&lt;/Date&gt;\n&lt;SecurityDescriptor&gt;D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FA;;;S-1-5-87-2978287140-3787137133-1749738600-1988163579-2060695581)&lt;/SecurityDescriptor&gt;\n&lt;Source&gt;$(@%SystemRoot%\\system32\\ApplockerCsp.dll,-101)&lt;/Source&gt;\n&lt;Author&gt;$(@%SystemRoot%\\system32\\ApplockerCsp.dll,-100)&lt;/Author&gt;\n&lt;Description&gt;$(@%SystemRoot%\\system32\\ApplockerCsp.dll,-102)&lt;/Description&gt;\n&lt;URI&gt;\\Microsoft\\Windows\\AppID\\EDP Policy Manager&lt;/URI&gt;</code></pre>\n\n&lt;/RegistrationInfo&gt;\r<br />\n  &lt;Principals&gt;<br />\n<pre><code>&lt;Principal id=&quot;LocalService&quot;&gt;\n  &lt;UserId&gt;S-1-5-19&lt;/UserId&gt;\n&lt;/Principal&gt;</code></pre>\n\n&lt;/Principals&gt;\r<br />\n  &lt;Settings&gt;<br />\n<pre><code>&lt;AllowHardTerminate&gt;false&lt;/AllowHardTerminate&gt;\n&lt;DisallowStartIfOnBatteries&gt;false&lt;/DisallowStartIfOnBatteries&gt;\n&lt;StopIfGoingOnBatteries&gt;false&lt;/StopIfGoingOnBatteries&gt;\n&lt;ExecutionTimeLimit&gt;PT0S&lt;/ExecutionTimeLimit&gt;\n&lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;\n&lt;IdleSettings&gt;\n  &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;\n  &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;\n&lt;/IdleSettings&gt;\n&lt;UseUnifiedSchedulingEngine&gt;true&lt;/UseUnifiedSchedulingEngine&gt;</code></pre>\n\n&lt;/Settings&gt;\r<br />\n  &lt;Triggers&gt;<br />\n<pre><code>&lt;WnfStateChangeTrigger&gt;\n  &lt;StateName&gt;7588BCA328009213&lt;/StateName&gt;\n&lt;/WnfStateChangeTrigger&gt;\n&lt;WnfStateChangeTrigger&gt;\n  &lt;StateName&gt;75E0BCA328009213&lt;/StateName&gt;\n&lt;/WnfStateChangeTrigger&gt;</code></pre>\n\n&lt;/Triggers&gt;\r<br />\n  &lt;Actions Context=&quot;LocalService&quot;&gt;<br />\n<pre><code>&lt;ComHandler&gt;\n  &lt;ClassId&gt;{DECA92E0-AF85-439E-9204-86679978DA08}&lt;/ClassId&gt;\n  &lt;Data&gt;&lt;![CDATA[EdpPolicyManager]]&gt;&lt;/Data&gt;\n&lt;/ComHandler&gt;</code></pre>\n\n&lt;/Actions&gt;\r<br />\n&lt;/Task&gt;<br />\n",
+    "PostedDate": "2017-03-24T02:25:22.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494606",
+    "ThreadId": "662189",
+    "Html": "Is this a task created by the OS or by you? What action are you performing when you see the exception?<br />\n",
+    "PostedDate": "2017-03-24T09:08:05.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494747",
+    "ThreadId": "662189",
+    "Html": "Hi,\r<br />\n<br />\nSorry for the late reply. The task is created by the OS.\r<br />\n<br />\nThe exception occur when I'm trying to access the Task's Definition property.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2017-03-27T17:10:21.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495049",
+    "ThreadId": "662189",
+    "Html": "Hi,\r<br />\n<br />\nAny updates?\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2017-04-02T16:48:53.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495092",
+    "ThreadId": "662189",
+    "Html": "I have this task on my Windows 10 Build 1607 and am able to read the TaskDefinition (you'll actually see in your image that the Definition is not the problem). It's value is &quot;<a href=\"mailto:$(@%SystemRoot%\\system32\\ApplockerCsp.dll,-102)\" rel=\"nofollow\">$(@%SystemRoot%\\system32\\ApplockerCsp.dll,-102)</a>&quot; which refers to an embedded resource in a DLL. Can you open the task in the system &quot;Task Scheduler&quot;? Also, are you running as Administrator? Windows Server secures tasks so they can only be read and modified by the sysadmin.<br />\n",
+    "PostedDate": "2017-04-03T14:37:49.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495148",
+    "ThreadId": "662189",
+    "Html": "Hi,\r<br />\n<br />\nI am able to open the task in the system &quot;Task Scheduler&quot; and run as Administrator.\r<br />\n<br />\nI actually has a windows service which run this line of code. \r<br />\n<br />\nforeach (Task task in source) //source is TaskCollection<br />\n<pre><code>        {\n           //process Task's information\n           myObject.Author = task.Definition.RegistrationInfo.Author; //problem arise here\n        }\n</code></pre>\n\nThe windows service is running using Local System account. I have tried to change it to Administrator account but the problem still persist.\r<br />\n<br />\nBelow is the result from my immediate window when I'm trying to access task.Definition or task.IsActive\r<br />\n<br />\ntask.Definition\r<br />\n'task.Definition' threw an exception of type 'System.Runtime.InteropServices.COMException'<br />\n<pre><code>Data: {System.Collections.ListDictionaryInternal}\nErrorCode: -2147216618\nHResult: -2147216618\nHelpLink: null\nInnerException: null\nMessage: &quot;(1,1148):WnfStateChangeTrigger:&quot;\nSource: &quot;&quot;\nStackTrace: &quot;   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition.set_XmlText(String value)\\r\\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\\r\\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()&quot;\nTargetSite: {Void set_XmlText(System.String)}\n</code></pre>\n\ntask.IsActive\r<br />\n'task.IsActive' threw an exception of type 'System.Runtime.InteropServices.COMException'<br />\n<pre><code>Data: {System.Collections.ListDictionaryInternal}\nErrorCode: -2147216618\nHResult: -2147216618\nHelpLink: null\nInnerException: null\nMessage: &quot;(1,1148):WnfStateChangeTrigger:&quot;\nSource: &quot;&quot;\nStackTrace: &quot;   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition.set_XmlText(String value)\\r\\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\\r\\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()\\r\\n   at Microsoft.Win32.TaskScheduler.Task.get_IsActive()&quot;\nTargetSite: {Void set_XmlText(System.String)}\n</code></pre>\n\nKindly advise.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2017-04-05T01:45:36.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495223",
+    "ThreadId": "662189",
+    "Html": "Did you have this problem using the 2.5.21 version of the library? If using NuGet, can you downgrade the library to 2.5.21 and retest and let me know if the exception goes away? I have a registry query to see if on Win10/Svr16 and I made a change to 2.5.22 that may be the cause of the error.<br />\n",
+    "PostedDate": "2017-04-06T10:40:24.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495247",
+    "ThreadId": "662189",
+    "Html": "The problem exists when I'm using version 2.5.22 of the library. The exception goes away after I've downgraded the library to 2.5.21 via NuGet.\r<br />\n<br />\nThanks for the assistance. Looking forward to the version update. :)<br />\n",
+    "PostedDate": "2017-04-06T18:56:04.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495286",
+    "ThreadId": "662189",
+    "Html": "Should be fixed in 2.5.23 released today<br />\n",
+    "PostedDate": "2017-04-07T16:08:13.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495326",
+    "ThreadId": "662189",
+    "Html": "I've updated the library version to 2.5.23 and the exception did not occur.\r<br />\n<br />\nThanks.<br />\n",
+    "PostedDate": "2017-04-09T19:23:45.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-04-10T11:41:46.64-07:00"
+  }
+]

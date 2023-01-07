@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed in 2.5.22",
+    "ClosedDate": "2017-02-05T12:44:38.713-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "All DateTimePickers on the form some time show time in incorrect format. That depends on current regional settings. If regional settings use a 24 hour clock form translates the time into 12 hour format without AM/PM notations. And it is impossible to set a time for PM preriod.\n\nhttps://taskscheduler.codeplex.com/discussions/659231",
+    "LastUpdatedDate": "2017-02-05T12:44:38.713-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-11-18T07:27:59.143-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "DateTimePicker Issue",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12433
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

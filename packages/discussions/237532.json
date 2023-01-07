@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "532639",
+    "ThreadId": "237532",
+    "Html": "\r\n<p>Having a real problem trying to register a Task in an MSI installer with Visual Studio 2010. I can use the assembly just fine in a plain Console application, but in the installer I get an exception which looks like its just unable to initialize COM or something\r\n else strange. Anyone know if there are issues loading the assembly within an MSI installer class?</p>\r\n<p>This is the exception that occurs on the first method I run after creating the TaskService and TaskDefinition.</p>\r\n<p></p>\r\n<pre>System.InvalidCastException: Unable to cast COM object of type 'System.__ComObject' to interface type 'Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition'. This operation failed because the QueryInterface call on the COM component for the interface with IID '{F5BC8FC5-536D-4F77-B852-FBC1356FDEB6}' failed due to the following error: No such interface supported (Exception from HRESULT: 0x80004002 (E_NOINTERFACE)).\r\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition.get_Triggers()\r\n   at Microsoft.Win32.TaskScheduler.TaskDefinition.get_Triggers()\r\n   at SNMPLoggingService.ProjectInstaller.registerParserTask()</pre>\r\n<p></p>\r\n",
+    "PostedDate": "2010-12-07T17:56:14.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "532991",
+    "ThreadId": "237532",
+    "Html": "\r\n<p>Half-found a solution. I was making the calls during the commit callbacks of the installer (they happen at the end). Apparently the MSI unloads all the assemblies/dependencies... or something by this point in the installer.</p>\r\n<p>Making the calls during the install callbacks &quot;solves&quot; the issue.</p>\r\n",
+    "PostedDate": "2010-12-08T10:07:55.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

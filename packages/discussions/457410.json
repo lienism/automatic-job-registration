@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1094422",
+    "ThreadId": "457410",
+    "Html": "<pre><code>td.Actions.Add(new ExecAction(&quot;myprogram.exe&quot;, &quot;$(Arg0),$(Arg1),$(Arg2)&quot;));\ntask.Run(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;);</code></pre>\n\nI am unsure what <code>task</code> refers to.<br />\nMy code:<br />\n<pre><code>objTaskService = New TaskService\nDim objTrigger As New DailyTrigger\nobjTrigger.StartBoundary = dtStartDate\nDim objTask = objTaskService.NewTask\nobjTask.Actions.Add(objAction)\nobjTask.Triggers.Add(objTrigger)\nobjTaskService.RootFolder.RegisterTaskDefinition(&quot;Log&quot;, objTask)\n</code></pre>\n\nOn which instance should i invoke the &quot;<code>Run</code>&quot;method?<br />\nCan we pass variables instead of string parameters to the Run method?<br />\n",
+    "PostedDate": "2013-09-19T04:57:53.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1094520",
+    "ThreadId": "457410",
+    "Html": "Here is some working code that does what I think you're asking. You can pass string typed variables to the Run method.<br />\n<pre><code>Using ts As New TaskService()\n    ' Create a new task definition\n    Dim td As TaskDefinition = ts.NewTask\n\n    ' Add a daily trigger\n    Dim dt As New DailyTrigger()\n    dt.StartBoundary = dtStartDate\n    td.Triggers.Add(dt)\n\n    ' Add an action that takes parameters\n    td.Actions.Add(New ExecAction(&quot;myprogram.exe&quot;, &quot;$(Arg0) $(Arg1) $(Arg2)&quot;))\n\n    ' Register the task in the root folder\n    Dim task As Task = ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td)\n\n    ' Run the task immediately with parameters\n    task.Run(&quot;A&quot;, var1, &quot;C&quot;)\nEnd Using</code></pre>\n\n",
+    "PostedDate": "2013-09-19T08:48:12.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1096862",
+    "ThreadId": "457410",
+    "Html": "Thankyou for the quick reply<br />\n<br />\nI am still facing problems defining the ExecAction instance.<br />\n<pre><code>td.Actions.Add(New ExecAction(&quot;cmd&quot;, &quot;/c start &quot;&quot;Log&quot;&quot; /min &quot; + ConfigurationSettings.AppSettings(&quot;consoleAppExeFilePath&quot;) + &quot; &quot; + var1 + &quot; &quot; + var2 + &quot; &quot; + var3.ToString + &quot; &quot; + dtEndDate + &quot; &quot; + dtStartDate + &quot; &quot; + var4, Nothing)</code></pre>\n\nI'm trying to rewrite the above code using Arguments as follows:<br />\n<pre><code>td.Actions.Add(New ExecAction(&quot;cmd&quot;, &quot;/c start &quot;, &quot;Log&quot;, &quot; /min&quot;, ConfigurationSettings.AppSettings(&quot;consoleAppExeFilePath&quot;), &quot;$(Arg0)&quot;, &quot;$(Arg1)&quot;, &quot;$(Arg1)&quot;, &quot;$(Arg1)&quot;, &quot;$(Arg1)&quot;, &quot;$(Arg1)&quot;))\nDim task As Task = ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td)\ntask.Run(var1, var2, var3.ToString, dtEndDate, dtStartDate, var4)</code></pre>\n\nIt does not work.<br />\nI get the following error at ExecAction:<br />\n<pre><code>Error   11  Overload resolution failed because no accessible 'New' accepts this number of arguments.\n</code></pre>\n\nHelp appreciated<br />\n",
+    "PostedDate": "2013-09-20T03:16:05.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1096953",
+    "ThreadId": "457410",
+    "Html": "The ExecAction constructor takes a comma separated list of string constants. If variables are supplied to this constructor, they must evaluate to strings and cannot be replaced at runtime. The only arguments that can be evaluated at runtime are those in the $(ArgX) format where X represents the numerical order of the parameter in the Run method.<br />\n<br />\nTry:<br />\n<pre><code>td.Actions.Add(New ExecAction(&quot;cmd&quot;, &quot;/c start Log /min &quot; + ConfigurationSettings.AppSettings(&quot;consoleAppExeFilePath&quot;) + &quot;$(Arg0) $(Arg1) $(Arg2) $(Arg3) $(Arg4) $(Arg5)&quot;))</code></pre>\n\n",
+    "PostedDate": "2013-09-20T07:21:04.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1097972",
+    "ThreadId": "457410",
+    "Html": "I tried using the format you specified. Still gives the same error<br />\n",
+    "PostedDate": "2013-09-23T04:25:05.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098257",
+    "ThreadId": "457410",
+    "Html": "I have corrected errors in my previous code samples in this thread. I believe they should work now.<br />\n",
+    "PostedDate": "2013-09-23T15:48:04.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098399",
+    "ThreadId": "457410",
+    "Html": "Yes that works. Thank you for your time.\r<br />\nJust wanted to clarify : Using task.Run causes the task to be executed immediately and in this case, the StartBoundary of the DailyTrigger is not relevant?<br />\n",
+    "PostedDate": "2013-09-24T00:52:53.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098725",
+    "ThreadId": "457410",
+    "Html": "The Run method forces the task's action(s) to be run immediately regardless of any trigger settings.<br />\n",
+    "PostedDate": "2013-09-24T12:23:19.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1098861",
+    "ThreadId": "457410",
+    "Html": "Thank you for your help.<br />\n",
+    "PostedDate": "2013-09-24T22:29:29.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

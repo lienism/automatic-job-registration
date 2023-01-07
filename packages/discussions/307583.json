@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "757163",
+    "ThreadId": "307583",
+    "Html": "\r\n<p>when I use</p>\r\n<p>using (TaskService ts = new TaskService()) {}</p>\r\n<p>if works perfectly locally. Now I would like to move to a server, so I start using:</p>\r\n<p>using (TaskService ts = new TaskService(&quot;192.168.1.3&quot;,&quot;testuser&quot;,null,&quot;PaSSword&quot;, false)) {} or</p>\r\n<p>using (TaskService ts = new TaskService(&quot;192.168.1.3&quot;,&quot;testuser&quot;,null,&quot;PaSSword&quot;, true)) {} or</p>\r\n<p>using (TaskService ts = new TaskService(&quot;192.168.1.3&quot;,&quot;testuser&quot;,&quot;192.168.1.3&quot;,&quot;PaSSword&quot;, false)) {}</p>\r\n<p>But now I never get a connection. When I do on the other hand:</p>\r\n<p>schtasks /query /S 192.168.1.3 /U testuser /P PaSSword</p>\r\n<p>I have no problem. Does anybody have a clue what I'm doing wrong?</p>\r\n",
+    "PostedDate": "2012-02-11T08:37:43.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "763431",
+    "ThreadId": "307583",
+    "Html": "<p>I figured it out, thanks.</p>",
+    "PostedDate": "2012-02-14T07:26:32.573-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "767730",
+    "ThreadId": "307583",
+    "Html": "<p>What was your solution?</p>",
+    "PostedDate": "2012-02-15T07:59:43.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "796541",
+    "ThreadId": "307583",
+    "Html": "<p>I use Windows 7 connecting to Windows 2008R2.</p>\r\n<p>First UAC must be disabled on Windows 2008R2 otherwise access denied keeps apearing.</p>\r\n<p>When I started using the hostname (computername) instead of the IPaddress, all worked.</p>",
+    "PostedDate": "2012-02-22T17:10:07.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

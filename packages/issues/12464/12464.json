@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This has been fixed in 2.5.27 released today.",
+    "ClosedDate": "2017-06-11T14:05:18.17-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I tried to get the Task.Definition.Actions on Windows 10 Version 1607\nI got \n\"Exception Error The current version of the native library (1.1) does not support the original or minimum version of the ...\"\n\nI looked at the source code in TaskService/Task.cs and found the function\ninternal static int GetOSLibraryMinorVersion() returns 1 instead of 5 \nand that cause the above error\nI belive the issue to do with  Environment.OSVersion.Version.Major is set to 10 in my case rather than 6  because I embded manfist file with my program\n\nTo reproduce the issue you would need to emabed a manfist file with your program and \nthen call something like the follwoing\n\n   string Allatasks = \"\";\n  TaskService taskService = new TaskService();\n    \n  foreach (var task in taskService.AllTasks)\n  {\n                try\n                {\n                        Allatasks  += task.Definition.Actions.ToString()) + \"\\r\\n\";\n                }\n                catch (Exception ex)\n                {\n                    ...\n                }\n            }\n   }\n\nPlease note this happen only when I embed a amnifist file with the program",
+    "LastUpdatedDate": "2017-06-11T14:05:18.17-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-09T09:31:55.213-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Exception Error The current version of the native library (1.1) does not support the original or minimum version ...",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12464
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

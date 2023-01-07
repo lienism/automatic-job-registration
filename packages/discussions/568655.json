@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1309186",
+    "ThreadId": "568655",
+    "Html": "I am working on a project where I have to remotly connect to the task scheduler on various machines inside a domain. It works fine connecting to win7, win8, 2008sp2, 2008R2 and 2012. But with XP I have problems.\r<br />\n<br />\nAll machines (except XP) can be easily connected via<br />\n<pre><code>ts = new TaskService(aHostname, aUserName, aDomainName, aPwd);</code></pre>\n\nWith XP this doesnt work. The error message is always :<br />\n<pre><code>The request is not supported. (Exception from HRESULT: 0x80070032)</code></pre>\n\nBy the way: The firewall on the XP machine is completly deactivated so the firewall doesn't matter.\r<br />\n<br />\nWhen I now use the following code I am more or less able to connect to xp and can create a task:<br />\n<pre><code>ts = new TaskService();\nts.TargetServer = aHostname;</code></pre>\n\nThis means: I am connecting to the Task Scheduler of the machine where my app is started and then set the target server to the hostname of the XP machine. But connecting to XP with this methode creates new problems: When I call <br />\n<pre><code>ts.FindTask </code></pre>\n\nwith this connection I again get a <br />\n<pre><code>&quot;The request is not supported. (Exception from HRESULT: 0x80070032)&quot;.</code></pre>\n\nOkay. The FindTask problem doesn't hurt me much. The tasks themselves on XP are also not started but I guess that doesn't have to do with the connection.\r<br />\n<br />\nDo you have any experience using the wrapper to connect to XP (SP3)? Is there something I am doing wrong or did I miss something? Why I am not able to connect to XP using<br />\n<pre><code>ts = new TaskService(aHostname, aUserName, aDomainName, aPwd);</code></pre>\n\nIs it because of Task Scheduler v1.0?\r<br />\n<br />\np.s.: Sorry for so many words but it is hard to describe it shorter.  And sorry for coming up with an XP problem ;-)<br />\n",
+    "PostedDate": "2014-09-30T02:16:21.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1309542",
+    "ThreadId": "568655",
+    "Html": "XP requires that the firewall on both client and server allows the Task Scheduler to pass through. It also requires file and print sharing enabled on the XP box and that the permissions on the \\Windows\\Tasks folder allow access to the account specified in the TaskService constructor.<br />\n",
+    "PostedDate": "2014-10-01T05:22:32.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

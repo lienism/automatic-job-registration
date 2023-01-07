@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "905064",
+    "ThreadId": "393341",
+    "Html": "\r\n<p>Create a new trigger. On 'Begin the task' option, select &#65279;'On Workstation Lock' or 'On Workstation Unlock'.</p>\r\n",
+    "PostedDate": "2012-08-28T05:18:32.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905228",
+    "ThreadId": "393341",
+    "Html": "\r\n<p>I am not able to reproduce on Windows 7. This should only be the case when editing a task setup for XP or if the compatibility combo box has been set to that. All state change triggers are exclusive to Vista and later.</p>\r\n",
+    "PostedDate": "2012-08-28T10:28:55.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905232",
+    "ThreadId": "393341",
+    "Html": "<p>Sorry, I think I misstated the issue: the ﻿'On Workstation Lock' and 'On Workstation Unlock' are on the combobox list, but when you select either one of them, the selected item for the combobox is not updated (it reverts back to the previously selected item).</p>",
+    "PostedDate": "2012-08-28T10:35:24.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905300",
+    "ThreadId": "393341",
+    "Html": "<p>Got it. You found a bug which I have corrected for the next release. Source code is available now. Thanks.</p>",
+    "PostedDate": "2012-08-28T12:51:31.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "656644",
+    "ThreadId": "268726",
+    "Html": "<p>I'm working to create a task on Windows 2008, and&nbsp;would like for the password to be stored when my task is added (the \"Do not store password. The task will only have access to local resources\" box will not be checked when viewed in Task Scheduler).</p>\n<p>When using the schtasks.exe command line utility, this is accomplished by omitting the /NP parameter (I think).</p>\n<p>In looking through the documentation and this discussion board, I don't see any way to control this...unless&nbsp;I&nbsp;just missed it. It seems that using TaskLogonType.Password would accomplish this, but that isn't working for me.</p>\n<p>I'm using a variation of the provided example code:</p>\n<p>&nbsp;// Get the service on the local machine<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create a new task definition and assign properties<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = \"My Task Description\";<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Principal.LogonType = TaskLogonType.Password;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Principal.RunLevel = TaskRunLevel.Highest;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Add a trigger that will fire every Sunday at 13:00<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(new WeeklyTrigger { StartBoundary = DateTime.Today + TimeSpan.FromHours(13), DaysOfWeek = DaysOfTheWeek.Sunday });<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Add an action that will launch MyApp.exe whenever the trigger fires<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(\"MyApp.exe\", \"\", null));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Register the task in the root folder<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const string taskName = \"My task description\";<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, \"someUserId\", \"somePassword\");<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\n<p>&nbsp;Thanks in advance for any guidance on this.</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2011-08-11T08:55:02.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656686",
+    "ThreadId": "268726",
+    "Html": "<p>Just needed to dig a little more. Found that if I change</p>\r\n<p>&nbsp;ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, \"someUserId\", \"somePassword\"); to be</p>\r\n<p>&nbsp;ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, \"someUserId\", \"somePassword\", TaskLogonType.Password);</p>\r\n<p>it works fine.</p>\r\n<p><br /><br /></p>",
+    "PostedDate": "2011-08-11T09:47:16.613-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-27T11:19:05.61-08:00"
+  },
+  {
+    "Id": "1491559",
+    "ThreadId": "268726",
+    "Html": "hello<br />\n<br />\nI am developing a wpf application on custom task scheduler. Application will not run without admin privileges or manifest file as it is the required. So is it possible to create task from my application without giving admin privileges on launch time.<br />\n<br />\nI tried the above one and googled but error is getting into it.<br />\nhere is my code that, i am using <br />\n<br />\n  using (var taskService = new TaskService())<br />\n<pre><code>            {\n                // Create a new task definition and assign properties\n                var taskDefinition = taskService.NewTask();\n                taskDefinition.RegistrationInfo.Description = taskDescription;\n                taskDefinition.RegistrationInfo.Author = WindowsIdentity.GetCurrent().Name;\n                taskDefinition.Principal.UserId = WindowsIdentity.GetCurrent().Name;\n                taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;\n                taskDefinition.Settings.DisallowStartIfOnBatteries = false;\n                foreach (var trigger in triggers)\n                {\n                    taskDefinition.Triggers.Add(trigger._Trigger);\n                }\n                foreach (var action in actionList)\n                {\n                    taskDefinition.Actions.Add(action);\n                }\n\n\n                var spectraFolder = taskService.RootFolder.SubFolders.Where(sf =&gt; sf.Name.Equals(_taskFolderPath));\n                var spectraTaskFolder = spectraFolder.FirstOrDefault() ??\n                                        taskService.RootFolder.CreateFolder(_taskFolderPath);\n\n                // Register the task in the Spectra Logic folder\n                spectraTaskFolder.RegisterTaskDefinition(taskName, taskDefinition ,TaskCreation.CreateOrUpdate, taskDefinition.Principal.UserId, &quot;12345678&quot;, TaskLogonType.Password);\n            }</code></pre>\n\nit return exception as null<br />\n<br />\nThanks in advance for any guidance<br />\n<br />\nshubham jain<br />\n",
+    "PostedDate": "2017-01-24T04:05:14.72-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491712",
+    "ThreadId": "268726",
+    "Html": "Yes, Use the parameters to the TaskService constructor to supply an account and password that have Admin rights. See the Documentation for detail.<br />\n",
+    "PostedDate": "2017-01-26T05:53:20.63-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-27T11:18:58.393-08:00"
+  }
+]

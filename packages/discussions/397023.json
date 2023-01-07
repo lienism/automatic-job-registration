@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "917987",
+    "ThreadId": "397023",
+    "Html": "\r\n<p>Hi - I am using Win 7 and I was wondering why when I create a task through .NET I only have the Configure for: options of 'Windows Vista or Windows Server 2008' and 'Windows Server 2003, Windows XP, or Windows 2000'.&nbsp; But when I go back into the task\r\n though Task Manager the options are 'Windows Vista, Windows Server 2008' and 'Windows 7, Windows Server 2008 R2'.&nbsp; I was wondering what setting I was missing.</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-09-26T10:48:05.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "918786",
+    "ThreadId": "397023",
+    "Html": "<p>In the 1.8.3 version of the library, this dropdown does not exactly match the behavior found in the Task Scheduler applet. In that version of the library, there was no intelligence that would allow a successuly \"downgrade\" of functionality from a 2.0 task (Vista and higher) to a 1.0 task (XP). I have added that functionality in the 1.9.0 beta code.</p>",
+    "PostedDate": "2012-09-27T18:38:27.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938552",
+    "ThreadId": "397023",
+    "Html": "<p>Great!&nbsp; How would I implement that?&nbsp; Is there an example somewhere I can look at?&nbsp; Thanks!</p>",
+    "PostedDate": "2012-11-08T06:58:16.597-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938640",
+    "ThreadId": "397023",
+    "Html": "<p>You first set the desired Task.Defintion.Settings.Compatibility to the version you want to go to and then use the Task.Definition.Validate method to determine if the current settings will support that change. For a list of properties that are not supported in the different versions of the native library, look at the TaskDefinition.LowestSupportedVersion property implementation in Task.cs in the Source Code repository.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2012-11-08T09:12:47.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

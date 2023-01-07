@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1458649",
+    "ThreadId": "649834",
+    "Html": "The property <strong>td.Settings.RunOnlyIfLoggedOn</strong> is marked as version 1 only.<br />\nFor v2 tasks is seems to always return True<br />\n<br />\nHow can we identify if a v2 task is set to 'Run whether user is logged on or not'?<br />\n<br />\nLooks like RunOnlyIfLoggedOn is True in v2 tasks if the LogonType is:<br />\nTASK_LOGON_INTERACTIVE_TOKEN or TASK_LOGON_GROUP. <br />\nPlease consider hiding that complexity by adding READ ONLY access to the RunOnlyIfLoggedOn proeprty even for v2 tasks.  That would also remove the uncertainty (I'm not sure that the logic above is indeed complete).<br />\n",
+    "PostedDate": "2016-01-10T06:53:20.45-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459014",
+    "ThreadId": "649834",
+    "Html": "I found a small bug that didn't disable that checkbox under V1. It is now corrected.<br />\n",
+    "PostedDate": "2016-01-12T21:03:19.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459060",
+    "ThreadId": "649834",
+    "Html": "I don't think that change addresses my question/suggestion.\r<br />\nIn a v2 scenario, how should we get the status of the attribute?<br />\n",
+    "PostedDate": "2016-01-13T03:16:55.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459103",
+    "ThreadId": "649834",
+    "Html": "That checkbox should only be available now under V2.\r<br />\n<br />\nI'm not sure what the request is. Do you want something hidden in the UI? If so, I'd rather not as I have tried to stay the same as the system UI. In C#, there is not a way to make a property read-only some of the time and read/write other times so there is no way to hide it for a developer that I can think of. If you other specific ideas, please let me know.<br />\n",
+    "PostedDate": "2016-01-13T07:43:31.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459120",
+    "ThreadId": "649834",
+    "Html": "The question was not about the GUI.\r<br />\nIn code, accessing a v2 task object, How to detect if it is set to 'Run whether user is logged on or not'?<br />\n",
+    "PostedDate": "2016-01-13T09:05:32.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

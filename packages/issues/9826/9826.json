@@ -1,0 +1,206 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed. Cause is mixing old .NET with new &#40;&#62;3.5&#41; .NET assemblies.",
+    "ClosedDate": "2012-08-03T08:37:06.093-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "'Elucidate.vshost.exe' (Managed (v4.0.30319)): Loaded 'Z:\\Elucidate\\Elucidate-Phase_I\\Elucidate\\bin\\Debug\\TimeSpan2.dll'\nA first chance exception of type 'System.NullReferenceException' occurred in Microsoft.Win32.TaskScheduler.dll\n \nRunning on Win 7 x64, when using the editor to go through the pages that have been generated.\n \nThis is caused when clicking on the \"Run Times\" tab shown by the TaskEditDialog.ShowDialog()",
+    "LastUpdatedDate": "2013-05-16T04:49:10.487-07:00",
+    "PlannedForRelease": "Release 1.8.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-01-20T12:36:56.053-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Uncaught exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9826
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3234,
+      "FileName": "Crash.avi",
+      "DownloadUrl": ".\\3234"
+    },
+    {
+      "FileId": 3237,
+      "FileName": "Error shows in tab now.png",
+      "DownloadUrl": ".\\3237"
+    },
+    {
+      "FileId": 3238,
+      "FileName": "Microsoft.Win32.TaskScheduler.zip",
+      "DownloadUrl": ".\\3238"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Task that is used in the dialog is generated from this code block:\r\n         using (TaskService ts = new TaskService())\r\n         {\r\n            // Create a new task\r\n            // Create a new task definition and assign properties\r\n            TaskDefinition td = ts.NewTask();\r\n            td.Data = \"Your data\";\r\n            td.Principal.UserId = user;\r\n            td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n            td.RegistrationInfo.Author = \"Elucidate\";\r\n            td.RegistrationInfo.Description = \"Performs the SnapRAID Sync command after a small delay after logon\";\r\n            td.RegistrationInfo.Documentation = \"http://elucidate.codeplex.com/documentation\";\r\n            td.Settings.DisallowStartIfOnBatteries = true;\r\n            td.Settings.Enabled = true;\r\n            td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(24);\r\n            td.Settings.Hidden = false;\r\n            td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;\r\n            td.Settings.RunOnlyIfIdle = false;\r\n            td.Settings.RunOnlyIfNetworkAvailable = false;\r\n            td.Settings.StopIfGoingOnBatteries = true;\r\n            Version ver = ts.HighestSupportedVersion;\r\n            bool newVer = (ver >= new Version(1, 2));\r\n            // Create a trigger that fires 15 minutes after the current user logs on and then every 1000 seconds after that\r\n            LogonTrigger lTrigger = (LogonTrigger)td.Triggers.Add(new LogonTrigger());\r\n            if (newVer)\r\n            {\r\n               lTrigger.Delay = TimeSpan.FromSeconds(30);\r\n               lTrigger.UserId = user;\r\n            }\r\n            // Create an action which opens a log file in notepad\r\n            td.Actions.Add(new ExecAction(\"cmd\", @\"/k\" + FormatSnapRaidCommandArgs(\"Sync\"), null));\r\n            // Register the task definition (saves it) in the security context of the interactive user\r\n            return ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, null, null,\r\n                                                          TaskLogonType.InteractiveToken, null);\r\n         }\r\n",
+      "PostedDate": "2012-01-20T12:39:30.997-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Using this exact code to create a task, and on Windows 7 x64, I am not able to reproduce this error with the most current source code (1.7.2).",
+      "PostedDate": "2012-01-20T23:42:41.54-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I used the released version which is 1.7.1.\r\nAlso it is not the task creation that is the problem, it's when the user goes to the tab that is displayed by the dialogShow that causes the exception.\r\n\r\nWhat is the ETA for 1.7.2 ? Can I have an Alpha style download release to test ?",
+      "PostedDate": "2012-01-21T02:13:39.757-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-21T09:18:23.91-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I did test it against the \"Run Times\" tab and did not see the exception. I will attach a pre-release version of 1.7.2 here. Official release is a few weeks from now.",
+      "PostedDate": "2012-01-21T09:18:26.66-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-22T05:01:19.16-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for the file, but this does not seems to have fixed it.\r\nWhen the above task code is run (TemplateFunction) there is no SnapRAID Sync in the Task Schedule Manager.\r\nIf it run a 2nd time then it will not crash.\r\nFollow the included AVI that show the creation of the task via the template, a large pause while the showdialog is running, then me clicking each of the shown tabs until the runtimes, then the uncaught exception handler is thrown from inside the TaskScheduler.dll.\r\nHTH's",
+      "PostedDate": "2012-01-22T05:01:20.88-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "   at Microsoft.Win32.TaskScheduler.TaskFolder.DeleteTask(String Name)\r\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.runTimesTab_Leave(Object sender, EventArgs e)\r\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.runTimesTab_Enter(Object sender, EventArgs e)\r\n   at System.Windows.Forms.TabPage.OnEnter(EventArgs e)\r\n   at System.Windows.Forms.TabControl.WmSelChange()\r\n   at System.Windows.Forms.TabControl.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n   at System.Windows.Forms.UnsafeNativeMethods.SendMessage(HandleRef hWnd, Int32 msg, IntPtr wParam, IntPtr lParam)\r\n   at System.Windows.Forms.Control.SendMessage(Int32 msg, IntPtr wparam, IntPtr lparam)\r\n   at System.Windows.Forms.Control.WmNotify(Message& m)\r\n   at System.Windows.Forms.Control.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n   at System.Windows.Forms.UnsafeNativeMethods.CallWindowProc(IntPtr wndProc, IntPtr hWnd, Int32 msg, IntPtr wParam, IntPtr lParam)\r\n   at System.Windows.Forms.NativeWindow.DefWndProc(Message& m)\r\n   at System.Windows.Forms.Control.WmMouseDown(Message& m, MouseButtons button, Int32 clicks)\r\n   at System.Windows.Forms.Control.WndProc(Message& m)\r\n   at System.Windows.Forms.TabControl.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n   at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\r\n   at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\r\n   at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\r\n   at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\r\n   at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)\r\n   at Elucidate.Form1.btnEdit_Click(Object sender, EventArgs e) in Z:\\Elucidate\\Elucidate-Phase_I\\Elucidate\\Form1.cs:line 283",
+      "PostedDate": "2012-01-22T05:05:25.18-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-22T21:42:51.73-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-22T21:43:48.847-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I added some better error handling and re-uploaded the assemblies. Please try and let me know if the exception persists.",
+      "PostedDate": "2012-01-22T21:43:50.343-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-23T09:39:42.14-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Tried the new Assemblies (They still state 1.7.2.0) and got \"Error shows in tab now\" (See picture).\r\nDoes not pass the exception back to the code which is better. Just need better handling in the GUI part as this is \"Customer facing\" :-)",
+      "PostedDate": "2012-01-23T09:39:44.237-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "One more thing to try. Remove the line:\r\n> td.Principal.UserId = user;\r\nand change the RegisterTaskDefinition line at the end to:\r\n> ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n",
+      "PostedDate": "2012-01-23T12:51:37.277-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Done as suggested,\r\nStill the same result as in the \"Error shows in tab now.png\"",
+      "PostedDate": "2012-01-24T10:51:13.137-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-25T10:04:31.32-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-25T10:05:33.313-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I was hoping changing those two lines would prevent the exception. To hide the error text, set the ShowErrors property to false. Try new assemblies in zip file.",
+      "PostedDate": "2012-01-25T10:05:34.79-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This is still not working, because when the Editor is loaded and a user clicks on the OK button (Do not even have to go to other tabs for that) the exception (as already mentioned) is thrown back to the calling application, just now from a different place in the editor.dll:\r\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r\n   at Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object sender, EventArgs e)\r\n   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r\n   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\r\n   at System.Windows.Forms.Control.WndProc(Message& m)\r\n   at System.Windows.Forms.ButtonBase.WndProc(Message& m)\r\n   at System.Windows.Forms.Button.WndProc(Message& m)\r\n   at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\r\n   at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\r\n   at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)\r\n   at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\r\n   at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\r\n   at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)\r\n   at Elucidate.Form1.btnEdit_Click(Object sender, EventArgs e) in Z:\\Elucidate\\Elucidate-Phase_I\\Elucidate\\Form1.cs:line 303",
+      "PostedDate": "2012-01-25T10:36:39.103-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have managed to implement a workaround for this that may help you understand what variables are not being initialised (That's what your errors are stating)\r\n\r\nGoto the following Diff [http://elucidate.codeplex.com/SourceControl/changeset/changes/73650#Elucidate-Phase_I%2fElucidate%2fForm1.cs] \r\nand scroll down to lines 319.\r\nThere you will see that if the template function is used, then the GetTask(taskName) is called again, in order to return a fully initialised Task that will then allow the edit's and okay buttons to be used correctly",
+      "PostedDate": "2012-01-26T11:44:51.23-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You must have missed one of my comments. If you will remove the following lines from GetTaskTemplate, you will get rid of your errors and the long delay in bringing up the editor and it will not change the functionality of your code. You cannot specify an interactive token and a user account together.\r\n\r\n> td.Principal.UserId = user;\r\n> td.Principal.LogonType = TaskLogonType.InteractiveToken;",
+      "PostedDate": "2012-01-26T23:14:36.653-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The template function was taken from your \"Complex example\" where those 2 lines are together. [http://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation]\r\nAnd yes I did perform the steps you requested.\r\nI shall try again tonight, but the long delay is still there even when editing an already existing Task.",
+      "PostedDate": "2012-01-27T00:57:22.333-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I can confirm that commenting out\r\n> td.Principal.UserId = user;\r\nin the template function and then using the task directly in the Edit dialog causes an exception to be thrown when pressing ok.\r\nI can also confirm that the timings (Delay) are the same.",
+      "PostedDate": "2012-01-27T11:26:23.54-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have copied the task creation code from your Elucidate code exactly and put it in my test harness on Win7 x64. The dialog launches in 2.4 seconds and does not error when making changes and hitting Ok. Below is the code I'm using:\r\n\r\nconst string taskName = \"Test\";\r\nTaskDefinition td = ts.NewTask();\r\ntd.Data = \"Your data\";\r\ntd.RegistrationInfo.Author = \"Elucidate\";\r\ntd.RegistrationInfo.Description = \"Performs the SnapRAID Sync command after a small delay after logon\";\r\ntd.RegistrationInfo.Documentation = \"http://elucidate.codeplex.com/documentation\";\r\ntd.Settings.DisallowStartIfOnBatteries = true;\r\ntd.Settings.Enabled = true;\r\ntd.Settings.ExecutionTimeLimit = TimeSpan.FromDays(1);\r\ntd.Settings.Hidden = false;\r\ntd.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;\r\ntd.Settings.RunOnlyIfIdle = false;\r\ntd.Settings.RunOnlyIfNetworkAvailable = false;\r\ntd.Settings.StopIfGoingOnBatteries = true;\r\nVersion ver = ts.HighestSupportedVersion;\r\nbool newVer = (ver >= new Version(1, 2));\r\n// Create a trigger that fires 30 seconds after the current user logs on\r\nLogonTrigger lTrigger = new LogonTrigger();\r\nif (newVer)\r\n{\r\n  lTrigger.Delay = TimeSpan.FromSeconds(30);\r\n  lTrigger.UserId = user;\r\n}\r\ntd.Triggers.Add(lTrigger);\r\n// Create an action which opens a log file in notepad\r\ntd.Actions.Add(new ExecAction(\"cmd\", @\"/k\", null));\r\n// Register the task definition (saves it) in the security context of the interactive user\r\nts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken);\r\n\r\n// Edit task\r\nTask t = ts.GetTask(taskName);\r\nTaskEditDialog editorForm = new TaskEditDialog();\r\neditorForm.Editable = true;\r\neditorForm.Initialize(t);\r\neditorForm.RegisterTaskOnAccept = true;\r\neditorForm.ShowDialog();",
+      "PostedDate": "2012-01-29T20:27:15.697-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for the reply\r\n1) It will not error because you are using the workaround of finding the task [Task t = ts.GetTask(taskName);] rather than using the one generated from the RegisterTaskDefinition return.\r\n2) I included a video of how long it takes on my Win7 x64 machine, and it still takes that long. What machine OS are you using ?",
+      "PostedDate": "2012-01-30T09:15:47.013-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I just changed it so I am using the Task returned from RegisterTaskDefinition and get the same results as before: No exception and quick display of dialog. There must be something else. I'm running Windows 7 (6.1.7601) x64 on an old Centrino2 processor with 4Gb RAM. Check to make sure you aren't disposing the task instance before running the dialog. It seems there was a place where you put the Task or TaskDefinition variable in a \"using\" statement.",
+      "PostedDate": "2012-01-30T10:52:04.96-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-08-03T08:36:33.457-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-08-03T08:37:06.093-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:03.577-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:10.487-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

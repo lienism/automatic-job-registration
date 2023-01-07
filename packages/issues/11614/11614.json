@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in 2.1.0",
+    "ClosedDate": "2014-04-17T10:31:24.403-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I open a task in the TaskEditDialog the Triggers don't seem to update properly.\n\nSteps to reproduce:\n\nCreate a new TaskEditDialog passing into the constructor the task, true for edit, and true for register on accept.\n\nWhen the user opens lets say a weekly task scheduled to run ever Wed. they can for example change the Description, hit OK and everything works great.  HOWEVER if instead they go to the Triggers tab, Edit the existing weekly trigger.  Then UNCHECK Wednesday and CHECK Sunday then hit OK in the Edit Trigger window you can see in the list of Triggers that the one you just edited has BOTH Sunday and Wednesday checked instead of just Sunday.  No matter what you do you can't seem to unselect the day the trigger was initialized with yet it's NOT read only because you CAN add to it.  I assume this is a bug.",
+    "LastUpdatedDate": "2014-04-17T10:31:24.403-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-03-07T10:32:51.247-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskEditDialog Weekly Trigger issue",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11614
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "559714",
+    "ThreadId": "244390",
+    "Html": "\r\n<p>Using the Notepad example on the Codeplex web site, I am trying to figure out how to create a new task and specify the Windows Domain, Username, and Password to be used when the Task is Executed (ie: The value defined in the 'Run As' box of a Task's Properties.\r\n I am writing my code in Microsoft Visual Basic .NET 2010.</p>\r\n<p>Below is my code:</p>\r\n<p>&#65279;Dim ts As New TaskService</p>\r\n<p>Dim td As TaskDefinition</p>\r\n<p>td = ts.NewTask</p>\r\n<p>td.RegistrationInfoDescription = &quot;Test&quot;</p>\r\n<p>td.Triggers.Add(New DailyTrigger(daysInterval:=2))</p>\r\n<p>td.Actions.Add(New ExeAction(&quot;notepad.exe&quot;, &quot;c:\\test.txt&quot;))</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td, TaskCreation.Create, &quot;domain\\userid&quot;, &quot;password&quot;)</p>\r\n<p>If I leave off the last three parameters of the 'RegiserTaskDefinition' call, it&nbsp;creates the task&nbsp;and defaults the 'Run As' Property of the task as 'NT AUTHORITY\\SYSTEM', but this task will not run unless I change the 'Run As' property value to\r\n a valid Windows domain and userid, and then click on the Password Button to define the Password.</p>\r\n<p>If I add the last three parameters, I get a message that this is not supported in the 1.0 version of the task scheduler. I am using the 1.0 version, because my laptop is running on Windows XP, so my question would be: Is there a way to specify the domain\\userid\r\n and password when creating a task (programatically), with the 1.0 version of the Microsoft Task Scheduler installed?</p>\r\n<p>&#65279;&#65279;</p>\r\n",
+    "PostedDate": "2011-02-02T13:44:46.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "559806",
+    "ThreadId": "244390",
+    "Html": "\r\n<p>You almost got it. You only need to add the appropriate TaskLogonType value as the last parameter:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;Test&quot;</span>, td, TaskCreation.Create, <span style=\"color:#a31515\">&quot;domain\\userid&quot;</span>, <span style=\"color:#a31515\">&quot;password&quot;</span>, TaskLogonType.Password)\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-02-02T18:16:54.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635417",
+    "ThreadId": "244390",
+    "Html": "<p>I am using the method mentioned in this thread to create a task for a user + password and it is working fine.&nbsp; The problem I have is when the user does not have a logon password.&nbsp; If you pass the user and a blank password, Windows gives an access denied error.</p>\r\n<p>How do I use it when the user has no password?</p>",
+    "PostedDate": "2011-06-30T07:35:20.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635678",
+    "ThreadId": "244390",
+    "Html": "<p>Try&nbsp;passing in String.Empty or \"\".</p>",
+    "PostedDate": "2011-06-30T14:55:15.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "635689",
+    "ThreadId": "244390",
+    "Html": "<p>When I said blank password I meant that I am passing an empty string.&nbsp; After reading in other places I am comming to the conclusion that Windows will not allow a task to be scheduled if the user does not have a password.&nbsp; Advice I am reading elsewhere suggests that you have to give the user account a password.&nbsp; Can anyone else confirm this?</p>",
+    "PostedDate": "2011-06-30T16:01:01.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "636488",
+    "ThreadId": "244390",
+    "Html": "<p>Does the same error occur when you pass 'null' for the password?</p>",
+    "PostedDate": "2011-07-02T13:20:04.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

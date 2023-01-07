@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "222389",
+    "ThreadId": "65300",
+    "Html": "<p>Hi all,</p>\r\n<p>I'm trying to create a new task using this code:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>                    ExecAction action = <span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;HTTPRequest.vbs&quot;</span>, <span style=\"color:#A31515\">&quot;http://&quot;</span> + Request.Url.Host + <span style=\"color:#A31515\">&quot;/scheduler/&quot;</span> + taskPage, <span style=\"color:#A31515\">&quot;C:\\\\inetpub\\\\ftproot\\\\LocalUser\\\\MyAccount\\\\scheduler&quot;</span>);\r\n                    TaskDefinition definition = service.NewTask();\r\n\r\n                    definition.RegistrationInfo.Description = taskName;\r\n                    \r\n                    definition.Actions.Add(action);\r\n                    \r\n                    definition.Settings.AllowHardTerminate = <span style=\"color:Blue\">false</span>;\r\n                    \r\n                    definition.Principal.LogonType = TaskLogonType.ServiceAccount;\r\n                    definition.Principal.UserId = String.Empty;\r\n\r\n                    TimeTrigger trigger = <span style=\"color:Blue\">new</span> TimeTrigger();\r\n\r\n                    definition.Triggers.Add(trigger);\r\n\r\n                    trigger.StartBoundary = DateTime.Now.AddMinutes(2);\r\n                    trigger.EndBoundary = trigger.StartBoundary.AddHours(12);\r\n                    \r\n                    service.GetFolder(<span style=\"color:#A31515\"><a>\\\\MyFolder</a></span>).RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;Task &quot;</span> + e.CommandArgument + <span style=\"color:#A31515\">&quot; - User &quot;</span> + Session[<span style=\"color:#A31515\">&quot;UserID&quot;</span>], definition);\r\n\r\nNow, when I try to run this code I get only:</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>&nbsp;</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>&quot;(41,4):LogonType:&quot;</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>as exception message. Fired here:</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)</pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"font-size:11pt\">&nbsp;&nbsp; at</span></pre>\r\n</div>\r\n<div style=\"color:Black;background-color:White\"><span style=\"font-size:11pt\">&nbsp;</span></div>\r\n<div style=\"color:Black;background-color:White\"><span style=\"font-size:11pt\">I have looked here for similar troubles, without luck. Please, has anyone had the same problem before?</span></div>\r\n<div style=\"color:Black;background-color:White\"><span style=\"font-size:11pt\">&nbsp;</span></div>\r\n<div style=\"color:Black;background-color:White\"><span style=\"font-size:11pt\">Thanks in advance.</span></div>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>&nbsp;</pre>\r\n</div>",
+    "PostedDate": "2009-08-12T01:37:21.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "222440",
+    "ThreadId": "65300",
+    "Html": "<p>I forgot to give you some essential details:</p>\r\n<p>OS: Windows Server 2008</p>\r\n<p>Application type: ASP.NET 2.0</p>\r\n<p>Hoping someone can help me.</p>",
+    "PostedDate": "2009-08-12T04:29:20.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "223104",
+    "ThreadId": "65300",
+    "Html": "<p>This is the code I ran to make it work. I had to change some of the code because of local variables you had. The only real change is that the Principle.UserId assignment needs to be to &quot;System&quot;. I also reorganized the code a bit as you will see.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService service = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n\tExecAction action = <span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;HTTPRequest.vbs&quot;</span>, <span style=\"color:#A31515\">&quot;http://somesite.com&quot;</span>, <span style=\"color:Blue\">null</span>);\r\n\r\n\tTimeTrigger trigger = <span style=\"color:Blue\">new</span> TimeTrigger();\r\n\ttrigger.StartBoundary = DateTime.Now.AddMinutes(2);\r\n\ttrigger.EndBoundary = trigger.StartBoundary.AddHours(12);\r\n\r\n\tTaskDefinition definition = service.NewTask();\r\n\tdefinition.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;Desc&quot;</span>;\r\n\tdefinition.Actions.Add(action);\r\n\tdefinition.Settings.AllowHardTerminate = <span style=\"color:Blue\">false</span>;\r\n\tdefinition.Principal.LogonType = TaskLogonType.ServiceAccount;\r\n\tdefinition.Principal.UserId = <span style=\"color:#A31515\">&quot;System&quot;</span>;\r\n\tdefinition.Triggers.Add(trigger);\r\n    \r\n\tservice.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;Task - User&quot;</span>, definition);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-08-13T13:32:36.027-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "223278",
+    "ThreadId": "65300",
+    "Html": "<p>Thank you dahall! It's working now.</p>\r\n<p>By the way, congratulations for your job.. It's a very very well done project.</p>\r\n<p>Hope to hear from you and your project soon.</p>",
+    "PostedDate": "2009-08-14T01:26:09.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "446877",
+    "ThreadId": "65300",
+    "Html": "<p>I am trying to get this working on Vista ( though using Visual Basic) and making almost exactly the<br>same call as described above.</p>\r\n<p>I am impersonating an administrator who has access to the task scheduler (can create tasks using the Task Scheduler windows app)</p>\r\n<p>I am using the DLL as a reference in ASP.NET and making the calls from a web page. The web page has annoymous access<br>turned off and I am successfully impersonating the underlying windows user - who is an administrator.</p>\r\n<p>However I always get an access denied error&nbsp; - Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))</p>\r\n<p>The only way I can avoid this is to specify the user name and the password of the administrator in the RegisterTaskDefintion call.</p>\r\n<p>Any ideas /pointers would be very welcome.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-05-24T17:57:34.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "455750",
+    "ThreadId": "65300",
+    "Html": "<p>I would try registering the task as either &quot;System&quot; or with the username and the login type of&nbsp;TaskLogonType.S4U as follows:</p>\r\n<pre>ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.Create, <span style=\"color:#a31515\">@&quot;DOMAIN\\user&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.S4U, <span style=\"color:blue\">null</span>);\r\n</pre>",
+    "PostedDate": "2010-06-15T10:43:16.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

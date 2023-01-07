@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "745050",
+    "ThreadId": "297182",
+    "Html": "\r\n<p>On XP machines, if you add a new Daily trigger, 5 hours is being added to the Start Time:</p>\r\n<ol>\r\n<li>Delete all existing Triggers </li><li>Click New </li><li>Select Daily </li><li>Change Start Date to 2/8/2012 </li><li>Change Start Time to 3:31 AM </li><li>Click OK </li></ol>\r\n<p>NOTE: Details says 'At 8:31 AM on 2/8/2012' instead of 3:31 AM.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-02-07T05:29:44.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "745942",
+    "ThreadId": "297182",
+    "Html": "<p>This has something to do with UTC vs. Local time. I'm working on the code now to determine the best way to correct the problem and provide and consistent and expected outcome. I'll repost once I have the problem fixed and uploaded.</p>",
+    "PostedDate": "2012-02-07T14:49:25.67-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "746417",
+    "ThreadId": "297182",
+    "Html": "<p>Fixed in source code revision <a id=\"ChangeSetLink0\" style=\"font-weight: bold;\" title=\"View change set 74744\" href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/changes/74744\">74744</a>.</p>",
+    "PostedDate": "2012-02-07T21:00:49.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "747360",
+    "ThreadId": "297182",
+    "Html": "<p>Fixed.&nbsp; Thanks!</p>",
+    "PostedDate": "2012-02-08T08:20:30.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

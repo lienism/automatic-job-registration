@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1481294",
+    "ThreadId": "657186",
+    "Html": "Not sure if this is possible:\r<br />\n<br />\nI wrote an app that monitors tasks on several servers and I use impersonation to run the service if the user logged into the app is in a certain security group. What I was wondering is if there is a way to put that users name into the task history instead of the impersonated user's name.\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2016-08-16T10:34:10.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481577",
+    "ThreadId": "657186",
+    "Html": "Task history is controlled by the native scheduler. I know no way of manipulating how or what it puts into the event log.<br />\n",
+    "PostedDate": "2016-08-19T10:01:29.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-08-19T10:01:32.09-07:00"
+  }
+]

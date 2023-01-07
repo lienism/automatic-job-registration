@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "682158",
+    "ThreadId": "275337",
+    "Html": "\r\n<p>how to use actioncollection in taskscheduler</p>\r\n<p>give some examples</p>\r\n",
+    "PostedDate": "2011-10-10T09:10:03.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682186",
+    "ThreadId": "275337",
+    "Html": "<p>Under V1 of the task scheduler (XP and prior), you can only have a single ExecAction.</p>\r\n<p>Under V2, you can have any of the four actions and you treat the ActionCollection just like any ICollection (Add, Remove, Insert, etc.).</p>\r\n<p>If you will describe your requirements, I will reply with some sample code.</p>",
+    "PostedDate": "2011-10-10T10:27:41.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682207",
+    "ThreadId": "275337",
+    "Html": "<p>I am wondering if I could use delegate instead of exe here? for example: td.Actions.Add(myDelegate);</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2011-10-10T11:29:20.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682229",
+    "ThreadId": "275337",
+    "Html": "<p>Actions can only be of the four types described here: <a href=\"http://taskscheduler.codeplex.com/wikipage?title=ActionSamples&amp;referringTitle=Documentation\">http://taskscheduler.codeplex.com/wikipage?title=ActionSamples&amp;referringTitle=Documentation</a></p>\r\n<p>Given that this is a wrapper around the Microsoft task scheduler, they defined what is available.</p>",
+    "PostedDate": "2011-10-10T12:28:34.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682414",
+    "ThreadId": "275337",
+    "Html": "<p>Thanks for your reply. And My requirements is,</p>\r\n<p>I want to Create One Task in that i want to create Multiple Actions.&nbsp;</p>\r\n<p>If i click on delete that particular action want to delete not entire Task.</p>\r\n<p>Reply ASAP and also give code for above requirements.</p>",
+    "PostedDate": "2011-10-10T22:10:33.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

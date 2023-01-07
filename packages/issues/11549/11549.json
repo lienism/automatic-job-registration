@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in upcoming source code update and next release (2.0.4)",
+    "ClosedDate": "2014-01-31T14:13:35.097-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "In TaskService/Task.cs, the SetSecurityDescriptorSddlForm always throws an exception, even when the Task is a V2 task.",
+    "LastUpdatedDate": "2017-12-11T21:32:27.983-08:00",
+    "PlannedForRelease": "Release 2.0.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-01-31T12:14:44.923-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Task.SetSecurityDescriptorSddlForm always throws NotV1SupportedException",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11549
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

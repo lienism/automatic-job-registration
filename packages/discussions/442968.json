@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1040914",
+    "ThreadId": "442968",
+    "Html": "I want to have an app that waits for the windows GUID_MONITOR_POWER_ON event that is picked up through WndProcs ... so we need a window :( ... but these cannot seem to be created at the login screen before a user logs in as it only seems to work when the &quot;run only when user is logged in&quot; option is ticked\r<br />\n<br />\nNow I don't need any interface visible to the user at all ... but this seems to be the ONLY way of picking up when windows turns your screen off and on ... so I am hoping I can solve this issue ... any ideas?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-05-08T08:15:10.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041415",
+    "ThreadId": "442968",
+    "Html": "I don't know if this will work, but I would try registering the task using the System or Local Service account and then assigning the EventTrigger or SessionStateChangeTrigger to call whatever action you need to take place. Make sure your action does not require access to resources (networking, files, etc.) that may not be available to the account under which you registered the task.<br />\n",
+    "PostedDate": "2013-05-09T08:21:32.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

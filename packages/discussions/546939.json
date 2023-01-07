@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1250925",
+    "ThreadId": "546939",
+    "Html": "I have the following function in my program to check if a task exists or not.<br />\n<pre><code>Function doesTaskExist(ByVal nameOfTask As String, ByRef taskObject As Task) As Boolean\n    Using taskServiceObject As TaskService = New TaskService()\n        taskObject = taskServiceObject.GetTask(nameOfTask)\n\n        If taskObject Is Nothing Then\n            Return False\n        Else\n            Return True\n        End If\n    End Using\nEnd Function</code></pre>\n\nI use this function to return an instance of the task object to work on the task such as executing it from inside a program.<br />\n<pre><code>Dim task As Microsoft.Win32.TaskScheduler.Task\nIf doesTaskExist(&quot;My Task&quot;, task) = True Then\n    task.Run()\nEnd If</code></pre>\n\nOK, this code works fine if the &quot;When running the task, use the following user account&quot; portion of the task in Task Scheduler (the Microsoft provided interface) matches that of the user that's running the program that's checking the existence of the task.  (Does that statement make sense?)<br />\n<br />\nBut, as soon as I change the task's &quot;When running the task, use the following user account&quot; portion of the task in Task Scheduler to say... &quot;BUILTIN\\Administrators&quot;, that function doesn't say that the task exists.<br />\n<br />\nI need to create a task that will be owned by every Administrator on the computer and able to be run by any administrator on that machine.  Again, does that makes any sense?<br />\n",
+    "PostedDate": "2014-05-29T10:00:34.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1251307",
+    "ThreadId": "546939",
+    "Html": "You are likely experiencing the joys of UAC. When running C#, by default, it runs at reduced privileges. What happens if you run your code &quot;as Administrator&quot;?<br />\n",
+    "PostedDate": "2014-05-30T08:29:21.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1251336",
+    "ThreadId": "546939",
+    "Html": "Even with Administrator privileges/rights, it shows that the task doesn't exist.  I'm beginning to think that tasks created by another user are invisible to users that didn't create it (at least to this API).<br />\n",
+    "PostedDate": "2014-05-30T09:37:33.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

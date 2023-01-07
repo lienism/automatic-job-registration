@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "509457",
+    "ThreadId": "231511",
+    "Html": "<p>Error&nbsp;1&nbsp;'Microsoft.Win32.TaskScheduler.DailyTrigger' does not contain a constructor that takes '0' arguments</p>\r\n<p>The source code line is</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>td.Triggers.Add(<span style=\"color:blue\">new</span> DailyTrigger { DaysInterval = 2 });\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-10-19T08:49:30.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509523",
+    "ThreadId": "231511",
+    "Html": "<p>Please ensure you have downloaded the latest source code drop. Also, note that the current version of the code is written to be compiled by Visual Studio 2010 and .NET 4.</p>",
+    "PostedDate": "2010-10-19T10:41:28.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "509525",
+    "ThreadId": "231511",
+    "Html": "<p>I guess that is the reason, I used VS2008 to reference yur DLL, and modified your sample code a little. It still works.</p>\r\n<p>So I am wandering, is it possible you also can provide a .Net 3.5 version?</p>",
+    "PostedDate": "2010-10-19T10:46:03.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "510038",
+    "ThreadId": "231511",
+    "Html": "<p>The DLL is actually .NET 2.0 compatible. The sample code however does assume .NET 4. Are you looking for a sample that is 2.0 compatible?</p>",
+    "PostedDate": "2010-10-20T10:07:32.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

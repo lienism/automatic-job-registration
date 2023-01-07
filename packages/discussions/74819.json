@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "256062",
+    "ThreadId": "74819",
+    "Html": "<p>I was hoping someone could help point me in the right direction. I'm trying to enumerate all my currently scheduled Tasks as a standard user in XP. This code seems to work fine in Vista, and as an Administrator on XP, but not when I'm logged in with a standard user account. My code snippet look like the following:</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>TaskService s = <span style=\"color:Blue\">new</span> TaskService();\r\n<span style=\"color:Blue\">foreach</span> (Task t <span style=\"color:Blue\">in</span> s.RootFolder.Tasks)\r\n{\r\n  <span style=\"color:Blue\">if</span> (<span style=\"color:Blue\">string</span>.Compare(((ExecAction)t.Definition.Actions[0]).Path, Application.ExecutablePath, <span style=\"color:Blue\">true</span>) == 0)\r\n    myTaskList.Add(t);\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The error I'm getting is:</p>\r\n<pre>Error Message: System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))<br>   at V1Interop.ITaskScheduler.Activate(String Name, Guid&amp; riid)<br>   at TaskCollection.V1TaskEnumerator.get_Current() in C:\\Test\\TaskScheduler\\TaskCollection.cs:line 82<br><br>Any ideas?<br><br>Thanks in advance.</pre>",
+    "PostedDate": "2009-11-11T10:49:55.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "256479",
+    "ThreadId": "74819",
+    "Html": "<p>If the task is created as administrator user, standard users will not have permission to access it. If it is created in a standard user environment, other standard users will not have permission to access it.</p>\r\n<p>If the task with given name exists and user doesn't have access permisions to the job, Activate(..) call returns E_ACCESSDENIED. So the user cannot reschedule or delete it.</p>\r\n<p>You must ensure the ACL of the job file under 1.0&nbsp;has granted &ldquo;full permission&rdquo; for &ldquo;everyone&rdquo;. The Task.Path property will return the path of that file.</p>",
+    "PostedDate": "2009-11-12T13:36:51.09-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "256743",
+    "ThreadId": "74819",
+    "Html": "<p>Great, thanks for getting back to me.</p>\r\n<p>I understand not being able to see/edit other users' tasks, but is there a way I can get a list of tasks that the current user has permission to? It seems that the very call to the Tasks property throws the exception, so I don't have a chance to look at any part of the collection. (Or perhaps there's something more fundamental that I don't understand.)</p>\r\n<p>Basically what I'm trying to do is allow the user to schedule one or more instances of the application I'm working on. Multiple users may schedule it on a single PC. I want to provide each user with a list of their scheduled instances (so each user only sees his/her view on the universe). Can this be done?</p>\r\n<p>Thanks again for any insight, and thanks for writing this excellent library.</p>",
+    "PostedDate": "2009-11-13T06:20:10.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257629",
+    "ThreadId": "74819",
+    "Html": "<p>There was a problem with the enumerator for tasks under V1 for users without Admin rights. It is really a problem with the native library in that it will allow you to enumerate the names, but will provide names of tasks that you can't activate. I have modified the enumerator in the code (not the released build for now) so that it checks for access before allowing the enumeration.</p>\r\n<p>Using the current library, you could modify your code to not use foreach and catch the exception, like this:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>System.Collections.Generic.IEnumerator&lt;Task&gt; tasks = ts.RootFolder.Tasks.GetEnumerator();\r\n<span style=\"color:Blue\">while</span> (tasks.MoveNext())\r\n{\r\n  Task t = <span style=\"color:Blue\">null</span>;\r\n  <span style=\"color:Blue\">try</span>\r\n  {\r\n    t = tasks.Current;\r\n    <span style=\"color:Blue\">if</span> (<span style=\"color:Blue\">string</span>.Compare(((ExecAction)t.Definition.Actions[0]).Path, Application.ExecutablePath, <span style=\"color:Blue\">true</span>) == 0)\r\n      myTaskList.Add(t);\r\n  }\r\n  <span style=\"color:Blue\">catch</span> { }\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-11-16T11:57:39.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

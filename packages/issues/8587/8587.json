@@ -1,0 +1,141 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "No further response from submitter. In private testing this appears to be resolved with 1.6.2.",
+    "ClosedDate": "2011-06-22T23:36:03.493-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm having issues with TaskEditorDialog. Using the example of 'using the editor', the outside dialog is not scaling to expose the whole control. Even if I resize the window it doesn't help, it'll keep displaying wrong. I'm using version 1.61 by the way.",
+    "LastUpdatedDate": "2013-05-16T04:49:12.577-07:00",
+    "PlannedForRelease": "Release 1.6.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-05-06T15:49:14.81-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEditorDialog does not display correctly",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8587
+  },
+  "FileAttachments": [
+    {
+      "FileId": 2861,
+      "FileName": "Editor without custom DPI.jpg",
+      "DownloadUrl": ".\\2861"
+    },
+    {
+      "FileId": 2862,
+      "FileName": "Editor with custom DPI.jpg",
+      "DownloadUrl": ".\\2862"
+    },
+    {
+      "FileId": 2866,
+      "FileName": "Microsoft.Win32.TaskScheduler.1.6.2.zip",
+      "DownloadUrl": ".\\2866"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Try this attached file as a replacement for Microsoft.Win32.TaskSchedulerEditor.dll and let me know if it displays correctly.",
+      "PostedDate": "2011-05-06T15:51:15.567-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hey, thanks for addressing this issue. I'm sorry to say it didn't help, however with your tip I managed to find out the cause.\r\nI am indeed using Windows 7's custom DPI option. It's under Control Panel\\Appearance and Personalization\\Display - Set custom text size (DPI).\r\nIt seems to occur if you're enlarging and have 'Windows XP style DPI scaling' on.",
+      "PostedDate": "2011-05-06T16:50:03.54-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-06T22:58:43.27-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-07T04:15:43.607-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi again, it seems the tab control containing the properties is not scaling well.\r\nI've attached images with and without scaling to illustrate the issue.\r\n",
+      "PostedDate": "2011-05-07T04:15:45.953-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-07T04:17:00.69-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Second image attachment.",
+      "PostedDate": "2011-05-07T04:17:02.393-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Forgot to mention - the attached images are using version 1.6.2.",
+      "PostedDate": "2011-05-07T05:45:42.43-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Found the problem. I needed to scale both the control and the form. This is fixed in 1.6.2 and in source code drop 66671.\r\n\r\n\n\n** Closed by dahall 5/6/2011 10:58 PM",
+      "PostedDate": "2011-05-08T22:45:18.623-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fix didn't solve problem. Re-opened for further investigation.",
+      "PostedDate": "2011-05-08T22:45:19.53-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-08T22:48:34.013-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-09T11:05:30.203-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try the new assemblies in the Microsoft.Win32.TaskScheduler.1.6.2.zip file attached and let me know if they resolve the problem. In my more comprehensive testing they do. I also found some similar problems with the ActionEditDialog.",
+      "PostedDate": "2011-05-09T11:07:46.697-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-05-09T11:07:49.277-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-06-22T23:36:03.493-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:05.947-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:12.577-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

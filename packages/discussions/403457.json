@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "942597",
+    "ThreadId": "403457",
+    "Html": "\r\n<p>Is there any way to control the AC Power Condition?</p>\r\n",
+    "PostedDate": "2012-11-16T01:26:06.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942829",
+    "ThreadId": "403457",
+    "Html": "\r\n<p>Look at the Task.Definition.Settings area and check out the properties StopIfGoingOnBatteries, DisallowStartIfOnBatteries and WakeToRun.</p>\r\n",
+    "PostedDate": "2012-11-16T08:16:43.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945552",
+    "ThreadId": "403457",
+    "Html": "\r\n<p>Dehall, thanks a lot! That was exactly what I was looking for!</p>\r\n",
+    "PostedDate": "2012-11-22T02:32:03.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

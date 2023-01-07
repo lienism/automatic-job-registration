@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1418934",
+    "ThreadId": "633848",
+    "Html": "The above is not working and i am catching this \r<br />\n<br />\nTask Scheduler 2.0 (1.2) does not support setting this property. You must use an InteractiveToken in order to have the task run in the current user session.\r<br />\n<br />\nThanks in advance<br />\n",
+    "PostedDate": "2015-04-27T06:08:07.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422362",
+    "ThreadId": "633848",
+    "Html": "Yes, when using TaskScheduler 2.0 (Vista and later) the RunOnlyIfLoggedOn property will throw an exception. You must instead do as instructed and register the task using an InteractiveToken setting.<br />\n",
+    "PostedDate": "2015-05-02T12:48:54.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:00:37.003-07:00"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1243664",
+    "ThreadId": "544868",
+    "Html": "Is it possible to import a task from xml?\r<br />\n<br />\nMaybe i just missed something in the documentation and the code but i didn't see the word &quot;import&quot; anywhere.\r<br />\n<br />\nhelp?<br />\n",
+    "PostedDate": "2014-05-09T13:46:08.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243883",
+    "ThreadId": "544868",
+    "Html": "Yes. There are actually a few ways:\r<br />\n<br />\n1) As a file, you can pass the filename to the ImportTask method on the instantiated TaskFolder object of the task's destination.<br />\n<pre><code>using (TaskService ts = new TaskService())\n   ts.RootFolder.ImportTask(&quot;TaskName&quot;, @&quot;C:\\temp\\task.xml&quot;);</code></pre>\n\n2) As a string, you have a few options:<br />\n<pre><code>string myTaskXml = &quot;&lt;(blah blah blah)&gt;...&quot;;\nusing (TaskService ts = new TaskService())\n{\n   // First option is straight to registration using current user.\n   // You can also supply parameters to register under a different user\n   ts.RootFolder.RegisterTask(&quot;TaskName&quot;, myTaskXml);\n\n   // You can also feed the XML to a task definition and even change it before registering it\n   TaskDefinition td = ts.NewTask();\n   td.XmlText = myTaskXml;\n   td.RegistrationInfo.Description = &quot;Update description&quot;;\n   ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td);\n}</code></pre>\n\n",
+    "PostedDate": "2014-05-10T10:46:40.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-10T19:36:16.3-07:00"
+  },
+  {
+    "Id": "1243890",
+    "ThreadId": "544868",
+    "Html": "Excellent response! I will try this when i get back to work<br />\n",
+    "PostedDate": "2014-05-10T11:34:30.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

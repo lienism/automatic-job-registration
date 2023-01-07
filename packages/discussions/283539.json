@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "714546",
+    "ThreadId": "283539",
+    "Html": "\r\n<p>Very nice library. Thank you for your hard work.</p>\r\n<p>I note that the repository doesn't store a set of import libraries - and when I tried to build against the tip of TimeSpan2 I got numerous errors. Are there any plans to identify the proper dependencies to use when building, or perhaps to store those dependencies\r\n in the repo?</p>\r\n",
+    "PostedDate": "2011-12-19T16:35:23.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715136",
+    "ThreadId": "283539",
+    "Html": "<p>You can find all the missing assemblies in the TaskSchedulerEditor.zip file in the downloads section. I like the idea of adding them to the source code repository and will look at how I might do that so pulling the code also pulls the dependencies.</p>",
+    "PostedDate": "2011-12-20T15:20:44.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "715178",
+    "ThreadId": "283539",
+    "Html": "<p>That's what I ended up using. One thing is that the solution/projects are referencing projects, not binary dependencies.</p>",
+    "PostedDate": "2011-12-20T17:49:34.177-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

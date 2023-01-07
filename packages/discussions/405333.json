@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "950366",
+    "ThreadId": "405333",
+    "Html": "\r\n<p>Hello.</p>\r\n<p>How can I set up &quot;Run whether user is logged on or not&quot; and &quot;Do not store password&quot; options for a task programmaticaly?</p>\r\n<p>I know if I don't set&nbsp;TASK_FLAG_RUN_ONLY_IF_LOGGED_ON flag then &quot;Run whether user is logged on or not&quot; option is set.</p>\r\n<p>But it works only for SYSTEM account, for any other account I get this error:</p>\r\n<p><span><span>The task has been configured with an unsupported combination of account settings and run time options.</span>.</span></p>\r\n<p>And how can I set &quot;Do not store password option?&quot;</p>\r\n",
+    "PostedDate": "2012-12-03T00:24:26.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950701",
+    "ThreadId": "405333",
+    "Html": "\r\n<p>&quot;Run only when user is logged on&quot;, when checked, sets the TaskLogonToken to InteractiveToken. When &quot;Run wheter user is logged on or not&quot; is checked, if &quot;Do not store password&quot; is checked, it is set to S4U or Password if not.</p>\r\n",
+    "PostedDate": "2012-12-03T11:21:11.51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

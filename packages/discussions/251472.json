@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "587528",
+    "ThreadId": "251472",
+    "Html": "\r\n<p>HI,</p>\r\n<p>I am facing a problem while editing a scheduled task from my application which uses this wrapper.&nbsp; This problem occurs only when we log in as a standard user and then create tasks in the following way.</p>\r\n<p>Scenario:</p>\r\n<p>1) Log in as a standard user.</p>\r\n<p>2) Launch my application using admin rights (i.e run as a administrator)</p>\r\n<p>3) Create a schedule using the application.</p>\r\n<p>4) Now, switch the user and log in as an admin (using the same credentials which were used to create the schedule).</p>\r\n<p>5) Try to edit the schedule which was created in step 3.</p>\r\n<p>The application crashes with the following message:</p>\r\n<p>System.Unauthorized Exception: {&quot;Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))&quot;}</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)<br>\r\n&nbsp;&nbsp; at SampleApplication.TaskSchedulerOperations.EditTaskInTaskScheduler(TaskDetails objTaskDetails)</p>\r\n<p>The same problem does not exist when we try to edit the same schedule using the Windows Task Scheduler.</p>\r\n<p>Any help is greatly appreciated.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-03-28T05:35:18.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "587711",
+    "ThreadId": "251472",
+    "Html": "<p>RegisterTaskDefinition, when called with the 2 parameters as you do, pulls the UserId and LogonType from the TaskDefinition.Principal properties. If you used a password before to register the task, you could run into permission problems. You may wish to try specifying all the parameters to that method to ensure you are getting the right results both the first and second times.</p>",
+    "PostedDate": "2011-03-28T10:17:06.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588032",
+    "ThreadId": "251472",
+    "Html": "<p>Thanks for your reply.</p>\n<p>But i do not use password to while creating the schedule either.&nbsp; We do specify the user id and TaskLogOnType while creating and editing the schedules as follows:</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre> tskDef.Data = <span style=\"color: #a31515;\">\"\"</span>\n            tskDef.Principal.UserId = <span style=\"color: blue;\">String</span>.Concat(Environment.UserDomainName, <span style=\"color: #a31515;\">\"\\\"</span>, Environment.UserName)\n            tskDef.Principal.LogonType = TaskLogonType.InteractiveToken\n            tskDef.RegistrationInfo.Author = <span style=\"color: #a31515;\">\"My Application\"</span>\n            tskDef.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"\"</span>\n            tskDef.RegistrationInfo.Documentation = <span style=\"color: #a31515;\">\"\"</span>\n            tskDef.Settings.DisallowStartIfOnBatteries = <span style=\"color: blue;\">True</span>\n            tskDef.Settings.Enabled = <span style=\"color: blue;\">True</span>\n            tskDef.Settings.Hidden = <span style=\"color: blue;\">False</span>\n            tskDef.Settings.RunOnlyIfIdle = <span style=\"color: blue;\">False</span>\n            tskDef.Settings.IdleSettings.IdleDuration = TimeSpan.FromMinutes(20)\n            tskDef.Settings.IdleSettings.WaitTimeout = TimeSpan.FromMinutes(10)\n            tskDef.Settings.IdleSettings.StopOnIdleEnd = <span style=\"color: blue;\">False</span>\n            tskDef.Settings.IdleSettings.RestartOnIdle = <span style=\"color: blue;\">False</span>\n            tskDef.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal\n            tskDef.Settings.RunOnlyIfNetworkAvailable = <span style=\"color: blue;\">False</span>\n            tskDef.Settings.StopIfGoingOnBatteries = <span style=\"color: blue;\">True</span>\n           \n            <span style=\"color: blue;\">If</span> newVersion <span style=\"color: blue;\">Then</span>\n               <span style=\"color: #000000;\"> tskDef.Principal.RunLevel = TaskRunLevel.LUA\n</span>                tskDef.Settings.AllowDemandStart = <span style=\"color: blue;\">True</span>\n                tskDef.Settings.AllowHardTerminate = <span style=\"color: blue;\">True</span>\n                tskDef.Settings.Compatibility = TaskCompatibility.V2\n                tskDef.Settings.ExecutionTimeLimit = TimeSpan.Zero\n                tskDef.Settings.MultipleInstances = TaskInstancesPolicy.Parallel\n                tskDef.Settings.StartWhenAvailable = <span style=\"color: blue;\">True</span>\n                tskDef.Settings.WakeToRun = <span style=\"color: blue;\">False</span>\n            <span style=\"color: blue;\">End</span> <span style=\"color: blue;\">If</span>\n</pre>\n</div>\n<p>Am i missing out on certain properties to be set?</p>",
+    "PostedDate": "2011-03-28T23:01:37.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "588337",
+    "ThreadId": "251472",
+    "Html": "<p>On the registration you perform after the edit, I think you will need to supply the user and logon type in the method call. On the first registration, you are pulling the data for the non-adminstrator account, but impersonating an admin to get the call done. On second registration, you are&nbsp;using the same username but don't have the impersonation working for you which would lead to a failure. When you edit and re-register through the Windows Task Scheduler, I would assume it will show up with a different principal. I believe that by specifying an account that has permissions to make the change implicitly, you will have success.</p>",
+    "PostedDate": "2011-03-29T10:13:40.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

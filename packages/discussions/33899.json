@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "112307",
+    "ThreadId": "33899",
+    "Html": "I have to supply many parameters to TaskFolder.RegisterTaskDefinition() instead of just calling Task.Save() as it was in previous version of Task Scheduler 1.0 wrapper from CodeProject.\r\n",
+    "PostedDate": "2008-08-20T05:51:49.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "125148",
+    "ThreadId": "33899",
+    "Html": "The equivalent to Task.Save() is TaskFolder.RegisterTaskDefinition(Task.Path, Task.Definition). An example follows:\r\n<p><span style=\"color:#2b91af\">TaskService</span> ts = <span style=\"color:#0000ff\">new</span> <span style=\"color:#2b91af\">TaskService</span>();<br>\r\n<span style=\"color:#2b91af\">Task</span> t = ts.RootFolder.Tasks[<span style=\"color:#a31515\">&quot;MyTask&quot;</span><span class=style1>];<br>\r\nt.Definition.Settings.Enabled = </span><span style=\"color:#0000ff\">false</span>;<br>\r\nts.RootFolder.RegisterTaskDefinition(t.Path, t.Definition);</p>\r\n",
+    "PostedDate": "2008-10-14T16:17:00.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "417546",
+    "ThreadId": "33899",
+    "Html": "<p>What happens when you call RegisterTaskDefinition with only two parameters like in my example above? This should pull the account name and type out of the task definition's Principal object which it got from the last registration.</p>",
+    "PostedDate": "2010-03-12T09:46:51.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "418830",
+    "ThreadId": "33899",
+    "Html": "<p>Let me know if you're doing this under XP. If not, I have done some testing under Vista and have found the following:</p>\r\n<ul>\r\n<li>Re-registering a task using&nbsp;TaskFolder.RegisterTaskDefinition(string path, TaskDefinition definition) works every time if you first register&nbsp;the task using:\r\n<ul>\r\n<li>folder.RegisterTaskDefinition(path, definition), or</li>\r\n<li>folder.RegisterTaskDefinition(path, definition, TaskCreation.Create, null, null, LogonType.InteractiveToken, null), or</li>\r\n<li>folder.RegisterTaskDefinition(path, definition, TaskCreation.Create, &quot;DOMAIN\\\\user&quot;, null, LogonType.S4U, null), or</li>\r\n<li>folder.RegisterTaskDefinition(path, definition, &quot;SYSTEM&quot;, null, LogonType.ServiceAccount, null)</li>\r\n</ul>\r\n</li>\r\n<li>Re-registering a task using&nbsp;TaskFolder.RegisterTaskDefinition(string path, TaskDefinition definition) fails every time if you have initially registered and supplied a password.</li>\r\n</ul>\r\n<p>I also found a problem with the way MS implemented the IRegisteredTask.Definition property. It returns a unique COM interface with every call. This causes a problem with the code I supplied above as a replacement for task.Save(). I have worked around the problem in the code by retaining the first ITaskDefinition that I get back from that property and using it. I will update the source code here shortly. I have added a new method to the Task class called RegisterChanges that will allow the following code:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>TaskService ts = <span style=\"color:Blue\">new</span> TaskService();\r\nTask t = ts.GetTask(<span style=\"color:#A31515\">&quot;MyTask&quot;</span>);\r\nt.Definition.Settings.Enabled = <span style=\"color:Blue\">false</span>;\r\nt.RegisterChanges();\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-03-16T12:06:25.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "419045",
+    "ThreadId": "33899",
+    "Html": "<p>After further testing, under V1 or V2 you must supply the username, password and logon type any time you register or re-register a task that stores its password.</p>\r\n<p>To answer your question on whether or not &quot;SYSTEM&quot; must be supplied, the answer is &quot;it depends&quot;. For compatibility between V1 and V2 instances you should supply it. If this will only ever act against V1 schedulers, then you don't have to as V1 provides a special condition where if the type is ServiceAccount and the name is an empty string, it assumes the SYSTEM account. Personally I would recommend always including it for code readability and for compatibility.</p>",
+    "PostedDate": "2010-03-17T00:03:58.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

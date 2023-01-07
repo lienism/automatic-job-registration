@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "161285",
+    "ThreadId": "48334",
+    "Html": " I want to use it in XP. But while generating the Interop assembly from &quot;schedsvc.dll&quot;(and I am assuming this is the currect assembly in XP for task scheduler) throgh TlbImp, I am getting error that 'Not a valid Type Library&quot;?<br>\r\n<br>\r\nCan anyone give me some idea on this? \r\n",
+    "PostedDate": "2009-02-23T23:28:04.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "162170",
+    "ThreadId": "48334",
+    "Html": "You are in luck because you don't need to create an Interop assembly to use this library. It is a completely managed library that includes all the interop code and binds at runtime with whichever version of the Task Scheduler is available on the machine.\r\n",
+    "PostedDate": "2009-02-25T22:49:44.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

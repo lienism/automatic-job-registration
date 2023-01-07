@@ -1,0 +1,86 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-09-17T09:28:13.887-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "In V1 mode, the RegisterChanges fails saying the following:\n\n```\nMicrosoft.Win32.TaskScheduler.NotV1SupportedException: Folder other than the root (\\) was requested on a system only supporting Task Scheduler 1.0.\n   à Microsoft.Win32.TaskScheduler.TaskService.GetFolder(String folderName)\n   à Microsoft.Win32.TaskScheduler.Task.RegisterChanges()\n\n```\n\nThe task was created using the RootFolder property. \n\nAs a workaround I had to write this:\n```\ntask.Folder.RegisterTaskDefinition(task.Name, task.Definition);\n\n```\n\nHowever a fix would be better :)",
+    "LastUpdatedDate": "2015-09-17T09:28:13.887-07:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-09-15T05:19:48.063-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "RegisterChanges() fails on XP",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12208
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5015,
+      "FileName": "TSMLv2.4.2beta3.zip",
+      "DownloadUrl": ".\\5015"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Before your call to RegisterChanges, what is the string value of task.Path? This will help me determine if I missed a condition on the path before assuming it wasn't the root folder.",
+      "PostedDate": "2015-09-15T07:39:43.963-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Something like \"\\MyTask\".\n",
+      "PostedDate": "2015-09-15T08:11:02.517-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "See your submitted issue around making the exceptions serializable for code that may fix this issue.",
+      "PostedDate": "2015-09-15T12:31:14.2-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks, unfortunately, I still have the problem.",
+      "PostedDate": "2015-09-16T08:41:43.697-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-16T11:25:08.293-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Found the problem. See attached code and let me know.",
+      "PostedDate": "2015-09-16T11:25:08.993-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "And we have a winner! It works :)\nThanks (I'm now waiting for an updated NuGet package...).\n",
+      "PostedDate": "2015-09-17T00:13:01.607-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-17T09:28:13.887-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

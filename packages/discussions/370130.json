@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "869017",
+    "ThreadId": "370130",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm getting errors when trying to create or delete a tasks for the current user. I have not been able to repo this on my machine at all. However, I can repo this on any test machine (i.e. no VS installed and user is not running with admin permissions).</p>\r\n<p>System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object\r\n UserId, Object password, TaskLogonType LogonType, Object sddl)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType,\r\n String sddl)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)</p>\r\n<p>Here's my code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (<span style=\"color:blue\">var</span> ts = <span style=\"color:blue\">new</span> TaskService())\r\n{\r\n<span style=\"color:blue\">var</span> taskDef = ts.NewTask();\r\ntaskDef.RegistrationInfo.Description = <span style=\"color:blue\">string</span>.Format(\r\n                            Resources.Scheduled_Task_Desc_Format,\r\n                            <span style=\"color:blue\">this</span>.TargetEntity.FriendlyName\r\n                        );\r\ntaskDef.Triggers.Add(GetTrigger(_interval));\r\n\r\ntaskDef.Actions.Add(\r\n                 <span style=\"color:blue\">new</span> ExecAction(\r\n                     Assembly.GetEntryAssembly().Location,\r\n                     <span style=\"color:#a31515\">&quot;-s &quot;</span> &#43; GetSyncFlowName(<span style=\"color:blue\">this</span>.TargetEntity)\r\n                 )\r\n             );\r\nts.RootFolder.RegisterTaskDefinition(taskName, taskDef);\r\n}</pre>\r\n</div>\r\n<p></p>\r\n<p>for deletes<br>\r\n</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> taskFilter = <span style=\"color:blue\">new</span> Regex(\r\n                     <span style=\"color:blue\">string</span>.Concat(<span style=\"color:#a31515\">&quot;^&quot;</span>, taskName, <span style=\"color:#a31515\">&quot;$&quot;</span>),\r\n                     RegexOptions.Singleline | RegexOptions.Compiled\r\n                 );\r\n<span style=\"color:green\">// Find the existing instance of the task..</span>\r\n<span style=\"color:blue\">var</span> olTask = ts.RootFolder.GetTasks(taskFilter).FirstOrDefault();\r\n<span style=\"color:blue\">if</span> (olTask != <span style=\"color:blue\">null</span>)\r\n{\r\n\tts.RootFolder.DeleteTask(taskName);\r\n}\r\n</pre>\r\n</div>\r\n&nbsp;\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-15T23:00:04.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "869841",
+    "ThreadId": "370130",
+    "Html": "<p>Check these two links for information about rights required on systems to register and delete tasks:</p>\r\n<ul>\r\n<li><a href=\"http://taskscheduler.codeplex.com/discussions/247469\">http://taskscheduler.codeplex.com/discussions/247469</a></li>\r\n<li><a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx</a></li>\r\n</ul>",
+    "PostedDate": "2012-07-16T09:37:52.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "870557",
+    "ThreadId": "370130",
+    "Html": "<p>Thanks Dahall.&nbsp;<br />Does this mean that a application opened by a standard user would not be able to even schedule a taks that does not require elevated permissions?</p>\r\n<p>I've verified that the standard user can schedule and delete tasks by going to Scheduled Tasks in Control Panel. The task needs to execute only for the current user and in the current user's context.</p>",
+    "PostedDate": "2012-07-16T23:17:58.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "871301",
+    "ThreadId": "370130",
+    "Html": "<p>I haven't tried your specific scenario, but the Scheduled Tasks applet uses the same base COM library as this library. I would expect that you will need to specify the username and logontype of S4U or InteractiveToken&nbsp;in the RegisterTaskDefinition method and ensure that your settings in code match the settings of those tasks created using the applet.</p>",
+    "PostedDate": "2012-07-17T14:40:29.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "872489",
+    "ThreadId": "370130",
+    "Html": "\r\n<p>This is the latest code I tried. I'm pretty sure I'm just missing something small. Your help is greatly appreciated:</p>\r\n<p>&nbsp;</p>\r\n<hr>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> taskDef = ts.NewTask();\n\n<span style=\"color:blue\">if</span> (ts.HighestSupportedVersion &gt;= <span style=\"color:blue\">new</span> Version(1, 2))\n{\n\ttaskDef.Principal.RunLevel = TaskRunLevel.LUA;\n}\n<span style=\"color:blue\">else</span>\n{\n\ttaskDef.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">true</span>;\n}\n\n<span style=\"color:blue\">string</span> userId = <span style=\"color:blue\">string</span>.Concat(Environment.UserDomainName, &quot;\\\\&quot;, Environment.UserName);\n\ntaskDef.Principal.LogonType = TaskLogonType.S4U;\ntaskDef.Principal.UserId = userId;\n\ntaskDef.RegistrationInfo.Description = <span style=\"color:blue\">string</span>.Format(\n\t\t\t\t\t\t\tResources.Scheduled_Task_Desc_Format,\n\t\t\t\t\t\t\t<span style=\"color:blue\">this</span>.TargetEntity.FriendlyName\n\t\t\t\t\t\t);\ntaskDef.Triggers.Add(GetTrigger(_interval));\ntaskDef.Actions.Add(\n\t\t\t\t<span style=\"color:blue\">new</span> ExecAction(\n\t\t\t\t\tAssembly.GetEntryAssembly().Location,\n\t\t\t\t\t<span style=\"color:#a31515\">&quot;-s &quot;</span> &#43; GetSyncFlowName(<span style=\"color:blue\">this</span>.TargetEntity)\n\t\t\t\t)\n\t\t\t);\n\n\nts.RootFolder.RegisterTaskDefinition(\n\t\t\t\ttaskName, \n\t\t\t\ttaskDef,\n\t\t\t\tTaskCreation.CreateOrUpdate,\n\t\t\t\tuserId,\n\t\t\t\tLogonType: TaskLogonType.S4U\n\t\t\t);\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-07-17T23:50:43.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "872729",
+    "ThreadId": "370130",
+    "Html": "<p>Great news! I found the solution based on the following thread:&nbsp;</p>\r\n<p><a href=\"http://social.technet.microsoft.com/Forums/is/winserverGP/thread/6eb2bbb4-4444-47f4-b4f1-dbac43f33561\">http://social.technet.microsoft.com/Forums/is/winserverGP/thread/6eb2bbb4-4444-47f4-b4f1-dbac43f33561</a></p>\r\n<p>Based on the two recommendations,&nbsp;</p>\r\n<ol>\r\n<li>Add a Execution Time limit</li>\r\n<li>Created the task on a sub folder rather than the root folder</li>\r\n</ol>\r\n<p>I'm not sure how critical #1 is, however #2 will get you past this exception. Creates and Deletes all work now :)</p>",
+    "PostedDate": "2012-07-18T01:37:49.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "873253",
+    "ThreadId": "370130",
+    "Html": "\r\n<p>For everyone's benefit, here is the simplified code to make this work for non-admin users on XP and Win7</p>\r\n<p>I think I'll be sleeping better from today since this is resolved :D</p>\r\n<p></p>\r\n<hr>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> taskDef = ts.NewTask();\n\ntaskDef.Settings.ExecutionTimeLimit = TimeSpan.FromMinutes(15);\ntaskDef.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;My Task&quot;</span>;\n\ntaskDef.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(\n\t\t\t\t\tAssembly.GetEntryAssembly().Location,\n\t\t\t\t\t<span style=\"color:#a31515\">&quot;-myArgs&quot;</span>\n\t\t\t\t)\n\t\t\t);\n\n<span style=\"color:blue\">string</span> userId = <span style=\"color:blue\">string</span>.Concat(Environment.UserDomainName, &quot;\\\\&quot;, Environment.UserName);\nTaskLogonType logonType;\n<span style=\"color:blue\">if</span> (ts.HighestSupportedVersion &gt;= _v2)\n{\n\ttaskDef.Principal.RunLevel  = TaskRunLevel.LUA;\n\ttaskDef.Principal.LogonType = logonType = TaskLogonType.S4U;\n\ttaskDef.Principal.UserId    = userId;\n\ttaskDef.Triggers.Add(GetTrigger(interval));\n}\n<span style=\"color:blue\">else</span> <span style=\"color:green\">// For Windows XP</span>\n{\n\ttaskDef.Settings.RunOnlyIfLoggedOn = <span style=\"color:blue\">true</span>;\n\tlogonType = TaskLogonType.InteractiveToken;\n\n\t<span style=\"color:green\">// Avoid System.ArgumentException: </span>\n\t<span style=\"color:green\">//       Trigger.Repetition.Interval must be less than </span>\n\t<span style=\"color:green\">//       Trigger.Repetition.Duration under Task Scheduler 1.0</span>\n\t<span style=\"color:blue\">var</span> trigger   = GetTrigger(interval);\n\ttrigger.Repetition.Duration = trigger.Repetition.Interval.Add(TimeSpan.FromMinutes(1));\n\ttrigger.Repetition.StopAtDurationEnd = <span style=\"color:blue\">false</span>;\n\ttaskDef.Triggers.Add(trigger);\n}\n\n<span style=\"color:blue\">var</span> taskFolder = GetTaskFolder(ts);\ntaskFolder.RegisterTaskDefinition(\n\t\t\t\ttaskName,\n\t\t\t\ttaskDef,\n\t\t\t\tTaskCreation.CreateOrUpdate,\n\t\t\t\tuserId,\n\t\t\t\tLogonType: logonType\n\t\t\t);\n\t\t\n<span style=\"color:green\">// Add this helper method\t\t</span>\n<span style=\"color:blue\">private</span> TaskFolder GetCeligoTaskFolder(TaskService ts)\n{\n\t<span style=\"color:blue\">if</span> (ts.HighestSupportedVersion &gt;= _v2)\n\t{\n\t\t<span style=\"color:blue\">return</span> ts.RootFolder\n\t\t\t\t .SubFolders\n\t\t\t\t .FirstOrDefault(f =&gt; f.Name == <span style=\"color:#a31515\">&quot;MyTaskFolder&quot;</span>)\n\t\t\t\t ?? ts.RootFolder.CreateFolder(<span style=\"color:#a31515\">&quot;MyTaskFolder&quot;</span>);\n\t}\n\t<span style=\"color:blue\">else</span>\n\t{\n\t\t<span style=\"color:blue\">return</span> ts.RootFolder;\n\t}\n}\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-07-18T04:53:38.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-24T07:28:02.133-07:00"
+  }
+]

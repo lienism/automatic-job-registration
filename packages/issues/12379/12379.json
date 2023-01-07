@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in 2.5.19",
+    "ClosedDate": "2016-04-27T07:31:38.997-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi, I wanted to report this because the behavior in 2.5.18 is different than the library version included with the [events example](https://taskscheduler.codeplex.com/wikipage?title=EventSamples&referringTitle=Documentation) (2.5.7) and it took me a while to realize what was missing :)\n\nThat said, thanks for an amazing library!",
+    "LastUpdatedDate": "2016-04-27T13:40:07.89-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-04-22T06:40:49.353-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskEventWatcher will not watch a folder unless IncludeSubfolders is true",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12379
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "What version of Windows are you running against and when constructing the TaskService, are you setting the final parameter to true?",
+      "PostedDate": "2016-04-22T07:04:33.23-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Are you trying to watch a single task or all tasks in a folder? Are you setting a filter?",
+      "PostedDate": "2016-04-22T07:53:57.927-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please look at https://taskscheduler.codeplex.com/SourceControl/latest#TaskService/TestTaskService/TaskWatcherForm.cs as a full example of how this component can be used. I have tested this and cannot find the problem you've indicated.",
+      "PostedDate": "2016-04-22T08:16:44.123-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am running win7 pro sp1 x64 (spanish). I am watching a folder, no filters. This is my init code:\r\n\r\n```\n            watcher = new TaskEventWatcher();\n            watcher.BeginInit();\n            watcher.Folder = \"\\\\Automation\";\n            watcher.IncludeSubfolders = true; // if i don't include this line, i don't get any events\r\n\r\n            // Only watch for task events that are informational\n            watcher.Filter.EventLevels = new int[]\n            {(int)StandardEventLevel.LogAlways, (int) StandardEventLevel.Informational};\r\n\r\n            // Assign an event handler for when events are recorded\n            watcher.EventRecorded += Watcher_EventRecorded;\r\n\r\n            // Start watching the folder by enabling the watcher\n            watcher.Enabled = true;\n            watcher.EndInit();\r\n\r\n```\nAnything else I can do to help? Thank you",
+      "PostedDate": "2016-04-22T11:54:49.127-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. I found the bug. Until I release 2.5.19 (shortly) you can potentially work around the problem by adding a trailing '\\' to the Folder value.",
+      "PostedDate": "2016-04-22T14:19:43.733-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-27T07:31:38.997-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Great. Thank you very much.",
+      "PostedDate": "2016-04-27T13:40:07.89-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "568736",
+    "ThreadId": "246673",
+    "Html": "\r\n<p>Under the Settings tab in the Task Scheduler GUI, &quot;Stop the task if it runs longer than:&quot; is being checked by default for my tasks. How can I use the managed wrapper to disable that setting--i.e., uncheck the box, so that there's no limit on how long the\r\n task will run?</p>\r\n",
+    "PostedDate": "2011-02-18T12:54:15.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570286",
+    "ThreadId": "246673",
+    "Html": "<p>That UI element is associated with the TaskDefinition.Settings.ExecutionTimeLimit property. Setting that property to TimeSpan.Zero will have the task run indefinitely.</p>",
+    "PostedDate": "2011-02-22T09:41:06.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570345",
+    "ThreadId": "246673",
+    "Html": "<p>I'm running into the same problem with this issue&nbsp;that I just&nbsp;documented in my other thread about security options settings. Again, here is the code I'm using:</p>\r\n<p>TaskService ts = new TaskService();<br />TaskDefinition td = ts.NewTask();<br />td.RegistrationInfo.Description = \"Run \" + taskName + \" at logon\";<br />td.Settings.DisallowStartIfOnBatteries = false;<br />td.Settings.ExecutionTimeLimit = TimeSpan.Zero;<br />td.Principal.GroupId = \"BUILTIN\";<br />td.Principal.UserId = \"Administrators\";<br />LogonTrigger lTrigger = (LogonTrigger)td.Triggers.Add(new LogonTrigger());<br />td.Actions.Add(new ExecAction(taskAppLocation, null, null));<br />ts.RootFolder.RegisterTaskDefinition(taskName, td);</p>\r\n<p>When I run this code, it has no impact on the \"Stop the task if it runs longer than...\" setting. The checkbox remains checked, and the combo box is set to 3 days. I don't understand what I'm doing wrong. Thanks for any help you can provide.</p>",
+    "PostedDate": "2011-02-22T11:38:22.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "571045",
+    "ThreadId": "246673",
+    "Html": "<p>It's working now with the ExecutionTimeLimit set to TimeSpan.Zero. There was something else&nbsp;going on&nbsp;with the wrong version of a .dll in my project, which I straightended out, and now the code works. Thanks!</p>",
+    "PostedDate": "2011-02-23T12:56:13.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "912471",
+    "ThreadId": "246673",
+    "Html": "<p>I have the save problem. When I set ExecutionTimeLimit to TimeSpan.Zero, &nbsp;the checkbox keeps checked, and the time limit is set to 0 hrs 0 mins, the scheduled action will exit immediately &nbsp;after started. How to solve this problem? &nbsp;My enviroment is WinXP sp3 + .NET 4.0.</p>",
+    "PostedDate": "2012-09-13T19:41:58.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "912717",
+    "ThreadId": "246673",
+    "Html": "<p>I have tried this with the current build (1.8.3) on both XP and Windows 7 and the control behaves as it should: When the the TaskDefinition.Settings.ExecutionTimeLimit is set to TimeSpan.Zero, the checkbox is unchecked and the combobox is disabled. Please check your version.</p>\r\n<p>On <em>JoeyChaps</em> earlier post, I want to make a comment for other readers: You cannot set both the Principal.GroupId and Principal.UserId properties. You use GroupId if the account is a group and UserId if an individual identity. Also, GroupId is not supported under XP (1.0).</p>",
+    "PostedDate": "2012-09-14T08:00:12.933-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1048748",
+    "ThreadId": "246673",
+    "Html": "I just tried this with V1.9.4 in Windows XP SP3. Not sure what I'm doing wrong, but TimeSpan.Zero results in the checkbox being checked and 0,0 for the time limit. XP is not nearly as important to me, so I currently set the value to 999 hours for XP. My app needs to run in the background on startup. Would be nice to know how Joey fixed this.<br />\n",
+    "PostedDate": "2013-05-25T21:57:08.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1202174",
+    "ThreadId": "246673",
+    "Html": "I have v2.0.3 and I'm having the same issue in XP SP3 where the &quot;Settings.ExecutionTimeLimit&quot; property is set to &quot;TimeSpan.Zero&quot;, but the &quot;Stop the task if it runs longer than...&quot; is still checked. Thus, the task never executes. Is there some combination of settings that will uncheck the &quot;Stop the task if it runs longer than...&quot; option? It works perfectly under Win 7 or greater, but not XP SP3.<br />\n",
+    "PostedDate": "2014-02-03T10:57:34.103-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1203279",
+    "ThreadId": "246673",
+    "Html": "This is fixed in release 2.0.4. Thank you for identifying the problem.<br />\n",
+    "PostedDate": "2014-02-05T18:59:48.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:11:42.08-07:00"
+  }
+]

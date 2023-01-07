@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1457521",
+    "ThreadId": "649440",
+    "Html": "Cancel button should always be enabled.<br />\n",
+    "PostedDate": "2015-12-30T06:06:26.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457528",
+    "ThreadId": "649440",
+    "Html": "Thanks again. I should bring you on as a permanent tester! You have found a lot of bugs lately. I truly appreciate you documenting them for me so I can get them fixed.\r<br />\n<br />\nThis issue is now fixed and will ship shortly with the 2.5.10 release.<br />\n",
+    "PostedDate": "2015-12-30T08:01:22.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T08:01:27.633-08:00"
+  },
+  {
+    "Id": "1457542",
+    "ThreadId": "649440",
+    "Html": "Much appreciated!<br />\n",
+    "PostedDate": "2015-12-30T08:50:55.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457545",
+    "ThreadId": "649440",
+    "Html": "Just to confirm: 2.5.10 indeed fixes that issue.<br />\n",
+    "PostedDate": "2015-12-30T09:10:34.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

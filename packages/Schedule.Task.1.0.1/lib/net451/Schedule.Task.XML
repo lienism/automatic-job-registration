@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Schedule.Task</name>
+    </assembly>
+    <members>
+        <member name="T:Schedule.Task.ScheduleProcess">
+            <summary>
+            Create a process to execute action or actions in schedule time
+            </summary>
+        </member>
+        <member name="M:Schedule.Task.ScheduleProcess.#ctor(System.String,System.Action)">
+            <summary>
+            Create a schedule processs to run in schedule time
+            </summary>
+            <param name="name">Name of schedule in configuration</param>
+            <param name="action">Action to run</param>
+        </member>
+        <member name="M:Schedule.Task.ScheduleProcess.#ctor(System.String,System.Action[])">
+            <summary>
+            Create a schedule processs to run in schedule time with run actions in Async
+            </summary>
+            <param name="name">Name of schedule in configuration</param>
+            <param name="actions">Actions to run in Async</param>
+        </member>
+        <member name="M:Schedule.Task.ScheduleProcess.Run">
+            <summary>
+            Run process in schedule time set
+            </summary>
+        </member>
+        <member name="T:Schedule.Task.ScheduleTask">
+            <summary>
+            Define many task to execute in schedule time
+            </summary>
+        </member>
+        <member name="M:Schedule.Task.ScheduleTask.#ctor(System.Collections.Generic.IDictionary{System.String,System.Action})">
+            <summary>
+            Execute action by each schedule
+            </summary>
+            <param name="nameActionList">List of schedule with action to excute:
+            <example>
+                new Dictionary&lt;string, Action&gt;() 
+                {
+                   { "", action}
+                };
+            </example>
+            </param>
+        </member>
+        <member name="M:Schedule.Task.ScheduleTask.#ctor(System.Collections.Generic.IDictionary{System.String,System.Action[]})">
+            <summary>
+            Execute action by each schedule time async
+            </summary>
+            <param name="nameActionListAsync">List of schedule with action to excute:
+            <example>
+            new Dictionary&lt;string, Action[]&gt;() 
+                {
+                   { "", new Action[] { action1, action2, action3, ..., actionN} }
+                };
+            </example>
+            </param>
+        </member>
+        <member name="M:Schedule.Task.ScheduleTask.Run">
+            <summary>
+            Run actions in each schedule time set
+            </summary>
+        </member>
+        <member name="M:Schedule.Task.ScheduleTask.RunAsync">
+            <summary>
+            Run actions async in each schedule time set
+            </summary>
+        </member>
+    </members>
+</doc>

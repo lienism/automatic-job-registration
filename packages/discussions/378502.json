@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "879005",
+    "ThreadId": "378502",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I have a task which created manually. Each time it runs, I need to check some conditions from my Database to determine its NextRunTime but NexRunTime property is readonly.</p>\r\n<p>How can I change the NextRunTime value or is there anyway to define its next run time ?</p>\r\n<p>Thanks for your help.</p>\r\n",
+    "PostedDate": "2012-07-19T23:58:30.763-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "887603",
+    "ThreadId": "378502",
+    "Html": "<p>NextRunTime is calculated internally by looking at all the triggers and determining when they will all execute. The only way to change it is by changing some or all of the triggers associated with the task.</p>",
+    "PostedDate": "2012-07-22T19:47:52.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

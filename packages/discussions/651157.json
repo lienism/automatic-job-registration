@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1462835",
+    "ThreadId": "651157",
+    "Html": "I am creating a task from my code. It has a trigger (Idle Trigger) where I do not check &quot;Active&quot; time (keep the checkbox unchecked and create the task.\r<br />\n<br />\nnow if I try to read the task xml, it does not have a &quot;StartBoundary&quot; node.\r<br />\n<br />\nHowever, when a task object is created, it shows me the Task Trigger with StartBoundary set to current time.\r<br />\n<br />\nThis sets the UI off and on my UI, the Active is set to CHECKED.\r<br />\n<br />\nIs there something that I am missing.\r<br />\n<br />\n<br />\nThanks in Advance.\r<br />\nAshutosh<br />\n",
+    "PostedDate": "2016-02-11T04:22:41.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462870",
+    "ThreadId": "651157",
+    "Html": "In the library, all triggers are assigned a StartBoundary when constructed. It appears, now that you bring this to my attention, that the native library only assigns a StartBoundary to calendar triggers by default. Is this a problem for your code? I can't see any scenario where having a StartBoundary set to a time in the past would cause any different behavior.<br />\n",
+    "PostedDate": "2016-02-11T08:58:45.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462873",
+    "ThreadId": "651157",
+    "Html": "The code that I am using fetches the task from Task scheduler and based on whether the StartBoundary node is present or not, we can set the &quot;Activate&quot; checkbox for the trigger.\r<br />\n<br />\nTask Scheduler allows us to set this time to be somewhere in past as well without any issues.\r<br />\n<br />\nWhile mocking the same behaviour, the only check I have is to see if the NODE &quot;StartBoundary&quot; exists in the XML or not. If it does not exist, then the &quot;Activate&quot; Checkbox is unchecked in task scheduler. However, when this task comes to me through the wrapper, the TaskDefinition sets this StartBoundary to current date time if it does not find the node and thus, I now have a StartBoundary set for that trigger.\r<br />\n<br />\n<br />\nEnd result is that even if I have a task with an idle trigger  which does not have &quot;Activate&quot; check box checked, it comes out to me with a &quot;Start Date&quot; that is equal to current date time and therefore, &quot;Activate&quot; is set to ON.\r<br />\n<br />\n<br />\nI hope I did not confuse things here.\r<br />\n<br />\nI see the quick fix to this as making the StartBoundary and EndBoundary as DateTime? instead of DateTime and initializing them with NULL.\r<br />\n<br />\nAlthough that might have its own issue which I am not yet aware of :)\r<br />\n<br />\n<br />\nThanks\r<br />\nAshutosh<br />\n",
+    "PostedDate": "2016-02-11T09:13:57.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462928",
+    "ThreadId": "651157",
+    "Html": "I believe I have this fixed in 2.5.14.<br />\n",
+    "PostedDate": "2016-02-11T15:43:24.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

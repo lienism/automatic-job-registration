@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1355657",
+    "ThreadId": "581829",
+    "Html": "I have some code which I use to schedule a task to launch notepad.exe after 2 minutes have elapsed.<br />\n<br />\nThe process seems to start fine, but the program doesn't show up in the UI.<br />\n<br />\nPlease help.<br />\n<br />\nHere is the code:<br />\n<pre><code>        Dim ts As New TaskService\n        Dim td As TaskDefinition = ts.NewTask\n\n        Dim tf As TaskFolder = ts.RootFolder\n\n        td.RegistrationInfo.Description = &quot;Test action&quot;\n        td.Principal.LogonType = TaskLogonType.S4U\n        td.Settings.DisallowStartIfOnBatteries = False\n        td.Settings.Hidden = False\n        td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal\n        td.Settings.RunOnlyIfIdle = False\n        td.Settings.RunOnlyIfNetworkAvailable = False\n        td.Settings.StopIfGoingOnBatteries = False\n\n        td.Principal.RunLevel = TaskRunLevel.Highest\n        td.Settings.AllowDemandStart = True\n        td.Settings.AllowHardTerminate = True\n        td.Settings.Compatibility = TaskCompatibility.V2\n        td.Settings.DeleteExpiredTaskAfter = TimeSpan.FromMinutes(1)\n        td.Settings.StartWhenAvailable = True\n\n        Dim tt As New TimeTrigger\n\n        td.Triggers.Add(tt)\n\n        tt.StartBoundary = DateTime.Now + TimeSpan.FromMinutes(2)\n        tt.EndBoundary = DateTime.Now + TimeSpan.FromMinutes(2)\n\n        tt.Repetition.StopAtDurationEnd = True\n\n        tt.Enabled = True\n\n        td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;C:\\test.txt&quot;))\n\n        Try\n\n        tf.RegisterTaskDefinition(&quot;TestNewest&quot;, td, TaskCreation.CreateOrUpdate, My.User.Name, , TaskLogonType.S4U)\n\n\n        Catch ex As Exception\n            Debug.Print(ex.ToString())\n        End Try\n\n        Debug.Print(&quot;Task registered, will run at &quot; + CStr(DateTime.Now + TimeSpan.FromMinutes(2)))</code></pre>\n\n",
+    "PostedDate": "2015-02-25T07:52:52.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359061",
+    "ThreadId": "581829",
+    "Html": "To show an application running interactively, you must specify a LogonType of InteractiveToken. You can skip setting the td.Principal.LogonType property and just do it through the RegisterTaskDefinition method (e.g. RegisterTaskDefinition(&quot;TestNewest&quot;, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken)).<br />\n",
+    "PostedDate": "2015-03-02T14:39:56.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-02T14:40:13.003-08:00"
+  }
+]

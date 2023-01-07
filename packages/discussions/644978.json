@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1444465",
+    "ThreadId": "644978",
+    "Html": "(this is not a troll!)\r<br />\nMoving to a more open repository would allow third-party developpers (such as me) to submit patches, and help improving the product.\r<br />\nOn codeplex, this is a bit more difficult.<br />\n",
+    "PostedDate": "2015-09-15T06:24:42.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444480",
+    "ThreadId": "644978",
+    "Html": "A valuable suggestion. Thank you. I have a bunch of automation tied to CodePlex currently that I would need to unravel, but I completely agree that suggesting patches is difficult here.<br />\n",
+    "PostedDate": "2015-09-15T07:41:29.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1444485",
+    "ThreadId": "644978",
+    "Html": "On my projects, I use appveyor to automate build, tests and deployment to NuGet. This way, one commit with a different version number makes the whole magic to release a new package (and a commit with the same version number still does builds and tests, but no deployment since the version already exists).<br />\n",
+    "PostedDate": "2015-09-15T08:15:05.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

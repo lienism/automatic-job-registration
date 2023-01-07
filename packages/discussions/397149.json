@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "918423",
+    "ThreadId": "397149",
+    "Html": "\r\n<p>If you check the DLL using e.g. https://www.virustotal.com/, there are warnings like:</p>\r\n<p>Ikarus&nbsp;&nbsp; not-a-virus:Monitor.MSIL</p>\r\n<p>Kaspersky&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; not-a-virus:Monitor.MSIL.KeyLogger.er</p>\r\n<p>Kaspersky (Online)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; not-a-virus:Monitor.MSIL.KeyLogger.er</p>\r\n<p>How can I avoid these warnings (hoping they are fals alarms)? Or better: Build a DLL without producing virus warnings!</p>\r\n<p>I have found another diskussion <span title=\"Paste this into a wiki page to link to this discussion\">\r\n[discussion:390691] for this problem. I'd like to understand, what patterns produce the antivirus-warnings to remove them. But until now I did not found any description for these &quot;KeyLogger&quot; warnings. Do you can think of any code in the library, that could\r\n be misunderstood as a KeyLogger?<br>\r\n</span></p>\r\n",
+    "PostedDate": "2012-09-27T06:14:09.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919042",
+    "ThreadId": "397149",
+    "Html": "<p>I can't think of anything in the code that could be interpretted as a keylogger. Nothing in the library even captures keystrokes. I'm baffled. Interesting that only Kaspersky finds a problem. All the other virus scanners find nothing. Unfortunately, the virustotal site provides no information to help diagnose the problem.</p>",
+    "PostedDate": "2012-09-28T08:44:46.313-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919257",
+    "ThreadId": "397149",
+    "Html": "<p>I have contacted the antivirus companies and wait for their answers. IKARUS has answered very prompt and already removed the detection from their product (signature from 9/28). I did also find no information about the found 'risks'. I agree with you that the library is completely harmless. I tried an \"analysis\" to see, what the antivirus software might treat as a 'risk', but this did not help me out. Perhaps you can interpret the results better than me: http://anubis.iseclab.org/?action=result&amp;task_id=1e91f277620a55de40df518467ef558df&amp;call=first</p>",
+    "PostedDate": "2012-09-28T16:39:52.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919508",
+    "ThreadId": "397149",
+    "Html": "<p>Now also Kaspersky has corrected their false alarm, after I contacted them. If you would like your library be completely free from suspicion, you should contact the other anti-virus companies (at virus total this is Emsisoft - which I contacted, but had no answer until now - and TrendMicro-HouseCall).</p>",
+    "PostedDate": "2012-09-29T16:46:40.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

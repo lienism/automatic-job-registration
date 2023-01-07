@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1460884",
+    "ThreadId": "650564",
+    "Html": "A user on a virtual Windows Server 2012 R2 is getting this error \r<br />\nError HRESULT E_FAIL has been returned from a call to a COM component\r<br />\nwhile my code is getting various task properties via this library.\r<br />\n<br />\nAny known suspects?<br />\n",
+    "PostedDate": "2016-01-27T08:09:50.187-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1460886",
+    "ThreadId": "650564",
+    "Html": "Turns out this is caused by tasks that have no defined triggers.<br />\n",
+    "PostedDate": "2016-01-27T08:58:34.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-01-27T08:58:39.88-08:00"
+  }
+]

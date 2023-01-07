@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "983671",
+    "ThreadId": "428736",
+    "Html": "\r\n<pre style=\"font-family:Segoe UI; background:#ffffea; color:black; font-size:13px\"><span style=\"color:blue\">var</span>&nbsp;taskEditDialog&nbsp;=&nbsp;<span style=\"color:blue\">new</span>&nbsp;<span style=\"color:#2b91af\">TaskEditDialog</span>(taskService,&nbsp;taskDefinition,&nbsp;<span style=\"color:blue\">true</span>,&nbsp;<span style=\"color:blue\">false</span>)\r\n</pre>\r\n<p>I am making an object of TaskEditDialog. But it is taking too much time to do this. What is problem.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2013-01-07T02:54:36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983822",
+    "ThreadId": "428736",
+    "Html": "\r\n<p>See Comments in this post: <a href=\"http://taskscheduler.codeplex.com/workitem/9855\">\r\nhttp://taskscheduler.codeplex.com/workitem/9855</a>. I believe this may&nbsp;resolve your problem.</p>\r\n",
+    "PostedDate": "2013-01-07T09:22:07.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983948",
+    "ThreadId": "428736",
+    "Html": "\r\n<p>I am using v2 dlls of TaskSceduler. My application is on v4 and on Any CPU. I changed Any CPU to x86. But it didnt worked. Where are v4 dlls for TaskScheduler?</p>\r\n",
+    "PostedDate": "2013-01-07T21:22:15.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983950",
+    "ThreadId": "428736",
+    "Html": "\r\n<p>ok, i tried again, shifted all my projects to x86 instead of only main project. Now it is working. But now problem is that I cannot shift my application to x86. Is there any way around for ANY CPU?,</p>\r\n",
+    "PostedDate": "2013-01-07T21:31:30.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "985628",
+    "ThreadId": "428736",
+    "Html": "\r\n<p>There is only one version of the two assemblies (DLLs) and to use both your project must support at least .NET 3.5 and must compile with the x86 setting in order to avoid the performance problem. You could download the source and change the project compile\r\n settings and build your own release with &quot;Any CPU&quot; and then see if the performance problems exist or not.</p>\r\n",
+    "PostedDate": "2013-01-11T12:38:03.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

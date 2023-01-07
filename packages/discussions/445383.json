@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1050356",
+    "ThreadId": "445383",
+    "Html": "Hi!!\r<br />\n<br />\nI have a problem when I try to create a new task. \r<br />\n<br />\nWhen I catch the error, the message is &quot;(19,8):LogonType&quot;. In fact, I try to create the new task into setup project in VS 2010.\r<br />\n<br />\nI'm not sure if the type of project is the problem, because I have the same code in windowsform project  and the task is created correctly.\r<br />\n<br />\nHope you can help me.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-05-29T15:46:10.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1051255",
+    "ThreadId": "445383",
+    "Html": "What environment are you in? If this is an ASP.NET instance, please search the discussions for how to set permissions and accounts correctly within that environment.<br />\n",
+    "PostedDate": "2013-05-31T08:40:20.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

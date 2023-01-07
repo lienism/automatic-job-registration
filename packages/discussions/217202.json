@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "459498",
+    "ThreadId": "217202",
+    "Html": "<p>I want my task to run whether I am logged on or not. &nbsp;This has to work on XP, Vista, and Window 7. &nbsp;Assuming I am NOT the admin user, are these statements correct:</p>\r\n<p>&nbsp;</p>\r\n<p>1. On Vista/Win7 I MUST provide a user and password if I want to run as the user I am logged in on and I want to run without being logged on.</p>\r\n<p>2. For XP I don't need to supply a user/password, but make sure the&nbsp;RunOnlyIfLoggedOn = false.</p>\r\n<p>3. I need to check the HighestSupported version to know which scheduler I am working with and which calls to make.</p>\r\n<p>&nbsp;</p>\r\n<p>Please confirm. &nbsp;Thanks.</p>",
+    "PostedDate": "2010-06-24T07:10:02.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "463243",
+    "ThreadId": "217202",
+    "Html": "<p>The only way to do this for both versions is to supply a user name and password when you register the task and set the TaskLogonType to Password.</p>",
+    "PostedDate": "2010-07-04T08:26:01.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

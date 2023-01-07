@@ -1,0 +1,110 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Tasks loaded in separate thread having less privileges. This caused an exception. Elevating thread privileges corrected issue.",
+    "ClosedDate": "2010-03-27T16:24:39.837-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Sample code:\n \nimplemented with Microsoft.Win32.Scheduler version 1.42\nbut also reproducible with latest trunk;\n \nclass TaskRepository {\n \nprivate TaskService taskService;\nprivate string taskPrefix = \"MyTask\";\n \npublic TaskRepository()\n{\n  taskService = new TaskService();\n}\n \npublic void Save(Credentials credentials, string shellInstruction)\n{\n    if(credentials == null)\n      throw new ArgumentNullException(\"credentials\");\n      \n    if(string.IsNullOrEmpty(shellInstruction))\n      throw new ArgumentNullException(\"shellInstruction\");\n \n    var taskDefenition = taskService.NewTask();\n    taskDefenition.RegistrationInfo.Author = Strings.ApplicationName;\n    taskDefenition.Settings.ExecutionTimeLimit = TimeSpan.FromHours(24);\n    taskDefenition.Principal.RunLevel = Win32.TaskRunLevel.Highest;\n    taskDefenition.Actions.Add(new Win32.ExecAction(mainAppPath, shellInstruction, null));\n    \n    taskService.RootFolder.RegisterTaskDefinition(\n\t\t\t\ttaskPrefix + DateTime.Now.ToString(\"ddMMyyyyHHmmss\"),\n\t\t\t\ttaskDefenition,\n\t\t\t\tTaskCreation.CreateOrUpdate,\n\t\t\t\tcredentials.Name,\n\t\t\t\tcredentials.Password,\n\t\t\t\tTaskLogonType.Password, null);  \n}\n \npublic IEnumerable<TaskDefinition> Load()\n{\n    var rootTasks = taskService.RootFolder.Tasks;\n    List<TaskDefinition> result = new List<TaskDefinition>();\n       \n\t\tforeach (var task in rootTasks)\n\t\t{\n\t\t\tif (task.Name.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))\n\t\t\t\t\tresult.Add(task.Definition); // task.Definition <--- Exception thrown here\n\t\t}\t\t\t\t\n\t\treturn result;\n}\n}\n \nCOMException: Interface not registered (Exception from HRESULT: 0x80040155)\nat Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Definition()\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()\n   at Scheduler.TaskRepository.Load() in ...\\TaskRepository.cs:line 40\n \nOS: Win7.\n \nTasks are created successfully, but while loading created tasks ComException is thrown on task.Definition property;",
+    "LastUpdatedDate": "2016-09-21T11:17:03.28-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-03-23T05:17:21.377-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "COMException: Interface not registered (Exception from HRESULT: 0x80040155)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 5603
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Do you have local administration rights on the pc causing the exception? I remember having problems with registering com interfaces with vista/7. Are you allowing the app through UAC and running as admin?",
+      "PostedDate": "2010-03-23T05:38:10.083-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-03-23T06:26:04.51-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-03-23T11:52:31.54-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "2 IIvanden:\r\nYes. I do have administrator rights. The application is started with Administrator permissions.\r\nThe exception is thrown when trying to access Definition property which is of type ITaskDefinition. Don't understand how this may happen when I just created Task from new TaskDefinition.",
+      "PostedDate": "2010-03-23T11:56:40.38-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Will you provide the code or describe the properties you have set on the definition when you register it the first time?",
+      "PostedDate": "2010-03-23T23:30:22.063-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-03-23T23:31:27.503-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Here you go",
+      "PostedDate": "2010-03-24T01:54:29.367-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-03-24T02:07:29.857-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi,\r\nI was loading Tasks in separate thread which probably has less privileges. This caused an exception.\r\nThanks. The issue can be closed;",
+      "PostedDate": "2010-03-26T01:31:19.843-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-03-27T16:24:39.837-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:08.85-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.363-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This issue is happening again.\nI've tested the latest version (2.5.21) on Windows 7 and 10.\nI'm using a WinForm project with the UI thread using that lib (New TaskService().RootFolder) and then when listing the scheduled tasks from another thread it fails:\r\n\r\nSystem.Runtime.InteropServices.COMException (0x80040155): Interface not registered (Exception from HRESULT: 0x80040155)\n   at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Definition()\n   at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError)\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()\n...\r\n\r\nThank you for your help.\n/Lio",
+      "PostedDate": "2016-09-21T09:56:42.833-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The base Microsoft library is not thread safe and is in a COM Apartment Threaded model which assumes a single thread. Each class must be used only with other classes instantiated in the same thread, including, and most importantly, the TaskService class.",
+      "PostedDate": "2016-09-21T11:17:03.28-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

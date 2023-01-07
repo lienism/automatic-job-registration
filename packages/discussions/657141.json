@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1481137",
+    "ThreadId": "657141",
+    "Html": "using (TaskService ts = new TaskService())<br />\n<pre><code>        {\n            // Create a new task definition and assign properties\n            TaskDefinition td = ts.NewTask();\n            td.RegistrationInfo.Description = &quot;Does something&quot;;\n            td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n            TimeTrigger tTrigger = new TimeTrigger();\n            tTrigger.StartBoundary = new DateTime(DateTime.Today.Year, 8, 15, 10, 42, 0);\n\n            // Add a trigger that will fire every week on Friday\n            td.Triggers.Add(tTrigger);\n\n            // Add an action that will launch Notepad whenever the trigger fires\n            td.Actions.Add(new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null));\n\n            // Register the task in the root folder\n            const string taskName = &quot;Test&quot;;\n            ts.RootFolder.RegisterTaskDefinition(taskName, td);\n        }</code></pre>\n\n",
+    "PostedDate": "2016-08-14T19:46:56.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481193",
+    "ThreadId": "657141",
+    "Html": "This appears to be configured properly. Make sure event logging for tasks is turned on and then check the event log. This can be done by going into the Task Scheduler applet, navigating to this tasks, opening its properties, and looking at the History. It should give you failure codes and show the set of events that occurred related to this task.<br />\n",
+    "PostedDate": "2016-08-15T10:55:55.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-08-15T10:56:10.887-07:00"
+  },
+  {
+    "Id": "1481423",
+    "ThreadId": "657141",
+    "Html": "i find that the error log now,\r<br />\n<br />\nit is due to battery in notebook, need to use AC power supply<br />\n",
+    "PostedDate": "2016-08-17T23:15:18.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

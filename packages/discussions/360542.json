@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "852356",
+    "ThreadId": "360542",
+    "Html": "\r\n<p>I am using Microsoft.Win32.TaskScheduler trying to get a history of the tasks and can't find TaskEventLog in that DLL.&nbsp; Where is it?&nbsp; I'm using the latest version from May 18th.</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-06-21T14:36:50.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "852397",
+    "ThreadId": "360542",
+    "Html": "<p>It is in the TaskSchedulerEditor assembly and download.</p>",
+    "PostedDate": "2012-06-21T17:36:20.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

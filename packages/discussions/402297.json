@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "938061",
+    "ThreadId": "402297",
+    "Html": "\r\n<p>I want to create a task that does the following:</p>\r\n<p>- Run once immediately</p>\r\n<p>- Self-delete task after running</p>\r\n<p>How to implement this? I looked around the documentation, but couldn't find one. Appreciate any pointers.</p>\r\n",
+    "PostedDate": "2012-11-07T09:49:15.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938312",
+    "ThreadId": "402297",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre>TaskDefinition td = ts.NewTask();\r\n<span style=\"color: green;\">// Set the TimeSpan to a value that gives the action long enough to complete</span>\r\ntd.Settings.DeleteExpiredTaskAfter = TimeSpan.FromMinutes(1);\r\ntd.Triggers.Add(<span style=\"color: blue;\">new</span> TimeTrigger());\r\n<span style=\"color: green;\">// Set the action to what needs to execute</span>\r\ntd.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, <span style=\"color: #a31515;\">\"c:\\\\test.log\"</span>, <span style=\"color: blue;\">null</span>));\r\nts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"TaskName\"</span>, td);\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-11-07T21:23:52.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938667",
+    "ThreadId": "402297",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>dahall wrote:</strong><br>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>TaskDefinition td = ts.NewTask();\n<span style=\"color:green\">// Set the TimeSpan to a value that gives the action long enough to complete</span>\ntd.Settings.DeleteExpiredTaskAfter = TimeSpan.FromMinutes(1);\ntd.Triggers.Add(<span style=\"color:blue\">new</span> TimeTrigger());\n<span style=\"color:green\">// Set the action to what needs to execute</span>\ntd.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#a31515\">&quot;c:\\\\test.log&quot;</span>, <span style=\"color:blue\">null</span>));\nts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;TaskName&quot;</span>, td);\n\n</pre>\r\n</div>\r\n</blockquote>\r\n<p>I got an error with message&nbsp;<span style=\"text-decoration:underline\">(37,4):EndBoundary.</span></p>\r\n<p>Adding StartBoundary and EndBoundary fixed the error.</p>\r\n<p>In your code, you are setting&nbsp;DeleteExpiredTaskAfter value to a number. In my case, i don't want to restrict by a duration. I want to let the task run to completion and get deleted after that. Is this possible?</p>\r\n<p>Many thanks!</p>\r\n",
+    "PostedDate": "2012-11-08T10:11:49.46-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "938933",
+    "ThreadId": "402297",
+    "Html": "<p>My bad. DeleteExpiredTaskAfter requires the EndBoundary to be set. StartBoundary is set automatically in the TimeTrigger constructor to DateTime.Now.</p>\r\n<p>I don't know of anyway to delete the task immediately upon completion other than have the task's action delete the task or wait for the DeleteExpiredTaskAfter to kick in.</p>",
+    "PostedDate": "2012-11-08T19:58:54.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

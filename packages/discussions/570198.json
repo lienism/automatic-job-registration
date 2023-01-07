@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1314794",
+    "ThreadId": "570198",
+    "Html": "Hi,\r<br />\n<br />\nIn task scheduler action(s) I would like to execute following DOS commands without using any batch file. Would it be possible? Please help.\r<br />\n<br />\n/<em> Store current date and time in a variable </em>/\r<br />\nset TIMESTAMP=%DATE:~0,2%-%DATE:~3,2%-%DATE:~6,4%-%TIME:~0,2%.%TIME:~3,2%.%TIME:~6,2%\r<br />\n<br />\n/<em> Create directory </em>/\r<br />\nmd &quot;%TIMESTAMP%&quot;\r<br />\n<br />\n/<em> Pass above created directory to one of the program </em>/\r<br />\nHTBase.exe /full /logfile=%LOGDIR%\\HTBase.log /r /y %APPDIR% %FULLDIR%/&quot;%TIMESTAMP%&quot; &gt;&gt; %LOGDIR%\\HTBaseFullBackup.log\r<br />\n<br />\nCurrently it is done through batch file but I would like to execute these command through Task scheduler action(s) without using any batch file.\r<br />\n<br />\nRegards,\r<br />\nPabitra<br />\n",
+    "PostedDate": "2014-10-19T12:08:13.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314967",
+    "ThreadId": "570198",
+    "Html": "Under Vista and later, you can use multiple actions. Order them in the order you want the DOS commands run and then put each command in a separate action. You will use the ExecAction class.<br />\n",
+    "PostedDate": "2014-10-20T06:42:18.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316160",
+    "ThreadId": "570198",
+    "Html": "Hi Dahall,\r<br />\n<br />\nThank you for your response. I can have multiple actions. But thing is that The output of following first action would be the input to second and third action.\r<br />\n<br />\n1st action\r<br />\nset TIMESTAMP=%DATE:~0,2%-%DATE:~3,2%-%DATE:~6,4%-%TIME:~0,2%.%TIME:~3,2%.%TIME:~6,2% \r<br />\n<br />\n2nd action\r<br />\nThe above 'TIMESTAMP' would be input to following action.\r<br />\nmd &quot;%TIMESTAMP%&quot; \r<br />\n<br />\nHow can I achieve this? Please revert.\r<br />\n<br />\nRegards,\r<br />\nPabitra<br />\n",
+    "PostedDate": "2014-10-23T22:01:58.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316275",
+    "ThreadId": "570198",
+    "Html": "You would have to do something like persist information to a temp file in between messages if you wanted to use separate actions. You could also use a PowerShell script. Actions do not have a way to maintain state between executions.<br />\n",
+    "PostedDate": "2014-10-24T07:21:32.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-28T10:27:26.793-07:00"
+  },
+  {
+    "Id": "1317099",
+    "ThreadId": "570198",
+    "Html": "The task is achieved through adding a action with PowerShell script. Thank you.<br />\n",
+    "PostedDate": "2014-10-28T10:08:29.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

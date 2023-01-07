@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "819733",
+    "ThreadId": "351141",
+    "Html": "\r\n<p>I notice that there is a property to disable the &quot;run times&quot; tab. How do I make use of this functionality when displaying properties via Task.ShowEditor()?</p>\r\n<p>My problem is that the &quot;run times&quot; tab seems to cause an exception on my customer's server, and I really don't need to display this tab... If you run the Task Scheduler from windows, this tab is not even displayed...</p>\r\n<p>Greg.</p>\r\n",
+    "PostedDate": "2012-04-04T03:52:52.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819876",
+    "ThreadId": "351141",
+    "Html": "<p>You can't disable it with the ShowEditor method. You will need to reference Microsoft.Win32.TaskScheduler.dll in your project.&nbsp;Below is the code to use:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskEditDialog editorForm = <span style=\"color: blue;\">new</span> TaskEditDialog(task, <span style=\"color: blue;\">true</span>, <span style=\"color: blue;\">true</span>);\r\neditorForm.ShowRunTimesTab = <span style=\"color: blue;\">false</span>;\r\neditorForm.ShowDialog();\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-04-04T08:27:48.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819889",
+    "ThreadId": "351141",
+    "Html": "<p>ShowRunTimesTab is not a property/attribute of the TaskEditDialog class... so the code above is not valid.</p>",
+    "PostedDate": "2012-04-04T08:54:12.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819898",
+    "ThreadId": "351141",
+    "Html": "<p>I got it right doing the following... not sure if there is a easier way...</p>\r\n<p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>            TaskEditDialog diag = <span style=\"color: blue;\">new</span> TaskEditDialog(t, <span style=\"color: blue;\">true</span>, <span style=\"color: blue;\">true</span>);\r\n            TaskPropertiesControl prop = <span style=\"color: blue;\">null</span>;\r\n\r\n            <span style=\"color: blue;\">foreach</span> (System.Windows.Forms.Control control <span style=\"color: blue;\">in</span> diag.Controls)\r\n                <span style=\"color: blue;\">if</span> (control.Name.Equals(<span style=\"color: #a31515;\">\"taskPropertiesControl1\"</span>))\r\n                {\r\n                    prop = (TaskPropertiesControl)control;\r\n                    prop.ShowRunTimesTab = <span style=\"color: blue;\">false</span>;\r\n                    <span style=\"color: blue;\">break</span>;\r\n                }\r\n\r\n            <span style=\"color: blue;\">if</span> (prop != <span style=\"color: blue;\">null</span>)\r\n                diag.ShowDialog();\r\n            <span style=\"color: blue;\">else</span>\r\n                t.ShowEditor();\r\n\r\n</pre>\r\n</div>\r\n</p>",
+    "PostedDate": "2012-04-04T09:08:28.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "819933",
+    "ThreadId": "351141",
+    "Html": "<p>The code I provided does work with version 1.8.1 of the library and any builds dated after Jan 27, 2012. For prior versions, your code is the only way to set it.</p>",
+    "PostedDate": "2012-04-04T09:54:59.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "820285",
+    "ThreadId": "351141",
+    "Html": "<blockquote style=\"padding-bottom: 0px; font-style: italic; margin: 0.25em 1em 0px; padding-left: 0.25em; padding-right: 0.25em; padding-top: 0px; border: #ccc 0.1em solid;\"><strong>shady5k wrote:</strong><br />\r\n<p>ShowRunTimesTab is not a property/attribute of the TaskEditDialog class... so the code above is not valid.</p>\r\n</blockquote>\r\n<p>That's odd, because for me it is... TaskScheduler.TaskEditDialog that is...<br /><br />My code:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskEditDialog editorForm = <span style=\"color: blue;\">new</span> TaskEditDialog();\r\neditorForm.Editable = <span style=\"color: blue;\">true</span>;\r\neditorForm.RegisterTaskOnAccept = <span style=\"color: blue;\">true</span>;\r\neditorForm.Initialize(theTask);\r\neditorForm.AllowTransparency = <span style=\"color: blue;\">true</span>;\r\neditorForm.ShowRunTimesTab = <span style=\"color: blue;\">false</span>;\r\neditorForm.ShowDialog();\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-04-05T02:30:38.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "821825",
+    "ThreadId": "351141",
+    "Html": "<p>Thanks for the help. I seem to be using version 1.7.1</p>",
+    "PostedDate": "2012-04-09T23:36:03.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

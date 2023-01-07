@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "619873",
+    "ThreadId": "259398",
+    "Html": "\r\n<p>I've created a task with this code:</p>\r\n<p><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string taskName = execName;</span></p>\r\n<p></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Get the service on the local machine</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create a new task definition and assign properties</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = &quot;My task description&quot;;</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Settings and principles</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Settings.DisallowStartIfOnBatteries = false;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Settings.Priority = ProcessPriorityClass.Normal;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Settings.WakeToRun = true;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Principal.GroupId = &quot;Users&quot;;</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Triggers.</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LogonTrigger lt = new LogonTrigger();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lt.Delay = TimeSpan.FromMinutes(5);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lt.UserId = String.Empty;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(lt);</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Start at 2:30 p.m.</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DailyTrigger dt2 = new DailyTrigger();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dt2.StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(14.5);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(dt2);</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an action that will launch the exec whenever the trigger fires</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExecAction ea1 = new ExecAction();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ea1.Path = this.execFullPath;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ea1.Arguments = &quot;-SignatureUpdate&quot;;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ea1.WorkingDirectory = null;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(ea1);</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Register the task in the root folder</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken);</span></p>\r\n<p></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Remove the task we just created</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //ts.RootFolder.DeleteTask(taskName);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"color:#000000\">&#65279;The\r\n task is created and runs OK.</span></span></span></span></span></span></span></span></span></p>\r\n<p><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"color:#000000\">&#65279;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style=\"color:#000000\">I\r\n then attempt to edit the task with the following code but the RegisterTaskDefinition throws Access is Denied?</span></p>\r\n</span></span></span></span></span></span></span></span>\r\n<p></p>\r\n<p>&nbsp;&nbsp;&nbsp;<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DialogResult res;</span></p>\r\n<p></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Get the service on the local machine</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create a new task</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string taskName = name;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task t = ts.FindTask(taskName, true);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (t == null)</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Edit task and re-register if user clicks Ok</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskEditDialog editorForm = new TaskEditDialog();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; editorForm.Editable = true;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; editorForm.Initialize(t);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; res = editorForm.ShowDialog();</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (res == System.Windows.Forms.DialogResult.OK)</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(taskName, editorForm.TaskDefinition);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p></p>\r\n<p><span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Remove the task we just created</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.DeleteTask(taskName);</span><br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>\r\n<p><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"font-family:Consolas; color:#c0c0c0; font-size:x-small\"><span style=\"color:#000000\">&#65279;Thanks,<br>\r\nEd...</span></span></span></span></span></span></span></span></span></p>\r\n",
+    "PostedDate": "2011-05-28T17:24:24.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620022",
+    "ThreadId": "259398",
+    "Html": "<p>Your best bet is to use the RegisterTaskOnAccept property of the TaskEditDialog&nbsp;as it handles an number of conditions instead of trying to re-register it on your own. You can also combine a lot of those same lines into the constructor.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskEditDialog editorForm = <span style=\"color: blue;\">new</span> TaskEditDialog(t, <span style=\"color: blue;\">true</span>, <span style=\"color: blue;\">true</span>);\r\neditorForm.ShowDialog();\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-05-29T12:51:01.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620073",
+    "ThreadId": "259398",
+    "Html": "<p>Thank you for taking the time to reply...</p>\r\n<p>I edited my method as you indicated:</p>\r\n<pre>TaskEditDialog editorForm = <span style=\"color: blue;\">new</span> TaskEditDialog(t, <span style=\"color: blue;\">true</span>, <span style=\"color: blue;\">true</span>);\r\neditorForm.ShowDialog();\r\n</pre>\r\n<pre>and removed my registrTaskDefination. After editing the task and clicking OK, the \"Access is Denied\" is returned (0x80070005) after editorFoem.ShowDialog()?</pre>\r\n<pre>I'm logged on as Administrator. The OS is Win7 x64.</pre>\r\n<pre>Ed...</pre>",
+    "PostedDate": "2011-05-29T16:32:55.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620104",
+    "ThreadId": "259398",
+    "Html": "<p>Remove the line below and see if that helps.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>td.Principal.GroupId = <span style=\"color: #a31515;\">\"Users\"</span>;\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-05-29T20:17:22.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620122",
+    "ThreadId": "259398",
+    "Html": "<p>Removing the td.Principal.GroupId = \"Users\" causes a ComException 0x80070534.</p>\r\n<p>I guess I should explain that the task create code method is in a Custom Actions InstallerClass and is being called in the Installer_Committed callback.</p>\r\n<p>Removing the Principal.GroupId line produces the ComException during the program setup install. (<span style=\"text-decoration: underline;\">With the GroupId line in, the Task is created with incident or error</span>??)</p>\r\n<p><strong>So</strong>, I placed the Task Schedule create code in the main app and called the TaskSchedule create in debug (not install).</p>\r\n<p>The only method run is the Task Create method I Posted above. <strong>With and without </strong>the td.Principal.GroupId = \"Users\", an \"Access is Denied\" 0x80070005 is thrown?</p>\r\n<p>I don't understand enough about the RegisterTaskDefinition method to go further in analysis? I figured that the TaskLogonType.InteractiveToken parm would negate the need for userId and PW to be required since I'm logged in as Administrator.</p>\r\n<p>Ed...</p>",
+    "PostedDate": "2011-05-29T22:05:04.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620130",
+    "ThreadId": "259398",
+    "Html": "<p>OK, I created another project and used the Task Create code you have on your Home page. It works fine.</p>\r\n<p>So I went to my code and removed the LogonTrigger. This is what is causing the ComException in registration?</p>\r\n<p>With the LogonTrigger removed and the td.Principle.GroupId set, a Access is Denied is thrown. I removed the GroupId line as you mentioned.&nbsp;</p>\r\n<p>I guess I mis-interpret the meaning of this trigger?</p>\r\n<p>I want to run my action after the system starts-up (after a delay).</p>\r\n<p>ed...</p>",
+    "PostedDate": "2011-05-29T22:35:38.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620135",
+    "ThreadId": "259398",
+    "Html": "<p>I believe you may be looking for a BootTrigger which will fire just after system startup. You can use the Delay property for that trigger to indicate the time after boot that should lapse before the trigger fires. You are correct, the LogonTrigger must be created with credentials that can access the user credentials of the account logging on.</p>",
+    "PostedDate": "2011-05-29T23:01:45.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620333",
+    "ThreadId": "259398",
+    "Html": "<p>David, this project has got me by the tail :)<br />I've paired it down trying to make it as simple as possible. In reading the BootTrigger documentation, I don't see that user credentials are required?</p>\r\n<p>This gives me Access is Denied:</p>\r\n<p>using (TaskService ts = new TaskService())<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br />&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = \"Testing\";<br />&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(\"notepad.exe, \"c:\\\\test.log\", null));</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; BootTrigger bt = new BootTrigger();<br />&nbsp;&nbsp;&nbsp;&nbsp; bt.Delay = TimeSpan.FromMinutes(5);<br />&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(bt);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(taskName, td);</p>\r\n<p>{</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-05-30T08:26:20.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620421",
+    "ThreadId": "259398",
+    "Html": "<p>David, I dont' believe that the BootTrigger is going to work in my case since my task has to run after logs on.</p>\r\n<p>I visited this URL: <a href=\"http://msdn.microsoft.com/en-us/library/aa380727(v=VS.85).aspx\">http://msdn.microsoft.com/en-us/library/aa380727(v=VS.85).aspx</a><br />for the LogonTrigger which reads:</p>\r\n<p>If you want a task to be triggered when any member of a group logs on to the computer rather than when a specific user logs on, then do not assign a value to the <strong>UserId</strong> property. Instead, create a logon trigger with an empty <strong>UserId</strong> property and assign a value to the principal for the task using the <a href=\"http://msdn.microsoft.com/en-us/library/aa380744(v=VS.85).aspx\"><strong>GroupId</strong></a> property.</p>\r\n<p>So I tried this:</p>\r\n<p>using (TaskService ts = new TaskService())<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = \"Testing\";<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(\"notepad.exe, \"c:\\\\test.log\", null));</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LogonTrigger lt = new LogonTrigger();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lt.UserId = string.Empty;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(lt);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Principal.GroupId = \"Administrators\";</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(\"Test\", td);<br />{</p>\r\n<p>It still produces \"Access is Denied\".<br />BTW, the ts.HighestSupportedVersion = 1.3.</p>\r\n<p>ed...</p>",
+    "PostedDate": "2011-05-30T12:51:49.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620553",
+    "ThreadId": "259398",
+    "Html": "<p>I just ran this code with no errors on a Win7 64-bit machine.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   TaskDefinition td = ts.NewTask();\r\n   td.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Does something\"</span>;\r\n   td.Principal.GroupId = <span style=\"color: #a31515;\">\"Administrators\"</span>;\r\n   td.Triggers.Add(<span style=\"color: blue;\">new</span> LogonTrigger { UserId = <span style=\"color: blue;\">string</span>.Empty });\r\n   td.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, <span style=\"color: #a31515;\">\"c:\\\\test.log\"</span>, <span style=\"color: blue;\">null</span>));\r\n   ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test\"</span>, td);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-05-30T21:58:51.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620817",
+    "ThreadId": "259398",
+    "Html": "<p>Thanks for taking your time.</p>\n<p>I created a new VS 2010 project and placed your method there in. The registration doesn't itself throw an error, but it doesn't actually create a task.</p>\n<p>Placing a try/catch around the code, catches a \"Access is Denied\" exception.</p>\n<p>I'm going to download a fresh copy of the TaskScheduler zip and replace my orginal copy, clean up the references,&nbsp;and start fresh. Something is weird.</p>\n<p>Edit Update: I downloaded the zip package but the error remains.</p>\n<p>Ed...</p>",
+    "PostedDate": "2011-05-31T07:39:22.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621802",
+    "ThreadId": "259398",
+    "Html": "<p>The only way I can get a LogonTrigger to register is to supply a userId to the trigger which is contrary to the specs?<br />Win7 x64, VS 2010</p>\r\n<pre><span style=\"color: blue;\">    try{</span></pre>\r\n<pre><span style=\"color: blue;\">\tusing</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n\t{\r\n\t  TaskDefinition td = ts.NewTask();\r\n \t  td.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Does something\"</span>;\r\n \t  //td.Principal.GroupId = <span style=\"color: #a31515;\">\"Administrators\"</span>;\r\n \t  td.Triggers.Add(<span style=\"color: blue;\">new</span> LogonTrigger { UserId = <span style=\"color: blue;\">\"MyDomain\\\\My UserId\"</span> });\r\n \t  td.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, <span style=\"color: #a31515;\">\"c:\\\\test.log\"</span>, <span style=\"color: blue;\">null</span>));\r\n \t  ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test\"</span>, td);\r\n\t}\r\n       }</pre>\r\n<pre>    catch(Exception ex)<br />    {<br />        Display ex;<br />    }</pre>",
+    "PostedDate": "2011-06-01T21:26:48.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621814",
+    "ThreadId": "259398",
+    "Html": "<p>Is there a chance that the current user account is not a member of the Adminstrators group? This would prevent you from being able to create a task with those permissions.</p>",
+    "PostedDate": "2011-06-01T22:45:08.813-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621973",
+    "ThreadId": "259398",
+    "Html": "<p>Well, if I open Local Users and Groups =&gt; Groups =&gt; Administrators I see my usedID listed in the Administrators Properties. I have 2 desktop and 1 laptop with Win7 x64&nbsp;which exhibit the same symptom. In any event, the spec states that all that needs be done is provide an empty UserId for the trigger and a groupId for the Principal.GroupId. It doesn't say it has to be an administrator, I believe.</p>",
+    "PostedDate": "2011-06-02T07:09:57.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "625668",
+    "ThreadId": "259398",
+    "Html": "<p>Determined to be a problem with debugging under Visual Studio while not running as Adminstrator.</p>",
+    "PostedDate": "2011-06-09T15:43:16.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

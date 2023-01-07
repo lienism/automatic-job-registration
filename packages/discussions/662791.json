@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1496011",
+    "ThreadId": "662791",
+    "Html": "Hello, <br />\n<br />\n   I am working on using the TSMW setting up some tasks that use the 'run only if logged on' Task Scheduler 2.0 feature, and I have been running into problems. <br />\n<br />\n   I keep getting errors to the effect of 'Task Scheduler 2.0 (1.2) does not support setting this property. You must use an InteractiveToken in order to have the task run in the current user session.' The problem though is that I think I am setting a token correctly.<br />\n<br />\n   I dug into the source code (taskscheduler-98194) and I found that the error message is generated when the code attempts to set the Tasks.RunOnlyIfLoggedOn property. It looks like the error is generated if the v2Settings are NOT null. I would think that this should check for null, but I don't know the code base or object's internal logic. I found it very difficult to get the code compiling because of all the 3rd party add ins, or I would have just fixed it myself.<br />\n<br />\n   My question is: Is this an error I have found? If it is not, what is the correct way to set an interactive logon token? <br />\n<br />\nI have a full write up posted on Stack Overflow with code samples, if that helps:<br />\n<a href=\"http://stackoverflow.com/questions/43599271/how-to-set-run-only-if-logged-in-and-run-as-with-taskscheduler-in-c\" rel=\"nofollow\">http://stackoverflow.com/questions/43599271/how-to-set-run-only-if-logged-in-and-run-as-with-taskscheduler-in-c</a><br />\n",
+    "PostedDate": "2017-05-02T09:36:04.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496032",
+    "ThreadId": "662791",
+    "Html": "This is not an error as is indicated in multiple threads on this discussion board. (e.g. <a href=\"http://taskscheduler.codeplex.com/discussions/633848\" rel=\"nofollow\">http://taskscheduler.codeplex.com/discussions/633848</a>)\r<br />\n<br />\nThis was a setting provided for backwards compatibility with the V1 library where this setting works. Under V2, you must, as the exception states, use the InteractiveToken enum on the RegisterTaskDefinition instead of setting that property.<br />\n",
+    "PostedDate": "2017-05-02T18:58:15.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-02T18:58:18.943-07:00"
+  },
+  {
+    "Id": "1496048",
+    "ThreadId": "662791",
+    "Html": "Ahhhhh, that explains it.  My problem is solved.\r<br />\n<br />\nThere are two places that you set the Interactive token: the TaskDefinition.Principal.LoginType and in the RegisterTaskDefinition call.\r<br />\n<br />\nMight I recommend that the error message be slightly altered to reflect what you just said. As it stands now, the message tells you nothing helpful about what specifically needs to be done to correct the problem.\r<br />\n<br />\n'Task Scheduler 2.0 (1.2) does not support setting this property. You must use an InteractiveToken in order to have the task run in the current user session.'\r<br />\n<br />\nTo something like:\r<br />\n<br />\n'Task Scheduler 2.0 (1.2) does not support setting this property. You must specify using an InteractiveToken in the RegisterTaskDefinition in order to have the task run in the current user session.'\r<br />\n<br />\nThanks for the help, I will update my SO question to assist others.<br />\n",
+    "PostedDate": "2017-05-03T11:04:50.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

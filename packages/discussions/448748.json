@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1063322",
+    "ThreadId": "448748",
+    "Html": "I need to get to the task history from a remote computer.  How would I go about doing that?  The constructor on TaskHistoryLog has a parameter for Machine, but not username or password (like the task service has).<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-07-01T13:03:49.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1215816",
+    "ThreadId": "448748",
+    "Html": "I have updated the TaskEventLog constructor so it accepts optional parameters for username and password.<br />\n",
+    "PostedDate": "2014-02-27T12:56:20.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:10:02.63-07:00"
+  }
+]

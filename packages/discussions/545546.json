@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1246094",
+    "ThreadId": "545546",
+    "Html": "Hi,\r<br />\nI'm currently scheduling tasks using SYSTEM account:<br />\n<pre><code>  folder.RegisterTaskDefinition(task.name, td, TaskCreation.CreateOrUpdate,\n     &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);\n</code></pre>\n\nScheduling is done from a Windows Service, that is configured by default with SYSTEM account. Since windows service's user credentials can be modified, I would like to schedule tasks using the user who is currently running the service, instead of always using SYSTEM.\r<br />\n<br />\nIs it possible to call RegisterTaskDefinition with the current service's user and password?\r<br />\nThank you, Valentina<br />\n",
+    "PostedDate": "2014-05-16T05:23:39.86-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246488",
+    "ThreadId": "545546",
+    "Html": "You can supply any user credentials you want. Credentials supplied through the TaskService constructor determine access to the host specified to work with the Task Scheduler and then the credentials supplied to the RegisterTaskDefinition method determine the run time access of the task.<br />\n",
+    "PostedDate": "2014-05-17T10:11:55.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246588",
+    "ThreadId": "545546",
+    "Html": "Hello dahall,\r<br />\nthank you for your reply.\r<br />\nI was thinking of something &quot;automatic&quot;: since I don't know the username and the password of Windows Service's user (and the password isn't stored in plain text, anyway) if I don't specify any credential on RegisterTaskDefinition, which user is then used by the Windows Task Scheduler?\r<br />\nThanks again, bye!<br />\n",
+    "PostedDate": "2014-05-18T01:04:16.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246658",
+    "ThreadId": "545546",
+    "Html": "Ah, I think I see. You are looking at impersonating the current user and then scheduling tasks. Others have tried this with mixed results. According to the Microsoft documentation, Task Scheduler should run using the current security token if the TaskService is instantiated with no user credentials. However, in practice, this doesn't always work. From the library's standpoint, if you are able to instantiate TaskService in the context of the current user, you then will call RegisterTaskDefinition without user credentials as well in order to register the task in their security context.<br />\n",
+    "PostedDate": "2014-05-18T08:15:01.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:52.953-07:00"
+  },
+  {
+    "Id": "1252817",
+    "ThreadId": "545546",
+    "Html": "Hello dahall,\r<br />\nthanks, you're always very kind.\r<br />\nI solved it by asking the user for username and password and using the RegisterTaskDefinition method with the credentials specified. \r<br />\nHave a nice day, Valentina<br />\n",
+    "PostedDate": "2014-06-04T05:20:47.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:53.81-07:00"
+  }
+]

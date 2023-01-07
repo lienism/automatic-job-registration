@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "942048",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>Hello,<br>\r\nI am using v1.9.0.23355 of TaskScheduler and v1.9.0.23358 of TaskSchedulerEditor. I'm trying to use the TaskEditDialog to modify a task which I have created previously using the following code;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>taskFolder.RegisterTaskDefinition(taskName, td);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p><br>\r\nI pop up the dialog like this;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>TaskEditDialog editorForm = <span style=\"color:blue\">new</span> TaskEditDialog();\r\neditorForm.Editable = <span style=\"color:blue\">true</span>;\r\neditorForm.RegisterTaskOnAccept = <span style=\"color:blue\">true</span>;\r\neditorForm.Initialize(task);\r\neditorForm.ShowDialog();\r\neditorForm.BringToFront();\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I can modify the task OK, but when I try to change the user who runs the task, say from\r\n<strong>MyDomain\\UserA</strong> to <strong>MyDomain\\UserB</strong>, then I get a COMException with the message &quot;<strong>(37,8):LogonType</strong>&quot;.</p>\r\n<p><br>\r\nI've tried a few permutations of the calls to RegisterTaskDefinition, such as;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>taskFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, username, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color:blue\">null</span>);\r\n</pre>\r\n</div>\r\nWith this, I can change between SYSTEM and NETWORK SERVICE with no problem. If I try to change to a normal user then I get an error, which I kinda expected.\r\n<p></p>\r\n<p>I also tried this;<span> </span></p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>taskFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, username, <span style=\"color:blue\">null</span>, TaskLogonType.InteractiveToken, <span style=\"color:blue\">null</span>);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>This allowed me to change to SYSTEM, but not back to MyDomain\\UserA. Same exception again.</p>\r\n<p>I would appreciate any guidance that anyone can give me on how to correctly use the library, and please let me know if there's any other information I can supply which would be useful.</p>\r\n",
+    "PostedDate": "2012-11-15T02:42:35.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942132",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>Just a bit more information, after registering a task with the first snippet, if I look at the XML property for it I see the following;</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">&lt;</span><span style=\"color:#a31515\">Principals</span><span style=\"color:blue\">&gt;</span>\r\n\t<span style=\"color:blue\">&lt;</span><span style=\"color:#a31515\">Principal</span> <span style=\"color:red\">id</span><span style=\"color:blue\">=</span><span style=\"color:black\">&quot;</span><span style=\"color:blue\">Author</span><span style=\"color:black\">&quot;</span><span style=\"color:blue\">&gt;</span>\r\n\t\t<span style=\"color:blue\">&lt;</span><span style=\"color:#a31515\">UserId</span><span style=\"color:blue\">&gt;</span>MyDomain\\UserA<span style=\"color:blue\">&lt;/</span><span style=\"color:#a31515\">UserId</span><span style=\"color:blue\">&gt;</span>\r\n\t\t<span style=\"color:blue\">&lt;</span><span style=\"color:#a31515\">LogonType</span><span style=\"color:blue\">&gt;</span>InteractiveToken<span style=\"color:blue\">&lt;/</span><span style=\"color:#a31515\">LogonType</span><span style=\"color:blue\">&gt;</span>\r\n\t\t<span style=\"color:blue\">&lt;</span><span style=\"color:#a31515\">RunLevel</span><span style=\"color:blue\">&gt;</span>LeastPrivilege<span style=\"color:blue\">&lt;/</span><span style=\"color:#a31515\">RunLevel</span><span style=\"color:blue\">&gt;</span>\r\n\t<span style=\"color:blue\">&lt;/</span><span style=\"color:#a31515\">Principal</span><span style=\"color:blue\">&gt;</span>\r\n<span style=\"color:blue\">&lt;/</span><span style=\"color:#a31515\">Principals</span><span style=\"color:blue\">&gt;</span>\r\n</pre>\r\n</div>\r\n<p></p>\r\n",
+    "PostedDate": "2012-11-15T06:41:47.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942187",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>OK so I downloaded the source and put a break point in TaskFolder.cs (line 254);</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">if</span> (v2Folder != <span style=\"color:blue\">null</span>)\r\n\t<span style=\"color:blue\">return</span> <span style=\"color:blue\">new</span> Task(<span style=\"color:blue\">this</span>.TaskService, v2Folder.RegisterTaskDefinition(Path, definition.v2Def, (<span style=\"color:blue\">int</span>)createType, UserId, password, LogonType, sddl));\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>The issue is seemingly stemming from the parameter <strong>UserId. </strong>When in the editor, I entered a new user to run the task, say,\r\n<strong>myDomain\\jsmith</strong>. The field in the editor is populated with the friendly name, e.g.\r\n<strong>John Smith</strong>, and it is this value that ends up being submitted by the editor to the above constructor. The problem is, it should have been the fully qualified username,&nbsp;<strong>myDomain\\jsmith</strong>.</p>\r\n<p>Tracking this back further, the source of the &quot;friendly&quot; username is in NativeMethods;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">bool</span> SelectAccount(System.Windows.Forms.IWin32Window parent, <span style=\"color:blue\">string</span> targetComputerName, <span style=\"color:blue\">ref</span> <span style=\"color:blue\">string</span> acctName, <span style=\"color:blue\">out</span> <span style=\"color:blue\">bool</span> isGroup, <span style=\"color:blue\">out</span> <span style=\"color:blue\">bool</span> isService)\r\n{\r\n\tCubicOrange.Windows.Forms.ActiveDirectory.DirectoryObjectPickerDialog dlg = <span style=\"color:blue\">new</span> CubicOrange.Windows.Forms.ActiveDirectory.DirectoryObjectPickerDialog();\r\n\tdlg.TargetComputer = targetComputerName;\r\n\t<span style=\"color:blue\">if</span> (dlg.ShowDialog(parent) == System.Windows.Forms.DialogResult.OK)\r\n\t{\r\n\t\t<span style=\"color:blue\">if</span> (dlg.SelectedObject != <span style=\"color:blue\">null</span>)\r\n\t\t{\r\n\t\t\tacctName = dlg.SelectedObject.Name;\r\n\t\t\tisGroup = dlg.SelectedObject.SchemaClassName.Equals(<span style=\"color:#a31515\">&quot;Group&quot;</span>, StringComparison.OrdinalIgnoreCase);\r\n\t\t\tisService = NativeMethods.AccountUtils.UserIsServiceAccount(acctName);\r\n\t\t\t<span style=\"color:blue\">return</span> <span style=\"color:blue\">true</span>;\r\n\t\t}\r\n\t}\r\n\tisGroup = isService = <span style=\"color:blue\">false</span>;\r\n\t<span style=\"color:blue\">return</span> <span style=\"color:blue\">false</span>;\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The line <strong>acctName = dlg.SelectedObject.Name</strong> is where the name is set and eventually makes its way to the RegisterTaskDefinition call.</p>\r\n<p>Now, I am no expert in this area, so apologies if this suggestion is nonsense, but the property\r\n<strong>dlg.SelectedObject.Upn </strong>seems like it might do the trick instead of\r\n<strong>Name.</strong></p>\r\n<p>I made this change locally and I now seem able to change my users as expected. I haven't gone as far as actually trying to run the tasks yet, but I'll look at that now and report back on whether it was actually successful.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-11-15T09:00:17.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "942818",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>The COMExeception you are seeing is coming from the fact that you must match the username and the TaskLogonType. If you are choosing SYSTEM or NETWORK SERVICE, you much choose TaskLogonType.ServiceAccount, if you are choosing an interactive user, the InteractiveToken.</p>\r\n",
+    "PostedDate": "2012-11-16T08:02:24.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943792",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>Hi dahall,</p>\r\n<p>Thanks for your reply - that's fair enough, I can work around that constraint. However - I was seeing this problem even when just changing from one normal user to another (so both should have been OK under the InteractiveToken registration).</p>\r\n<p>Like I mentioned in my further research, it seemed to be caused by the wrong data being extracted from the Active Directory object picker control (the Cubic Orange one). Have you had any issues around this yourself?</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-11-19T00:46:12.777-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944149",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>Thanks for pushing your point. I found a few bugs in the implementation of TaskPropertiesControl around prompting for and setting the account. The fixes will be in the next release (1.9.1).</p>\r\n",
+    "PostedDate": "2012-11-19T11:01:44.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945256",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>How long do you expect until the next release regarding this issue?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you</p>\r\n",
+    "PostedDate": "2012-11-21T09:40:22.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "945398",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>I have posted the code so you can build and use now. I will package the 1.9.1 release after some more testing over the next two weeks.</p>\r\n",
+    "PostedDate": "2012-11-21T16:13:54.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948849",
+    "ThreadId": "403304",
+    "Html": "\r\n<p>Hi dahall,</p>\r\n<p>Thanks for posting the fixed code, and thanks for taking the time to look into this issue. Much appreciated!</p>\r\n",
+    "PostedDate": "2012-11-29T02:15:33.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

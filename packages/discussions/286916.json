@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "728589",
+    "ThreadId": "286916",
+    "Html": "\r\n<p>Hi dahall and everyone,</p>\r\n<p>I have a problem when used this task scheduler . &nbsp;When I develop in windows 7 everything works successful , but when I develop my application in windows XP, application throw new exeception : &quot; MonPropScheduleSystem.CreateFirstSchedule is not supported\r\n on Task Scheduler 1.0 &quot;</p>\r\n<p>MonPropScheduleSystem is class library and CreateFirstSchedule is method</p>\r\n<p>this full code :</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">public</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> CreateFirstSchedule(String PathInstallation)\r\n        {\r\n            <span style=\"color:blue\">try</span>\r\n            {\r\n                <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n                {\r\n                    <span style=\"color:blue\">using</span> (Task t = ts.GetTask(_firstScheduleSystemName))\r\n                    {\r\n                        <span style=\"color:blue\">if</span> (t == <span style=\"color:blue\">null</span>)\r\n                        {\r\n                            TaskDefinition td = ts.NewTask();\r\n                            td.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;This is for Automate Daily Sending Email to other account&quot;</span>;\r\n                            td.RegistrationInfo.Author = <span style=\"color:#a31515\">&quot;MonProp&quot;</span>;\r\n                            td.Principal.RunLevel = TaskRunLevel.Highest;\r\n\r\n                            MonthlyTrigger mTrigger = (MonthlyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> MonthlyTrigger());\r\n                            mTrigger.DaysOfMonth = <span style=\"color:blue\">new</span> <span style=\"color:blue\">int</span>[] { 1, 15, 28 };\r\n                            mTrigger.StartBoundary = DateTime.Today.AddHours(8);\r\n                            mTrigger.RandomDelay = TimeSpan.FromHours(3);\r\n\r\n                            String InstalltionPath = PathInstallation.Remove(PathInstallation.Length - 1, 1) &#43; <span style=\"color:#a31515\">&quot;MonProp.Utilities.exe&quot;</span>;\r\n                            td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(InstalltionPath, <span style=\"color:#a31515\">&quot;-d -n&quot;</span>, <span style=\"color:blue\">null</span>));\r\n\r\n                            <span style=\"color:blue\">const</span> <span style=\"color:blue\">string</span> taskName = _firstScheduleSystemName;\r\n                            ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, <span style=\"color:#a31515\">&quot;SYSTEM&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color:blue\">null</span>);\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            <span style=\"color:blue\">catch</span> (Exception ex)\r\n            {\r\n\r\n                <span style=\"color:blue\">throw</span> ex;\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>any ideas?&nbsp;</p>\r\n<p>Thank you..</p>\r\n",
+    "PostedDate": "2012-01-21T03:28:09.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "728697",
+    "ThreadId": "286916",
+    "Html": "<p>td.Principal.RunLevel and mTrigger.RandomDelay are not supported on systems prior to Vista. See the Examples Page link under the Documentation tab&nbsp;for the \"complex example\". It will show you how to detect the version of the Task Scheduler and only call those properties when they are supported.</p>",
+    "PostedDate": "2012-01-21T09:25:17.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "728820",
+    "ThreadId": "286916",
+    "Html": "<blockquote style=\"border: solid .1em #ccc; font-style: italic; margin: .25em 1em 0 1em; padding: 0 .25em 0 .25em;\"><strong>dahall wrote:</strong><br />\r\n<p>td.Principal.RunLevel and mTrigger.RandomDelay are not supported on systems prior to Vista. See the Examples Page link under the Documentation tab&nbsp;for the \"complex example\". It will show you how to detect the version of the Task Scheduler and only call those  properties when they are supported.</p>\r\n</blockquote>\r\n<p>Thank for your explanation.. Now, my problem already fixed..</p>\r\n<p>Thank you.. :D</p>",
+    "PostedDate": "2012-01-21T17:46:33.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See http&#58;&#47;&#47;taskscheduler.codeplex.com&#47;workitem&#47;6612",
+    "ClosedDate": "2011-08-26T06:05:54.633-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Assembly Microsoft.Win32.TaskScheduler.dll available for download of Release 1.6.3 has no strong name. The issue - it can not be referenced from other strong named assemblies.",
+    "LastUpdatedDate": "2013-05-16T04:49:11.11-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-08-26T04:03:29.37-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Release 1.6.3 - Strong name",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9106
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

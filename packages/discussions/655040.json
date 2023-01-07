@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1474607",
+    "ThreadId": "655040",
+    "Html": "I'm trying to register a task for a local user who <strong>does not</strong> have administrator rights to his/her machine. The task registration code below is wrapped as part of a console application and the application is made to Run As administrator (not necessarily).\r<br />\n<br />\nWhen the Administrator credentials are passed in during the Run As procedure, the task gets registered under the Admin's account rather than the local user's. \r<br />\nI would want the task to be registered under the user's account and also, this being a domain user, I cannot ask for his/her credentials. If the console application is simply double-clicked by the local user, I get the <strong>Access is Denied</strong> error. Although, task registration works fine when the local user is added to the Administrator group. But this is again not a feasible solution while the program gets deployed.\r<br />\n<br />\nBelow is the code that I'm currently running as Admin to register the task for a local user. \r<br />\nCould someone guide me as to what's the right way to register the said task under these circumstances?<br />\n<pre><code>if (!taskExists)\n    {\n        //This task was never installed. So install.\n        TaskDefinition td = ts.NewTask();\n        td.RegistrationInfo.Description = &quot;MFT Console Application&quot;;\n        // Run Task whether user logged on or not\n        td.Principal.LogonType = TaskLogonType.S4U;\n        // Run as Administrator\n        td.Principal.RunLevel = TaskRunLevel.Highest;\n        td.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;\n\n        TimeTrigger trigger = new TimeTrigger();\n        trigger.StartBoundary = DateTime.Now;\n        trigger.Repetition.Interval = TimeSpan.FromMinutes(30);\n        td.Triggers.Add(trigger);\n\n        td.Actions.Add(new ExecAction(System.Reflection.Assembly.GetExecutingAssembly().Location, null, null));\n        TaskService.Instance.RootFolder.RegisterTaskDefinition(&quot;MFT Console Application&quot;, td);\n    }\n</code></pre>\n\n",
+    "PostedDate": "2016-05-29T15:08:46.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1474670",
+    "ThreadId": "655040",
+    "Html": "<h2>This is your answer, but got lost:</h2>\nAnswering my own question, I was able to finally achieve this using the bare minimum settings. \r<br />\nMoving the Prinicpal properties assignments and placing them instead inside the parameter call of RegisterTaskDefinition and removing the RunLevel parameter did the trick. I was trying to enable the Run with highest Privilege option using a local user account. \r<br />\n<br />\nBelow is the final code for the sake of completeness:<br />\n<pre><code>//This task was never installed. So install.\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = &quot;MFT Console Application&quot;;\n\nTimeTrigger trigger = new TimeTrigger();\ntrigger.StartBoundary = DateTime.Now;\ntrigger.Repetition.Interval = TimeSpan.FromMinutes(30);\ntd.Triggers.Add(trigger);\n\ntd.Actions.Add(new ExecAction(System.Reflection.Assembly.GetExecutingAssembly().Location, null, null));\n\nts.RootFolder.RegisterTaskDefinition(&quot;MFT Console Application&quot;, td, TaskCreation.CreateOrUpdate,\n   System.Security.Principal.WindowsIdentity.GetCurrent().Name, null, TaskLogonType.S4U);</code></pre>\n\n",
+    "PostedDate": "2016-05-30T10:07:25.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-30T10:07:58.44-07:00"
+  },
+  {
+    "Id": "1474678",
+    "ThreadId": "655040",
+    "Html": "Yes. That's correct. I somehow missed it the last time I tried to respond.\r<br />\nSo just for an FYI in case somebody hits this roadblock, if you plan to use the <strong>S4U</strong> logon type, you will need to pass the credentials of an Administrator while registering the task or the user himself needs to be part of the local administrator group. \r<br />\n<br />\nMy user for whom I'm trying to register this task for is a normal user without any such priveleges.\r<br />\n<br />\nBelow is a correction to the above response for registering the task.<br />\n<pre><code>ts.RootFolder.RegisterTaskDefinition(&quot;MFT Console Application&quot;, td, TaskCreation.CreateOrUpdate,\n   System.Security.Principal.WindowsIdentity.GetCurrent().Name, null, __TaskLogonType.None__);</code></pre>\n\n",
+    "PostedDate": "2016-05-30T13:01:37.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-31T07:32:31.403-07:00"
+  }
+]

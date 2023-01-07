@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1310207",
+    "ThreadId": "568951",
+    "Html": "When I change the password (or do any kind of update) to an existing task on Server 2008, the &quot;Do not store password&quot; checkbox is always reset to Checked.\r<br />\n<br />\nPossibly related, in the debugger I always see td.Settings.RunOnlyIfLoggedOn = true.\r<br />\n<br />\nI am doing the update with:\r<br />\nTaskDefinition td = task.Definition;\r<br />\ntaskservice.RootFolder.RegisterTaskDefinition(.taskname, td, TaskCreation.CreateOrUpdate,<br />\n<pre><code>                                                             username,password);\n</code></pre>\n\ntask was retrieved with:\r<br />\ntaskservice.RootFolder.Tasks[i];\r<br />\n<br />\nIs there some way to make it leave the &quot;Do not store password&quot; setting alone?\r<br />\n<br />\nBill<br />\n",
+    "PostedDate": "2014-10-03T05:32:03.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1310209",
+    "ThreadId": "568951",
+    "Html": "I figured it out myself. I needed to add TaskLogonType.Password.\r<br />\n<br />\nDOH!<br />\n",
+    "PostedDate": "2014-10-03T05:46:29.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-03T09:18:01.987-07:00"
+  }
+]

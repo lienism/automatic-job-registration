@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1306804",
+    "ThreadId": "568010",
+    "Html": "Hi all!<br />\n<br />\nFirst of all, I LOVE THIS CODE - it is saving my life in terms of being able to run programs on remote PCs using different credentials! :)<br />\n<br />\n** Here's my question: is there a way to subscribe to a local or remote TaskService so that I get notifications when any TaskScheduler change occurs?<br />\n<br />\nI'm currently showing all tasks in a DatGridView, and instead of a user needing to refresh the list, I would like to be able to do this only when my program gets notification of a change...<br />\n<br />\nAny thoughts or ideas about this?<br />\n<br />\n(and thanks in advance)! :)<br />\n<br />\n*** After thinking about this more, maybe what I'm after is some kind of HOOK I can created that would let me know when TaskScheduler events or mothods are bing used\\accessed?<br />\n",
+    "PostedDate": "2014-09-21T09:57:32.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1307065",
+    "ThreadId": "568010",
+    "Html": "The only thing that would indicate a task has run is the event log on the computer running the task. You could actually create another task that runs an executable or COM server that fires when a completion event is posted for the task you are wanting to get a notification from. You would use an EventTrigger and set the subscription value to the following (replacing the name of the task reference with your's):<br />\n<pre><code>&lt;QueryList&gt;\n  &lt;Query Id=&quot;0&quot; Path=&quot;Microsoft-Windows-TaskScheduler/Operational&quot;&gt;\n    &lt;Select Path=&quot;Microsoft-Windows-TaskScheduler/Operational&quot;&gt;\n    *[\n        System\n        [\n            Provider[@Name='Microsoft-Windows-TaskScheduler'] \n            and (Level=4)\n            and (EventID=201)\n        ]       \n    ]\n    and\n    *[\n        EventData\n        [\n            Data\n            [\n                @Name='TaskName'\n            ]='\\Full task path of task to track'\n        ]\n    ]    \n    &lt;/Select&gt;\n  &lt;/Query&gt;\n&lt;/QueryList&gt;</code></pre>\n\n",
+    "PostedDate": "2014-09-22T09:31:32.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

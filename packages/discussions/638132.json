@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1426032",
+    "ThreadId": "638132",
+    "Html": "the title is wrong: &quot;OK button (TaskEditDialog) is blank &quot;<br />\n<br />\nwhen the TaskEditDialog is showed the &quot;OK&quot; button has no text, is a blank button. On cancel button instead is written &quot;cancel&quot; correctly<br />\ndid i missed  something? the problem can be related to the interationalization/culture setting? i did no set nothing<br />\n<pre><code>TaskService ts = new TaskService();\nTaskEditDialog dlg = new TaskEditDialog(ts.RootFolder.Tasks[0], true, true);\ndlg.ShowDialog(this);\n</code></pre>\n\nas note aside:<br />\ni'm using  TaskSchedulerEditor 2.3.1 <br />\nthe &quot;2.3.2&quot; doesn't work on my machine<br />\n<br />\ni get this error: <br />\n<pre><code>Parameter name: Locale specific information about supported Operating Systems is insufficient</code></pre>\n\non the line <br />\n<pre><code>TaskEditDialog dlg = new TaskEditDialog(ts.RootFolder.Tasks[0], true, true);\n</code></pre>\n\nthis message makes me think that something about &quot;language/culture&quot; is missing, so this could explain why the &quot;ok button&quot; is blank<br />\ncan you help me to investigate? <br />\nthanks a lot<br />\n",
+    "PostedDate": "2015-05-18T09:30:10.423-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426062",
+    "ThreadId": "638132",
+    "Html": "Which locale are you using as the default for your app?<br />\n",
+    "PostedDate": "2015-05-18T11:31:01.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426150",
+    "ThreadId": "638132",
+    "Html": "my default is: &quot;it-IT&quot;<br />\n<br />\nif i set &quot;en-US&quot;, or &quot;fr-FR&quot; everything works(the 2.3.2 as well).<br />\nSo i have not the &quot;it&quot; language installed <br />\nIs it something related to the &quot;Windows Language pack&quot; or is it a resource of your library?<br />\n",
+    "PostedDate": "2015-05-18T23:43:13.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426418",
+    "ThreadId": "638132",
+    "Html": "It must be a bug with the Italian language resources for the library. Let me do some testing today and I'll see if I can come up with a fix.<br />\n",
+    "PostedDate": "2015-05-19T09:08:18.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426451",
+    "ThreadId": "638132",
+    "Html": "Wow, thanks<br />\n",
+    "PostedDate": "2015-05-19T13:54:38.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426744",
+    "ThreadId": "638132",
+    "Html": "I have updated the code that is causing the blank button and the exception. You can download the code and build a private version to complete your tests. I should be able to release 2.3.3 (with all these fixes) officially in the next couple of days once I complete testing.<br />\n",
+    "PostedDate": "2015-05-20T16:37:51.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:32:58.517-07:00"
+  },
+  {
+    "Id": "1426869",
+    "ThreadId": "638132",
+    "Html": "Great! \r<br />\ni'll update it  when you'll pubblish the next release.\r<br />\nTks<br />\n",
+    "PostedDate": "2015-05-21T07:13:50.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

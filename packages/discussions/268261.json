@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "654736",
+    "ThreadId": "268261",
+    "Html": "<p>Good evening,</p>\n<p>I am trying to set userid for a task:</p>\n<p>td.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;<br /> ts.RootFolder.RegisterTaskDefinition(\"SataPriceChecker\", td);</p>\n<p>But I get an exception&nbsp;COMException: the&nbsp;<em>task has been configured</em>&nbsp;with an unsupported combination of account settings and run time options.</p>\n<p>Is there a way to solve it under XP?</p>\n<p>Regards</p>",
+    "PostedDate": "2011-08-08T11:28:15.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "654861",
+    "ThreadId": "268261",
+    "Html": "<p>Instead of using Principal.UserId, I would put it all in the RegisterTaskDefinition method with the extra parameters as follows:</p>\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"SataPriceChecker\"</span>, td, TaskCreation.Create, <span style=\"color: #a31515;\">\"domain\\userid\"</span>, null, TaskLogonType.InteractiveToken);</pre>\r\n<p>If you want to do it with the user's password:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"SataPriceChecker\"</span>, td, TaskCreation.Create, <span style=\"color: #a31515;\">\"domain\\userid\"</span>, <span style=\"color: #a31515;\">\"password\"</span>, TaskLogonType.Password);</pre>\r\n</div>",
+    "PostedDate": "2011-08-08T16:05:42.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "655123",
+    "ThreadId": "268261",
+    "Html": "<p>It is solved. Thanks for the help</p>",
+    "PostedDate": "2011-08-09T05:27:51.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

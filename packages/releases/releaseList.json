@@ -1,0 +1,311 @@
+[
+  {
+    "Id": "0",
+    "Name": "Troubleshooter",
+    "DevelopmentStatus": "Stable",
+    "Description": "Having problems with permissions or \"Access denied\" errors? Try running this troubleshooting tool on the system causing the problem.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2017-07-01T09:31:13.163-07:00",
+    "Files": [
+      {
+        "Id": "477c3637-662b-475d-9491-6e9e1956403c",
+        "FileName": "TaskSchedulerConfig.application",
+        "Url": "./0/477c3637-662b-475d-9491-6e9e1956403c",
+        "Type": "Application",
+        "UploadDate": "2017-07-01T09:31:15.163-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "1",
+    "Name": "ITaskHandler Project Template",
+    "DevelopmentStatus": "Stable",
+    "Description": "Visual Studio Project Template that can be installed to \"%userprofile%\\Documents\\Visual Studio 2013\\Templates\\ProjectTemplates\" that will allow for easy creation of a new COM-Visible assembly that can be called by a Task Scheduler \"COM Handler\" action.\n\nYou may wish to swap out the key file (.snk file in new project) with one of your own.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2014-11-19T19:35:46.06-08:00",
+    "Files": [
+      {
+        "Id": "cda7e2fb-3f1f-4397-af21-0a44f112af78",
+        "FileName": "ITaskHandler COM Server Project Template.zip",
+        "Url": "./1/cda7e2fb-3f1f-4397-af21-0a44f112af78",
+        "Type": "Application",
+        "UploadDate": "2014-11-19T19:35:46.013-08:00"
+      }
+    ]
+  },
+  {
+    "Id": "2",
+    "Name": "Release 2.4.2",
+    "DevelopmentStatus": "Stable",
+    "Description": "Some bug fixes, better support for Windows 8 additions to core library, addition of Fluent syntax, and crontab syntax, since the 1.9.4 release. 2.4.0 release includes a number of bug fixes for Windows 10. Since 2.0.3 release, added support for .NET 2.0, 3.5 and 4.0, security handling, version compatibility handling (for connecting to up or down-stream versions), bug fixes, enhancements to history control and event trigger editor, compensation for deprecated email and message actions on Win8, and improved performance and marshalling. See [url:Source Code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] for full details of changes. In 2.3.0, a more modern editor has been added as TaskOptionsEditor.\n\n*Download Descriptions*\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Separate assemblies for .NET 2.0, 3.5 and 4.0. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskSchedulerEditor.dll) with all supporting assemblies. Works with .NET 2.0 and higher. Separate assemblies for .NET 2.0, 3.5 and 4.0. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2015-09-17T08:00:29.88-07:00",
+    "Files": [
+      {
+        "Id": "82a4596f-fbb3-46dd-a16d-6f264f83a8cf",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./2/82a4596f-fbb3-46dd-a16d-6f264f83a8cf",
+        "Type": "Application",
+        "UploadDate": "2015-09-17T08:00:28.507-07:00"
+      },
+      {
+        "Id": "d85b8c29-e9e1-420c-9bba-bd9dcbd4ba39",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./2/d85b8c29-e9e1-420c-9bba-bd9dcbd4ba39",
+        "Type": "Application",
+        "UploadDate": "2015-09-17T08:00:28.71-07:00"
+      },
+      {
+        "Id": "689be464-f707-44a0-915b-e660270baec2",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./2/689be464-f707-44a0-915b-e660270baec2",
+        "Type": "Application",
+        "UploadDate": "2015-09-17T08:00:28.897-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "3",
+    "Name": "Release 2.0.3",
+    "DevelopmentStatus": "Stable",
+    "Description": "Some bug fixes, better support for Windows 8 additions to core library, addition of Fluent syntax, and crontab syntax, since the 1.9.4 release. See [url:Source Code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] for full details of changes.\n\n*Download Descriptions*\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskSchedulerEditor.dll) with all supporting assemblies. Works with .NET 3.5 and higher. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help (VS2010) compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2014-01-07T14:13:06.277-08:00",
+    "Files": [
+      {
+        "Id": "87a19b82-d98c-4edf-be95-07a5d54f57fd",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./3/87a19b82-d98c-4edf-be95-07a5d54f57fd",
+        "Type": "Application",
+        "UploadDate": "2014-01-07T14:13:05.903-08:00"
+      },
+      {
+        "Id": "ccbc71dd-8455-4679-b9b4-d3918edd2204",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./3/ccbc71dd-8455-4679-b9b4-d3918edd2204",
+        "Type": "Application",
+        "UploadDate": "2014-01-07T14:13:05.95-08:00"
+      },
+      {
+        "Id": "f03b12a5-423a-42d1-9643-b62c7709aa57",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./3/f03b12a5-423a-42d1-9643-b62c7709aa57",
+        "Type": "Documentation",
+        "UploadDate": "2014-01-07T13:10:28.767-08:00"
+      }
+    ]
+  },
+  {
+    "Id": "4",
+    "Name": "Release 1.9.4",
+    "DevelopmentStatus": "Stable",
+    "Description": "Many bug fixes, full support for Windows 7 and Windows 8 additions to core library, and an enhanced editor to allow editing of all properties, since the 1.8.3 release. See [url:Source Code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] for full details of changes.\n\n*Download Descriptions*\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskSchedulerEditor.dll) with all supporting assemblies. Works with .NET 3.5 and higher. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help (VS2010) compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2013-03-21T10:37:07.18-07:00",
+    "Files": [
+      {
+        "Id": "044e4e6a-da56-49b0-b48d-5f37b52ec66d",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./4/044e4e6a-da56-49b0-b48d-5f37b52ec66d",
+        "Type": "Application",
+        "UploadDate": "2013-03-21T10:37:06.693-07:00"
+      },
+      {
+        "Id": "ed3c785d-75fd-492a-8cc5-32df5951038d",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./4/ed3c785d-75fd-492a-8cc5-32df5951038d",
+        "Type": "Application",
+        "UploadDate": "2013-03-21T10:37:06.71-07:00"
+      },
+      {
+        "Id": "4c2df86a-9899-45b6-94ad-4f040a0b92a6",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./4/4c2df86a-9899-45b6-94ad-4f040a0b92a6",
+        "Type": "Documentation",
+        "UploadDate": "2013-03-21T10:37:06.79-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "5",
+    "Name": "Release 1.8.3",
+    "DevelopmentStatus": "Stable",
+    "Description": "Many bug fixes, better localization support (adding Chinese), and Task Scheduler 1.0 support for XML since the 1.7.1 release. See [url:Source Code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] for full details of changes. Also, all assemblies are now strongly named.\n\n*Download Descriptions*\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskSchedulerEditor.dll) with all supporting assemblies. Works with .NET 3.5 and higher. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help (VS2010) compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.\n*Potentially Breaking Changes*\n_There is a remote chance that some of the changes in this release may break your code. Please check if you have code that:_\n* Makes specific assumptions about the underlying Kind (Utc, Local) of DateTime values for Trigger.StartBoundary and Trigger.EndBoundary.\n* Provides username, domain and password for connecting to remote servers. You must have all three as non-null, valid strings or all null.\n* V1 only: Assumes Task.State property does not provide the dynamic state of the task\n* V1 only: Assumes Task.Enabled property does not take effect until re-registering the task.\n* (1.8.2) Task.NextRunTime. For Task Scheduler 2.0, the return value was Dec 30, 1899 if there were no future run times. For 1.0, that value would have been DateTime.MinValue. Now all versions will return DateTime.MinValue if there are no future run times. While this is different from the native 2.0 library, it was deemed more appropriate to have consistency between the two libraries and with other .NET libraries.\n* (1.8.3) A number of the properties and methods related to reading and writing Xml that once threw NotV1SupportedException will now process the Xml.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2012-07-03T09:02:22.293-07:00",
+    "Files": [
+      {
+        "Id": "246fb4b0-2ee2-404a-b5f5-ba36ab2e0297",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./5/246fb4b0-2ee2-404a-b5f5-ba36ab2e0297",
+        "Type": "Application",
+        "UploadDate": "2012-07-03T09:02:21.653-07:00"
+      },
+      {
+        "Id": "3db6dc1c-acce-4954-b29b-8748c4db828d",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./5/3db6dc1c-acce-4954-b29b-8748c4db828d",
+        "Type": "Application",
+        "UploadDate": "2012-07-03T09:02:21.7-07:00"
+      },
+      {
+        "Id": "76a1ebb6-ae71-427f-aee7-a443483cf564",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./5/76a1ebb6-ae71-427f-aee7-a443483cf564",
+        "Type": "Documentation",
+        "UploadDate": "2012-07-03T09:02:21.763-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "6",
+    "Name": "Release 1.7.1",
+    "DevelopmentStatus": "Stable",
+    "Description": "More fixes and a few additions since the 1.7 release. See Source Code area for full details of changes.\n\nThere are three downloads here:\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskScheduler.dll) with all supporting assemblies. Works with .NET 3.5 and higher. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help (VS2010) compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.\nYou can find a list of all the changes in the [url:source code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] area of the site, but here is a brief summary:\n* Further work on the editor components including the addition of many configuration options for the wizard\n* Changes to v1 functionality to better align with Task Scheduler v2 actions",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2011-12-27T08:31:33.467-08:00",
+    "Files": [
+      {
+        "Id": "16ba8a04-abe9-4f3b-b1f0-916ab57765da",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./6/16ba8a04-abe9-4f3b-b1f0-916ab57765da",
+        "Type": "Application",
+        "UploadDate": "2011-12-27T08:31:33.263-08:00"
+      },
+      {
+        "Id": "5a386e95-63ae-42cb-ad64-61919cde0d85",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./6/5a386e95-63ae-42cb-ad64-61919cde0d85",
+        "Type": "Application",
+        "UploadDate": "2011-12-27T08:31:33.28-08:00"
+      },
+      {
+        "Id": "2ed78bfe-b67e-4449-a5f2-6dfa02a76471",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./6/2ed78bfe-b67e-4449-a5f2-6dfa02a76471",
+        "Type": "Documentation",
+        "UploadDate": "2011-09-13T14:25:35.14-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "7",
+    "Name": "Release 1.6.3",
+    "DevelopmentStatus": "Stable",
+    "Description": "Lots more testing since the 1.5 and 1.6.1 releases along with additions and fixes to bring you this release. The focus for this release was quality and usability.\n\nThere are three downloads here:\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskScheduler.dll) with all supporting assemblies. Works with .NET 3.5 and higher. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help (VS2010) compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.\nYou can find a list of all the changes in the [url:source code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] area of the site, but here is a brief summary:\n* Lot of improvements, fixes and error handling built into base library all the editor components (which are now feature complete and stable).\n* Improvements to the collections of tasks, triggers and actions allowing for filtering, cloning, and consistency between V1 and V2 services.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2011-07-21T08:44:46.177-07:00",
+    "Files": [
+      {
+        "Id": "5528d687-6f52-4e75-9444-d8c479db0b69",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./7/5528d687-6f52-4e75-9444-d8c479db0b69",
+        "Type": "Application",
+        "UploadDate": "2011-07-21T08:44:45.927-07:00"
+      },
+      {
+        "Id": "ffff0933-5ab4-4409-9ea9-8f0eda4e3302",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./7/ffff0933-5ab4-4409-9ea9-8f0eda4e3302",
+        "Type": "Application",
+        "UploadDate": "2011-07-21T08:44:45.977-07:00"
+      },
+      {
+        "Id": "6f0fe7a6-6f7d-475d-b684-ec82b8312a3d",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./7/6f0fe7a6-6f7d-475d-b684-ec82b8312a3d",
+        "Type": "Documentation",
+        "UploadDate": "2011-06-18T08:19:25.9-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "8",
+    "Name": "Release 1.5",
+    "DevelopmentStatus": "Stable",
+    "Description": "I have decided to remove the TaskSchedulerEditor download from this release as it had too many problems. Please look to version 1.6 or higher for the UI components.\n\n*Fixes:*\n* Fixed Clone and SetBasic errors with EventTrigger\n* Fixed Task.Settings.ExecutionTimeLimit problem with setting value to TimeSpan.Zero not working as expected.\n* Fixed problem with Task.GetRunTimes method failing on both V1 and V2  \n* Fixed TaskFolder.RegisterTaskDefinition throwing exception when \"System\" specified for user under v1  \n* Fixed some problems with null references within properties for TaskService  \n* Fixed bug in WeeklyTrigger contructor's default parameters (thanks to meekerd)\n* Fixed problem with Trigger.EndBoundary getting corrupted if edited multiple times\n* Fixed bug in late bound MonthlyDOWTrigger.WeeksOfMonth property when set to LastWeek (thanks grizli)\n* Added parameter validation to Task.Run\n* Fixed bug in Task.Stop (thanks SergeyI)\n* Corrected problem with Vista 32-bit calling GetRunTimes (thanks jelled)  \n\n*Enhancements:*\n* Updated help file to new Microsoft Help Viewer - Open Help folder in download and install using batch file\n* Added Action.ActionType property (like Trigger.TriggerType)\n* Added SecurityDescriptor properties to Task and TaskFolder\n* Added RegisterChanges() method to Task to simplify making changes to an existing task.\n* Added conditional parameters to a number of methods",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2011-03-20T00:29:11.843-07:00",
+    "Files": [
+      {
+        "Id": "4aa3bcbf-353c-4576-8251-12f3959798b6",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./8/4aa3bcbf-353c-4576-8251-12f3959798b6",
+        "Type": "Application",
+        "UploadDate": "2011-01-11T13:21:15.03-08:00"
+      }
+    ]
+  },
+  {
+    "Id": "9",
+    "Name": "Release 1.4.2",
+    "DevelopmentStatus": "Stable",
+    "Description": "+Fixes:+\n* Fixed documentation errors \n* Fixed problem with V1 triggers not getting enabled flag correct\n* Fixed problem with V1 tasks throwing exception on failed UserId read\n* Fixed problem enumerating tasks when user has limited rights (not admin) under V1\n* Fixed problem with TaskPropertiesControl throwing exceptions for V1 tasks \n* Fixed minor problem with changing the LogonType for V1 tasks from an interactive type to a system type. The flags were not getting set/cleared correctly.\n* Fixed problem with V1 ExecAction not clearing changed properties\n* Fixed problems reading full values for Trigger StartBoundary and EndBoundary\n* Fixed problem with TaskPrincipal for V1 handling SYSTEM account improperly\n* Changed TaskFolder.RegisterTaskDefinition(string path, TaskDefinition definition) method so it pulls user and logon type info from definition instead of defaulting to current user\n* Unbound triggers now will display their string value\n* Fixed multiple problems with editor:\n** Not handling V1 vs. V2 conditions correctly\n** Not reading V1 triggers\n** Not setting/updating all triggers correctly (event, state, and logon)\n** Not hiding history for pre-Vista systems\n** Not showing monthly selections after drop-down change\n** Not updating start and end times of triggers\n** Not handling repetition duration and interval constraints for V1 triggers\n** Not updating monthly days, months, or weeks\n** Not setting editable items correctly\n** Monthly trigger dropdowns allowing invalid selections\n** Time zone settings for times not the same as native control\n** Recurance and repetition settings not captured on save\n** Version selection cannot be changed. Object model doesn't handle it.\n** Pulled internal code and am now using CodePlex Active Directoy Common Dialogs .NET (http://adui.codeplex.com) for Directory Object Picker dialog (user/group selection)\n** Activation date was not getting displayed when trigger type was changed\n** All V1 triggers start and end dates have limitations which weren't represented correctly* * ** Fixed font scale problem with TaskPropertiesControl\n** Fixed incorrect logic with enabling and disabling controls in TaskPropertiesControl\n** Fixed errors that occured when setting the TaskDefinition property in TaskPropertiesControl more than once\n\n+Enhancements:+\n* Added ability to set and retrieve information on EventTrigger for a basic event\n* Added interop code for 2.1 library (Win7)\n* Added code to TaskService constructor to check for a machine name matching the local machine and nulling it to prevent a native library error\n* Added new constructors for EventTrigger and SessionStateTrigger\n* Added ability to edit Actions and Triggers independent of the TaskPropertiesControl (made ActionEditDialog and TriggerEditDialog public and adjusted public interfaces). \n* Added parameterless constructors to all Action derivatives\n* Exposed static create methods for Actions and Triggers",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2010-02-23T09:16:41.517-08:00",
+    "Files": [
+      {
+        "Id": "9f704d3a-e5c8-4ee8-aa4e-2ebc286a58b3",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./9/9f704d3a-e5c8-4ee8-aa4e-2ebc286a58b3",
+        "Type": "Application",
+        "UploadDate": "2010-02-05T20:46:03.563-08:00"
+      },
+      {
+        "Id": "c5c9f2dc-66c5-4c8e-ad7c-218cb75b324c",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./9/c5c9f2dc-66c5-4c8e-ad7c-218cb75b324c",
+        "Type": "Application",
+        "UploadDate": "2010-02-05T20:46:03.657-08:00"
+      }
+    ]
+  },
+  {
+    "Id": "10",
+    "Name": ".NET ITaskHandler Implementation",
+    "DevelopmentStatus": "Stable",
+    "Description": "If you want to use the COMHandlerAction action to run code in a startable in-process library, you have to implement the ITaskHandler interface. There are some interesting tricks to making this work. This project contains a working class library that exposes a COM object which implements ITaskHandler. It contains the Interop code for the interfaces. This is a nice option as you don't need to load an executable. A few things to note:\n\n# Create your own C# Class Library project\n# Add the TaskHandlerBase.cs file from this download into the project\n# Create a new class for your new handler\n** Inherit TaskHandlerBase\n** Create a new GUID (Tools | Create GUID)\n** Add the following attributes to the class replacing the Guid attribute with the value from the prior step\n{code:c#}\n[ObjectPooling(MinPoolSize = 2, MaxPoolSize = 10, CreationTimeout = 20)]\n[Transaction(TransactionOption.Required)]\n[ComVisible(true), Guid(\"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\")]\n[ClassInterface(ClassInterfaceType.None)]\n{code:c#}\n** Override any appropriate methods from the TaskHandlerBase class. At a minimum, you must override the Start(string data) method. See the [url:MSDN documentation for ITaskHandler|http://msdn.microsoft.com/en-us/library/windows/desktop/aa381370(v=vs.85).aspx] to understand the purposes of the four overridable methods.\n** In your Properties\\AssemblyInfo.cs file, add the following code and insert your own values for ApplicationName and Description. Update the ApplicationAccessControl if desired.\n{code:c#}\n[assembly: ApplicationActivation(ActivationOption.Server)]\n[assembly: ApplicationName(\"My COM Task\")]\n[assembly: Description(\"COM Task for Sample ITaskHandler implementation.\")]\n[assembly: ApplicationAccessControl(true,\n   AccessChecksLevel = AccessChecksLevelOption.ApplicationComponent,\n   Authentication = AuthenticationOption.Packet,\n   ImpersonationLevel = ImpersonationLevelOption.Identify)]\n[assembly: SecurityRole(\"Tester\", SetEveryoneAccess = true)]\n{code:c#}\n** In the project's properties \"Application | Assembly Information\" area, select \"Make assembly COM-visible\"\n** In the project's properties \"Signing\" tab, sign the assembly with a new key file.\n** In the project's properties \"Build Events\" tab, enter the following in the \"Post-build event command line:\" box\n{{C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\RegSvcs.exe \"$(TargetPath)\"}}",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2012-11-30T16:53:53.857-08:00",
+    "Files": [
+      {
+        "Id": "7f2239f8-ce64-40e7-bb20-a46f218fa499",
+        "FileName": "COMTask.zip",
+        "Url": "./10/7f2239f8-ce64-40e7-bb20-a46f218fa499",
+        "Type": "Source Code",
+        "UploadDate": "2012-11-30T16:43:20.977-08:00"
+      }
+    ]
+  },
+  {
+    "Id": "11",
+    "Name": "Release 2.5.28",
+    "DevelopmentStatus": "Stable",
+    "Description": "*Update history*\n+Version 2.5.28+\n* Minor fixes and compatibility with v1.6 of library\n+Version 2.5.27+\n* Corrected problem getting correct library version on Win10 systems with app manifests\n* Changed method of getting local library version from OS based to getting it from the version of %SYSTEM%\\taskschd.dll\n* Added ability to browse for Well Known Principals in User/Group picker dialog under TaskPropertiesControl general tab\n* Corrected incorrect selection of Windows version for compatibility combobox under TaskPropertiesControl general tab\n+Version 2.5.26+\n* German localization completed\n+Version 2.5.24+\n* Fixed background thread conflicts in TaskHistoryControl\n* Added TaskFolder.EnumerateTasks and TaskFolder.EnumerateFolders methods to provide an IEnumerable query\n* Fixed problem when determining equality of two MonthlyTrigger instances (thanks JDOSHI)\n* After 15 years, I found a more concise and efficient way to work with the core COM classes! Modifications made to interop classes to remove redundancy in the classes and now calling interfaces directly.\n* Cleaned up some unnecessary exceptions in XML parsing for V1.\n+Version 2.5.23+\n* Fixed problem with custom triggers on Win10/Svr16\n* Added automatic translation of embedded resource string from TaskDefinition when displayed in TaskPropertiesControl. Can turn off setting ConvertResourceStringReferences = false\n+Version 2.5.22+\n* Fixed problem with 2.0 and 3.5 libraries still requiring 4.0\n* Resolved issue with DateTimePicker not working with 24 hour clocks\n* Removed TaskCompability.V2_3 as it doesn't exist yet\n* Adjusted handling of Win10 so that it cannot display a version 1.5 of the library\n* Improved 'null' error handling in multiple files\n* Fixed critical error when passing empty string to RegisterTaskDefinition for userId\n* Added JetBrain [NotNull] indicators to methods\n* Fixed inconsistency on XP, where GetPath failed with exception instead of returning null like on later Windows versions.\n* Replaced direct dependency references with NuGet packages\n* More fixes to Trigger list context menu\n* Minor updates to TestTaskService\n* Fixed context menu bug in Trigger List UI\n* Code and XML comment cleanup\n+Version 2.5.21+\n* Changed TaskCollection and RunningTaskCollection to IReadOnlyCollection instead of just IEnumerable\n* Added error handling to task enumeration\n* Added ability to set Repetition property of a trigger using a RepetitionPattern instance. This allows for all trigger properties to be set inline with constructor.\n* With the above addition, set the Trigger.SetRepetition method as Obsolete\n* Added 'description' parameter to TaskService.AddTask\n* Updated LocalSecurity class w/ default constructor for PS use\n* Fixed upper boundary on DailyTrigger interval UI\n+Version 2.5.20+\n* Bug fixes with UI and field validation\n+Version 2.5.19+\n* Bug fixes\n+Version 2.5.17+\n* Added back in .NET 4 builds\n* Fixed RegisterTaskDefinition for tasks setting password to null\n* Fixed Task.Run and RunEx methods\n+Version 2.5.16+\n* Event and Security UI bug fixes\n* Changed package to .NET 4.5.2 from 4.0\n+Version 2.5.15+\n* Editor fixes\n+Version 2.5.14+\n* Fixes to TaskEventWatcher, Trigger.StartDate and assoc UI\n+Version 2.5.13+\n* More bug fixes (see History)\n* Completed first revision of a diagnostic tool\n+Version 2.5.12+\n* A few bug fixes (see History)\n+Version 2.5.8+\n* A few bug fixes (see History)\n* Updated NuGet to include symbols\n+Version 2.5.7+\n* Fixed V1 error with ActionCollection.Clear\n* Added TaskSchedulerConfig project (incomplete) to help identify connection problems on V1 and V2 systems\n+Version 2.5.6+\n* Bug fixes (V1 actions count and retention)\n+Version 2.5.5+\n* Bug fixes (V1 registration validation & Task.IsActive)\n+Version 2.5.4+\n* Added TaskEventWatcher component that enables watching task folders or tasks for changes and updated TaskListView and TaskHistoryControl with that feature (see [sample code|EventSamples])\n* Fixed bug with context menu for lists that would display it in wrong position\n+Version 2.5.3+\n* Fixed major bug when registering tasks with well known groups and built-in accounts (\"Everyone\", \"SYSTEM\", etc.) -- Sorry everyone.\n* Removed data contract attributes\n+Version 2.5.0+\n* Bug fixes\n* Added ability for V1 tasks to support almost all V2 properties including the support of multiple action types of all action variants.\n* Bi-directional support for XML across V1 and V2\n+Version 2.4+\n* A number of bug fixes for Windows 10.\n* Added support for .NET 2.0, 3.5 and 4.0\n* Added security handling and version compatibility handling (for connecting to up or down-stream versions)\n* Bug fixes\n* Enhancements to history control and event trigger editor\n* Compensation for deprecated email and message actions on Win8\n* Improved performance and marshalling.\n+Version 2.3+\n* A more modern editor has been added as TaskOptionsEditor.\n+Version 2.0+\n* Some bug fixes\n* Better support for Windows 8 additions to core library\n* Addition of Fluent syntax and crontab syntax\nSee [url:Source Code|http://taskscheduler.codeplex.com/SourceControl/list/changesets] for full details of changes.\n\n*Download Descriptions*\n* TaskScheduler.zip - Includes the base library (Microsoft.Win32.TaskScheduler.dll) with no UI code. Works with .NET 2.0 and higher. Separate assemblies for .NET 2.0, 3.5 and 4.0. Add this assembly as a reference to interact with Task Scheduler on all systems with IE4 and later. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskScheduler] with package name _TaskScheduler_.\n* TaskSchedulerEditor.zip - Includes the UI library (Microsoft.Win32.TaskSchedulerEditor.dll) with all supporting assemblies. Works with .NET 2.0 and higher. Separate assemblies for .NET 2.0, 3.5 and 4.0. Add this assembly as a reference along with Microsoft.Win32.TaskScheduler.dll to get editor controls and dialogs that allow for viewing and editing tasks, triggers, actions, lists, etc. This package is also available via [url:NuGet|http://nuget.org/List/Packages/TaskSchedulerEditor] with package name _TaskSchedulerEditor_.\n* TaskSchedulerHelp.zip - Includes the Microsoft Help compatible help files for both the base and editor libraries. Extract all files and then run Install_TaskScheduler.bat to integrate the help.",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2017-06-27T10:18:08.37-07:00",
+    "Files": [
+      {
+        "Id": "65fe4fe8-0335-41cd-9e52-93275237a357",
+        "FileName": "TaskScheduler.zip",
+        "Url": "./11/65fe4fe8-0335-41cd-9e52-93275237a357",
+        "Type": "Application",
+        "UploadDate": "2017-06-27T10:18:06.733-07:00"
+      },
+      {
+        "Id": "c823e67f-c0db-43ee-a3bd-491dae8a6783",
+        "FileName": "TaskSchedulerEditor.zip",
+        "Url": "./11/c823e67f-c0db-43ee-a3bd-491dae8a6783",
+        "Type": "Application",
+        "UploadDate": "2017-06-27T10:18:07.013-07:00"
+      },
+      {
+        "Id": "f602cc82-2be7-4f8e-97f6-8daca817c6fa",
+        "FileName": "TaskSchedulerHelp.zip",
+        "Url": "./11/f602cc82-2be7-4f8e-97f6-8daca817c6fa",
+        "Type": "Application",
+        "UploadDate": "2017-06-27T10:18:07.373-07:00"
+      }
+    ]
+  }
+]

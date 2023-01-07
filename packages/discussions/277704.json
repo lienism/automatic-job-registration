@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "691384",
+    "ThreadId": "277704",
+    "Html": "\r\n<p>Up till now I have been able to pass in&nbsp; parameters to the task service object constructor and run tasks that are registered under the same account in a development server.</p>\r\n<p>I have read some articles on task security and am a little confused.</p>\r\n<p>On a production server there are tasks registered by different users and I would like the ability to run these tasks using the run method</p>\r\n<p>Could someone please take the time to explain what would be the path of least resistance for me.</p>\r\n<p>Should I reregister these tasks under a local system account/network service account and use the no argument constructor or&nbsp; would it be preferable to reregister them under a general account and pass in these credentials to the constructor.</p>\r\n<p>If someone could explain to me the best approach I would very much appreciate it .</p>\r\n<p>I have done a bit of digging and would love some feeback</p>\r\n<p>Thanks</p>\r\n<p>Steve</p>\r\n",
+    "PostedDate": "2011-10-30T14:23:11.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "691434",
+    "ThreadId": "277704",
+    "Html": "<p>Generally the best approach is to use the constructor with the credentials of an account that can create tasks like an administrator account. You can then register the tasks for any user you want by using the parameters of the RegisterTaskDefinition method that specify a user and password. This will then run the task with those supplied credentials and not those used to connect to the remote server in the TaskService constructor.</p>\r\n<p>Let me know if I missed the point of your question.</p>",
+    "PostedDate": "2011-10-30T21:03:12.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "691636",
+    "ThreadId": "277704",
+    "Html": "Thank you very much for your prompt response.\r\n<div>It is much appreciated .</div>\r\n<div>Steve<br>\r\n<br>\r\n<div>On Sun, Oct 30, 2011 at 11:03 PM, dahall <span dir=\"ltr\">&lt;<a href=\"mailto:notifications@codeplex.com\">notifications@codeplex.com</a>&gt;</span> wrote:<br>\r\n<blockquote style=\"margin:0 0 0 .8ex; border-left:1px #ccc solid; padding-left:1ex\">\r\n<div>\r\n<p>From: dahall</p>\r\n<div>\r\n<p>Generally the best approach is to use the constructor with the credentials of an account that can create tasks like an administrator account. You can then register the tasks for any user you want by using the parameters of the RegisterTaskDefinition method\r\n that specify a user and password. This will then run the task with those supplied credentials and not those used to connect to the remote server in the TaskService constructor.</p>\r\n<p>Let me know if I missed the point of your question.</p>\r\n</div>\r\n<div>\r\n<p>Read the <a href=\"http://taskscheduler.codeplex.com/discussions/277704#post691434\" target=\"_blank\">\r\nfull discussion online</a>.</p>\r\n<p>To add a post to this discussion, reply to this email (<a href=\"mailto:taskscheduler@discussions.codeplex.com?subject=[taskscheduler:277704]\" target=\"_blank\">taskscheduler@discussions.codeplex.com</a>)</p>\r\n<p>To start a new discussion for this project, email <a href=\"mailto:taskscheduler@discussions.codeplex.com\" target=\"_blank\">\r\ntaskscheduler@discussions.codeplex.com</a></p>\r\n<p>You are receiving this email because you subscribed to this discussion on CodePlex. You can\r\n<a href=\"https://taskscheduler.codeplex.com/discussions/277704/unsubscribe/\" target=\"_blank\">\r\nunsubscribe</a> on CodePlex.com.</p>\r\n<p>Please note: Images and attachments will be removed from emails. Any posts to this discussion will also be available online at CodePlex.com</p>\r\n</div>\r\n</div>\r\n</blockquote>\r\n</div>\r\n<br>\r\n<br clear=\"all\">\r\n<div><br>\r\n</div>\r\n-- <br>\r\n<span style=\"font-family:Arial; font-size:13px\"><i>There is little difference in people, but that little difference makes a big difference. That little difference is attitude. The big difference is whether it is positive or negative.</i> - W. Clement Stone</span><br>\r\n</div>\r\n",
+    "PostedDate": "2011-10-31T07:13:27.237-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

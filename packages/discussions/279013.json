@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "696549",
+    "ThreadId": "279013",
+    "Html": "<p>When I create a task using the following line:</p>\n<p>var task = taskFolder.RegisterTaskDefinition(@\"Test\", taskDefinition, TaskCreation.CreateOrUpdate, \"SYSTEM\", null, TaskLogonType.ServiceAccount, null);</p>\n<p>I get the following error:</p>\n<p>Task Scheduler 2.0 (1.2) does not support setting this property. You must use an InteractiveToken in order to have the task run in the current user session.</p>\n<p>My client machine as well as target machine are both Windows 7.</p>\n<p>&nbsp;</p>\n<p>I am uncertain how to \"use an InteractiveToken\". Please advise.</p>\n<p>&nbsp;</p>\n<p>TIA,</p>\n<p>JH</p>",
+    "PostedDate": "2011-11-10T09:19:36.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "696551",
+    "ThreadId": "279013",
+    "Html": "<p>Turns out it was another setting that was causing this..</p>\r\n<p>taskDefinition.Settings.RunOnlyIfLoggedOn = false; &lt;- offending (and, it turns out, unnecessary) line</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for looking!</p>\r\n<p>JH</p>",
+    "PostedDate": "2011-11-10T09:26:18.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

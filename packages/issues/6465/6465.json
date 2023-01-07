@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Corrected in code drop 52599.",
+    "ClosedDate": "2010-06-15T10:30:35.337-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Is the editor supposed to work on XP? I got past the reference issue, tested on my win7 box, but on XP...\nWith the following code:\nConst TaskName As String = \"Test\"\n \n'play with task editor\nUsing ts As TaskService = New TaskService\n'set up task\nDim TmTrigger As New TimeTrigger\nTmTrigger.StartBoundary = DateTime.Now + TimeSpan.FromMinutes(1)\nTmTrigger.Enabled = True\nDim Action As New ExecAction(\"notepad.exe\", \"c:\\test.log\", \"c:\\\")\nDim t As Task\nt = ts.AddTask(TaskName, TmTrigger, Action)\n \nDim EditorForm As New TaskEditDialog()\n \nEditorForm.Editable = True\nEditorForm.Initialize(t)\nIf EditorForm.ShowDialog = Windows.Forms.DialogResult.OK Then\nts.RootFolder.RegisterTaskDefinition(TaskName, EditorForm.TaskDefinition)\nEnd If\nEnd Using\n \non the \"EditorForm.Initialize(t)\" line I get the following exception.\n \nSystem.NullReferenceException was unhandled\nMessage=\"Object reference not set to an instance of an object.\"\nSource=\"Microsoft.Win32.TaskScheduler\"\nStackTrace:\nat Microsoft.Win32.TaskScheduler.TaskService.ShouldSerializeUserName()\nat Microsoft.Win32.TaskScheduler.TaskService.get_UserName()\nat Microsoft.Win32.TaskScheduler.TaskPropertiesControl.set_TaskDefinition(TaskDefinition value)\nat Microsoft.Win32.TaskScheduler.TaskPropertiesControl.set_Task(Task value)\nat Microsoft.Win32.TaskScheduler.TaskPropertiesControl.Initialize(Task task)\nat Microsoft.Win32.TaskScheduler.TaskEditDialog.Initialize(Task task)\nat taskschedplay.Form1.btnCreate_Click(Object sender, EventArgs e) in C:\\Visual Studio Projects\\ben\\taskschedplay\\taskschedplay\\Form1.vb:line 45\nat System.Windows.Forms.Control.OnClick(EventArgs e)\nat System.Windows.Forms.Button.OnClick(EventArgs e)\nat System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\nat System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)\nat System.Windows.Forms.Control.WndProc(Message& m)\nat System.Windows.Forms.ButtonBase.WndProc(Message& m)\nat System.Windows.Forms.Button.WndProc(Message& m)\nat System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\nat System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\nat System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\nat System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)\nat System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)\nat System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)\nat System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)\nat System.Windows.Forms.Application.Run(ApplicationContext context)\nat Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.OnRun()\nat Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.DoApplicationModel()\nat Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.Run(String[] commandLine)\nat taskschedplay.My.MyApplication.Main(String[] Args) in 17d14f5c-a337-4978-8281-53493378c1071.vb:line 81\nat System.AppDomain._nExecuteAssembly(Assembly assembly, String[] args)\nat System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)\nat Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\nat System.Threading.ThreadHelper.ThreadStart_Context(Object state)\nat System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\nat System.Threading.ThreadHelper.ThreadStart()\n \nAt first I thought it was because I was using vs2005, so I installed on a fresh virtual XP box vs2008 express, I get the same error.\n \nI figured it was better to create a new issue than change the reason for the old one.",
+    "LastUpdatedDate": "2013-05-16T04:49:14.077-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-06-07T07:34:58.97-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "taskscheduleditor System.NullReferenceException was unhandled on XP",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 6465
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

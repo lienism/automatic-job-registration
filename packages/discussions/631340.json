@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1415204",
+    "ThreadId": "631340",
+    "Html": "I am looking at editing a Time Trigger. In advanced settings I see an option to Repeat Task every X time/date for a duration of y time/date.\r<br />\n<br />\nWhere can I find this in the API?<br />\n",
+    "PostedDate": "2015-04-17T03:24:32.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1415306",
+    "ThreadId": "631340",
+    "Html": "<a href=\"https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples&amp;referringTitle=Documentation\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples&referringTitle=Documentation</a>\r<br />\n<br />\nSee the first example.<br />\n",
+    "PostedDate": "2015-04-17T11:11:33.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-04-20T08:12:02.617-07:00"
+  },
+  {
+    "Id": "1415470",
+    "ThreadId": "631340",
+    "Html": "Thanks!<br />\n",
+    "PostedDate": "2015-04-18T03:32:08.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

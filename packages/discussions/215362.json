@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "453117",
+    "ThreadId": "215362",
+    "Html": "I have been able to change the username associated with a task, but how do you change only the password of the user that the task runs as? ",
+    "PostedDate": "2010-06-08T11:13:44.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "455747",
+    "ThreadId": "215362",
+    "Html": "You must call RegisterTaskDefintion for the task's definition with the new username and password to change just the password.",
+    "PostedDate": "2010-06-15T10:36:27.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

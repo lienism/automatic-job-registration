@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-02-03T11:10:39.99-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi\n\nGetting  NotV1SupportedException when creating a folder.\n\n__Here's the stack trace:__\n\nMicrosoft.Win32.TaskScheduler.NotV1SupportedException: MyClass.createTask is not supported on Task Scheduler 1.0\n   at Microsoft.Win32.TaskScheduler.TaskFolder.CreateFolder(String subFolderName, String sddlForm, Boolean exceptionOnExists)\n\n\n__Code:__\n\n               td.Actions.Add(new ExecAction(scheduleExePath, scheduleId));\n\n                TaskFolder tf = ts.RootFolder;\n                TaskFolder testFolder = null;\n                foreach (TaskFolder taskFolder in tf.SubFolders)\n                {\n                    if (taskFolder.Name.Equals(\"ReportSchedule\", StringComparison.OrdinalIgnoreCase))\n                    {\n                        testFolder = taskFolder;\n                    }\n                }\n                if (testFolder == null)\n                    testFolder = tf.CreateFolder(\"MyFolder\");\n__Environment:__\nOS: Windows 10 / Windows 2012\nVisual Studio 2013\n.NET Framework 4.5.1\nTask Scheduler Version: Release 2.5.21\n\nKindly advice, is there anything I am doing wrong?\n\nThanks\nMani",
+    "LastUpdatedDate": "2017-12-11T21:32:32.59-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-02-02T23:17:36.463-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "NotV1SupportedException while creating a folder",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12450
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This one is easy and is a problem with your code. You have created the TaskService instance and have set the 'forceV1' parameter to 'true'. This forces the library to revert to the version created for Windows XP that does not support subfolders. You simply need to set that parameter to false and your code should work. Please note that you should protect against trying to create folders on any system older than Windows Vista. Also, you can use the tf.SubFolders.Exists method to see if the \"ReportSchedule\" subfolder has been created instead of the loop. It is much more efficient. I would do something like:\n```C#\nTaskFolder tf = ts.RootFolder;\nTaskFolder testFolder = tf;\nif (System.Environment.OSVersion.Version.Major >= 6)\n{\n   if (!tf.SubFolders.Exists(\"ReportSchedule\"))\n      testFolder = tf.CreateFolder(\"MyFolder\");\n   else\n      testFolder = tf.SubFolders[\"ReportSchedule\"];\n}\n```",
+      "PostedDate": "2017-02-03T11:09:45.093-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-03T11:10:39.99-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-02-03T11:10:40.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi dahall,\r\n\r\nThanks a lot for the resolution. \r\n\r\n\nThough, I haven't explicitly set forceV1 to true, it was in the initialization line.\r\n\r\nTaskService ts = new TaskService(server, userName, domain, Password, __true__)\r\n\r\nThanks\nMani\n",
+      "PostedDate": "2017-02-04T04:42:29.72-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:32.59-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

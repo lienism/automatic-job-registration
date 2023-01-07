@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1105997",
+    "ThreadId": "461778",
+    "Html": "Hello,\r<br />\n<br />\nis there any way to localize the TriggerEditDialog? And get the Trigger's details in German?\r<br />\n<br />\n<br />\nThank you very much!\r<br />\n<br />\n<br />\nBest regards,\r<br />\n<br />\nMuhaNERD<br />\n",
+    "PostedDate": "2013-10-10T07:00:10.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1106064",
+    "ThreadId": "461778",
+    "Html": "All of the editor dialogs and output strings can be localized and some have been already done. If you can do the translations, I'm happy to roll them into the source. There are three things needed to localize the TriggerEditDialog: You will need to add project based resources to both the TaskService and TaskEditor (under the EditorProperties folder) projects for German. You will then need to localize the TriggerEditDialog. All three resources are already localized into Italian and Chinese. Are you able to download the source code and then add those localizations?<br />\n",
+    "PostedDate": "2013-10-10T09:09:20.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1106413",
+    "ThreadId": "461778",
+    "Html": "I did the translation, I could build the source code and the resources .dll have been generated. I copied them to my application under Debug\\de-DE but it seems that something doesn't work. What should I do?\r<br />\n<br />\nHow can I attach the RESX files here? or how to send them to you?<br />\n",
+    "PostedDate": "2013-10-11T07:15:08.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1106426",
+    "ThreadId": "461778",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/11330\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2013-10-11T07:47:35.623-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1106427",
+    "ThreadId": "461778",
+    "Html": "Please zip up the files and attach them to the work item referenced above.<br />\n",
+    "PostedDate": "2013-10-11T07:48:41.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

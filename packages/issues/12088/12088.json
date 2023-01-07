@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "This is corrected and the 2.3.2 release will include a build for .NET 3.5 that will also be included in the NuGet package.",
+    "ClosedDate": "2015-04-22T14:29:03.81-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n\nI am testing the release 2.3.1 over the previous 2.0.3 with .NET 3.5. I took the 2.0 version of the dll and I have compilation errors.\nSome types from System.Core v3.5.0.0 have the same names as types in Microsoft.Win32.TaskScheduler.dll:\nSystem.Diagnostics.Eventing.Reader.PathType\nSystem.Diagnostics.Eventing.Reader.EventRecord\n\nI am getting:\nThe type 'System.Diagnostics.Eventing.Reader.PathType' exists in both \n'c:\\WINDOWS\\Microsoft.NET\\Framework\\v2.0.50727\\Temporary ASP.NET Files\\root\\64cd053d\\cb6b2d6d\\assembly\\dl3\\2fe9cd28\\002ef9be_1064d001\\Microsoft.Win32.TaskScheduler.DLL' \nand 'c:\\WINDOWS\\assembly\\GAC_MSIL\\System.Core\\3.5.0.0__b77a5c561934e089\\System.Core.dll'\n\nCan you rename those or do a .NET 3.5 special version?\n\nThanks",
+    "LastUpdatedDate": "2017-12-11T21:32:30.14-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-04-21T08:45:36.743-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Release 2.3.1 bug with .NET 3.5",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12088
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Great :)\nThanks",
+      "PostedDate": "2015-04-23T00:38:28.27-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:30.14-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

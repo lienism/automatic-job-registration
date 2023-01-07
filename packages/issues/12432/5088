@@ -1,0 +1,55 @@
+		private void btnConfigureSchedule_Click(object sender, EventArgs e)
+		{
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                MessageBox.Show(strings.RequiresAdministratorPrivileges);
+                return;
+            }
+
+            bool bIncompatible = false;
+
+            Microsoft.Win32.TaskScheduler.Task dct = null;
+            
+            btnConfigureSchedule.Enabled = false;
+            try
+            {
+                dct = util.CreateDataCommunicatorTask();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); 
+            }
+
+            OperatingSystem os = Environment.OSVersion;
+
+            if (os.Version.Major == 6)          // Windows 2008 Server R2
+                if (os.Version.Minor == 1)
+                    if(util.IsServerOS())
+                    {
+                        bIncompatible = true;
+                    }
+
+            if (dct != null && !bIncompatible)
+            {
+                TaskEditDialog ted = new TaskEditDialog(dct, true, true);
+                try 
+                {
+                    //ted.AvailableTabs = AvailableTaskTabs.General | AvailableTaskTabs.Triggers | AvailableTaskTabs.Actions | AvailableTaskTabs.History;
+                    //with library 2.5.0 there's no need to deny access to certain tabs. So they might as well all be available.
+                    ted.ShowDialog();
+                }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show(ex.Message); 
+                }
+            }
+
+            if (bIncompatible)
+            {
+                MessageBox.Show(strings.Incompatible);
+            }
+
+			btnConfigureSchedule.Enabled = true;
+		}

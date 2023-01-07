@@ -1,0 +1,101 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-07-20T08:29:39.89-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The TaskEditDialog constructor generates an exception in a Windows 10 Enterprise version 1703.\nI haven't reproduce the issue in a Windows 10 Pro.\n\nException:\nIndex was outside the bounds of the array.\nIndexOutOfRangeException.\n\nI'm working with the version 2.5.27 of Task Scheduler Managed Wrapper",
+    "LastUpdatedDate": "2017-07-20T08:29:39.89-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-26T06:39:30.6-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskEditDialog constructor crash in Windows 10 Enterprise version 1703",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12468
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5095,
+      "FileName": "Crash.jpg",
+      "DownloadUrl": ".\\5095"
+    },
+    {
+      "FileId": 5098,
+      "FileName": "accessDenied.JPG",
+      "DownloadUrl": ".\\5098"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I know what happened to cause this. While I'm working on correcting the code, you can work around this by adding a manifest to your application and including the following:\n```xml\n  <compatibility xmlns=\"urn:schemas-microsoft-com:compatibility.v1\">\n    <application>\n      <!-- Windows 10 -->\n      <supportedOS Id=\"{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}\" />\n    </application>\n  </compatibility>\n```",
+      "PostedDate": "2017-06-27T07:47:57.837-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "My last comment, after further testing, is incorrect. Microsoft, in those new versions of Windows, has upgraded the library to version 1.6, causing the problem. I'm correcting it now.",
+      "PostedDate": "2017-06-27T09:52:16.073-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fixed in 2.5.28 released today",
+      "PostedDate": "2017-06-27T10:22:42.633-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-27T10:23:00.433-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-29T02:45:15.06-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "With version 2.5.28 of the wrapper, I don't get the exception as before, but now I get the access denied.\nI create the task with an account who belongs to the Administrator group of the machine.",
+      "PostedDate": "2017-06-29T02:45:17.44-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "** Closed by dahall 6/27/2017 10:23 AM",
+      "PostedDate": "2017-06-29T02:46:17.687-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-29T02:46:17.783-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ok, you can close this issue.",
+      "PostedDate": "2017-07-12T08:08:25.11-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-20T08:29:39.89-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

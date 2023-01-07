@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "134796",
+    "ThreadId": "40647",
+    "Html": "<p>Can you add the ability to retreive localized trigger strings? All strings are hard-coded now and are located in different parts of code, so can you move them into one place or into the resource file to simplify the translation?\r\n</p>\r\n<p>Update: this suggestion is applicable to Action.ToString() too.</p>\r\n",
+    "PostedDate": "2008-11-24T08:05:22.107-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "137195",
+    "ThreadId": "40647",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://www.codeplex.com/taskscheduler/WorkItem/View.aspx?WorkItemId=2786\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2008-12-03T02:29:58.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

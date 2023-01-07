@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1456842",
+    "ThreadId": "649160",
+    "Html": "After editing a TimeTrigger (MyTrigger) in TriggerEditDialog, trying to add the edited trigger to a task definition fails to reflect the properties set by the TriggerEditDialog. <br />\n<pre><code>Dim MyTrigger As New TimeTrigger\nDim ls_Trigger_Window_Title As String = &quot;Please Specify Trigger&quot;\nDim triggerDlg As New TriggerEditDialog(MyTrigger, False) With { _\n                .Text = ls_Trigger_Window_Title _\n                }\nIf triggerDlg.ShowDialog() = vbOK Then\n      td.Triggers.Add(MyTrigger)\nEnd If</code></pre>\n\nA trigger indeed gets added to the Task Definition (td) but it does not reflect the properties set in the Trigger Dialog.\r<br />\n<br />\nIs there a special step we need to take in order to not lose the edited properties of a TimedTrigger once the TriggerEditDialog is closed?<br />\n",
+    "PostedDate": "2015-12-22T05:12:28.697-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456846",
+    "ThreadId": "649160",
+    "Html": "I think I see the solution. AFTER the dialog is closed, we still have access to the .Trigger property of the dialog,  That gives us the updated trigger properties. <br />\n",
+    "PostedDate": "2015-12-22T06:12:50.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-22T06:23:12.403-08:00"
+  }
+]

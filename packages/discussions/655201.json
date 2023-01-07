@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1475021",
+    "ThreadId": "655201",
+    "Html": "Hello,\r<br />\n<br />\nI have an application that creates a scheduled task, but the program it is using it needs, to run whether user is logged on or not.\r<br />\n<br />\nI have done a lot of research and tried many things, but cannot seem to get this working.\r<br />\n<br />\nCan someone please help me.\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2016-06-03T09:52:33.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1475074",
+    "ThreadId": "655201",
+    "Html": "An Administrator may register a task to run as the SYSTEM account or any user can register a task as any user and supply a password. The first option cannot access the network and the second option will only be able to run a task the requires the rights of the supplied user. See the <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity\" rel=\"nofollow\">Security Page</a> for examples. <br />\n",
+    "PostedDate": "2016-06-04T13:12:30.7-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-06-04T13:12:35.77-07:00"
+  },
+  {
+    "Id": "1475332",
+    "ThreadId": "655201",
+    "Html": "Hi Dahall,\r<br />\n<br />\nSo I'm not seeing where i can use the Run whether user is logged on or not.\r<br />\n<br />\nWhat I can do is set the Run with TaskRunLevel.Highest, but this did not work.\r<br />\n<br />\nRunning it as an Administrator did not work, if I logged out of the server.\r<br />\n<br />\nI looked a the Security page, I did not see anything related to what I need, can you please help me find the correct code.\r<br />\n<br />\nThanks,\r<br />\n<br />\n-Mike<br />\n",
+    "PostedDate": "2016-06-07T08:21:45.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

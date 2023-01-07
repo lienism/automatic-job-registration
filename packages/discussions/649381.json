@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1457371",
+    "ThreadId": "649381",
+    "Html": "Using the code below, when the user tries to save the task, they do NOT get prompted for user id &amp; password.  No Author property is set for the task, and the created task is set to 'Run only when user is loggen on'.  <strong>What could be causing the library to ignore the editorForm.RegisterTaskOnAccept = True</strong> ?<br />\n<pre><code>Dim editorForm As New TaskEditDialog()\neditorForm.Title = &quot;Create New Task&quot;\neditorForm.Editable = True\neditorForm.RegisterTaskOnAccept = True\neditorForm.Initialize(ts)\neditorForm.ShowDialog()</code></pre>\n\n",
+    "PostedDate": "2015-12-28T11:02:13.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457454",
+    "ThreadId": "649381",
+    "Html": "That should work. Try the following and let me know if this changes anything:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">Dim</span> regTask <span style=\"color:Blue;\">As</span> Task = <span style=\"color:Blue;\">Nothing</span>\n<span style=\"color:Blue;\">Dim</span> editorForm <span style=\"color:Blue;\">As</span> <span style=\"color:Blue;\">New</span> TaskEditDialog(ts, <span style=\"color:Blue;\">Nothing</span>, <span style=\"color:Blue;\">True</span>, <span style=\"color:Blue;\">True</span>) <span style=\"color:Blue;\">With</span> {.Title = <span style=\"color:#A31515;\">&quot;Create New Task&quot;</span>}\n<span style=\"color:Blue;\">If</span> editorForm.ShowDialog() = Windows.Forms.DialogResult.OK <span style=\"color:Blue;\">Then</span>\n    regTask = editorForm.Task\n<span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">If</span>\r\n</pre></div>",
+    "PostedDate": "2015-12-29T11:50:31.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457467",
+    "ThreadId": "649381",
+    "Html": "Same exact behavior using the alternative code you provided above.<br />\n\r<br />\nI suspect the dialog is not recognizing that the radio button for '<strong>Run whether user is logged or not</strong>' was selected. <br />\n",
+    "PostedDate": "2015-12-29T14:14:31.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457494",
+    "ThreadId": "649381",
+    "Html": "I see now what you were asking. I found the bug and it will be corrected in the next release (2.5.10). Until then, you can use this as a work around:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">Dim</span> regTask <span style=\"color:Blue;\">As</span> Task = <span style=\"color:Blue;\">Nothing</span>\n<span style=\"color:Blue;\">Dim</span> td <span style=\"color:Blue;\">As</span> TaskDefinition = ts.NewTask()\ntd.Principal.LogonType = LogonType.InteractiveToken\n<span style=\"color:Blue;\">Dim</span> editorForm <span style=\"color:Blue;\">As</span> <span style=\"color:Blue;\">New</span> TaskEditDialog(ts, td, <span style=\"color:Blue;\">True</span>, <span style=\"color:Blue;\">True</span>) <span style=\"color:Blue;\">With</span> {.Title = <span style=\"color:#A31515;\">&quot;Create New Task&quot;</span>}\n<span style=\"color:Blue;\">If</span> editorForm.ShowDialog() = Windows.Forms.DialogResult.OK <span style=\"color:Blue;\">Then</span>\n    regTask = editorForm.Task\n<span style=\"color:Blue;\">End</span> <span style=\"color:Blue;\">If</span>\r\n</pre></div>",
+    "PostedDate": "2015-12-29T23:38:14.683-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-29T23:38:22.03-08:00"
+  },
+  {
+    "Id": "1457524",
+    "ThreadId": "649381",
+    "Html": "The workaround works if you:\r<br />\na) change TaskEditDialog(ts, td, True, <strong>True</strong>) to TaskEditDialog(ts, td, True, <strong>False</strong>) \r<br />\nb) take care of changing the logon type (to 'Password'), prompting the user for logon info, and registering the task.<br />\n\r<br />\nNew Problem: that process works but the library reports a <strong>blank td.RegistrationInfo.Author</strong> even though the editor shows author information.\r<br />\nI've seen that happen with other scenarios.  Something is wrong with td.RegistrationInfo.Author for library-created tasks.<br />\n",
+    "PostedDate": "2015-12-30T06:27:41.247-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457547",
+    "ThreadId": "649381",
+    "Html": "Version 2.5.10 indeed fixes the lack of registration issue.\r<br />\nThe Author info is still reported as blank.<br />\n",
+    "PostedDate": "2015-12-30T09:17:23.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

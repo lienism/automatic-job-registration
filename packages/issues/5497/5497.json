@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed with source code update 62521.",
+    "ClosedDate": "2011-01-27T01:11:26.49-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am trying to update the action on a v1 task definition but cannot work out how to do it.\n \nYou cannot do:ExistingTask.Definition.Actions.Clear();because you get the message:There can be only a single action and it cannot be removed.\n \nYou cannot do:ExistingTask.Definition.Actions[0] = new ExecAction(...because the left side is read only.\n \nYou cannot change the parts of the action by:ExistingTask.Definition.Actions[0].SomePropertyToChange\n \nSo how do I replace/change the action on an existing task?",
+    "LastUpdatedDate": "2013-05-16T04:49:14.503-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-03-03T22:37:17.48-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Unable to update the action on a v1 task",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 5497
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Current work around:\r\n\r\nvoid UpdateFirstAction(Task t, Action action)\r\n{\r\n   if (t.TaskService.HighestSupportedVersion >= new Version(1, 2))\r\n      t.Definition.Actions.RemoveAt(0);\r\n   t.Definition.Actions.Add(action);\r\n}\r\n \r\nActionCollection.Add will actually replace the current action under V1. Under V2, it will add a second action so you really should put a version conditional in before the call like I have done in the method.",
+      "PostedDate": "2010-06-15T10:24:06.733-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-01-27T01:11:26.49-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:09.06-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.503-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

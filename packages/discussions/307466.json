@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "757031",
+    "ThreadId": "307466",
+    "Html": "\r\n<p>I wanted to add an timetrigger to an already existing task. How can I do that? I looked at all the examples, but I can't find it there.</p>\r\n",
+    "PostedDate": "2012-02-11T06:46:57.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "760903",
+    "ThreadId": "307466",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   <span style=\"color: green;\">// Retrieve the task, change the trigger and re-register it</span>\r\n   Task t = ts.GetTask(taskName);\r\n   td = t.Definition;\r\n   td.Triggers.Add(<span style=\"color: blue;\">new</span> TimeTrigger() { StartBoundary = DateTime.Now + TimeSpan.FromHours(1) });\r\n   ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-02-13T09:19:49.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

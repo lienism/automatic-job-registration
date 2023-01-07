@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "922446",
+    "ThreadId": "398173",
+    "Html": "\r\n<p>I am facing a problem while editing tasks on a XP machine.</p>\r\n<p>While editing a task, i register it using the flag TaskCreation.CreateOrUpdate but after the update find that always a new task gets created (because after updating the task the last run time of the task is displayed as 'Never' in windows task scheduler.)</p>\r\n<p>This flag works properly on Vista and Windows 7.</p>\r\n<p>Any help would be appreciated.</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-05T07:21:05.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "922500",
+    "ThreadId": "398173",
+    "Html": "<p>Under V1 of the library (XP and earlier), the CreateOrUpdate flag get interpretted by the library as a pure Save of a file that will not fail if the task already existed. What you're seeing is typical behavior of the V1 library. I don't know of a way to change the results of the LastRunTime property.</p>",
+    "PostedDate": "2012-10-05T08:51:42.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

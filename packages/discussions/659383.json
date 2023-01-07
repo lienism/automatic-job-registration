@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1487884",
+    "ThreadId": "659383",
+    "Html": "I made an app that uses the Task Scheduler Managed Wrapper Library. When the app runs on Windows 7 or later, it works OK. But when it runs on Windows XP, it crashes on startup with a FileNotFoundException. I have no clue what causes this issue. Here is the stack trace. Any help? I need to make this app work in Windows XP.<br />\n<br />\n2016-11-14 15:41:04,004 [1] FATAL - Hubo un error al ejecutar la aplicación<br />\nSystem.IO.FileNotFoundException: El sistema no puede hallar el archivo especificado. (Excepción de HRESULT: 0x80070002)<br />\n   en Microsoft.Win32.TaskScheduler.V1Interop.ITaskScheduler.Activate(String Name, Guid&amp; riid)<br />\n   en Microsoft.Win32.TaskScheduler.TaskService.GetTask(ITaskScheduler iSvc, String name)<br />\n   en Microsoft.Win32.TaskScheduler.TaskService.GetTask(String taskPath)<br />\n   en Form1.Form1_Load(Object sender, EventArgs e)<br />\n",
+    "PostedDate": "2016-11-14T10:49:10.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487920",
+    "ThreadId": "659383",
+    "Html": "This error has occurred in the past when the name of the task conflicts with the V1 engine. What is the name of your task?<br />\n",
+    "PostedDate": "2016-11-15T04:22:37.77-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487923",
+    "ThreadId": "659383",
+    "Html": "The name of the task is &quot;Backups&quot;. I also tried with a different name but it didn´t work.<br />\n<br />\nEdit: Never mind, I managed to find the issue. The app was checking if the task was already created. In Windows 7 the GetTask() function returned null if the task was not found but in Windows XP it throwed a FileNotFoundException instead.<br />\n",
+    "PostedDate": "2016-11-15T05:04:19.33-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488145",
+    "ThreadId": "659383",
+    "Html": "Thank you for finding that inconsistency. I will adjust it so that it behaves the same for both.<br />\n",
+    "PostedDate": "2016-11-16T21:54:01.997-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488323",
+    "ThreadId": "659383",
+    "Html": "It is now corrected and will appear in the next release.<br />\n",
+    "PostedDate": "2016-11-18T07:25:37.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-07-09T18:05:15.507-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Run this code:\nvar trigger = new TimeTrigger();\ntrigger.EndBoundary = new DateTime(2016, 1, 1);\nvar dialog = new TriggerEditDialog(trigger, supportV1Only: false);\ndialog.ShowDialog();\n\nThen interactive with the dialog:\n1. Uncheck Expire\n2. Change to \"At log on\"\n3. Uncheck Activate\n4. Change to \"On a schedule\".\n\nThe following exception is thrown:\n\nAn unhandled exception of type 'System.ArgumentOutOfRangeException' occurred in System.Windows.Forms.dll\nAdditional information: Value of '0001-01-01 00:00:00' is not valid for 'Value'. 'Value' should be between 'MinDate' and 'MaxDate'.",
+    "LastUpdatedDate": "2015-07-09T18:05:15.507-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-06-03T08:57:59.267-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TriggerEditDialog: DateTime out of range",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12117
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "It looks like valid DateTimes, in particular DateTime.MinValue, are not supported by WinForm's DateTimePicker. The latter has its own DateTimePicker.MinimumDateTime.",
+      "PostedDate": "2015-06-04T01:52:47.447-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I believe this problem is corrected in the latest source code drop. It will be fixed in release 2.3.3.",
+      "PostedDate": "2015-06-23T10:19:11.537-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-09T18:05:15.507-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

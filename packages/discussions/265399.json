@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "643264",
+    "ThreadId": "265399",
+    "Html": "<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\"><pre>Dim folder As TaskFolder\nfolder.createfolder(\"name\")\n</pre>\n<br /></span></pre>\n</div>\n<p>&nbsp;</p>\n<p>gives me this error</p>\n<p>'CreateFolder' is ambiguous because multiple kinds of members with this name exist in class 'Microsoft.Win32.TaskScheduler.TaskFolder'</p>\n<p>&nbsp;</p>\n<p>edit: 1.6.2 and 1.5 gives this error, 1.4.2 no error</p>",
+    "PostedDate": "2011-07-16T05:43:04.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643372",
+    "ThreadId": "265399",
+    "Html": "<p>You've found a bug. I will fix this in 1.6.3. For now, to remove this error, you can just pass in the VB equivalent of <strong><em>(string)null</em></strong> as a second parameter.</p>",
+    "PostedDate": "2011-07-16T21:13:46.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

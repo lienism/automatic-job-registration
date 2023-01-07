@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1289611",
+    "ThreadId": "561037",
+    "Html": "hi <br />\nTaskService doesn't show all tasks on Windows 2003.<br />\nI couldn't figure out why some tasks do show and some do not.<br />\n<br />\nthe code is<br />\n<pre><code>public void ShowTasks()\n{\n    using (var service = new TaskService())\n    {\n        foreach (var task in EnumerateFolderTasks(service.RootFolder))\n        {\n            Console.WriteLine(&quot;{0}&quot;, task.Name);\n        }\n    }\n}\n\nIEnumerable&lt;Task&gt; EnumerateFolderTasks(TaskFolder folder)\n{\n    foreach (var task in folder.Tasks)\n    {\n        yield return task;\n    }\n\n    foreach (var sfld in folder.SubFolders)\n    {\n        foreach (var task in EnumerateFolderTasks(sfld))\n        {\n            yield return task;\n        }\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2014-08-13T03:42:23.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1289613",
+    "ThreadId": "561037",
+    "Html": "looks like it fails to show tasks which names end with .com.\r<br />\nSeems like a bug.<br />\n",
+    "PostedDate": "2014-08-13T03:45:49.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291096",
+    "ThreadId": "561037",
+    "Html": "I'll look into how I can work around this bug in the native library in the wrapper. I really like this idea of being able to enumerate all tasks regardless of folder. I hope you don't mind if I add this capability to the wrapper.<br />\n",
+    "PostedDate": "2014-08-18T09:18:51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291125",
+    "ThreadId": "561037",
+    "Html": "I'm seeing a similar problem when trying to access tasks on a remote server 2008. It only returns the first task from server 2008, but works fine for server 2003. Any thoughts?<br />\n",
+    "PostedDate": "2014-08-18T10:23:39.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291187",
+    "ThreadId": "561037",
+    "Html": "I think I have corrected the problem here and the changes are in the latest source code and will be included in the 2.2.1 release.<br />\n",
+    "PostedDate": "2014-08-18T16:27:36.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1291266",
+    "ThreadId": "561037",
+    "Html": "awesome. Seems to be fixed.\r<br />\nwhat's the planned release date?<br />\n",
+    "PostedDate": "2014-08-19T02:09:46.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1292456",
+    "ThreadId": "561037",
+    "Html": "At least a couple of weeks. I'm adding a requested feature around event based triggers that is taking some real effort.<br />\n",
+    "PostedDate": "2014-08-22T07:51:42.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

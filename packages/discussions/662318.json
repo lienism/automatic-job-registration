@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1494920",
+    "ThreadId": "662318",
+    "Html": "Hello,<br />\n<br />\nI was recently trying to figure out a permissions problem that cropped up when I tried to delete a scheduled task. I was working under an account that was a member of the administrator group, and I could create and update tasks without a problem, but when I tried to delete them I got the standard perms error: 'Delete Task HRESULT: 0x80070005 (E_ACCESSDENIED))'<br />\n<br />\nRunning the task (or visual studio when debugging) as an administrator corrected the problem, but I think that you might want to update your sample delete task code (or even the underlying library wrapper) to be a little more aware of the user's current permissions before trying a futile task:<br />\n<br />\nvoid DeleteTask(taskName)<br />\n{<br />\n   // A taskName by itself assumes the root folder (e.g. &quot;MyTask&quot;)<br />\n   // A taskName can include folders (e.g. &quot;MyFolder\\MySubFolder\\MyTask&quot;)<br />\n   Task t = ts.GetTask(taskName);<br />\n   if (t == null) return;<br />\n<br />\n   WindowsIdentity identity = WindowsIdentity.GetCurrent();<br />\n   WindowsPrincipal principal = new WindowsPrincipal(identity);<br />\n   if (!principal.IsInRole(WindowsBuiltInRole.Administrator))<br />\n   {<br />\n   string account_name = WindowsIdentity.GetCurrent().Name;<br />\n   throw new Exception($&quot;Cannot delete scheduled task with your current identity '{account_name}' permissions level. You might need to run this application 'as administrator' even if you are using an administrator account.&quot;);<br />\n   }<br />\n<br />\n   // Remove the task we just created<br />\n   ts.RootFolder.DeleteTask(taskName);<br />\n}<br />\n<br />\nWarning people that extra permissions are required for task deletion would be a good step over just passing back a win api error message.<br />\n<br />\nNice work on this library otherwise, though.<br />\n",
+    "PostedDate": "2017-03-30T11:45:43.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1494963",
+    "ThreadId": "662318",
+    "Html": "Great idea. That information is covered elsewhere in the documentation, but I agree that calling it out will help people newer to task management and the library. I'll make the change using your code today.<br />\n",
+    "PostedDate": "2017-03-31T08:54:39.18-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497456",
+    "ThreadId": "662318",
+    "Html": "<strong>dahall wrote:</strong><br />\n<blockquote>\nGreat idea. That information is covered elsewhere in the documentation, but I agree that calling it out will help people newer to task management and the library. I'll make the change using your code today.<br />\n</blockquote>\nTell me please, will the confirmation be added to delete the task without restarting the application with administrator rights?<br />\n",
+    "PostedDate": "2017-07-20T23:33:10.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497494",
+    "ThreadId": "662318",
+    "Html": "smiz001: I'm not sure what you're asking exactly. There is not a mechanism to override the system if it determines that permissions from the calling application are not sufficient to perform an operation. That is why it throws the exception. This request was to further explain the exception so that developers can better react to the root cause of the problem.<br />\n",
+    "PostedDate": "2017-07-24T07:23:28.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

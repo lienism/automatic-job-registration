@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Unknown resolution",
+    "ClosedDate": "2015-02-17T08:47:33.3-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I wrote an c# console app which calls web service.\nI needed to run this app for every night, so I decided to use this task scheduler as it seems a good one to do my job.\n\nBut I got an issue which says \"Unhandled Exception: System.NullReferenceException: Object reference not set to an instance of an object. ...\"\nI read many articles described about same issue, but nothing is helpful.\n\nFor example,\n\n```\n                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = \"Does something\";\n                td.Principal.Id = \"any string\";\n                td.Principal.GroupId = \"NETWORK SERVICE\";\n                td.Principal.RunLevel = TaskRunLevel.LUA;\n                td.Principal.LogonType = TaskLogonType.S4U;\n                ts.RootFolder.RegisterTaskDefinition(@\"NetsuiteInvoiceGetTask\", td);\n```\n\nMy OS is Windows7 64bit.\nCan anyone help me? Thanks.",
+    "LastUpdatedDate": "2015-02-17T08:47:33.3-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-09-07T02:46:33.54-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "System.NullReferenceException exception in web service call task",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11850
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "At what line are you getting the exception? Some other things: RunLevel defaults to LUA. TaskLogonType.S4U is reserved for user accounts. I, personally, would eliminate the GroupID, RunLevel and LogonType lines from your code and just call the RegisterTaskDefinition as outlined [here](https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Documentation#system).",
+      "PostedDate": "2014-09-07T10:44:57.873-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for your post, but still doesn't work.\nI tested 2 cases:\n1) This doesn't run task.\r\n\r\n```\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\nts.RootFolder.RegisterTaskDefinition(\"TaskName\", taskDefinition,\n   TaskCreation.CreateOrUpdate, \"SYSTEM\", null,\n   TaskLogonType.ServiceAccount);\n```\r\n\r\n2) System.NullReferenceException\r\n\r\n```\nTaskDefinition td = ts.NewTask();\ntd.Principal.RunLevel = TaskRunLevel.Highest;\n// Set trigger and action and other properties...\nts.RootFolder.RegisterTaskDefinition(\"Test\", td);\n```\nMy console app uses Netsuite webservice and taskeng.exe says that issue occurs in line 524.\n(Screenshot attached)\r\n\r\n```\n522            System.Uri originalUri = new System.Uri(this.Url);\n523            DataCenterUrls urls = getDataCenterUrls(account).dataCenterUrls;\n524            Uri dataCenterUri = new Uri(urls.webservicesDomain + originalUri.PathAndQuery);\n525            this.Url = dataCenterUri.ToString();\r\n\r\n```\n__Here__\nthis.Url = {https://webservices.netsuite.com/services/NetSuitePort_2013_2}\nurls.webservicesDomain = \"https://webservices.na1.netsuite.com\"\noriginalUri.PathAndQuery = \"/services/NetSuitePort_2013_2\"\r\n\r\nI think to try with\nts.RootFolder.RegisterTaskDefinition(\"TaskName\", taskDefinition,\n   TaskCreation.CreateOrUpdate, \"userDomain\\\\userName\", \"userPassword\",\n   TaskLogonType.Password)\r\n\r\nBut don't know how to give parameters -  \"userDomain\\\\userName\", \"userPassword\".\nWould you help?",
+      "PostedDate": "2014-09-07T18:38:00.923-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "If the exception occurs on line 524, then it is happening with either \"urls\" or \"originalUri\" and not anything to do with task registration. Something else to be aware of, you need to connect to the TaskService using credentials that can create tasks. See [this link](https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Documentation#remote) for information on connecting using a known account with permissions.",
+      "PostedDate": "2014-09-08T08:17:16.777-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Were you able to resolve this issue? If not, please let me know the errors you're seeing and the line or lines of code associated with them. If so, please let me know how or if my suggestions worked for you. Thank you.",
+      "PostedDate": "2014-10-22T23:03:56.477-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-02-17T08:47:33.3-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

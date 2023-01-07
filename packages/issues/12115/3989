@@ -1,0 +1,3535 @@
+Index: TaskService/TaskEditor/TaskEditor.csproj
+===================================================================
+--- TaskService/TaskEditor/TaskEditor.csproj	(revision 95870)
++++ TaskService/TaskEditor/TaskEditor.csproj	(working copy)
+@@ -394,6 +394,12 @@
+     <Compile Include="UIComponents\MonthlyTriggerUI.Designer.cs">
+       <DependentUpon>MonthlyTriggerUI.cs</DependentUpon>
+     </Compile>
++    <Compile Include="UIComponents\ScheduledTriggerUI.cs">
++      <SubType>UserControl</SubType>
++    </Compile>
++    <Compile Include="UIComponents\ScheduledTriggerUI.Designer.cs">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++    </Compile>
+     <Compile Include="UIComponents\ShowMessageActionUI.cs">
+       <SubType>UserControl</SubType>
+     </Compile>
+@@ -744,6 +750,22 @@
+     <EmbeddedResource Include="UIComponents\MonthlyTriggerUI.resx">
+       <DependentUpon>MonthlyTriggerUI.cs</DependentUpon>
+     </EmbeddedResource>
++    <EmbeddedResource Include="UIComponents\ScheduledTriggerUI.de-DE.resx">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++    </EmbeddedResource>
++    <EmbeddedResource Include="UIComponents\ScheduledTriggerUI.fr.resx">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++    </EmbeddedResource>
++    <EmbeddedResource Include="UIComponents\ScheduledTriggerUI.it.resx">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++    </EmbeddedResource>
++    <EmbeddedResource Include="UIComponents\ScheduledTriggerUI.resx">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++      <SubType>Designer</SubType>
++    </EmbeddedResource>
++    <EmbeddedResource Include="UIComponents\ScheduledTriggerUI.zh-CN.resx">
++      <DependentUpon>ScheduledTriggerUI.cs</DependentUpon>
++    </EmbeddedResource>
+     <EmbeddedResource Include="UIComponents\ShowMessageActionUI.fr.resx">
+       <DependentUpon>ShowMessageActionUI.cs</DependentUpon>
+     </EmbeddedResource>
+Index: TaskService/TaskEditor/TriggerEditDialog.cs
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.cs	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.cs	(working copy)
+@@ -117,6 +117,21 @@
+ 		{
+ 			get
+ 			{
++				if (trigger == null)
++					return null;
++				switch (trigger.TriggerType)
++				{
++					case TaskTriggerType.Time:
++					case TaskTriggerType.Daily:
++					case TaskTriggerType.Weekly:
++					case TaskTriggerType.Monthly:
++					case TaskTriggerType.MonthlyDOW:
++						// ScheduledTriggerUI doesn't mutate the Trigger we assigned to it, just like we don't
++						// mutate the Trigger assigned to us.  So we have to merge ScheduledTriggerUI's output
++						// Trigger into our Trigger.
++						trigger = TriggerMergeSchedule(otherProperties: trigger, schedule: scheduledTriggerUI1.Trigger);
++						break;
++				}
+ 				return trigger;
+ 			}
+ 			set
+@@ -133,24 +148,12 @@
+ 				switch (trigger.TriggerType)
+ 				{
+ 					case TaskTriggerType.Time:
+-						schedOneRadio.Checked = true;
+-						SetSchedTrigger();
+-						break;
+ 					case TaskTriggerType.Daily:
+-						schedDailyRadio.Checked = true;
+-						SetSchedTrigger();
+-						dailyTriggerUI1.Trigger = trigger;
+-						break;
+ 					case TaskTriggerType.Weekly:
+-						schedWeeklyRadio.Checked = true;
+-						SetSchedTrigger();
+-						weeklyTriggerUI1.Trigger = trigger;
+-						break;
+ 					case TaskTriggerType.Monthly:
+ 					case TaskTriggerType.MonthlyDOW:
+-						schedMonthlyRadio.Checked = true;
+-						SetSchedTrigger();
+-						monthlyTriggerUI1.Trigger = trigger;
++						TriggerView = TaskTriggerDisplayType.Schedule;
++						scheduledTriggerUI1.Trigger = trigger;
+ 						break;
+ 					case TaskTriggerType.Logon:
+ 						TriggerView = TaskTriggerDisplayType.Logon;
+@@ -255,9 +258,10 @@
+ 				if (value != useUnifiedSchedulingEngine)
+ 				{
+ 					useUnifiedSchedulingEngine = value;
+-					schedMonthlyRadio.Enabled = stopIfRunsCheckBox.Enabled = stopIfRunsSpan.Enabled =
+-						repeatCheckBox.Enabled = repeatSpan.Enabled = durationLabel.Enabled =
+-						durationSpan.Enabled = stopAfterDurationCheckBox.Enabled = !useUnifiedSchedulingEngine;
++					scheduledTriggerUI1.UseUnifiedSchedulingEngine = useUnifiedSchedulingEngine;
++					stopIfRunsCheckBox.Enabled = stopIfRunsSpan.Enabled = repeatCheckBox.Enabled =
++						repeatSpan.Enabled = durationLabel.Enabled = durationSpan.Enabled =
++						stopAfterDurationCheckBox.Enabled = !useUnifiedSchedulingEngine;
+ 				}
+ 			}
+ 		}
+@@ -277,6 +281,36 @@
+ 			}
+ 		}
+ 
++		/// <summary>
++		/// Returns the result of merging two <see cref="Trigger"/> objects. The once/daily/weekly/monthly schedule is copied from one of the objects, and the other properties from the other.
++		/// </summary>
++		/// <param name="otherProperties">The source of other properties.</param>
++		/// <param name="schedule">The source of the schedule.</param>
++		/// <returns></returns>
++		private static Trigger TriggerMergeSchedule(Trigger otherProperties, Trigger schedule)
++		{
++			if (!(schedule.GetType() == typeof(TimeTrigger)
++				|| schedule.GetType() == typeof(DailyTrigger)
++				|| schedule.GetType() == typeof(WeeklyTrigger)
++				|| schedule.GetType() == typeof(MonthlyTrigger) || schedule.GetType() == typeof(MonthlyDOWTrigger)))
++			{
++				throw new ArgumentOutOfRangeException("schedule");
++			}
++
++			DateTime startBoundary = schedule.StartBoundary;
++			Trigger merged = schedule.Clone() as Trigger;
++			if (otherProperties != null)
++				merged.CopyBaseClassProperties(otherProperties);
++			if (otherProperties is ITriggerDelay && merged is ITriggerDelay)
++				try { ((ITriggerDelay)merged).Delay = ((ITriggerDelay)otherProperties).Delay; }
++				catch { }
++			if (otherProperties is ITriggerUserId && merged is ITriggerUserId)
++				try { ((ITriggerUserId)merged).UserId = ((ITriggerUserId)otherProperties).UserId; }
++				catch { }
++			merged.StartBoundary = startBoundary;
++			return merged;
++		}
++
+ 		private void activateCheckBox_CheckedChanged(object sender, EventArgs e)
+ 		{
+ 			activateDatePicker.Enabled = activateCheckBox.Checked;
+@@ -370,24 +404,6 @@
+ 			((ITriggerUserId)trigger).UserId = logonUserLabel.Text = acct;
+ 		}
+ 
+-		private void monthlyTriggerUI1_TriggerTypeChanged(object sender, EventArgs e)
+-		{
+-			if (!onAssignment)
+-			{
+-				Trigger newTrigger = null;
+-				if (monthlyTriggerUI1.TriggerType == TaskTriggerType.Monthly)
+-					newTrigger = new MonthlyTrigger();
+-				else
+-					newTrigger = new MonthlyDOWTrigger();
+-				if (newTrigger != null)
+-				{
+-					if (trigger != null)
+-						newTrigger.CopyProperties(trigger);
+-					this.Trigger = newTrigger;
+-				}
+-			}
+-		}
+-
+ 		private void okBtn_Click(object sender, EventArgs e)
+ 		{
+ 			DialogResult = DialogResult.OK;
+@@ -443,11 +459,10 @@
+ 
+ 			// Enable/disable version specific features
+ 			stopIfRunsCheckBox.Enabled = stopIfRunsSpan.Enabled = delayCheckBox.Enabled = delaySpan.Enabled = isV2;
+-			dailyTriggerUI1.IsV2 = weeklyTriggerUI1.IsV2 = monthlyTriggerUI1.IsV2 = isV2;
++			scheduledTriggerUI1.IsV2 = isV2;
+ 
+ 			// Set date/time controls
+-			schedStartDatePicker.UTCPrompt = activateDatePicker.UTCPrompt = expireDatePicker.UTCPrompt = isV2 ? EditorProperties.Resources.DateTimeSyncText : null;
+-			schedStartDatePicker.TimeFormat = (isV2) ? FullDateTimePickerTimeFormat.LongTime : FullDateTimePickerTimeFormat.ShortTime;
++			activateDatePicker.UTCPrompt = expireDatePicker.UTCPrompt = isV2 ? EditorProperties.Resources.DateTimeSyncText : null;
+ 			activateDatePicker.TimeFormat = (isV2) ? FullDateTimePickerTimeFormat.LongTime : FullDateTimePickerTimeFormat.ShortTime;
+ 			expireDatePicker.TimeFormat = (isV2) ? FullDateTimePickerTimeFormat.LongTime : FullDateTimePickerTimeFormat.Hidden;
+ 
+@@ -456,53 +471,6 @@
+ 				c.Enabled = isV2;
+ 		}
+ 
+-		private void schedOneRadio_CheckedChanged(object sender, EventArgs e)
+-		{
+-			if (((RadioButton)sender).Checked)
+-			{
+-				Trigger newTrigger = null;
+-				if (sender == schedOneRadio)
+-				{
+-					schedTabControl.SelectedTab = oneTimeTab;
+-					if (!onAssignment) newTrigger = new TimeTrigger();
+-				}
+-				else if (sender == schedDailyRadio)
+-				{
+-					schedTabControl.SelectedTab = dailyTab;
+-					if (!onAssignment) newTrigger = new DailyTrigger();
+-				}
+-				else if (sender == schedWeeklyRadio)
+-				{
+-					schedTabControl.SelectedTab = weeklyTab;
+-					if (!onAssignment) newTrigger = new WeeklyTrigger();
+-				}
+-				else if (sender == schedMonthlyRadio)
+-				{
+-					schedTabControl.SelectedTab = monthlyTab;
+-					monthlyTriggerUI1_TriggerTypeChanged(this, EventArgs.Empty);
+-				}
+-
+-				if (newTrigger != null && !onAssignment)
+-				{
+-					if (trigger != null)
+-						newTrigger.CopyProperties(trigger);
+-					this.Trigger = newTrigger;
+-				}
+-			}
+-		}
+-
+-		private void schedStartDatePicker_ValueChanged(object sender, EventArgs e)
+-		{
+-			if (!onAssignment)
+-				trigger.StartBoundary = schedStartDatePicker.Value;
+-		}
+-
+-		private void SetSchedTrigger()
+-		{
+-			TriggerView = TaskTriggerDisplayType.Schedule;
+-			schedStartDatePicker.Value = trigger.StartBoundary;
+-		}
+-
+ 		private void stopAfterDurationCheckBox_CheckedChanged(object sender, EventArgs e)
+ 		{
+ 			trigger.Repetition.StopAtDurationEnd = stopAfterDurationCheckBox.Checked;
+@@ -534,12 +502,7 @@
+ 				case TaskTriggerDisplayType.Schedule:
+ 				default:
+ 					settingsTabControl.SelectedTab = scheduleTab;
+-					if (!onAssignment)
+-					{
+-						schedOneRadio.Checked = schedMonthlyRadio.Checked = schedDailyRadio.Checked = schedWeeklyRadio.Checked = false;
+-						schedOneRadio.Checked = true;
+-						return;
+-					}
++					if (!onAssignment) newTrigger = new TimeTrigger();
+ 					break;
+ 				case TaskTriggerDisplayType.Logon:
+ 					logonRemotePanel.Visible = false;
+@@ -579,8 +542,8 @@
+ 
+ 			if (newTrigger != null && !onAssignment)
+ 			{
+-				if (trigger != null)
+-					newTrigger.CopyProperties(trigger);
++				if (Trigger != null)
++					newTrigger.CopyProperties(Trigger);
+ 				this.Trigger = newTrigger;
+ 			}
+ 		}
+Index: TaskService/TaskEditor/TriggerEditDialog.de-DE.resx
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.de-DE.resx	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.de-DE.resx	(working copy)
+@@ -121,30 +121,6 @@
+     <value>Aufgabe starten:</value>
+   </data>
+   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+-  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>79, 19</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Text" xml:space="preserve">
+-    <value>Monatlich</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>92, 19</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Text" xml:space="preserve">
+-    <value>Wöchentlich</value>
+-  </data>
+-  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>64, 19</value>
+-  </data>
+-  <data name="schedDailyRadio.Text" xml:space="preserve">
+-    <value>Täglich</value>
+-  </data>
+-  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>61, 19</value>
+-  </data>
+-  <data name="schedOneRadio.Text" xml:space="preserve">
+-    <value>Einmal</value>
+-  </data>
+   <data name="logonLocalRadio.Size" type="System.Drawing.Size, System.Drawing">
+     <value>212, 19</value>
+   </data>
+@@ -277,15 +253,6 @@
+   <data name="logonUserLabel.Text" xml:space="preserve">
+     <value>&lt;Aktuelle benutzer&gt;</value>
+   </data>
+-  <data name="schedStartLabel.Text" xml:space="preserve">
+-    <value>Anfang:</value>
+-  </data>
+-  <data name="dailyDaysLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="dailyRecurLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+   <data name="groupBox6.Text" xml:space="preserve">
+     <value></value>
+   </data>
+@@ -298,15 +265,6 @@
+   <data name="logonTab.Text" xml:space="preserve">
+     <value></value>
+   </data>
+-  <data name="monthlyDaysRadio.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="monthlyOnRadio.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+   <data name="okBtn.Text" xml:space="preserve">
+     <value></value>
+   </data>
+@@ -346,31 +304,4 @@
+   <data name="triggerTypeCombo.Items9" xml:space="preserve">
+     <value></value>
+   </data>
+-  <data name="weeklyFriCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyMonCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyRecurLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklySatCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklySunCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyThuCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyTueCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyWedCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+ </root>
+\ No newline at end of file
+Index: TaskService/TaskEditor/TriggerEditDialog.Designer.cs
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.Designer.cs	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.Designer.cs	(working copy)
+@@ -34,22 +34,6 @@
+ 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+ 			this.settingsTabControl = new System.Windows.Forms.TabControl();
+ 			this.scheduleTab = new System.Windows.Forms.TabPage();
+-			this.schedStartDatePicker = new Microsoft.Win32.TaskScheduler.FullDateTimePicker();
+-			this.groupBox3 = new System.Windows.Forms.GroupBox();
+-			this.schedGroup = new System.Windows.Forms.GroupBox();
+-			this.schedTabControl = new System.Windows.Forms.TabControl();
+-			this.oneTimeTab = new System.Windows.Forms.TabPage();
+-			this.dailyTab = new System.Windows.Forms.TabPage();
+-			this.dailyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.DailyTriggerUI();
+-			this.weeklyTab = new System.Windows.Forms.TabPage();
+-			this.weeklyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.WeeklyTriggerUI();
+-			this.monthlyTab = new System.Windows.Forms.TabPage();
+-			this.monthlyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.MonthlyTriggerUI();
+-			this.schedStartLabel = new System.Windows.Forms.Label();
+-			this.schedMonthlyRadio = new System.Windows.Forms.RadioButton();
+-			this.schedWeeklyRadio = new System.Windows.Forms.RadioButton();
+-			this.schedDailyRadio = new System.Windows.Forms.RadioButton();
+-			this.schedOneRadio = new System.Windows.Forms.RadioButton();
+ 			this.logonTab = new System.Windows.Forms.TabPage();
+ 			this.logonRemotePanel = new System.Windows.Forms.Panel();
+ 			this.groupBox6 = new System.Windows.Forms.GroupBox();
+@@ -88,14 +72,10 @@
+ 			this.customPropsListView = new System.Windows.Forms.ListView();
+ 			this.propNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+ 			this.propValCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
++			this.scheduledTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.ScheduledTriggerUI();
+ 			this.groupBox1.SuspendLayout();
+ 			this.settingsTabControl.SuspendLayout();
+ 			this.scheduleTab.SuspendLayout();
+-			this.schedGroup.SuspendLayout();
+-			this.schedTabControl.SuspendLayout();
+-			this.dailyTab.SuspendLayout();
+-			this.weeklyTab.SuspendLayout();
+-			this.monthlyTab.SuspendLayout();
+ 			this.logonTab.SuspendLayout();
+ 			this.logonRemotePanel.SuspendLayout();
+ 			this.startupTab.SuspendLayout();
+@@ -141,129 +121,11 @@
+ 			// 
+ 			// scheduleTab
+ 			// 
+-			this.scheduleTab.Controls.Add(this.schedStartDatePicker);
+-			this.scheduleTab.Controls.Add(this.groupBox3);
+-			this.scheduleTab.Controls.Add(this.schedGroup);
+-			this.scheduleTab.Controls.Add(this.schedStartLabel);
+-			this.scheduleTab.Controls.Add(this.schedMonthlyRadio);
+-			this.scheduleTab.Controls.Add(this.schedWeeklyRadio);
+-			this.scheduleTab.Controls.Add(this.schedDailyRadio);
+-			this.scheduleTab.Controls.Add(this.schedOneRadio);
++			this.scheduleTab.Controls.Add(this.scheduledTriggerUI1);
+ 			resources.ApplyResources(this.scheduleTab, "scheduleTab");
+ 			this.scheduleTab.Name = "scheduleTab";
+ 			this.scheduleTab.UseVisualStyleBackColor = true;
+ 			// 
+-			// schedStartDatePicker
+-			// 
+-			resources.ApplyResources(this.schedStartDatePicker, "schedStartDatePicker");
+-			this.schedStartDatePicker.Name = "schedStartDatePicker";
+-			this.schedStartDatePicker.Value = new System.DateTime(2009, 7, 30, 13, 10, 46, 672);
+-			this.schedStartDatePicker.ValueChanged += new System.EventHandler(this.schedStartDatePicker_ValueChanged);
+-			// 
+-			// groupBox3
+-			// 
+-			resources.ApplyResources(this.groupBox3, "groupBox3");
+-			this.groupBox3.Name = "groupBox3";
+-			this.groupBox3.TabStop = false;
+-			// 
+-			// schedGroup
+-			// 
+-			this.schedGroup.Controls.Add(this.schedTabControl);
+-			resources.ApplyResources(this.schedGroup, "schedGroup");
+-			this.schedGroup.Name = "schedGroup";
+-			this.schedGroup.TabStop = false;
+-			// 
+-			// schedTabControl
+-			// 
+-			resources.ApplyResources(this.schedTabControl, "schedTabControl");
+-			this.schedTabControl.Controls.Add(this.oneTimeTab);
+-			this.schedTabControl.Controls.Add(this.dailyTab);
+-			this.schedTabControl.Controls.Add(this.weeklyTab);
+-			this.schedTabControl.Controls.Add(this.monthlyTab);
+-			this.schedTabControl.Name = "schedTabControl";
+-			this.schedTabControl.SelectedIndex = 0;
+-			this.schedTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+-			this.schedTabControl.TabStop = false;
+-			// 
+-			// oneTimeTab
+-			// 
+-			resources.ApplyResources(this.oneTimeTab, "oneTimeTab");
+-			this.oneTimeTab.Name = "oneTimeTab";
+-			this.oneTimeTab.UseVisualStyleBackColor = true;
+-			// 
+-			// dailyTab
+-			// 
+-			this.dailyTab.Controls.Add(this.dailyTriggerUI1);
+-			resources.ApplyResources(this.dailyTab, "dailyTab");
+-			this.dailyTab.Name = "dailyTab";
+-			this.dailyTab.UseVisualStyleBackColor = true;
+-			// 
+-			// dailyTriggerUI1
+-			// 
+-			resources.ApplyResources(this.dailyTriggerUI1, "dailyTriggerUI1");
+-			this.dailyTriggerUI1.Name = "dailyTriggerUI1";
+-			this.dailyTriggerUI1.ShowStartBoundary = false;
+-			// 
+-			// weeklyTab
+-			// 
+-			this.weeklyTab.Controls.Add(this.weeklyTriggerUI1);
+-			resources.ApplyResources(this.weeklyTab, "weeklyTab");
+-			this.weeklyTab.Name = "weeklyTab";
+-			this.weeklyTab.UseVisualStyleBackColor = true;
+-			// 
+-			// weeklyTriggerUI1
+-			// 
+-			resources.ApplyResources(this.weeklyTriggerUI1, "weeklyTriggerUI1");
+-			this.weeklyTriggerUI1.Name = "weeklyTriggerUI1";
+-			this.weeklyTriggerUI1.ShowStartBoundary = false;
+-			// 
+-			// monthlyTab
+-			// 
+-			this.monthlyTab.Controls.Add(this.monthlyTriggerUI1);
+-			resources.ApplyResources(this.monthlyTab, "monthlyTab");
+-			this.monthlyTab.Name = "monthlyTab";
+-			this.monthlyTab.UseVisualStyleBackColor = true;
+-			// 
+-			// monthlyTriggerUI1
+-			// 
+-			resources.ApplyResources(this.monthlyTriggerUI1, "monthlyTriggerUI1");
+-			this.monthlyTriggerUI1.Name = "monthlyTriggerUI1";
+-			this.monthlyTriggerUI1.ShowStartBoundary = false;
+-			this.monthlyTriggerUI1.TriggerTypeChanged += new System.EventHandler(this.monthlyTriggerUI1_TriggerTypeChanged);
+-			// 
+-			// schedStartLabel
+-			// 
+-			resources.ApplyResources(this.schedStartLabel, "schedStartLabel");
+-			this.schedStartLabel.Name = "schedStartLabel";
+-			// 
+-			// schedMonthlyRadio
+-			// 
+-			resources.ApplyResources(this.schedMonthlyRadio, "schedMonthlyRadio");
+-			this.schedMonthlyRadio.Name = "schedMonthlyRadio";
+-			this.schedMonthlyRadio.UseVisualStyleBackColor = true;
+-			this.schedMonthlyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
+-			// 
+-			// schedWeeklyRadio
+-			// 
+-			resources.ApplyResources(this.schedWeeklyRadio, "schedWeeklyRadio");
+-			this.schedWeeklyRadio.Name = "schedWeeklyRadio";
+-			this.schedWeeklyRadio.UseVisualStyleBackColor = true;
+-			this.schedWeeklyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
+-			// 
+-			// schedDailyRadio
+-			// 
+-			resources.ApplyResources(this.schedDailyRadio, "schedDailyRadio");
+-			this.schedDailyRadio.Name = "schedDailyRadio";
+-			this.schedDailyRadio.UseVisualStyleBackColor = true;
+-			this.schedDailyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
+-			// 
+-			// schedOneRadio
+-			// 
+-			resources.ApplyResources(this.schedOneRadio, "schedOneRadio");
+-			this.schedOneRadio.Name = "schedOneRadio";
+-			this.schedOneRadio.UseVisualStyleBackColor = true;
+-			this.schedOneRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
+-			// 
+ 			// logonTab
+ 			// 
+ 			this.logonTab.Controls.Add(this.logonRemotePanel);
+@@ -532,6 +394,11 @@
+ 			// 
+ 			resources.ApplyResources(this.propValCol, "propValCol");
+ 			// 
++			// scheduledTriggerUI1
++			// 
++			resources.ApplyResources(this.scheduledTriggerUI1, "scheduledTriggerUI1");
++			this.scheduledTriggerUI1.Name = "scheduledTriggerUI1";
++			// 
+ 			// TriggerEditDialog
+ 			// 
+ 			this.AcceptButton = this.okBtn;
+@@ -552,11 +419,6 @@
+ 			this.settingsTabControl.ResumeLayout(false);
+ 			this.scheduleTab.ResumeLayout(false);
+ 			this.scheduleTab.PerformLayout();
+-			this.schedGroup.ResumeLayout(false);
+-			this.schedTabControl.ResumeLayout(false);
+-			this.dailyTab.ResumeLayout(false);
+-			this.weeklyTab.ResumeLayout(false);
+-			this.monthlyTab.ResumeLayout(false);
+ 			this.logonTab.ResumeLayout(false);
+ 			this.logonTab.PerformLayout();
+ 			this.logonRemotePanel.ResumeLayout(false);
+@@ -582,21 +444,9 @@
+ 		private System.Windows.Forms.TabControl settingsTabControl;
+ 		private System.Windows.Forms.TabPage scheduleTab;
+ 		private System.Windows.Forms.TabPage logonTab;
+-		private System.Windows.Forms.RadioButton schedOneRadio;
+-		private System.Windows.Forms.Label schedStartLabel;
+-		private System.Windows.Forms.RadioButton schedMonthlyRadio;
+-		private System.Windows.Forms.RadioButton schedWeeklyRadio;
+-		private System.Windows.Forms.RadioButton schedDailyRadio;
+-		private System.Windows.Forms.GroupBox schedGroup;
+-		private System.Windows.Forms.TabControl schedTabControl;
+-		private System.Windows.Forms.TabPage oneTimeTab;
+-		private System.Windows.Forms.TabPage dailyTab;
+-		private System.Windows.Forms.TabPage weeklyTab;
+-		private System.Windows.Forms.TabPage monthlyTab;
+ 		private System.Windows.Forms.TabPage startupTab;
+ 		private System.Windows.Forms.TabPage idleTab;
+ 		private System.Windows.Forms.TabPage onEventTab;
+-		private System.Windows.Forms.GroupBox groupBox3;
+ 		private System.Windows.Forms.GroupBox advSettingsGroup;
+ 		private System.Windows.Forms.CheckBox delayCheckBox;
+ 		private System.Windows.Forms.CheckBox stopAfterDurationCheckBox;
+@@ -606,7 +456,6 @@
+ 		private System.Windows.Forms.CheckBox expireCheckBox;
+ 		private System.Windows.Forms.CheckBox activateCheckBox;
+ 		private System.Windows.Forms.Label durationLabel;
+-		private FullDateTimePicker schedStartDatePicker;
+ 		private System.Windows.Forms.TimeSpanPicker delaySpan;
+ 		private FullDateTimePicker expireDatePicker;
+ 		private FullDateTimePicker activateDatePicker;
+@@ -625,9 +474,6 @@
+ 		private System.Windows.Forms.RadioButton logonRemoteRadio;
+ 		private System.Windows.Forms.Button cancelBtn;
+ 		private System.Windows.Forms.Button okBtn;
+-		private UIComponents.DailyTriggerUI dailyTriggerUI1;
+-		private UIComponents.WeeklyTriggerUI weeklyTriggerUI1;
+-		private UIComponents.MonthlyTriggerUI monthlyTriggerUI1;
+ 		private UIComponents.EventTriggerUI eventTriggerUI1;
+ 		private System.Windows.Forms.TabPage customTab;
+ 		private System.Windows.Forms.TextBox customNameText;
+@@ -635,5 +481,6 @@
+ 		private System.Windows.Forms.ListView customPropsListView;
+ 		private System.Windows.Forms.ColumnHeader propNameCol;
+ 		private System.Windows.Forms.ColumnHeader propValCol;
++		private UIComponents.ScheduledTriggerUI scheduledTriggerUI1;
+ 	}
+ }
+\ No newline at end of file
+Index: TaskService/TaskEditor/TriggerEditDialog.fr.resx
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.fr.resx	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.fr.resx	(working copy)
+@@ -180,21 +180,6 @@
+   <data name="repeatCheckBox.Text" xml:space="preserve">
+     <value>Répéter la tâche toutes les :</value>
+   </data>
+-  <data name="schedDailyRadio.Text" xml:space="preserve">
+-    <value>Tous les jours</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Text" xml:space="preserve">
+-    <value>Tous les mois</value>
+-  </data>
+-  <data name="schedOneRadio.Text" xml:space="preserve">
+-    <value>Une fois</value>
+-  </data>
+-  <data name="schedStartLabel.Text" xml:space="preserve">
+-    <value>Démarrer</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Text" xml:space="preserve">
+-    <value>Hebdomadaire</value>
+-  </data>
+   <data name="startupIntroLabel.Text" xml:space="preserve">
+     <value>Aucun autre paramètre n’est requis.</value>
+   </data>
+Index: TaskService/TaskEditor/TriggerEditDialog.it.resx
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.it.resx	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.it.resx	(working copy)
+@@ -124,63 +124,6 @@
+   <data name="triggerTypeLabel.Text" xml:space="preserve">
+     <value>A&amp;vvia l'attività:</value>
+   </data>
+-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>85, 6</value>
+-  </data>
+-  <data name="oneTimeTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 84</value>
+-  </data>
+-  <data name="dailyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>508, 87</value>
+-  </data>
+-  <data name="weeklyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>508, 87</value>
+-  </data>
+-  <data name="monthlyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>508, 87</value>
+-  </data>
+-  <data name="schedTabControl.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>491, 93</value>
+-  </data>
+-  <data name="schedGroup.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>95, 30</value>
+-  </data>
+-  <data name="schedGroup.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>497, 115</value>
+-  </data>
+-  <data name="schedStartLabel.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>93, 9</value>
+-  </data>
+-  <data name="schedStartLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>38, 15</value>
+-  </data>
+-  <data name="schedStartLabel.Text" xml:space="preserve">
+-    <value>Inizio:</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>53, 19</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Text" xml:space="preserve">
+-    <value>&amp;Mese</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>78, 19</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Text" xml:space="preserve">
+-    <value>Settim&amp;ana</value>
+-  </data>
+-  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>61, 19</value>
+-  </data>
+-  <data name="schedDailyRadio.Text" xml:space="preserve">
+-    <value>&amp;Giorno</value>
+-  </data>
+-  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>75, 19</value>
+-  </data>
+-  <data name="schedOneRadio.Text" xml:space="preserve">
+-    <value>&amp;Una volta</value>
+-  </data>
+   <data name="logonLocalRadio.Size" type="System.Drawing.Size, System.Drawing">
+     <value>198, 19</value>
+   </data>
+@@ -320,12 +263,6 @@
+   <data name="$this.Text" xml:space="preserve">
+     <value>Nuova attivazione</value>
+   </data>
+-  <data name="dailyDaysLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="dailyRecurLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+   <data name="groupBox6.Text" xml:space="preserve">
+     <value></value>
+   </data>
+@@ -338,15 +275,6 @@
+   <data name="logonTab.Text" xml:space="preserve">
+     <value></value>
+   </data>
+-  <data name="monthlyDaysRadio.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="monthlyOnRadio.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+   <data name="okBtn.Text" xml:space="preserve">
+     <value>OK</value>
+   </data>
+@@ -386,33 +314,6 @@
+   <data name="triggerTypeCombo.Items9" xml:space="preserve">
+     <value></value>
+   </data>
+-  <data name="weeklyFriCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyMonCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyRecurLabel.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklySatCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklySunCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyThuCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyTueCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+-  <data name="weeklyWedCheck.Text" xml:space="preserve">
+-    <value></value>
+-  </data>
+   <data name="label1.Text" xml:space="preserve">
+     <value>Nome:</value>
+   </data>
+Index: TaskService/TaskEditor/TriggerEditDialog.resx
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.resx	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.resx	(working copy)
+@@ -171,420 +171,27 @@
+   <data name="settingsTabControl.Appearance" type="System.Windows.Forms.TabAppearance, System.Windows.Forms">
+     <value>Buttons</value>
+   </data>
+-  <data name="schedStartDatePicker.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>156, 7</value>
+-  </data>
+-  <data name="schedStartDatePicker.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>238, 23</value>
+-  </data>
+-  <data name="schedStartDatePicker.TabIndex" type="System.Int32, mscorlib">
+-    <value>6</value>
+-  </data>
+-  <data name="schedStartDatePicker.UTCPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
+-    <value />
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Name" xml:space="preserve">
+-    <value>schedStartDatePicker</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Type" xml:space="preserve">
+-    <value>Microsoft.Win32.TaskScheduler.FullDateTimePicker, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>93, 7</value>
+-  </data>
+-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>2, 153</value>
+-  </data>
+-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+-    <value>4</value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+-    <value>groupBox3</value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+-    <value>1</value>
+-  </data>
+-  <data name="schedTabControl.Appearance" type="System.Windows.Forms.TabAppearance, System.Windows.Forms">
+-    <value>Buttons</value>
+-  </data>
+-  <data name="oneTimeTab.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>4, 5</value>
+-  </data>
+-  <data name="oneTimeTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+-    <value>3, 3, 3, 3</value>
+-  </data>
+-  <data name="oneTimeTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 102</value>
+-  </data>
+-  <data name="oneTimeTab.TabIndex" type="System.Int32, mscorlib">
+-    <value>0</value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Name" xml:space="preserve">
+-    <value>oneTimeTab</value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Parent" xml:space="preserve">
+-    <value>schedTabControl</value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="dailyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
+-    <value>Segoe UI, 9pt</value>
+-  </data>
+-  <data name="dailyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
++  <data name="scheduledTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
+     <value>0, 0</value>
+   </data>
+-  <data name="dailyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>477, 55</value>
++  <data name="scheduledTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
++    <value>624, 172</value>
+   </data>
+-  <data name="dailyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
++  <data name="scheduledTriggerUI1.TabIndex" type="System.Int32, mscorlib">
+     <value>0</value>
+   </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Name" xml:space="preserve">
+-    <value>dailyTriggerUI1</value>
++  <data name="&gt;&gt;scheduledTriggerUI1.Name" xml:space="preserve">
++    <value>scheduledTriggerUI1</value>
+   </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Type" xml:space="preserve">
+-    <value>Microsoft.Win32.TaskScheduler.UIComponents.DailyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
++  <data name="&gt;&gt;scheduledTriggerUI1.Type" xml:space="preserve">
++    <value>Microsoft.Win32.TaskScheduler.UIComponents.ScheduledTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
+   </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Parent" xml:space="preserve">
+-    <value>dailyTab</value>
+-  </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="dailyTab.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>4, 5</value>
+-  </data>
+-  <data name="dailyTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+-    <value>3, 3, 3, 3</value>
+-  </data>
+-  <data name="dailyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 105</value>
+-  </data>
+-  <data name="dailyTab.TabIndex" type="System.Int32, mscorlib">
+-    <value>1</value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Name" xml:space="preserve">
+-    <value>dailyTab</value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Parent" xml:space="preserve">
+-    <value>schedTabControl</value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.ZOrder" xml:space="preserve">
+-    <value>1</value>
+-  </data>
+-  <data name="weeklyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
+-    <value>Segoe UI, 9pt</value>
+-  </data>
+-  <data name="weeklyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 0</value>
+-  </data>
+-  <data name="weeklyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>480, 99</value>
+-  </data>
+-  <data name="weeklyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
+-    <value>0</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Name" xml:space="preserve">
+-    <value>weeklyTriggerUI1</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Type" xml:space="preserve">
+-    <value>Microsoft.Win32.TaskScheduler.UIComponents.WeeklyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Parent" xml:space="preserve">
+-    <value>weeklyTab</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="weeklyTab.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>4, 5</value>
+-  </data>
+-  <data name="weeklyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 105</value>
+-  </data>
+-  <data name="weeklyTab.TabIndex" type="System.Int32, mscorlib">
+-    <value>2</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Name" xml:space="preserve">
+-    <value>weeklyTab</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Parent" xml:space="preserve">
+-    <value>schedTabControl</value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.ZOrder" xml:space="preserve">
+-    <value>2</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+-    <value>GrowAndShrink</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
+-    <value>Segoe UI, 9pt</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 0</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+-    <value>0, 0, 0, 0</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 91</value>
+-  </data>
+-  <data name="monthlyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
+-    <value>0</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Name" xml:space="preserve">
+-    <value>monthlyTriggerUI1</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Type" xml:space="preserve">
+-    <value>Microsoft.Win32.TaskScheduler.UIComponents.MonthlyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Parent" xml:space="preserve">
+-    <value>monthlyTab</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="monthlyTab.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>4, 5</value>
+-  </data>
+-  <data name="monthlyTab.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>483, 105</value>
+-  </data>
+-  <data name="monthlyTab.TabIndex" type="System.Int32, mscorlib">
+-    <value>3</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Name" xml:space="preserve">
+-    <value>monthlyTab</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Parent" xml:space="preserve">
+-    <value>schedTabControl</value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.ZOrder" xml:space="preserve">
+-    <value>3</value>
+-  </data>
+-  <data name="schedTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+-    <value>Fill</value>
+-  </data>
+-  <data name="schedTabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
+-    <value>0, 1</value>
+-  </data>
+-  <data name="schedTabControl.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>3, 19</value>
+-  </data>
+-  <data name="schedTabControl.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>491, 111</value>
+-  </data>
+-  <data name="schedTabControl.TabIndex" type="System.Int32, mscorlib">
+-    <value>0</value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Name" xml:space="preserve">
+-    <value>schedTabControl</value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Parent" xml:space="preserve">
+-    <value>schedGroup</value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.ZOrder" xml:space="preserve">
+-    <value>0</value>
+-  </data>
+-  <data name="schedGroup.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>106, 36</value>
+-  </data>
+-  <data name="schedGroup.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>497, 133</value>
+-  </data>
+-  <data name="schedGroup.TabIndex" type="System.Int32, mscorlib">
+-    <value>7</value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Name" xml:space="preserve">
+-    <value>schedGroup</value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Parent" xml:space="preserve">
++  <data name="&gt;&gt;scheduledTriggerUI1.Parent" xml:space="preserve">
+     <value>scheduleTab</value>
+   </data>
+-  <data name="&gt;&gt;schedGroup.ZOrder" xml:space="preserve">
+-    <value>2</value>
+-  </data>
+-  <data name="schedStartLabel.AutoSize" type="System.Boolean, mscorlib">
+-    <value>True</value>
+-  </data>
+-  <data name="schedStartLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+-    <value>NoControl</value>
+-  </data>
+-  <data name="schedStartLabel.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>103, 10</value>
+-  </data>
+-  <data name="schedStartLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>34, 15</value>
+-  </data>
+-  <data name="schedStartLabel.TabIndex" type="System.Int32, mscorlib">
+-    <value>5</value>
+-  </data>
+-  <data name="schedStartLabel.Text" xml:space="preserve">
+-    <value>Start:</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Name" xml:space="preserve">
+-    <value>schedStartLabel</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.ZOrder" xml:space="preserve">
+-    <value>3</value>
+-  </data>
+-  <data name="schedMonthlyRadio.AutoSize" type="System.Boolean, mscorlib">
+-    <value>True</value>
+-  </data>
+-  <data name="schedMonthlyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+-    <value>NoControl</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 83</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>70, 19</value>
+-  </data>
+-  <data name="schedMonthlyRadio.TabIndex" type="System.Int32, mscorlib">
+-    <value>3</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Text" xml:space="preserve">
+-    <value>Monthly</value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Name" xml:space="preserve">
+-    <value>schedMonthlyRadio</value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.ZOrder" xml:space="preserve">
+-    <value>4</value>
+-  </data>
+-  <data name="schedWeeklyRadio.AutoSize" type="System.Boolean, mscorlib">
+-    <value>True</value>
+-  </data>
+-  <data name="schedWeeklyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+-    <value>NoControl</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 58</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>63, 19</value>
+-  </data>
+-  <data name="schedWeeklyRadio.TabIndex" type="System.Int32, mscorlib">
+-    <value>2</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Text" xml:space="preserve">
+-    <value>Weekly</value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Name" xml:space="preserve">
+-    <value>schedWeeklyRadio</value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.ZOrder" xml:space="preserve">
+-    <value>5</value>
+-  </data>
+-  <data name="schedDailyRadio.AutoSize" type="System.Boolean, mscorlib">
+-    <value>True</value>
+-  </data>
+-  <data name="schedDailyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+-    <value>NoControl</value>
+-  </data>
+-  <data name="schedDailyRadio.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 33</value>
+-  </data>
+-  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>51, 19</value>
+-  </data>
+-  <data name="schedDailyRadio.TabIndex" type="System.Int32, mscorlib">
+-    <value>1</value>
+-  </data>
+-  <data name="schedDailyRadio.Text" xml:space="preserve">
+-    <value>Daily</value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Name" xml:space="preserve">
+-    <value>schedDailyRadio</value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.ZOrder" xml:space="preserve">
+-    <value>6</value>
+-  </data>
+-  <data name="schedOneRadio.AutoSize" type="System.Boolean, mscorlib">
+-    <value>True</value>
+-  </data>
+-  <data name="schedOneRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+-    <value>NoControl</value>
+-  </data>
+-  <data name="schedOneRadio.Location" type="System.Drawing.Point, System.Drawing">
+-    <value>0, 8</value>
+-  </data>
+-  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>74, 19</value>
+-  </data>
+-  <data name="schedOneRadio.TabIndex" type="System.Int32, mscorlib">
++  <data name="&gt;&gt;scheduledTriggerUI1.ZOrder" xml:space="preserve">
+     <value>0</value>
+   </data>
+-  <data name="schedOneRadio.Text" xml:space="preserve">
+-    <value>One time</value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Name" xml:space="preserve">
+-    <value>schedOneRadio</value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Type" xml:space="preserve">
+-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Parent" xml:space="preserve">
+-    <value>scheduleTab</value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.ZOrder" xml:space="preserve">
+-    <value>7</value>
+-  </data>
+   <data name="scheduleTab.Location" type="System.Drawing.Point, System.Drawing">
+     <value>4, 5</value>
+   </data>
+Index: TaskService/TaskEditor/TriggerEditDialog.zh-CN.resx
+===================================================================
+--- TaskService/TaskEditor/TriggerEditDialog.zh-CN.resx	(revision 95870)
++++ TaskService/TaskEditor/TriggerEditDialog.zh-CN.resx	(working copy)
+@@ -121,117 +121,6 @@
+     <value>开始任务:</value>
+   </data>
+   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+-  <data name="dailyDaysLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>19, 15</value>
+-  </data>
+-  <data name="dailyDaysLabel.Text" xml:space="preserve">
+-    <value>天</value>
+-  </data>
+-  <data name="dailyRecurLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>34, 15</value>
+-  </data>
+-  <data name="dailyRecurLabel.Text" xml:space="preserve">
+-    <value>每隔:</value>
+-  </data>
+-  <data name="weeklySunCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklySunCheck.Text" xml:space="preserve">
+-    <value>星期天</value>
+-  </data>
+-  <data name="weeklyMonCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklyMonCheck.Text" xml:space="preserve">
+-    <value>星期一</value>
+-  </data>
+-  <data name="weeklyTueCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklyTueCheck.Text" xml:space="preserve">
+-    <value>星期二</value>
+-  </data>
+-  <data name="weeklyWedCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklyWedCheck.Text" xml:space="preserve">
+-    <value>星期三</value>
+-  </data>
+-  <data name="weeklyThuCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklyThuCheck.Text" xml:space="preserve">
+-    <value>星期四</value>
+-  </data>
+-  <data name="weeklyFriCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklyFriCheck.Text" xml:space="preserve">
+-    <value>星期五</value>
+-  </data>
+-  <data name="weeklySatCheck.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>62, 19</value>
+-  </data>
+-  <data name="weeklySatCheck.Text" xml:space="preserve">
+-    <value>星期六</value>
+-  </data>
+-  <data name="weeklyOnWeeksLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>22, 15</value>
+-  </data>
+-  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
+-    <value>周:</value>
+-  </data>
+-  <data name="weeklyRecurLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>34, 15</value>
+-  </data>
+-  <data name="weeklyRecurLabel.Text" xml:space="preserve">
+-    <value>每隔:</value>
+-  </data>
+-  <data name="monthlyOnRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>40, 19</value>
+-  </data>
+-  <data name="monthlyOnRadio.Text" xml:space="preserve">
+-    <value>在:</value>
+-  </data>
+-  <data name="monthlyDaysRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>40, 19</value>
+-  </data>
+-  <data name="monthlyDaysRadio.Text" xml:space="preserve">
+-    <value>天:</value>
+-  </data>
+-  <data name="monthlyMonthsLabel.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>22, 15</value>
+-  </data>
+-  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
+-    <value>月:</value>
+-  </data>
+-  <data name="schedStartLabel.Text" xml:space="preserve">
+-    <value>开始:</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>49, 19</value>
+-  </data>
+-  <data name="schedMonthlyRadio.Text" xml:space="preserve">
+-    <value>每月</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>49, 19</value>
+-  </data>
+-  <data name="schedWeeklyRadio.Text" xml:space="preserve">
+-    <value>每周</value>
+-  </data>
+-  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>49, 19</value>
+-  </data>
+-  <data name="schedDailyRadio.Text" xml:space="preserve">
+-    <value>每天</value>
+-  </data>
+-  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
+-    <value>49, 19</value>
+-  </data>
+-  <data name="schedOneRadio.Text" xml:space="preserve">
+-    <value>一次</value>
+-  </data>
+   <data name="logonLocalRadio.Size" type="System.Drawing.Size, System.Drawing">
+     <value>121, 17</value>
+   </data>
+@@ -424,198 +313,6 @@
+   <data name="&gt;&gt;triggerTypeCombo.ZOrder">
+     <value></value>
+   </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartDatePicker.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;groupBox3.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;oneTimeTab.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTriggerUI1.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;dailyTab.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTriggerUI1.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;weeklyTab.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTriggerUI1.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;monthlyTab.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedTabControl.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedGroup.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedStartLabel.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedMonthlyRadio.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedWeeklyRadio.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedDailyRadio.ZOrder">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Name">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Type">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.Parent">
+-    <value></value>
+-  </data>
+-  <data name="&gt;&gt;schedOneRadio.ZOrder">
+-    <value></value>
+-  </data>
+   <data name="&gt;&gt;scheduleTab.Name">
+     <value></value>
+   </data>
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.cs
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.cs	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.cs	(working copy)
+@@ -0,0 +1,200 @@
++﻿using System;
++using System.ComponentModel;
++using System.Windows.Forms;
++
++namespace Microsoft.Win32.TaskScheduler.UIComponents
++{
++	public sealed partial class ScheduledTriggerUI : UserControl, ITriggerHandler
++	{
++		private bool isV2 = true;
++		private bool onAssignment = false;
++		private Trigger trigger;
++		private bool useUnifiedSchedulingEngine = false;
++
++		/// <summary>
++		/// Initializes a new instance of the <see cref="ScheduledTriggerUI"/> class.
++		/// </summary>
++		public ScheduledTriggerUI() : this(null)
++		{
++		}
++
++		/// <summary>
++		/// Initializes a new instance of the <see cref="ScheduledTriggerUI"/> class.
++		/// </summary>
++		/// <param name="trigger">The <see cref="Trigger"/> to edit.</param>
++		public ScheduledTriggerUI(Trigger trigger)
++		{
++			InitializeComponent();
++
++			ResetControls();
++
++			if (trigger != null)
++				this.Trigger = trigger;
++			else
++				this.Trigger = new TimeTrigger();
++
++		}
++
++		[Browsable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
++		public Trigger Trigger
++		{
++			get { return trigger; }
++			set
++			{
++				onAssignment = true;
++				trigger = value.Clone() as Trigger;
++				switch (trigger.TriggerType)
++				{
++					case TaskTriggerType.Time:
++						schedOneRadio.Checked = true;
++						schedStartDatePicker.Value = trigger.StartBoundary;
++						break;
++					case TaskTriggerType.Daily:
++						schedDailyRadio.Checked = true;
++						schedStartDatePicker.Value = trigger.StartBoundary;
++						dailyTriggerUI1.Trigger = trigger;
++						break;
++					case TaskTriggerType.Weekly:
++						schedWeeklyRadio.Checked = true;
++						schedStartDatePicker.Value = trigger.StartBoundary;
++						weeklyTriggerUI1.Trigger = trigger;
++						break;
++					case TaskTriggerType.Monthly:
++					case TaskTriggerType.MonthlyDOW:
++						schedMonthlyRadio.Checked = true;
++						schedStartDatePicker.Value = trigger.StartBoundary;
++						monthlyTriggerUI1.Trigger = trigger;
++						break;
++					default:
++						throw new ArgumentOutOfRangeException("trigger.TriggerType");
++				}
++				onAssignment = false;
++			}
++		}
++
++		[DefaultValue(true)]
++		public bool IsV2
++		{
++			get { return isV2; }
++			set
++			{
++				isV2 = value;
++				ResetControls();
++			}
++		}
++
++		[DefaultValue(true)]
++		bool ITriggerHandler.ShowStartBoundary
++		{
++			get { return true; }
++			set { }
++		}
++
++		public bool IsTriggerValid()
++		{
++			switch (trigger.TriggerType)
++			{
++				case TaskTriggerType.Time:
++					return true;
++				case TaskTriggerType.Daily:
++					return dailyTriggerUI1.IsTriggerValid();
++				case TaskTriggerType.Weekly:
++					return weeklyTriggerUI1.IsTriggerValid();
++				case TaskTriggerType.Monthly:
++				case TaskTriggerType.MonthlyDOW:
++					return monthlyTriggerUI1.IsTriggerValid();
++				default:
++					return false;
++			}
++		}
++
++		/// <summary>
++		/// Gets or sets a value indicating whether control should restrict items to those available when using the Unified Scheduling Engine.
++		/// </summary>
++		/// <value>
++		/// 	<c>true</c> if using the Unified Scheduling Engine; otherwise, <c>false</c>.
++		/// </value>
++		[DefaultValue(false), Category("Behavior")]
++		public bool UseUnifiedSchedulingEngine
++		{
++			get { return useUnifiedSchedulingEngine; }
++			set
++			{
++				if (!isV2 && value)
++					throw new NotSupportedException("Version 1.0 of the Task Scheduler library cannot use the Unified Scheduling Engine.");
++				if (value != useUnifiedSchedulingEngine)
++				{
++					useUnifiedSchedulingEngine = value;
++					schedMonthlyRadio.Enabled = !useUnifiedSchedulingEngine;
++				}
++			}
++		}
++
++		private void ResetControls()
++		{
++			dailyTriggerUI1.IsV2 = weeklyTriggerUI1.IsV2 = monthlyTriggerUI1.IsV2 = isV2;
++
++			schedStartDatePicker.UTCPrompt = isV2 ? EditorProperties.Resources.DateTimeSyncText : null;
++			schedStartDatePicker.TimeFormat = (isV2) ? FullDateTimePickerTimeFormat.LongTime : FullDateTimePickerTimeFormat.ShortTime;
++		}
++
++		private void monthlyTriggerUI1_TriggerTypeChanged(object sender, EventArgs e)
++		{
++			if (!onAssignment)
++			{
++				Trigger newTrigger = null;
++				if (monthlyTriggerUI1.TriggerType == TaskTriggerType.Monthly)
++					newTrigger = new MonthlyTrigger();
++				else
++					newTrigger = new MonthlyDOWTrigger();
++				if (newTrigger != null)
++				{
++					if (trigger != null)
++						newTrigger.CopyProperties(trigger);
++					this.Trigger = newTrigger;
++				}
++			}
++		}
++
++		private void schedOneRadio_CheckedChanged(object sender, EventArgs e)
++		{
++			if (((RadioButton)sender).Checked)
++			{
++				Trigger newTrigger = null;
++				if (sender == schedOneRadio)
++				{
++					schedTabControl.SelectedTab = oneTimeTab;
++					if (!onAssignment) newTrigger = new TimeTrigger();
++				}
++				else if (sender == schedDailyRadio)
++				{
++					schedTabControl.SelectedTab = dailyTab;
++					if (!onAssignment) newTrigger = new DailyTrigger();
++				}
++				else if (sender == schedWeeklyRadio)
++				{
++					schedTabControl.SelectedTab = weeklyTab;
++					if (!onAssignment) newTrigger = new WeeklyTrigger();
++				}
++				else if (sender == schedMonthlyRadio)
++				{
++					schedTabControl.SelectedTab = monthlyTab;
++					monthlyTriggerUI1_TriggerTypeChanged(this, EventArgs.Empty);
++				}
++
++				if (newTrigger != null && !onAssignment)
++				{
++					if (trigger != null)
++						newTrigger.CopyProperties(trigger);
++					this.Trigger = newTrigger;
++				}
++			}
++		}
++
++		private void schedStartDatePicker_ValueChanged(object sender, EventArgs e)
++		{
++			if (!onAssignment)
++				trigger.StartBoundary = schedStartDatePicker.Value;
++		}
++	}
++}
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.de-DE.resx
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.de-DE.resx	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.de-DE.resx	(working copy)
+@@ -0,0 +1,193 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<root>
++  <!-- 
++    Microsoft ResX Schema 
++    
++    Version 2.0
++    
++    The primary goals of this format is to allow a simple XML format 
++    that is mostly human readable. The generation and parsing of the 
++    various data types are done through the TypeConverter classes 
++    associated with the data types.
++    
++    Example:
++    
++    ... ado.net/XML headers & schema ...
++    <resheader name="resmimetype">text/microsoft-resx</resheader>
++    <resheader name="version">2.0</resheader>
++    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
++    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
++    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
++    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
++    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
++        <value>[base64 mime encoded serialized .NET Framework object]</value>
++    </data>
++    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
++        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
++        <comment>This is a comment</comment>
++    </data>
++                
++    There are any number of "resheader" rows that contain simple 
++    name/value pairs.
++    
++    Each data row contains a name, and value. The row also contains a 
++    type or mimetype. Type corresponds to a .NET class that support 
++    text/value conversion through the TypeConverter architecture. 
++    Classes that don't support this are serialized and stored with the 
++    mimetype set.
++    
++    The mimetype is used for serialized objects, and tells the 
++    ResXResourceReader how to depersist the object. This is currently not 
++    extensible. For a given mimetype the value must be set accordingly:
++    
++    Note - application/x-microsoft.net.object.binary.base64 is the format 
++    that the ResXResourceWriter will generate, however the reader can 
++    read any of the formats listed below.
++    
++    mimetype: application/x-microsoft.net.object.binary.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
++            : and then encoded with base64 encoding.
++    
++    mimetype: application/x-microsoft.net.object.soap.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
++            : and then encoded with base64 encoding.
++
++    mimetype: application/x-microsoft.net.object.bytearray.base64
++    value   : The object must be serialized into a byte array 
++            : using a System.ComponentModel.TypeConverter
++            : and then encoded with base64 encoding.
++    -->
++  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
++    <xsd:element name="root" msdata:IsDataSet="true">
++      <xsd:complexType>
++        <xsd:choice maxOccurs="unbounded">
++          <xsd:element name="metadata">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" />
++              </xsd:sequence>
++              <xsd:attribute name="name" use="required" type="xsd:string" />
++              <xsd:attribute name="type" type="xsd:string" />
++              <xsd:attribute name="mimetype" type="xsd:string" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="assembly">
++            <xsd:complexType>
++              <xsd:attribute name="alias" type="xsd:string" />
++              <xsd:attribute name="name" type="xsd:string" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="data">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
++              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
++              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="resheader">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" />
++            </xsd:complexType>
++          </xsd:element>
++        </xsd:choice>
++      </xsd:complexType>
++    </xsd:element>
++  </xsd:schema>
++  <resheader name="resmimetype">
++    <value>text/microsoft-resx</value>
++  </resheader>
++  <resheader name="version">
++    <value>2.0</value>
++  </resheader>
++  <resheader name="reader">
++    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <resheader name="writer">
++    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
++  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>79, 19</value>
++  </data>
++  <data name="schedMonthlyRadio.Text" xml:space="preserve">
++    <value>Monatlich</value>
++  </data>
++  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>92, 19</value>
++  </data>
++  <data name="schedWeeklyRadio.Text" xml:space="preserve">
++    <value>Wöchentlich</value>
++  </data>
++  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>64, 19</value>
++  </data>
++  <data name="schedDailyRadio.Text" xml:space="preserve">
++    <value>Täglich</value>
++  </data>
++  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>61, 19</value>
++  </data>
++  <data name="schedOneRadio.Text" xml:space="preserve">
++    <value>Einmal</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>Anfang:</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>Anfang:</value>
++  </data>
++  <data name="dailyDaysLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="dailyRecurLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyDaysRadio.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyOnRadio.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyFriCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyMonCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyRecurLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklySatCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklySunCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyThuCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyTueCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyWedCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++</root>
+\ No newline at end of file
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.Designer.cs
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.Designer.cs	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.Designer.cs	(working copy)
+@@ -0,0 +1,208 @@
++﻿namespace Microsoft.Win32.TaskScheduler.UIComponents
++{
++	partial class ScheduledTriggerUI
++	{
++		/// <summary> 
++		/// Required designer variable.
++		/// </summary>
++		private System.ComponentModel.IContainer components = null;
++
++		/// <summary> 
++		/// Clean up any resources being used.
++		/// </summary>
++		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
++		protected override void Dispose(bool disposing)
++		{
++			if (disposing && (components != null))
++			{
++				components.Dispose();
++			}
++			base.Dispose(disposing);
++		}
++
++		#region Component Designer generated code
++
++		/// <summary> 
++		/// Required method for Designer support - do not modify 
++		/// the contents of this method with the code editor.
++		/// </summary>
++		private void InitializeComponent()
++		{
++			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduledTriggerUI));
++			this.schedStartDatePicker = new Microsoft.Win32.TaskScheduler.FullDateTimePicker();
++			this.groupBox3 = new System.Windows.Forms.GroupBox();
++			this.schedGroup = new System.Windows.Forms.GroupBox();
++			this.schedTabControl = new System.Windows.Forms.TabControl();
++			this.oneTimeTab = new System.Windows.Forms.TabPage();
++			this.dailyTab = new System.Windows.Forms.TabPage();
++			this.dailyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.DailyTriggerUI();
++			this.weeklyTab = new System.Windows.Forms.TabPage();
++			this.weeklyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.WeeklyTriggerUI();
++			this.monthlyTab = new System.Windows.Forms.TabPage();
++			this.monthlyTriggerUI1 = new Microsoft.Win32.TaskScheduler.UIComponents.MonthlyTriggerUI();
++			this.schedStartLabel = new System.Windows.Forms.Label();
++			this.schedMonthlyRadio = new System.Windows.Forms.RadioButton();
++			this.schedWeeklyRadio = new System.Windows.Forms.RadioButton();
++			this.schedDailyRadio = new System.Windows.Forms.RadioButton();
++			this.schedOneRadio = new System.Windows.Forms.RadioButton();
++			this.schedGroup.SuspendLayout();
++			this.schedTabControl.SuspendLayout();
++			this.dailyTab.SuspendLayout();
++			this.weeklyTab.SuspendLayout();
++			this.monthlyTab.SuspendLayout();
++			this.SuspendLayout();
++			// 
++			// schedStartDatePicker
++			// 
++			resources.ApplyResources(this.schedStartDatePicker, "schedStartDatePicker");
++			this.schedStartDatePicker.Name = "schedStartDatePicker";
++			this.schedStartDatePicker.Value = new System.DateTime(2009, 7, 30, 13, 10, 46, 672);
++			this.schedStartDatePicker.ValueChanged += new System.EventHandler(this.schedStartDatePicker_ValueChanged);
++			// 
++			// groupBox3
++			// 
++			resources.ApplyResources(this.groupBox3, "groupBox3");
++			this.groupBox3.Name = "groupBox3";
++			this.groupBox3.TabStop = false;
++			// 
++			// schedGroup
++			// 
++			this.schedGroup.Controls.Add(this.schedTabControl);
++			resources.ApplyResources(this.schedGroup, "schedGroup");
++			this.schedGroup.Name = "schedGroup";
++			this.schedGroup.TabStop = false;
++			// 
++			// schedTabControl
++			// 
++			this.schedTabControl.Controls.Add(this.oneTimeTab);
++			this.schedTabControl.Controls.Add(this.dailyTab);
++			this.schedTabControl.Controls.Add(this.weeklyTab);
++			this.schedTabControl.Controls.Add(this.monthlyTab);
++			resources.ApplyResources(this.schedTabControl, "schedTabControl");
++			this.schedTabControl.Name = "schedTabControl";
++			this.schedTabControl.SelectedIndex = 0;
++			this.schedTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
++			this.schedTabControl.TabStop = false;
++			// 
++			// oneTimeTab
++			// 
++			resources.ApplyResources(this.oneTimeTab, "oneTimeTab");
++			this.oneTimeTab.Name = "oneTimeTab";
++			this.oneTimeTab.UseVisualStyleBackColor = true;
++			// 
++			// dailyTab
++			// 
++			this.dailyTab.Controls.Add(this.dailyTriggerUI1);
++			resources.ApplyResources(this.dailyTab, "dailyTab");
++			this.dailyTab.Name = "dailyTab";
++			this.dailyTab.UseVisualStyleBackColor = true;
++			// 
++			// dailyTriggerUI1
++			// 
++			resources.ApplyResources(this.dailyTriggerUI1, "dailyTriggerUI1");
++			this.dailyTriggerUI1.Name = "dailyTriggerUI1";
++			this.dailyTriggerUI1.ShowStartBoundary = false;
++			// 
++			// weeklyTab
++			// 
++			this.weeklyTab.Controls.Add(this.weeklyTriggerUI1);
++			resources.ApplyResources(this.weeklyTab, "weeklyTab");
++			this.weeklyTab.Name = "weeklyTab";
++			this.weeklyTab.UseVisualStyleBackColor = true;
++			// 
++			// weeklyTriggerUI1
++			// 
++			resources.ApplyResources(this.weeklyTriggerUI1, "weeklyTriggerUI1");
++			this.weeklyTriggerUI1.Name = "weeklyTriggerUI1";
++			this.weeklyTriggerUI1.ShowStartBoundary = false;
++			// 
++			// monthlyTab
++			// 
++			this.monthlyTab.Controls.Add(this.monthlyTriggerUI1);
++			resources.ApplyResources(this.monthlyTab, "monthlyTab");
++			this.monthlyTab.Name = "monthlyTab";
++			this.monthlyTab.UseVisualStyleBackColor = true;
++			// 
++			// monthlyTriggerUI1
++			// 
++			resources.ApplyResources(this.monthlyTriggerUI1, "monthlyTriggerUI1");
++			this.monthlyTriggerUI1.Name = "monthlyTriggerUI1";
++			this.monthlyTriggerUI1.ShowStartBoundary = false;
++			this.monthlyTriggerUI1.TriggerTypeChanged += new System.EventHandler(this.monthlyTriggerUI1_TriggerTypeChanged);
++			// 
++			// schedStartLabel
++			// 
++			resources.ApplyResources(this.schedStartLabel, "schedStartLabel");
++			this.schedStartLabel.Name = "schedStartLabel";
++			// 
++			// schedMonthlyRadio
++			// 
++			resources.ApplyResources(this.schedMonthlyRadio, "schedMonthlyRadio");
++			this.schedMonthlyRadio.Name = "schedMonthlyRadio";
++			this.schedMonthlyRadio.UseVisualStyleBackColor = true;
++			this.schedMonthlyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
++			// 
++			// schedWeeklyRadio
++			// 
++			resources.ApplyResources(this.schedWeeklyRadio, "schedWeeklyRadio");
++			this.schedWeeklyRadio.Name = "schedWeeklyRadio";
++			this.schedWeeklyRadio.UseVisualStyleBackColor = true;
++			this.schedWeeklyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
++			// 
++			// schedDailyRadio
++			// 
++			resources.ApplyResources(this.schedDailyRadio, "schedDailyRadio");
++			this.schedDailyRadio.Name = "schedDailyRadio";
++			this.schedDailyRadio.UseVisualStyleBackColor = true;
++			this.schedDailyRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
++			// 
++			// schedOneRadio
++			// 
++			resources.ApplyResources(this.schedOneRadio, "schedOneRadio");
++			this.schedOneRadio.Name = "schedOneRadio";
++			this.schedOneRadio.UseVisualStyleBackColor = true;
++			this.schedOneRadio.CheckedChanged += new System.EventHandler(this.schedOneRadio_CheckedChanged);
++			// 
++			// ScheduledTriggerUI
++			// 
++			resources.ApplyResources(this, "$this");
++			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
++			this.Controls.Add(this.schedStartDatePicker);
++			this.Controls.Add(this.groupBox3);
++			this.Controls.Add(this.schedGroup);
++			this.Controls.Add(this.schedStartLabel);
++			this.Controls.Add(this.schedMonthlyRadio);
++			this.Controls.Add(this.schedWeeklyRadio);
++			this.Controls.Add(this.schedDailyRadio);
++			this.Controls.Add(this.schedOneRadio);
++			this.Name = "ScheduledTriggerUI";
++			this.schedGroup.ResumeLayout(false);
++			this.schedTabControl.ResumeLayout(false);
++			this.dailyTab.ResumeLayout(false);
++			this.weeklyTab.ResumeLayout(false);
++			this.monthlyTab.ResumeLayout(false);
++			this.ResumeLayout(false);
++			this.PerformLayout();
++
++		}
++
++		#endregion
++
++		private System.Windows.Forms.RadioButton schedOneRadio;
++		private System.Windows.Forms.Label schedStartLabel;
++		private System.Windows.Forms.RadioButton schedMonthlyRadio;
++		private System.Windows.Forms.RadioButton schedWeeklyRadio;
++		private System.Windows.Forms.RadioButton schedDailyRadio;
++		private System.Windows.Forms.GroupBox schedGroup;
++		private System.Windows.Forms.TabControl schedTabControl;
++		private System.Windows.Forms.TabPage oneTimeTab;
++		private System.Windows.Forms.TabPage dailyTab;
++		private System.Windows.Forms.TabPage weeklyTab;
++		private System.Windows.Forms.TabPage monthlyTab;
++		private System.Windows.Forms.GroupBox groupBox3;
++		private FullDateTimePicker schedStartDatePicker;
++		private UIComponents.DailyTriggerUI dailyTriggerUI1;
++		private UIComponents.WeeklyTriggerUI weeklyTriggerUI1;
++		private UIComponents.MonthlyTriggerUI monthlyTriggerUI1;
++	}
++}
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.fr.resx
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.fr.resx	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.fr.resx	(working copy)
+@@ -0,0 +1,135 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<root>
++  <!-- 
++    Microsoft ResX Schema 
++    
++    Version 2.0
++    
++    The primary goals of this format is to allow a simple XML format 
++    that is mostly human readable. The generation and parsing of the 
++    various data types are done through the TypeConverter classes 
++    associated with the data types.
++    
++    Example:
++    
++    ... ado.net/XML headers & schema ...
++    <resheader name="resmimetype">text/microsoft-resx</resheader>
++    <resheader name="version">2.0</resheader>
++    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
++    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
++    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
++    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
++    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
++        <value>[base64 mime encoded serialized .NET Framework object]</value>
++    </data>
++    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
++        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
++        <comment>This is a comment</comment>
++    </data>
++                
++    There are any number of "resheader" rows that contain simple 
++    name/value pairs.
++    
++    Each data row contains a name, and value. The row also contains a 
++    type or mimetype. Type corresponds to a .NET class that support 
++    text/value conversion through the TypeConverter architecture. 
++    Classes that don't support this are serialized and stored with the 
++    mimetype set.
++    
++    The mimetype is used for serialized objects, and tells the 
++    ResXResourceReader how to depersist the object. This is currently not 
++    extensible. For a given mimetype the value must be set accordingly:
++    
++    Note - application/x-microsoft.net.object.binary.base64 is the format 
++    that the ResXResourceWriter will generate, however the reader can 
++    read any of the formats listed below.
++    
++    mimetype: application/x-microsoft.net.object.binary.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
++            : and then encoded with base64 encoding.
++    
++    mimetype: application/x-microsoft.net.object.soap.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
++            : and then encoded with base64 encoding.
++
++    mimetype: application/x-microsoft.net.object.bytearray.base64
++    value   : The object must be serialized into a byte array 
++            : using a System.ComponentModel.TypeConverter
++            : and then encoded with base64 encoding.
++    -->
++  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
++    <xsd:element name="root" msdata:IsDataSet="true">
++      <xsd:complexType>
++        <xsd:choice maxOccurs="unbounded">
++          <xsd:element name="metadata">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" />
++              </xsd:sequence>
++              <xsd:attribute name="name" use="required" type="xsd:string" />
++              <xsd:attribute name="type" type="xsd:string" />
++              <xsd:attribute name="mimetype" type="xsd:string" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="assembly">
++            <xsd:complexType>
++              <xsd:attribute name="alias" type="xsd:string" />
++              <xsd:attribute name="name" type="xsd:string" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="data">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
++              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
++              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="resheader">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" />
++            </xsd:complexType>
++          </xsd:element>
++        </xsd:choice>
++      </xsd:complexType>
++    </xsd:element>
++  </xsd:schema>
++  <resheader name="resmimetype">
++    <value>text/microsoft-resx</value>
++  </resheader>
++  <resheader name="version">
++    <value>2.0</value>
++  </resheader>
++  <resheader name="reader">
++    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <resheader name="writer">
++    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <data name="schedDailyRadio.Text" xml:space="preserve">
++    <value>Tous les jours</value>
++  </data>
++  <data name="schedMonthlyRadio.Text" xml:space="preserve">
++    <value>Tous les mois</value>
++  </data>
++  <data name="schedOneRadio.Text" xml:space="preserve">
++    <value>Une fois</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>Démarrer</value>
++  </data>
++  <data name="schedWeeklyRadio.Text" xml:space="preserve">
++    <value>Hebdomadaire</value>
++  </data>
++</root>
+\ No newline at end of file
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.it.resx
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.it.resx	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.it.resx	(working copy)
+@@ -0,0 +1,220 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<root>
++  <!-- 
++    Microsoft ResX Schema 
++    
++    Version 2.0
++    
++    The primary goals of this format is to allow a simple XML format 
++    that is mostly human readable. The generation and parsing of the 
++    various data types are done through the TypeConverter classes 
++    associated with the data types.
++    
++    Example:
++    
++    ... ado.net/XML headers & schema ...
++    <resheader name="resmimetype">text/microsoft-resx</resheader>
++    <resheader name="version">2.0</resheader>
++    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
++    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
++    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
++    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
++    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
++        <value>[base64 mime encoded serialized .NET Framework object]</value>
++    </data>
++    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
++        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
++        <comment>This is a comment</comment>
++    </data>
++                
++    There are any number of "resheader" rows that contain simple 
++    name/value pairs.
++    
++    Each data row contains a name, and value. The row also contains a 
++    type or mimetype. Type corresponds to a .NET class that support 
++    text/value conversion through the TypeConverter architecture. 
++    Classes that don't support this are serialized and stored with the 
++    mimetype set.
++    
++    The mimetype is used for serialized objects, and tells the 
++    ResXResourceReader how to depersist the object. This is currently not 
++    extensible. For a given mimetype the value must be set accordingly:
++    
++    Note - application/x-microsoft.net.object.binary.base64 is the format 
++    that the ResXResourceWriter will generate, however the reader can 
++    read any of the formats listed below.
++    
++    mimetype: application/x-microsoft.net.object.binary.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
++            : and then encoded with base64 encoding.
++    
++    mimetype: application/x-microsoft.net.object.soap.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
++            : and then encoded with base64 encoding.
++
++    mimetype: application/x-microsoft.net.object.bytearray.base64
++    value   : The object must be serialized into a byte array 
++            : using a System.ComponentModel.TypeConverter
++            : and then encoded with base64 encoding.
++    -->
++  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
++    <xsd:element name="root" msdata:IsDataSet="true">
++      <xsd:complexType>
++        <xsd:choice maxOccurs="unbounded">
++          <xsd:element name="metadata">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" />
++              </xsd:sequence>
++              <xsd:attribute name="name" use="required" type="xsd:string" />
++              <xsd:attribute name="type" type="xsd:string" />
++              <xsd:attribute name="mimetype" type="xsd:string" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="assembly">
++            <xsd:complexType>
++              <xsd:attribute name="alias" type="xsd:string" />
++              <xsd:attribute name="name" type="xsd:string" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="data">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
++              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
++              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="resheader">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" />
++            </xsd:complexType>
++          </xsd:element>
++        </xsd:choice>
++      </xsd:complexType>
++    </xsd:element>
++  </xsd:schema>
++  <resheader name="resmimetype">
++    <value>text/microsoft-resx</value>
++  </resheader>
++  <resheader name="version">
++    <value>2.0</value>
++  </resheader>
++  <resheader name="reader">
++    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <resheader name="writer">
++    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
++  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
++    <value>85, 6</value>
++  </data>
++  <data name="oneTimeTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 84</value>
++  </data>
++  <data name="dailyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>508, 87</value>
++  </data>
++  <data name="weeklyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>508, 87</value>
++  </data>
++  <data name="monthlyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>508, 87</value>
++  </data>
++  <data name="schedTabControl.Size" type="System.Drawing.Size, System.Drawing">
++    <value>491, 93</value>
++  </data>
++  <data name="schedGroup.Location" type="System.Drawing.Point, System.Drawing">
++    <value>95, 30</value>
++  </data>
++  <data name="schedGroup.Size" type="System.Drawing.Size, System.Drawing">
++    <value>497, 115</value>
++  </data>
++  <data name="schedStartLabel.Location" type="System.Drawing.Point, System.Drawing">
++    <value>93, 9</value>
++  </data>
++  <data name="schedStartLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>38, 15</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>Inizio:</value>
++  </data>
++  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>53, 19</value>
++  </data>
++  <data name="schedMonthlyRadio.Text" xml:space="preserve">
++    <value>&amp;Mese</value>
++  </data>
++  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>78, 19</value>
++  </data>
++  <data name="schedWeeklyRadio.Text" xml:space="preserve">
++    <value>Settim&amp;ana</value>
++  </data>
++  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>61, 19</value>
++  </data>
++  <data name="schedDailyRadio.Text" xml:space="preserve">
++    <value>&amp;Giorno</value>
++  </data>
++  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>75, 19</value>
++  </data>
++  <data name="schedOneRadio.Text" xml:space="preserve">
++    <value>&amp;Una volta</value>
++  </data>
++  <data name="dailyDaysLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="dailyRecurLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyDaysRadio.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="monthlyOnRadio.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyFriCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyMonCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyRecurLabel.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklySatCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklySunCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyThuCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyTueCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++  <data name="weeklyWedCheck.Text" xml:space="preserve">
++    <value></value>
++  </data>
++</root>
+\ No newline at end of file
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.resx
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.resx	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.resx	(working copy)
+@@ -0,0 +1,555 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<root>
++  <!-- 
++    Microsoft ResX Schema 
++    
++    Version 2.0
++    
++    The primary goals of this format is to allow a simple XML format 
++    that is mostly human readable. The generation and parsing of the 
++    various data types are done through the TypeConverter classes 
++    associated with the data types.
++    
++    Example:
++    
++    ... ado.net/XML headers & schema ...
++    <resheader name="resmimetype">text/microsoft-resx</resheader>
++    <resheader name="version">2.0</resheader>
++    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
++    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
++    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
++    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
++    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
++        <value>[base64 mime encoded serialized .NET Framework object]</value>
++    </data>
++    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
++        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
++        <comment>This is a comment</comment>
++    </data>
++                
++    There are any number of "resheader" rows that contain simple 
++    name/value pairs.
++    
++    Each data row contains a name, and value. The row also contains a 
++    type or mimetype. Type corresponds to a .NET class that support 
++    text/value conversion through the TypeConverter architecture. 
++    Classes that don't support this are serialized and stored with the 
++    mimetype set.
++    
++    The mimetype is used for serialized objects, and tells the 
++    ResXResourceReader how to depersist the object. This is currently not 
++    extensible. For a given mimetype the value must be set accordingly:
++    
++    Note - application/x-microsoft.net.object.binary.base64 is the format 
++    that the ResXResourceWriter will generate, however the reader can 
++    read any of the formats listed below.
++    
++    mimetype: application/x-microsoft.net.object.binary.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
++            : and then encoded with base64 encoding.
++    
++    mimetype: application/x-microsoft.net.object.soap.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
++            : and then encoded with base64 encoding.
++
++    mimetype: application/x-microsoft.net.object.bytearray.base64
++    value   : The object must be serialized into a byte array 
++            : using a System.ComponentModel.TypeConverter
++            : and then encoded with base64 encoding.
++    -->
++  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
++    <xsd:element name="root" msdata:IsDataSet="true">
++      <xsd:complexType>
++        <xsd:choice maxOccurs="unbounded">
++          <xsd:element name="metadata">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" />
++              </xsd:sequence>
++              <xsd:attribute name="name" use="required" type="xsd:string" />
++              <xsd:attribute name="type" type="xsd:string" />
++              <xsd:attribute name="mimetype" type="xsd:string" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="assembly">
++            <xsd:complexType>
++              <xsd:attribute name="alias" type="xsd:string" />
++              <xsd:attribute name="name" type="xsd:string" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="data">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
++              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
++              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="resheader">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" />
++            </xsd:complexType>
++          </xsd:element>
++        </xsd:choice>
++      </xsd:complexType>
++    </xsd:element>
++  </xsd:schema>
++  <resheader name="resmimetype">
++    <value>text/microsoft-resx</value>
++  </resheader>
++  <resheader name="version">
++    <value>2.0</value>
++  </resheader>
++  <resheader name="reader">
++    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <resheader name="writer">
++    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />    
++  <data name="schedStartDatePicker.Location" type="System.Drawing.Point, System.Drawing">
++    <value>156, 7</value>
++  </data>
++  <data name="schedStartDatePicker.Size" type="System.Drawing.Size, System.Drawing">
++    <value>238, 23</value>
++  </data>
++  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />  
++  <data name="schedStartDatePicker.TabIndex" type="System.Int32, mscorlib">
++    <value>6</value>
++  </data>
++  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />  
++  <data name="schedStartDatePicker.UTCPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
++    <value />
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Name" xml:space="preserve">
++    <value>schedStartDatePicker</value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Type" xml:space="preserve">
++    <value>Microsoft.Win32.TaskScheduler.FullDateTimePicker, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
++    <value>93, 7</value>
++  </data>
++  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
++    <value>2, 153</value>
++  </data>
++  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
++    <value>4</value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
++    <value>groupBox3</value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
++    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
++    <value>1</value>
++  </data>
++  <data name="schedTabControl.Appearance" type="System.Windows.Forms.TabAppearance, System.Windows.Forms">
++    <value>Buttons</value>
++  </data>
++  <data name="oneTimeTab.Location" type="System.Drawing.Point, System.Drawing">
++    <value>4, 5</value>
++  </data>
++  <data name="oneTimeTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
++    <value>3, 3, 3, 3</value>
++  </data>
++  <data name="oneTimeTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 102</value>
++  </data>
++  <data name="oneTimeTab.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Name" xml:space="preserve">
++    <value>oneTimeTab</value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Type" xml:space="preserve">
++    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Parent" xml:space="preserve">
++    <value>schedTabControl</value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="dailyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
++    <value>Segoe UI, 9pt</value>
++  </data>
++  <data name="dailyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 0</value>
++  </data>
++  <data name="dailyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
++    <value>477, 55</value>
++  </data>
++  <data name="dailyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Name" xml:space="preserve">
++    <value>dailyTriggerUI1</value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Type" xml:space="preserve">
++    <value>Microsoft.Win32.TaskScheduler.UIComponents.DailyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Parent" xml:space="preserve">
++    <value>dailyTab</value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="dailyTab.Location" type="System.Drawing.Point, System.Drawing">
++    <value>4, 5</value>
++  </data>
++  <data name="dailyTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
++    <value>3, 3, 3, 3</value>
++  </data>
++  <data name="dailyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 105</value>
++  </data>
++  <data name="dailyTab.TabIndex" type="System.Int32, mscorlib">
++    <value>1</value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Name" xml:space="preserve">
++    <value>dailyTab</value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Type" xml:space="preserve">
++    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Parent" xml:space="preserve">
++    <value>schedTabControl</value>
++  </data>
++  <data name="&gt;&gt;dailyTab.ZOrder" xml:space="preserve">
++    <value>1</value>
++  </data>
++  <data name="weeklyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
++    <value>Segoe UI, 9pt</value>
++  </data>
++  <data name="weeklyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 0</value>
++  </data>
++  <data name="weeklyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
++    <value>480, 99</value>
++  </data>
++  <data name="weeklyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Name" xml:space="preserve">
++    <value>weeklyTriggerUI1</value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Type" xml:space="preserve">
++    <value>Microsoft.Win32.TaskScheduler.UIComponents.WeeklyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Parent" xml:space="preserve">
++    <value>weeklyTab</value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="weeklyTab.Location" type="System.Drawing.Point, System.Drawing">
++    <value>4, 5</value>
++  </data>
++  <data name="weeklyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 105</value>
++  </data>
++  <data name="weeklyTab.TabIndex" type="System.Int32, mscorlib">
++    <value>2</value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Name" xml:space="preserve">
++    <value>weeklyTab</value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Type" xml:space="preserve">
++    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Parent" xml:space="preserve">
++    <value>schedTabControl</value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.ZOrder" xml:space="preserve">
++    <value>2</value>
++  </data>
++  <data name="monthlyTriggerUI1.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
++    <value>GrowAndShrink</value>
++  </data>
++  <data name="monthlyTriggerUI1.Font" type="System.Drawing.Font, System.Drawing">
++    <value>Segoe UI, 9pt</value>
++  </data>
++  <data name="monthlyTriggerUI1.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 0</value>
++  </data>
++  <data name="monthlyTriggerUI1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
++    <value>0, 0, 0, 0</value>
++  </data>
++  <data name="monthlyTriggerUI1.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 91</value>
++  </data>
++  <data name="monthlyTriggerUI1.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Name" xml:space="preserve">
++    <value>monthlyTriggerUI1</value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Type" xml:space="preserve">
++    <value>Microsoft.Win32.TaskScheduler.UIComponents.MonthlyTriggerUI, Microsoft.Win32.TaskSchedulerEditor, Version=2.3.0.25977, Culture=neutral, PublicKeyToken=7be0d908c369d1a5</value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Parent" xml:space="preserve">
++    <value>monthlyTab</value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="monthlyTab.Location" type="System.Drawing.Point, System.Drawing">
++    <value>4, 5</value>
++  </data>
++  <data name="monthlyTab.Size" type="System.Drawing.Size, System.Drawing">
++    <value>483, 105</value>
++  </data>
++  <data name="monthlyTab.TabIndex" type="System.Int32, mscorlib">
++    <value>3</value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Name" xml:space="preserve">
++    <value>monthlyTab</value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Type" xml:space="preserve">
++    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Parent" xml:space="preserve">
++    <value>schedTabControl</value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.ZOrder" xml:space="preserve">
++    <value>3</value>
++  </data>
++  <data name="schedTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
++    <value>Fill</value>
++  </data>
++  <data name="schedTabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
++    <value>0, 1</value>
++  </data>
++  <data name="schedTabControl.Location" type="System.Drawing.Point, System.Drawing">
++    <value>3, 19</value>
++  </data>
++  <data name="schedTabControl.Size" type="System.Drawing.Size, System.Drawing">
++    <value>491, 111</value>
++  </data>
++  <data name="schedTabControl.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Name" xml:space="preserve">
++    <value>schedTabControl</value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Type" xml:space="preserve">
++    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Parent" xml:space="preserve">
++    <value>schedGroup</value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.ZOrder" xml:space="preserve">
++    <value>0</value>
++  </data>
++  <data name="schedGroup.Location" type="System.Drawing.Point, System.Drawing">
++    <value>106, 36</value>
++  </data>
++  <data name="schedGroup.Size" type="System.Drawing.Size, System.Drawing">
++    <value>497, 133</value>
++  </data>
++  <data name="schedGroup.TabIndex" type="System.Int32, mscorlib">
++    <value>7</value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Name" xml:space="preserve">
++    <value>schedGroup</value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Type" xml:space="preserve">
++    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedGroup.ZOrder" xml:space="preserve">
++    <value>2</value>
++  </data>
++  <data name="schedStartLabel.AutoSize" type="System.Boolean, mscorlib">
++    <value>True</value>
++  </data>
++  <data name="schedStartLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
++    <value>NoControl</value>
++  </data>
++  <data name="schedStartLabel.Location" type="System.Drawing.Point, System.Drawing">
++    <value>103, 10</value>
++  </data>
++  <data name="schedStartLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>34, 15</value>
++  </data>
++  <data name="schedStartLabel.TabIndex" type="System.Int32, mscorlib">
++    <value>5</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>Start:</value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Name" xml:space="preserve">
++    <value>schedStartLabel</value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Type" xml:space="preserve">
++    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.ZOrder" xml:space="preserve">
++    <value>3</value>
++  </data>
++  <data name="schedMonthlyRadio.AutoSize" type="System.Boolean, mscorlib">
++    <value>True</value>
++  </data>
++  <data name="schedMonthlyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
++    <value>NoControl</value>
++  </data>
++  <data name="schedMonthlyRadio.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 83</value>
++  </data>
++  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>70, 19</value>
++  </data>
++  <data name="schedMonthlyRadio.TabIndex" type="System.Int32, mscorlib">
++    <value>3</value>
++  </data>
++  <data name="schedMonthlyRadio.Text" xml:space="preserve">
++    <value>Monthly</value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Name" xml:space="preserve">
++    <value>schedMonthlyRadio</value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Type" xml:space="preserve">
++    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.ZOrder" xml:space="preserve">
++    <value>4</value>
++  </data>
++  <data name="schedWeeklyRadio.AutoSize" type="System.Boolean, mscorlib">
++    <value>True</value>
++  </data>
++  <data name="schedWeeklyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
++    <value>NoControl</value>
++  </data>
++  <data name="schedWeeklyRadio.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 58</value>
++  </data>
++  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>63, 19</value>
++  </data>
++  <data name="schedWeeklyRadio.TabIndex" type="System.Int32, mscorlib">
++    <value>2</value>
++  </data>
++  <data name="schedWeeklyRadio.Text" xml:space="preserve">
++    <value>Weekly</value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Name" xml:space="preserve">
++    <value>schedWeeklyRadio</value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Type" xml:space="preserve">
++    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.ZOrder" xml:space="preserve">
++    <value>5</value>
++  </data>
++  <data name="schedDailyRadio.AutoSize" type="System.Boolean, mscorlib">
++    <value>True</value>
++  </data>
++  <data name="schedDailyRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
++    <value>NoControl</value>
++  </data>
++  <data name="schedDailyRadio.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 33</value>
++  </data>
++  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>51, 19</value>
++  </data>
++  <data name="schedDailyRadio.TabIndex" type="System.Int32, mscorlib">
++    <value>1</value>
++  </data>
++  <data name="schedDailyRadio.Text" xml:space="preserve">
++    <value>Daily</value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Name" xml:space="preserve">
++    <value>schedDailyRadio</value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Type" xml:space="preserve">
++    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.ZOrder" xml:space="preserve">
++    <value>6</value>
++  </data>
++  <data name="schedOneRadio.AutoSize" type="System.Boolean, mscorlib">
++    <value>True</value>
++  </data>
++  <data name="schedOneRadio.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
++    <value>NoControl</value>
++  </data>
++  <data name="schedOneRadio.Location" type="System.Drawing.Point, System.Drawing">
++    <value>0, 8</value>
++  </data>
++  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>74, 19</value>
++  </data>
++  <data name="schedOneRadio.TabIndex" type="System.Int32, mscorlib">
++    <value>0</value>
++  </data>
++  <data name="schedOneRadio.Text" xml:space="preserve">
++    <value>One time</value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Name" xml:space="preserve">
++    <value>schedOneRadio</value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Type" xml:space="preserve">
++    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Parent" xml:space="preserve">
++    <value>$this</value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.ZOrder" xml:space="preserve">
++    <value>7</value>
++  </data>
++  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
++    <value>True</value>
++  </metadata>
++  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
++    <value>7, 15</value>
++  </data>
++  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
++    <value>Segoe UI, 9pt</value>
++  </data>  
++  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
++    <value>624, 172</value>
++  </data>
++  <data name="&gt;&gt;$this.Name" xml:space="preserve">
++    <value>ScheduledTriggerUI</value>
++  </data>
++  <data name="&gt;&gt;$this.Type" xml:space="preserve">
++    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </data>
++</root>
+\ No newline at end of file
+Index: TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.zh-CN.resx
+===================================================================
+--- TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.zh-CN.resx	(revision 0)
++++ TaskService/TaskEditor/UIComponents/ScheduledTriggerUI.zh-CN.resx	(working copy)
+@@ -0,0 +1,424 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<root>
++  <!-- 
++    Microsoft ResX Schema 
++    
++    Version 2.0
++    
++    The primary goals of this format is to allow a simple XML format 
++    that is mostly human readable. The generation and parsing of the 
++    various data types are done through the TypeConverter classes 
++    associated with the data types.
++    
++    Example:
++    
++    ... ado.net/XML headers & schema ...
++    <resheader name="resmimetype">text/microsoft-resx</resheader>
++    <resheader name="version">2.0</resheader>
++    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
++    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
++    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
++    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
++    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
++        <value>[base64 mime encoded serialized .NET Framework object]</value>
++    </data>
++    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
++        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
++        <comment>This is a comment</comment>
++    </data>
++                
++    There are any number of "resheader" rows that contain simple 
++    name/value pairs.
++    
++    Each data row contains a name, and value. The row also contains a 
++    type or mimetype. Type corresponds to a .NET class that support 
++    text/value conversion through the TypeConverter architecture. 
++    Classes that don't support this are serialized and stored with the 
++    mimetype set.
++    
++    The mimetype is used for serialized objects, and tells the 
++    ResXResourceReader how to depersist the object. This is currently not 
++    extensible. For a given mimetype the value must be set accordingly:
++    
++    Note - application/x-microsoft.net.object.binary.base64 is the format 
++    that the ResXResourceWriter will generate, however the reader can 
++    read any of the formats listed below.
++    
++    mimetype: application/x-microsoft.net.object.binary.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
++            : and then encoded with base64 encoding.
++    
++    mimetype: application/x-microsoft.net.object.soap.base64
++    value   : The object must be serialized with 
++            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
++            : and then encoded with base64 encoding.
++
++    mimetype: application/x-microsoft.net.object.bytearray.base64
++    value   : The object must be serialized into a byte array 
++            : using a System.ComponentModel.TypeConverter
++            : and then encoded with base64 encoding.
++    -->
++  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
++    <xsd:element name="root" msdata:IsDataSet="true">
++      <xsd:complexType>
++        <xsd:choice maxOccurs="unbounded">
++          <xsd:element name="metadata">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" />
++              </xsd:sequence>
++              <xsd:attribute name="name" use="required" type="xsd:string" />
++              <xsd:attribute name="type" type="xsd:string" />
++              <xsd:attribute name="mimetype" type="xsd:string" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="assembly">
++            <xsd:complexType>
++              <xsd:attribute name="alias" type="xsd:string" />
++              <xsd:attribute name="name" type="xsd:string" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="data">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
++              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
++              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++              <xsd:attribute ref="xml:space" />
++            </xsd:complexType>
++          </xsd:element>
++          <xsd:element name="resheader">
++            <xsd:complexType>
++              <xsd:sequence>
++                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
++              </xsd:sequence>
++              <xsd:attribute name="name" type="xsd:string" use="required" />
++            </xsd:complexType>
++          </xsd:element>
++        </xsd:choice>
++      </xsd:complexType>
++    </xsd:element>
++  </xsd:schema>
++  <resheader name="resmimetype">
++    <value>text/microsoft-resx</value>
++  </resheader>
++  <resheader name="version">
++    <value>2.0</value>
++  </resheader>
++  <resheader name="reader">
++    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <resheader name="writer">
++    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
++  </resheader>
++  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
++  <data name="dailyDaysLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>19, 15</value>
++  </data>
++  <data name="dailyDaysLabel.Text" xml:space="preserve">
++    <value>天</value>
++  </data>
++  <data name="dailyRecurLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>34, 15</value>
++  </data>
++  <data name="dailyRecurLabel.Text" xml:space="preserve">
++    <value>每隔:</value>
++  </data>
++  <data name="weeklySunCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklySunCheck.Text" xml:space="preserve">
++    <value>星期天</value>
++  </data>
++  <data name="weeklyMonCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklyMonCheck.Text" xml:space="preserve">
++    <value>星期一</value>
++  </data>
++  <data name="weeklyTueCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklyTueCheck.Text" xml:space="preserve">
++    <value>星期二</value>
++  </data>
++  <data name="weeklyWedCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklyWedCheck.Text" xml:space="preserve">
++    <value>星期三</value>
++  </data>
++  <data name="weeklyThuCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklyThuCheck.Text" xml:space="preserve">
++    <value>星期四</value>
++  </data>
++  <data name="weeklyFriCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklyFriCheck.Text" xml:space="preserve">
++    <value>星期五</value>
++  </data>
++  <data name="weeklySatCheck.Size" type="System.Drawing.Size, System.Drawing">
++    <value>62, 19</value>
++  </data>
++  <data name="weeklySatCheck.Text" xml:space="preserve">
++    <value>星期六</value>
++  </data>
++  <data name="weeklyOnWeeksLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>22, 15</value>
++  </data>
++  <data name="weeklyOnWeeksLabel.Text" xml:space="preserve">
++    <value>周:</value>
++  </data>
++  <data name="weeklyRecurLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>34, 15</value>
++  </data>
++  <data name="weeklyRecurLabel.Text" xml:space="preserve">
++    <value>每隔:</value>
++  </data>
++  <data name="monthlyOnRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>40, 19</value>
++  </data>
++  <data name="monthlyOnRadio.Text" xml:space="preserve">
++    <value>在:</value>
++  </data>
++  <data name="monthlyDaysRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>40, 19</value>
++  </data>
++  <data name="monthlyDaysRadio.Text" xml:space="preserve">
++    <value>天:</value>
++  </data>
++  <data name="monthlyMonthsLabel.Size" type="System.Drawing.Size, System.Drawing">
++    <value>22, 15</value>
++  </data>
++  <data name="monthlyMonthsLabel.Text" xml:space="preserve">
++    <value>月:</value>
++  </data>
++  <data name="schedStartLabel.Text" xml:space="preserve">
++    <value>开始:</value>
++  </data>
++  <data name="schedMonthlyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>49, 19</value>
++  </data>
++  <data name="schedMonthlyRadio.Text" xml:space="preserve">
++    <value>每月</value>
++  </data>
++  <data name="schedWeeklyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>49, 19</value>
++  </data>
++  <data name="schedWeeklyRadio.Text" xml:space="preserve">
++    <value>每周</value>
++  </data>
++  <data name="schedDailyRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>49, 19</value>
++  </data>
++  <data name="schedDailyRadio.Text" xml:space="preserve">
++    <value>每天</value>
++  </data>
++  <data name="schedOneRadio.Size" type="System.Drawing.Size, System.Drawing">
++    <value>49, 19</value>
++  </data>
++  <data name="schedOneRadio.Text" xml:space="preserve">
++    <value>一次</value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartDatePicker.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;groupBox3.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;groupBox3.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;oneTimeTab.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTriggerUI1.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTab.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;dailyTab.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTriggerUI1.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;weeklyTab.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTriggerUI1.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;monthlyTab.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedTabControl.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedGroup.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedGroup.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedStartLabel.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedMonthlyRadio.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedWeeklyRadio.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedDailyRadio.ZOrder">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Name">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Type">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.Parent">
++    <value></value>
++  </data>
++  <data name="&gt;&gt;schedOneRadio.ZOrder">
++    <value></value>
++  </data>
++</root>
+\ No newline at end of file
+Index: TaskService/Trigger.cs
+===================================================================
+--- TaskService/Trigger.cs	(revision 95870)
++++ TaskService/Trigger.cs	(working copy)
+@@ -424,6 +424,21 @@
+ 		/// <param name="sourceTrigger">The source <see cref="Trigger"/>.</param>
+ 		public virtual void CopyProperties(Trigger sourceTrigger)
+ 		{
++			this.CopyBaseClassProperties(sourceTrigger);
++			if (sourceTrigger is ITriggerDelay && this is ITriggerDelay)
++				try { ((ITriggerDelay)this).Delay = ((ITriggerDelay)sourceTrigger).Delay; }
++				catch { }
++			if (sourceTrigger is ITriggerUserId && this is ITriggerUserId)
++				try { ((ITriggerUserId)this).UserId = ((ITriggerUserId)sourceTrigger).UserId; }
++				catch { }
++		}
++
++		/// <summary>
++		/// Copies the properties defined in the abstract base class, from another <see cref="Trigger"/> to the current instance.
++		/// </summary>
++		/// <param name="sourceTrigger">The source <see cref="Trigger"/>.</param>
++		public void CopyBaseClassProperties(Trigger sourceTrigger)
++		{
+ 			this.Enabled = sourceTrigger.Enabled;
+ 			this.EndBoundary = sourceTrigger.EndBoundary;
+ 			try { this.ExecutionTimeLimit = sourceTrigger.ExecutionTimeLimit; }
+@@ -432,12 +447,6 @@
+ 			this.Repetition.Interval = sourceTrigger.Repetition.Interval;
+ 			this.Repetition.StopAtDurationEnd = sourceTrigger.Repetition.StopAtDurationEnd;
+ 			this.StartBoundary = sourceTrigger.StartBoundary;
+-			if (sourceTrigger is ITriggerDelay && this is ITriggerDelay)
+-				try { ((ITriggerDelay)this).Delay = ((ITriggerDelay)sourceTrigger).Delay; }
+-				catch { }
+-			if (sourceTrigger is ITriggerUserId && this is ITriggerUserId)
+-				try { ((ITriggerUserId)this).UserId = ((ITriggerUserId)sourceTrigger).UserId; }
+-				catch { }
+ 		}
+ 
+ 		/// <summary>

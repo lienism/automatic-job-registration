@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "585124",
+    "ThreadId": "250891",
+    "Html": "\r\n<p>So I had the service set up to enumerate the tasks and add some info to a datatable, which I then databind to a webpage. &nbsp;When testing on my local pc, running XP, the service worked perfectly, but as soon as I moved it over to the server, the list of\r\n services was null. &nbsp;I've checked manually using the console, and there is an extensive list of services. &nbsp;Please advise.<br>\r\nCode is as follows:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre> <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService( ))\r\n        {\r\n\r\n            Version ver = ts.HighestSupportedVersion;\r\n            <span style=\"color:blue\">bool</span> newVer = (ver &gt;= <span style=\"color:blue\">new</span> Version(1, 2));\r\n\r\n            <span style=\"color:green\">// Output all the tasks in the root folder with their triggers and actions</span>\r\n            TaskFolder tf = ts.RootFolder;\r\n            \r\n            <span style=\"color:blue\">foreach</span> (Task t <span style=\"color:blue\">in</span> tf.Tasks)\r\n            {\r\n                tasks.Add(t);\r\n                <span style=\"color:blue\">string</span> trStr = <span style=\"color:#a31515\">&quot;&quot;</span>;\r\n                DataRow r = schedTable.NewRow();\r\n                <span style=\"color:blue\">try</span>\r\n                {\r\n                    r[<span style=\"color:#a31515\">&quot;Name&quot;</span>] = t.Name;\r\n\r\n                    <span style=\"color:blue\">foreach</span> (Trigger tr <span style=\"color:blue\">in</span> t.Definition.Triggers)\r\n                    {\r\n                        <span style=\"color:blue\">if</span> (trStr != <span style=\"color:#a31515\">&quot;&quot;</span>)\r\n                            trStr &#43;= <span style=\"color:#a31515\">&quot;;&quot;</span>;\r\n                        trStr &#43;= tr.ToString();\r\n                    }\r\n                    r[<span style=\"color:#a31515\">&quot;Schedule&quot;</span>] = trStr;\r\n                    r[<span style=\"color:#a31515\">&quot;Next&quot;</span>] = t.NextRunTime;\r\n                    r[<span style=\"color:#a31515\">&quot;Last&quot;</span>] = t.LastRunTime;\r\n                    r[<span style=\"color:#a31515\">&quot;Status&quot;</span>] = t.State;\r\n                    r[<span style=\"color:#a31515\">&quot;Enabled&quot;</span>] = t.Enabled;\r\n                    r[<span style=\"color:#a31515\">&quot;Description&quot;</span>] = t.Definition.RegistrationInfo.Description;\r\n\r\n                    schedTable.Rows.Add(r);\r\n                }\r\n                <span style=\"color:blue\">catch</span> { }\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n&nbsp;\r\n<p></p>\r\n",
+    "PostedDate": "2011-03-23T09:37:35.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585212",
+    "ThreadId": "250891",
+    "Html": "<p>See the bottom of post <a href=\"http://taskscheduler.codeplex.com/discussions/247469\">http://taskscheduler.codeplex.com/discussions/247469</a>&nbsp;about permissions needed to access the Task Scheduler. Your code is correct, and I know others are having no problems with WS08R2, so I'm guessing it's a permissions issue.</p>",
+    "PostedDate": "2011-03-23T11:11:32.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585235",
+    "ThreadId": "250891",
+    "Html": "<p>I had just finished checking that post, and I agree that the situation seems very similar.</p>",
+    "PostedDate": "2011-03-23T12:02:05.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585857",
+    "ThreadId": "250891",
+    "Html": "<p>I run this from an administrator account, and I've checked, and I have SeBatchLogonRight permissions, but I still get an access denied error</p>",
+    "PostedDate": "2011-03-24T10:19:29.797-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "586037",
+    "ThreadId": "250891",
+    "Html": "<p>Below is a short PowerShell script that should list all the task names in the root folder. Running this while logged in to a user session may show you the errors your C# code may not and should give you some further information about what works and what doesn't. You will need to change the path in the first line to the path on your system. If scripting is restricted, you can open the PowerShell console and cut and paste each line of the script in order for the same results.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>Add<span style=\"color: gray;\">-</span>Type <span style=\"color: gray;\">-</span>Path <span style=\"color: #a31515;\">'C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\bin\\Release\\Microsoft.Win32.TaskScheduler.dll'</span>\r\n<span style=\"color: orangered;\">$ts</span> <span style=\"color: gray;\">=</span> New<span style=\"color: gray;\">-</span>Object Microsoft.Win32.TaskScheduler.TaskService\r\n<span style=\"color: orangered;\">$ts</span>.RootFolder.Tasks | ForEach<span style=\"color: gray;\">-</span>Object {Write<span style=\"color: gray;\">-</span>Host <span style=\"color: orangered;\">$_</span>.Name}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-03-24T14:10:08.437-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "589585",
+    "ThreadId": "250891",
+    "Html": "<p>The list of tasks is no longer a problem, it was a permissions error.</p>\r\n<p>Adding tasks, however, is still something of a problem. &nbsp;At any attempt to do so, I am met with \"System.Runtime.InteropServices.COMException: (48,7):Body:\" as my stack trace at&nbsp;</p>\r\n<p><span style=\"color: #ff0000; font-family: Consolas, 'Courier New', Courier, monospace; white-space: pre;\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(txtName.Text.Trim(), td);</pre>\r\n<pre><br /></pre>\r\n<pre>My code for this section is:<br /><div style=\"color: black; background-color: white;\"><pre> <span style=\"color: blue;\">protected</span> <span style=\"color: blue;\">void</span> btnSave_Click(<span style=\"color: blue;\">object</span> sender, EventArgs e)\r\n    {\r\n        TaskDefinition task = (TaskDefinition)Session[<span style=\"color: #a31515;\">\"Duplicate\"</span>];\r\n\r\n        \r\n\r\n        <span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n        {\r\n            TaskDefinition td = ts.NewTask();\r\n\r\n            <span style=\"color: blue;\">foreach</span> (Trigger t <span style=\"color: blue;\">in</span> task.Triggers)\r\n            {\r\n                td.Triggers.Add((Trigger)t.Clone());\r\n            }\r\n            <span style=\"color: blue;\">foreach</span> (Microsoft.Win32.TaskScheduler.Action a <span style=\"color: blue;\">in</span> task.Actions)\r\n                td.Actions.Add(a);\r\n\r\n            td.RegistrationInfo.Description = task.RegistrationInfo.Description;\r\n\r\n            ts.RootFolder.RegisterTaskDefinition(txtName.Text.Trim(), td);\r\n        }\r\n\r\n        Session[<span style=\"color: #a31515;\">\"Duplicate\"</span>] = <span style=\"color: blue;\">null</span>;\r\n\r\n        Response.Redirect(<span style=\"color: #a31515;\">\"~/Default.aspx\"</span>);\r\n    }\r\n</pre>\r\n</div>\r\n&nbsp;</pre>\r\n</span></p>",
+    "PostedDate": "2011-03-31T08:41:04.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "589762",
+    "ThreadId": "250891",
+    "Html": "<p>COMException usually will include the COM error (result code) from the method execution. Can you provide the internal details of the COMException? This could also be a permissions problem as creating task requires more rights than reading tasks. One thing to consider is that the way you are calling it, without any user information, will assume the current user and an interactive logon type.</p>",
+    "PostedDate": "2011-03-31T12:52:08.883-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "602031",
+    "ThreadId": "250891",
+    "Html": "<p>I would try the following code which uses cloned Actions as well as cloned triggers, which works for me:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskDefinition td = ts.NewTask();\r\n<span style=\"color: blue;\">foreach</span> (Trigger t <span style=\"color: blue;\">in</span> task.Triggers)\r\n   td.Triggers.Add((Trigger)t.Clone());\r\n<span style=\"color: blue;\">foreach</span> (Microsoft.Win32.TaskScheduler.Action a <span style=\"color: blue;\">in</span> task.Actions)\r\n   td.Actions.Add((Microsoft.Win32.TaskScheduler.Action)a.Clone());\r\nts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-04-23T22:53:57.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

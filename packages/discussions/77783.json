@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "265986",
+    "ThreadId": "77783",
+    "Html": "<p>I see there is a logon trigger but I don't know how to use it.</p>\r\n<p>&nbsp;</p>\r\n<p>How can I set a task to run ar login?</p>",
+    "PostedDate": "2009-12-10T15:52:31.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "266440",
+    "ThreadId": "77783",
+    "Html": "<p>The logon trigger is pretty simple as it just runs right after&nbsp;each user logs on. See a simple sample program below.&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> System;\r\n<span style=\"color:Blue\">using</span> Microsoft.Win32.TaskScheduler;\r\n\r\n<span style=\"color:Blue\">class</span> Program\r\n{\r\n   <span style=\"color:Blue\">static</span> <span style=\"color:Blue\">void</span> Main(<span style=\"color:Blue\">string</span>[] args)\r\n   {\r\n     <span style=\"color:Blue\">new</span> TaskService().AddTask(<span style=\"color:#A31515\">&quot;Test&quot;</span>, <span style=\"color:Blue\">new</span> LogonTrigger(), <span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;AnExecutable.exe&quot;</span>, <span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">null</span>));\r\n   }\r\n}\r\n</pre>\r\n</div>\r\n</div>",
+    "PostedDate": "2009-12-11T13:37:47.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "269300",
+    "ThreadId": "77783",
+    "Html": "<p>The above code did not work (AddTask doesn't appear to be a member function of TaskService) but I just needed to see that the LoginTrigger didn't require any special parameters (like TimeTrigger does).</p>\r\n<p>When I tried using the LoginTrigger I get a System.UnauthorizedAccessException.&nbsp; I do not get this if I use a different trigger.&nbsp; How can I use the LoginTrigger?&nbsp; Some code posted below.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>TaskService test = <span style=\"color:Blue\">new</span> TaskService();\r\n    \r\nTaskDefinition td = test.NewTask();\r\n\r\ntd.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;desc&quot;</span>;\r\n\r\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\ntd.Triggers.Add(<span style=\"color:Blue\">new</span> LogonTrigger());\r\n\r\ntd.Actions.Add(<span style=\"color:Blue\">new</span> ExecAction(Application.StartupPath + <span style=\"color:#A31515\">&quot;\\\\this.exe&quot;</span>, <span style=\"color:#A31515\">&quot;param&quot;</span>, <span style=\"color:Blue\">null</span>));\r\n\r\ntest.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;stuff&quot;</span>, td);\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-12-19T13:51:37.607-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "269346",
+    "ThreadId": "77783",
+    "Html": "<p>You must be using an older version of the library as the AddTask method was added in version 1.3.1 (July 2009). I'm not sure why you're getting the UnauthorizedAccessException, but here are a couple of ideas. First, you may be running under an account that does not have administrator access on the machine. The second idea is that specifying the LogonType as InteractiveToken may be the problem as you are not interactive when logging on. I would try either not setting it or setting it to Password or SystemAccount and specifying the account.</p>",
+    "PostedDate": "2009-12-19T20:10:36.17-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:52.56-07:00"
+  },
+  {
+    "Id": "1150199",
+    "ThreadId": "77783",
+    "Html": "I just recently tried the following snippet:<br />\n<pre><code>new TaskService().AddTask(&quot;Test&quot;, new LogonTrigger(), new ExecAction(&quot;AnExecutable.exe&quot;, null, null));</code></pre>\n\nAnd I get: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\r<br />\n<br />\nI'm using the latest DLL and I'm also able to create both daily and weekly triggers.\r<br />\n<br />\nAny ideas on why the LogonTrigger wouldn't be working?<br />\n",
+    "PostedDate": "2014-01-06T16:51:25.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1150511",
+    "ThreadId": "77783",
+    "Html": "Logon triggers are kind of special cases as they are dependent on the security context of the current user. Check the link at <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=vs.85).aspx</a> for more information. You likely do not have administrator rights that would allow you to add that trigger.<br />\n",
+    "PostedDate": "2014-01-07T09:02:53.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:12:46.617-07:00"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1204422",
+    "ThreadId": "529751",
+    "Html": "Hi guys,<br />\n<br />\nI am trying to create a schedule task at the installation time on a Windows 7 32bits, but there is something wrong because it returns me an exception &quot;LogonType&quot;. Another thing, I want to create a schedule to run every day at 9h morning.<br />\n<br />\nCan you help me out on this one? What is missing?!<br />\n<br />\nThis is the code that I am using:<br />\n<pre><code>using (TaskService ts = new TaskService())\n                {\n                    TaskDefinition td = ts.NewTask();\n                    td.RegistrationInfo.Description = &quot;Daily trigger&quot;;\n                    td.Principal.LogonType = TaskLogonType.InteractiveToken;\n                    \n                    DailyTrigger dt = new DailyTrigger();\n                    dt.Repetition.Duration = TimeSpan.FromHours(9); // is this ok to run every day at 9h?????\n                    td.Triggers.Add(dt);\n\n\n                    // Create an action that will launch Notepad whenever the trigger fires\n                    td.Actions.Add(new ExecAction(&quot;c:\\\\Launcher.exe&quot;));\n\n                    // Register the task in the root folder\n                    ts.RootFolder.RegisterTaskDefinition(@&quot;Scheduler&quot;, td);\n                }</code></pre>\n\n",
+    "PostedDate": "2014-02-07T08:52:11.923-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206397",
+    "ThreadId": "529751",
+    "Html": "<pre><code>// Get the service on the local machine\nusing (TaskService ts = new TaskService())\n{\n   // Create a new task definition and assign properties\n   TaskDefinition td = ts.NewTask();\n   td.RegistrationInfo.Description = &quot;Daily trigger&quot;;\n   td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n   // Add a trigger that will fire the task at this time every other day\n   td.Triggers.Add(new DailyTrigger { StartBoundary = DateTime.Today.AddHours(9) });\n\n   // Add an action that will launch Notepad whenever the trigger fires\n   td.Actions.Add(new ExecAction(&quot;C:\\\\Launcher.exe&quot;));\n\n   // Register the task in the root folder\n   ts.RootFolder.RegisterTaskDefinition(&quot;Scheduler&quot;, td);\n}</code></pre>\n\n",
+    "PostedDate": "2014-02-10T08:25:35.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206414",
+    "ThreadId": "529751",
+    "Html": "First of all thanks for your quick replay Dahall,\r<br />\n<br />\nHowever the problem persists, everytime I try to depoy the setup on a Win7 machine it gives me an exception &quot;Exception: (41,4):LogonType: &quot; nothing more :(\r<br />\nOn a XP machine all runs smooth.\r<br />\n<br />\nFrom what I understood I am missing something related with the &quot;RegisterTaskDefinition&quot; besause once I use this line:<br />\n<pre><code>ts.RootFolder.RegisterTaskDefinition(&quot;Scheduler&quot;, td, TaskCreation.Create, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);</code></pre>\n\nthe task is created but I dont understand the usage of the &quot;SYSTEM&quot; for the username, can I presume that with this username it will be runnable in all machines? Or do I have to supply the username/password on all Win7 machines in order to deploy the task?\r<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2014-02-10T09:00:37.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

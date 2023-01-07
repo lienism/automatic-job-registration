@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1438302",
+    "ThreadId": "642615",
+    "Html": "Hi, I create a task using the following code...\r<br />\n<br />\n<br />\nTry<br />\n<pre><code>        Dim ts As New TaskService()\n\n        ' Create a new task definition and assign properties\n        Dim td As TaskDefinition = ts.NewTask()\n        td.RegistrationInfo.Description = &quot;Does something&quot;\n        td.Principal.RunLevel = TaskRunLevel.Highest\n        td.Principal.LogonType = TaskLogonType.InteractiveToken\n\n        ' Create a trigger that will fire the task at 06:00 every day.\n        Dim dt As New DailyTrigger(1)\n        dt.StartBoundary = CDate(DateAdd(DateInterval.Day, 1, Now()).ToString(&quot;dd/MM/yyyy 06:00:00&quot;))\n        td.Triggers.Add(dt)\n\n        'create a trigger that will fire the task every thursday at 04:00.\n        Dim wt As WeeklyTrigger = DirectCast(td.Triggers.Add(New WeeklyTrigger()), WeeklyTrigger)\n        wt.StartBoundary = CDate(DateAdd(DateInterval.Day, 1, Now()).ToString(&quot;dd/MM/yyyy 04:00:00&quot;))\n        wt.DaysOfWeek = DaysOfTheWeek.Thursday\n\n        ' Create an action that will launch Notepad whenever the trigger fires\n        td.Actions.Add(New ExecAction(&quot;notepad.exe&quot;, &quot;c:\\test.txt&quot;, Nothing))\n\n        ' Register the task in the root folder\n        ts.RootFolder.RegisterTaskDefinition(&quot;TestTask&quot;, td)\n\n    Catch ex As Exception\n        MsgBox(&quot;error - &quot; &amp; ex.Message)\n    End Try\n\n</code></pre>\n\n...and I'm trying to disable it using the following<br />\n<pre><code>    Try\n        Dim ts As New TaskService\n\n        Dim t As Task = ts.GetTask(&quot;TestTask&quot;)\n        t.Enabled = False\n        t.RegisterChanges()\n    Catch ex As Exception\n        MsgBox(&quot;error - &quot; &amp; ex.Message)\n    End Try\n\n</code></pre>\n\n...but when I use the code to disable it, the code runs OK, but the task isn't disabled.\r<br />\n<br />\nWhat am I missing?\r<br />\n<br />\nPS - the code to define the triggers looks a bit messy as I'm still getting my head around this - sorry.<br />\n",
+    "PostedDate": "2015-08-12T07:12:58.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1439328",
+    "ThreadId": "642615",
+    "Html": "See this answer for detail on the Enabled property: <a href=\"https://taskscheduler.codeplex.com/discussions/585279\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/585279</a>\r<br />\n<br />\nFor your code, there are some shortcuts in VB that will make your code easier to read:<br />\n<pre><code>Dim ts As New TaskService()\n\n' Create a new task definition and assign properties\nDim td As TaskDefinition = ts.NewTask()\ntd.RegistrationInfo.Description = &quot;Does something&quot;\ntd.Principal.RunLevel = TaskRunLevel.Highest\ntd.Principal.LogonType = TaskLogonType.InteractiveToken\n\n' Create a trigger that will fire the task at 06:00 every day.\ntd.Triggers.Add(New DailyTrigger(1) With {.StartBoundary = DateTime.Today.AddHours(6) })\n\n' Create a trigger that will fire the task every Thursday at 04:00.\ntd.Triggers.Add(New WeeklyTrigger With {.StartBoundary = DateTime.Today.AddHours(4), .DaysOfWeek = DaysOfTheWeek.Thursday })\n\n' Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(&quot;notepad.exe&quot;, &quot;c:\\test.txt&quot;)\n\n' Register the task in the root folder\nts.RootFolder.RegisterTaskDefinition(&quot;TestTask&quot;, td)</code></pre>\n\n",
+    "PostedDate": "2015-08-12T13:17:19.507-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1439422",
+    "ThreadId": "642615",
+    "Html": "Thanks for the tidier code.  And I'm sure I tried that method to disable the task, but it's working now, so thank you!<br />\n",
+    "PostedDate": "2015-08-13T08:16:10.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1440552",
+    "ThreadId": "642615",
+    "Html": "Update - It work on tasks that I've created.\r<br />\n<br />\nWhen I try to disable a task created by someone else, and the  machine name has subsequently changed, I can't disable the task.\r<br />\n<br />\nThe code throws an exception - &quot;No mapping between account names and security IDs was done (Exception from HRESULT 0x80070534)&quot;\r<br />\n<br />\nAlso, if I try to disable the task by right-clicking it in task scheduler, it won't let me, displaying an error message saying 'The specified account name is not valid'.  In order to fix this, I have to go into the properties of the task and change the user account.\r<br />\n<br />\nStrangely, the task with the incorrect account name still runs, so how would I change the account name so that I can disable it?<br />\n",
+    "PostedDate": "2015-08-14T03:33:18.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1440604",
+    "ThreadId": "642615",
+    "Html": "I believe you just need to create an instance of the existing task and the re-register the task using new credentials. The samples page shows how to get a current task instance. You will need to supply the new user information in the RegisterTaskDefinition method.<br />\n",
+    "PostedDate": "2015-08-14T10:15:16.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441030",
+    "ThreadId": "642615",
+    "Html": "OK, <br />\n<br />\nThat's what I thought, but it's not working for me, so here's the code I'm trying, could you tell me what I'm doing wrong please?<br />\n<pre><code>    'ask for the task name\n    Dim Taskname As String = InputBox(&quot;What's the task name?&quot;)\n    Dim td As TaskDefinition = Nothing\n\n    Try\n        'see if the username is set to something.\n        Dim ts As New TaskService\n        Dim thetask As Task = ts.GetTask(Taskname)\n        Dim Authorname As String = &quot;NotGood&quot;\n        Try\n            td = thetask.Definition\n            Authorname = td.RegistrationInfo.Author.ToString\n        Catch ex As Exception\n            Authorname = &quot;NotGood&quot;\n        End Try\n\n        'if we get a name, then this task was created by the 'wrong' user - try creating the task again to change the author.\n        If Authorname &lt;&gt; &quot;NotGood&quot; Then\n            td.Principal.RunLevel = TaskRunLevel.Highest\n            td.Principal.LogonType = TaskLogonType.InteractiveToken\n            td.RegistrationInfo.Author = &quot;tevalis&quot;\n            thetask.RegisterChanges()\n            ts.RootFolder.RegisterTaskDefinition(Taskname, td)\n        End If\n\n    Catch ex As Exception\n        MsgBox(&quot;Error - &quot; &amp; ex.Message)\n    End Try\n</code></pre>\n\n...should the RootFolder.RegisterTaskDefinition line use the xml? - if so, how do I get the xml of the existing task?<br />\n",
+    "PostedDate": "2015-08-19T02:39:27.093-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

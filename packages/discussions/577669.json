@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1341702",
+    "ThreadId": "577669",
+    "Html": "How to convert dateTimePicker format in winforms to match StartBoundary<br />\n",
+    "PostedDate": "2015-01-14T00:15:33.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1342000",
+    "ThreadId": "577669",
+    "Html": "Are you asking how to use the DateTimePicker control in your own application so that it can be used to edit a StartBoundary? If so, you really can't as it forces you to either supply a date or a time. If you need just the date or just the time, the Value property can be assigned directly to the StartBoundary.<br />\n<br />\nOptionally, the TaskSchedulerEditor assembly contains a FullDateTimePicker control that you can just add to your form and set the UTCPrompt property to the string you want to follow the time picker, set the TimeFormat property to LongTime and then set the Value property to the StartBoundary value. This control mimics the one found in the native Windows Task Scheduler app.<br />\n",
+    "PostedDate": "2015-01-14T15:38:30.587-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-14T15:55:51.413-08:00"
+  }
+]

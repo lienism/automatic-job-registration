@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "484893",
+    "ThreadId": "224858",
+    "Html": "<p>Newbie here - My apologies if this is not the appropriate section, or if the issue is addressed somewhere here already. I searched, but could not find it.</p>\r\n<p>Just wondering if there are any recommended mechanisms (in an app, eg, in C code), to detect if the app is running under the Task Scheduler. Best (in my case) would be something totally automatic, but I've searched a lot, and have not found any.</p>\r\n<p>I think the most appropriate I've see so far are:</p>\r\n<p>&nbsp; - Command-line parameter</p>\r\n<p>&nbsp; - Set a special Env-Var before running the app under the Scheduler, and delete the var just afterwards.</p>\r\n<p>Thank you for any references or suggestions.</p>\r\n<p>&nbsp; - Mike.</p>",
+    "PostedDate": "2010-08-25T16:14:14.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "485202",
+    "ThreadId": "224858",
+    "Html": "<p>The parent process for apps launched by the Task Scheduler is &quot;svchost.exe&quot; so that may help. The other option is to create a very small program in C or C++ that lauches the executable and waits for its completion. When you see your process running, you can check its parent process and if its the little program you wrote, you have your answer. I also like the command line parameter idea.</p>",
+    "PostedDate": "2010-08-26T07:12:41.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "485214",
+    "ThreadId": "224858",
+    "Html": "<p>Thank you.</p>\r\n<p>Re &quot;svchost.exe&quot;: Do you happen to know if that parent is NOT present for manually-activated tasks. If so, it looks like a perfect soln for me. Thank you.</p>\r\n<p>The C wrapper is also very nice. It relies on the installer activating that fellow for the TS runs, and not otherwise, which may be acceptable.</p>\r\n<p>In my case, the command-line option is not perfect, because the app runs a bunch of stuff (log-files, hardware environment, etc), before it parses the command-line, and it would be nice to have the &quot;Task-Scheduler&quot; status known from the VERY start - so that ALL console outputs and inputs, delays, etc, would be suppressed in the TS environment.</p>\r\n<p>Apart from the SVCHOST parent check, a suitable approach might be:</p>\r\n<p>&nbsp; - Run the app from a BAT-file/script</p>\r\n<p>&nbsp; - Have a simple command-line option on that BAT file, maybe &quot;/NOUI&quot;. When the app is installed under TS, that parm is specified.</p>\r\n<p>&nbsp; - If /NOUI is present, run your C wrapper (and then the app), or set a simple Env-var (eg, SET NOUI=Y)</p>\r\n<p>&nbsp; - In the app itself, detect the Wrapper, or the Env-Var.</p>\r\n<p>It ain't &quot;automatic&quot;, but it ain't bad!</p>\r\n<p>&nbsp; - Mike</p>",
+    "PostedDate": "2010-08-26T07:35:00.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

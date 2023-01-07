@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1455658",
+    "ThreadId": "648674",
+    "Html": "Hi David,<br />\n<br />\nThe following localized Polish string don't work:<br />\nminut or minuty (for minutes)<br />\ngodzin (for hours)<br />\n<br />\nThe following work:<br />\ngodzina (for hour or hours) <br />\nBez ograniczeń (for Indefinitely)<br />\ndzień (for day)<br />\n<br />\nNo Polish translation for minutes seem to work. Call to: <br />\n<br />\ninternal bool TryParse(string s, IFormatProvider provider, out TimeSpan result)<br />\n<br />\nin TimeSpanFormatInfo class returns false for minut or minuty.<br />\n<br />\nThanks,<br />\nAudi<br />\n",
+    "PostedDate": "2015-12-11T14:34:08.857-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455699",
+    "ThreadId": "648674",
+    "Html": "I will move this to an issue so I can post files in our exchange. Polish is not a supported language but is not that difficult to add if you can provide someone that can translate English to Polish.<br />\n",
+    "PostedDate": "2015-12-12T07:38:29.18-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455700",
+    "ThreadId": "648674",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/12304\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2015-12-12T07:41:00.033-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

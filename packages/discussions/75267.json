@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "257561",
+    "ThreadId": "75267",
+    "Html": "<p>Hi, I'm wondering if perhaps anyone has an example of scheduling a task using %system% or %systemroot% in the command syntax. I'm trying to dynamically schedule an NTBackup command remotely using task scheduler. For whatever reason, when I schedule a task where the Command path is @&quot;C:\\Windows\\System32\\NTBackup.exe&quot;, the task&nbsp;is scheduled and runs just&nbsp;fine.</p>\r\n<p>However, when I use @&quot;%systemroot%\\System32\\NTBackup.exe&quot; as my command, I get a &quot;Could not start&quot; error message in my task scheduler. The error message reported in the SchedLgU.txt is &quot;System cannot find the file specified&quot;.</p>\r\n<p>Incidentally, when I run&nbsp;the command containing&nbsp;%systemroot% directly from the command line, it runs fine. Am I missing something?</p>\r\n<p>Thanks in advance!</p>\r\n<p>&nbsp;</p>\r\n<p>Brian</p>",
+    "PostedDate": "2009-11-16T08:57:07.907-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "257590",
+    "ThreadId": "75267",
+    "Html": "<p>I'm guessing the Microsoft team decided not to support environment variables in their actions. Unfortunately, after a few minutes of research, I could not find a remotable equivalent for ExpandEnvironmentStrings that would allow me to resolve environment variables from a remote system. I know you can usually find the path to the system directory in &quot;HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\SystemRoot&quot; so you could grab the value from a remote connection to that machine's registry and then build your path. Let me know if you find a nice way to do it and I'll consider it for addition&nbsp;to the library.</p>",
+    "PostedDate": "2009-11-16T10:42:08.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

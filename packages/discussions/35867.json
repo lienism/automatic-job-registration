@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "119225",
+    "ThreadId": "35867",
+    "Html": "Hello,<br>\r\n<br>\r\nFirst off, thank you for making a 2.0 wrapper!<br>\r\n<br>\r\nI am having trouble figuring out how to loop through all the tasks on my computer<br>\r\n<br>\r\n<p><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">Dim</span></span><span style=\"font-size:13px\"> tc </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">As</span></span><span style=\"font-size:13px\">&nbsp;</span><span style=\"font-size:13px\">TaskCollection\r\n<p>&nbsp;</p>\r\n</span>\r\n<p><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">For</span></span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">Each</span></span><span style=\"font-size:13px\"> t </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">As</span></span><span style=\"font-size:13px\"> Task </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">In</span></span><span style=\"font-size:13px\"> tc\r\n<p>&nbsp;</p>\r\n<p>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p>\r\n<p><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">&nbsp;&nbsp;&nbsp;&nbsp;If</span></span><span style=\"font-size:13px\"> t.Name.ToLower = </span><span style=\"font-size:13px;color:#a31515\"><span style=\"font-size:13px;color:#a31515\">&quot;daily task.job&quot;</span></span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">Then\r\n<p>&nbsp;</p>\r\n<p>\r\n<p>&nbsp;</p>\r\n</span>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p>\r\n<p><span style=\"font-size:13px\">MsgBox(</span><span style=\"font-size:13px;color:#a31515\"><span style=\"font-size:13px;color:#a31515\">&quot;found&quot;</span></span><span style=\"font-size:13px\">)\r\n<p>&nbsp;</p>\r\n<p>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p>\r\n<p><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">End</span></span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">If\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n</span>\r\n<p>&nbsp;</p>\r\n</span></p>\r\n<p><span style=\"font-size:13px;color:#0000ff\"><span style=\"font-size:13px;color:#0000ff\">Next <br>\r\n</span></span><br>\r\nSince there is no way of&nbsp;accessing the new&nbsp;method of TaskCollection,&nbsp; tc is always nothing<br>\r\n&nbsp;What am I overlooking ?</p>\r\n",
+    "PostedDate": "2008-09-17T13:31:22.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "120112",
+    "ThreadId": "35867",
+    "Html": "Try this -<br>\r\n<br>\r\n<span style=\"font-size:13px\">\r\n<p>&nbsp;</p>\r\n</span>\r\n<p><span style=\"font-size:13px;color:#008080\">TaskService</span><span style=\"font-size:13px\"> ts = </span><span style=\"font-size:13px;color:#0000ff\">new</span><span style=\"font-size:13px\"> </span><span style=\"font-size:13px;color:#008080\">TaskService</span><span style=\"font-size:13px\">();<br>\r\n<span style=\"font-size:13px;color:#008080\">TaskFolder</span><span style=\"font-size:13px\"> taskFolder = _ts.GetFolder(</span><span style=\"font-size:13px;color:#800000\">@&quot;\\&quot;</span><span style=\"font-size:13px\">);<br>\r\n</span><span style=\"font-size:13px;color:#0000ff\">foreach</span><span style=\"font-size:13px\"> (</span><span style=\"font-size:13px;color:#008080\">Task</span><span style=\"font-size:13px\"> t </span><span style=\"font-size:13px;color:#0000ff\">in</span><span style=\"font-size:13px\"> taskFolder.Tasks)<br>\r\n{<br>\r\n<span style=\"font-size:13px;color:#008080\">&nbsp; TaskDefinition</span><span style=\"font-size:13px\"> td = task.Definition;<br>\r\n&nbsp; if (t.name == &quot;whatever&quot;)<br>\r\n&nbsp;&nbsp;&nbsp; dosomething();<br>\r\n}\r\n<p>&nbsp;</p>\r\n</span></span></span></p>\r\n",
+    "PostedDate": "2008-09-22T11:24:00.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "120172",
+    "ThreadId": "35867",
+    "Html": "<p style=\"margin:0in 0in 0pt\">Thank you very much. <br>\r\n<br>\r\nNow I have run into another question that hopefully you can answer.</p>\r\n<p style=\"margin:0in 0in 0pt\">In the previous version of the TaskScheduler, you were able to set a username and password with SetAccountInformation(_accountName, _accountPassword)</p>\r\n<p style=\"margin:0in 0in 0pt\">All I was able to find was a Principle.UserId. If I set the Principle.LogonType = TaskLogonType.Password. How do I specify a password for the task?</p>\r\n<p style=\"margin:0in 0in 0pt\">Thanks,</p>\r\n<p style=\"margin:0in 0in 0pt\"><span style=\"color:black\">Ryan</span></p>\r\n",
+    "PostedDate": "2008-09-22T14:12:37.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "120355",
+    "ThreadId": "35867",
+    "Html": "Can't help you there.&nbsp; Though I do know that the test program that comes with the project adds a task.\r\n",
+    "PostedDate": "2008-09-23T05:26:19.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "125159",
+    "ThreadId": "35867",
+    "Html": "You can now do this through the TaskFolder.RegisterTaskDefinition method by supplying a UserId, password and setting the TaskLogonType to either InteractiveTokenOrPassword or Password.\r\n",
+    "PostedDate": "2008-10-14T16:51:30.217-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

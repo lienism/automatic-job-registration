@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1391009",
+    "ThreadId": "609139",
+    "Html": "How to get the hum trigger replay value , when recursion for weekly?<br />\n",
+    "PostedDate": "2015-03-23T12:41:10.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1391177",
+    "ThreadId": "609139",
+    "Html": "Can you clarify please? I'm not sure what a &quot;hum trigger&quot; is nor a &quot;replay value&quot; nor &quot;recursion for weekly&quot;.<br />\n",
+    "PostedDate": "2015-03-23T15:52:14.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1391182",
+    "ThreadId": "609139",
+    "Html": "Descupe Google Translate was not as helpful this time .\r<br />\n<br />\nBasically what I need is to get the value of the highlighted field in the image <a href=\"http://i.imgur.com/vYfxKG5.jpg\" rel=\"nofollow\">http://i.imgur.com/vYfxKG5.jpg</a>\r<br />\n<br />\nI tried using the command &quot;MyTask.Definition.Triggers&quot; and saw that the values ​​are stored in it but could not find the property that show me this value.<br />\n",
+    "PostedDate": "2015-03-23T16:05:15.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1393791",
+    "ThreadId": "609139",
+    "Html": "You are looking for a WeeklyTrigger (see <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TriggerSamples&amp;referringTitle=Documentation\" rel=\"nofollow\">Documentation here</a>) where you will set the DaysOfWeek property for all the days of the week needed and the WeeksInterval property for the interval.<br />\n",
+    "PostedDate": "2015-03-24T12:36:32.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1393848",
+    "ThreadId": "609139",
+    "Html": "Setting this value I found in the documentation , but I need is go the other way .\r<br />\nHow to rebuild value of a task already created ?<br />\n",
+    "PostedDate": "2015-03-24T17:47:49.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1393853",
+    "ThreadId": "609139",
+    "Html": "<pre><code>Task t = taskService.GetTask(&quot;MyTaskName&quot;);\n// Assume there is only a single trigger\nWeeklyTrigger wt = t.TaskDefinition.Triggers[0] as WeeklyTrigger;\nif (wt != null)\n   return wt.WeeksInterval;</code></pre>\n\n",
+    "PostedDate": "2015-03-24T18:58:35.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-24T19:04:53.253-07:00"
+  },
+  {
+    "Id": "1393854",
+    "ThreadId": "609139",
+    "Html": "That's it!\r<br />\nYou helped me a lot . Thank U.<br />\n",
+    "PostedDate": "2015-03-24T19:04:05.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

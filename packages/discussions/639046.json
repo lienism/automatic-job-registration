@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1428345",
+    "ThreadId": "639046",
+    "Html": "Hello,<br />\ni want to get a list of all runtimes from a task. <br />\nI have the following situation: <br />\n<br />\n10:10 o'clock Task was planned<br />\n<em>10:15 o'clock  manuel triggered</em><br />\n10:20 o'clock  manual triggered<br />\n<br />\nWith the method <strong>getRunTimes()</strong>, i get only the exectuion times for the planned one, not the manuel triggered.<br />\n<pre><code>Dim allRunsFromOneTask() As Date\nallRunsFromOneTask = task.GetRunTimes(dStartdate.ToUniversalTime(), dEnddate.ToUniversalTime())</code></pre>\n\nso i get the first one with getRunTimes-method and the last one with lastRunTime proberty but not the one in the middle.<br />\n<pre><code>allRunsFromOneTask(allRunsFromOneTask.Length - 1) = task.LastRunTime</code></pre>\n\nDoes someone have an idea  ? <br />\n",
+    "PostedDate": "2015-06-02T03:50:28.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428398",
+    "ThreadId": "639046",
+    "Html": "This is likely due to how Microsoft implemented the GetRunTimes method in the native COM library. I'm guessing they go to the Event Log and look for entries and chose to skip manually run entries. You too can use the TaskEventLog to go through all events looking for those that are important to you.<br />\n",
+    "PostedDate": "2015-06-02T07:40:53.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:54:15.257-07:00"
+  }
+]

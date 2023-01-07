@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1456284",
+    "ThreadId": "648890",
+    "Html": "Hi,\r<br />\n<br />\ndo you have plans to upload the source as Nuget package?\r<br />\n<br />\n<a href=\"https://docs.nuget.org/create/creating-and-publishing-a-symbol-package\" rel=\"nofollow\">https://docs.nuget.org/create/creating-and-publishing-a-symbol-package</a>\r<br />\n<br />\nI want to debug an Task Scheduler issue that I have on a Win7 machine.\r<br />\n<br />\nThanks :)<br />\n",
+    "PostedDate": "2015-12-17T07:26:16.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456343",
+    "ThreadId": "648890",
+    "Html": "I like the idea a lot. Look for it in the next release.<br />\n",
+    "PostedDate": "2015-12-17T16:23:17.617-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456908",
+    "ThreadId": "648890",
+    "Html": "The symbol packages for 2.5.8 were pushed today. Let me know if it works or not for you.<br />\n",
+    "PostedDate": "2015-12-22T15:43:07.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T08:03:22.857-08:00"
+  }
+]

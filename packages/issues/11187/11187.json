@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "There are numerous discussion threads that address permissions with ASP.NET. Please take a look at those and resubmit an issue if those do not answer your question.",
+    "ClosedDate": "2013-08-02T12:42:21.08-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am using a mvc application to manage windows tasks on a Windows 2008 server. MVC app and Windows tasks are on the same server, but unable to create it through App, \n\nIf I run the MVC app in Visual Studio, it works fine \n\nAny idea, what could be missing ?",
+    "LastUpdatedDate": "2013-08-02T12:42:21.08-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-08-02T07:53:57.16-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Unable to create tasks on Windows 2008 server",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11187
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "856354",
+    "ThreadId": "361687",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>&nbsp;</p>\r\n<p>im hoping to get some help on my problem.</p>\r\n<p>im trying to make something that will change the password of a task if it has defined a username/password</p>\r\n<p>if possible i would like to do if task has username admin in it then change password to xx</p>\r\n<p>i already found the way how to update the task, only i need to find a way to list all tasks and see under what user they are running</p>\r\n<p>i hope i was able to explain myself well enough.</p>\r\n<p>Regards,</p>\r\n<p>Reinier van Dijk</p>\r\n",
+    "PostedDate": "2012-07-02T07:22:55.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "856449",
+    "ThreadId": "361687",
+    "Html": "<p>Use the Enumerate all task example (<a href=\"http://taskscheduler.codeplex.com/wikipage?title=Examples#enum\">http://taskscheduler.codeplex.com/wikipage?title=Examples#enum</a>) and then use the Task.TaskDefinition.Principal.UserId property to get the username. Once you have that, you can use TaskFolder.RegisterTaskDefinition method to re-register the task with a different set of credentials.</p>",
+    "PostedDate": "2012-07-02T10:34:08.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "857667",
+    "ThreadId": "361687",
+    "Html": "<p>Thanks for the reply, this was exactly what i needed!</p>",
+    "PostedDate": "2012-07-05T00:14:41.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

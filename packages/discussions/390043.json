@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "894836",
+    "ThreadId": "390043",
+    "Html": "\r\n<p>Hi David,</p>\r\n<p>I have a couple of questions for you:</p>\r\n<p>(1) I noticed that if I choose &quot;Configure for: Windows Server 2003, Windows XP, or Windows 2000&quot;, save the task schedule, and reopen or edit it, the &quot;Configure for:&quot; value doesn't stick to this chosen OS when the task schedule was saved. Is this by design?\r\n ...meaning it defaults to whatever is your current OS.</p>\r\n<p>(2) Can we add&nbsp;Windows 8 to the list...together with &#65279;&#65279;Windows 7,&nbsp;Vista, and&nbsp;Windows Server 2008 in the Configure for: &lt;OS&gt; choices?</p>\r\n<p>Thanks, Audi</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-02T12:18:34.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895237",
+    "ThreadId": "390043",
+    "Html": "<p>On your first item, you found a bug. I have corrected the problem in the code and will release it with the next update (likely 1.8.4).</p>\r\n<p>On your second point, I haven't done this yet as Windows 8 has not released and I don't know yet if they will be enhancing the base COM library or what the final UI will look like on the RTM Windows 8 Task Scheduler MMC. Once I know both those things, I will update the library.</p>",
+    "PostedDate": "2012-08-03T09:07:16.52-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "895303",
+    "ThreadId": "390043",
+    "Html": "<p>Thanks David. I really appreciate it!</p>\r\n<p>Have a great weekend.</p>\r\n<p>Audi :-)</p>",
+    "PostedDate": "2012-08-03T11:08:29.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "899611",
+    "ThreadId": "390043",
+    "Html": "<p>Hello,&nbsp;</p>\r\n<p>Just wondering were there any updates on&nbsp;enhancing&nbsp;you base COM library for Windows 8 RTM?</p>",
+    "PostedDate": "2012-08-15T10:04:39.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "899980",
+    "ThreadId": "390043",
+    "Html": "<p>I'm installing the SDK's today to compare them (Win 7 vs. Win 8). Unfortunately Microsoft has not released any notes regarding changes. Once compared, I will make the changes to the base .NET library. Later this month I will get Windows 8 installed and can update the UI components to match the new UI.</p>",
+    "PostedDate": "2012-08-16T09:18:08.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

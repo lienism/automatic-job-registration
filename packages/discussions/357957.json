@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "843468",
+    "ThreadId": "357957",
+    "Html": "\r\n<p>Hi!</p>\r\n<p>While using the taskService.GetFolder method i receive an exception saying FileNotFoundException: 'The system cannot find the file specified. (Exception from HRESULT: 0x80070002)'</p>\r\n<p>After checking i found that the folder that i was trying to get was deleted from the WindowsTaskScheduler</p>\r\n<p>Example:</p>\r\n<p>taskService.GetFolder(&quot;My Tasks&quot;);</p>\r\n<p>and the folder &quot;My Tasks&quot; got deleted from the Windows Task Scheduler.</p>\r\n<p>I wanted to know that how can we check if the folder in which our tasks are stored exists or not so that i can check it before hand.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2012-06-01T02:33:27.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848524",
+    "ThreadId": "357957",
+    "Html": "<p>There is no \"HasFolder\" method or anything like it. I would call the GetFolder method and handle the FileNotFoundException as an indicator that the folder does not exist.</p>",
+    "PostedDate": "2012-06-13T10:07:26.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

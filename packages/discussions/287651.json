@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "731718",
+    "ThreadId": "287651",
+    "Html": "\r\n<p>I've been having an issue when updating or deleting existing tasks when UAC is involved. Here are the steps that cause the issue to happen:</p>\r\n<p></p>\r\n<ol>\r\n<li>I run my application. My application creates (or updates) a task on startup. Initially, the application has no admin privileges. The task is created successfully. If I restart the app, the task is updated and/or deleted successfully as well.\r\n</li><li>At one point in my app, I have to get admin privileges. After granting admin privileges through UAC, I then create the task again (overwriting the previous one).\r\n</li><li>Now, if I restart my app (thus, losing admin privileges) and try to update or delete the task again, I get this error:\r\n<ol>\r\n<li>Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)) at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType,\r\n Object sddl) at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)&nbsp;\r\n</li></ol>\r\n</li></ol>\r\n<p></p>\r\n<p>I resolved this for now by preventing the task from being updated or created when admin privileges (via UAC) are set, but it isn't a perfect solution. Is there another way of fixing this?</p>\r\n",
+    "PostedDate": "2012-01-27T08:33:58.31-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731859",
+    "ThreadId": "287651",
+    "Html": "<p>If you specify an account always when registering the task, and always use that same account when re-registering it, it will ignore the current user settings.</p>",
+    "PostedDate": "2012-01-27T15:35:18.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732687",
+    "ThreadId": "287651",
+    "Html": "<p>What if I don't know what the user account being used is? Is there a way to get the current logged in user's credentials for registration of a task?</p>",
+    "PostedDate": "2012-01-30T08:25:35.583-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732820",
+    "ThreadId": "287651",
+    "Html": "<p>Not that I know of. I guess my direction would be to follow MS guidelines and release Admin rights as soon as they are no longer needed. Then you won't have to keep track of which type of credentials are used to create a task.</p>",
+    "PostedDate": "2012-01-30T12:23:42.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732834",
+    "ThreadId": "287651",
+    "Html": "<p>Unfortunately that isn't possible. Admin rights are needed while my application is running it's processes. I guess, for now, I'll have to just be careful with adding tasks while my app has admin rights.&nbsp;Thank you for the help though!</p>",
+    "PostedDate": "2012-01-30T12:54:58.13-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

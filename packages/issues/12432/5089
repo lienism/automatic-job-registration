@@ -1,0 +1,38 @@
+        public static Microsoft.Win32.TaskScheduler.Task CreateDataCommunicatorTask()
+        {
+            TaskService tsmgr = new TaskService();
+
+            Microsoft.Win32.TaskScheduler.Task dct = tsmgr.GetTask(strings.DataCommunicator2Task);
+
+            if (dct == null)
+            {
+                string strThisProgram = Assembly.GetEntryAssembly().CodeBase.ToString();
+                strThisProgram = strThisProgram.Replace(@"file:///", @"");
+                strThisProgram = strThisProgram.Replace('/', '\\');
+
+                TaskDefinition td = tsmgr.NewTask();
+
+                td.RegistrationInfo.Description = strings.ExecuteTheDataCommunicator;
+
+
+                TimeTrigger tg = new TimeTrigger(DateTime.Now.AddHours(2));
+                tg.Repetition.Interval = TimeSpan.FromMinutes(5);
+
+                td.Triggers.Add(tg);
+                td.Actions.Add(strThisProgram);
+
+                try
+                {
+                    tsmgr.RootFolder.RegisterTaskDefinition(strings.DataCommunicator2Task, td);
+                    dct = tsmgr.GetTask(strings.DataCommunicator2Task);
+                }
+                catch
+                {
+                    MessageBox.Show(strings.CouldNotCreateDataCommunicatorTask);
+                    dct = null;
+                }
+
+            }
+
+            return dct;
+        }

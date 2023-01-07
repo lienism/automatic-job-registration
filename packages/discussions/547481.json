@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1252639",
+    "ThreadId": "547481",
+    "Html": "A few months ago, I implemented some code that uses Task Scheduler Managed Wrapper (release 2.2.0) to trigger Task Scheduler tasks on a remote computer.  It's worked fine since then until yesterday when the remote computer was replaced with a server that has a different operating server.<br />\n<br />\nNow, I am running in to the &quot;The request is not supported 0x80070032&quot; error and haven't been able to figure out how to fix it.<br />\n<br />\nHere are the specifics:<br />\n<br />\nThe old target server was running Windows Server 2008 R2.<br />\nThe new target server is running Windows Server 2012 R2.<br />\n<br />\nThe pertinent code is very simple and is as follows:<br />\n<pre><code>using (Microsoft.Win32.TaskScheduler.TaskService ts = new TaskService(serverName, userName, domain, password))\n            {\n                Microsoft.Win32.TaskScheduler.Task task = ts.FindTask(&quot;TrxImporter&quot;);\n                TaskState state = TaskState.Unknown;\n                if (task != null)\n                {\n                    state = task.State;\n                    isReady = state == TaskState.Ready;\n                }\n                else\n                {\n                    WriteErrorToEventLog(&quot;Task not found&quot;, &quot;TaskIsReady&quot;);\n                    return isReady;\n                }</code></pre>\n\nThe exception is thrown when the TaskService is instantiated in the using line.<br />\n<br />\nOne other piece of info: When I run this code on my dev box (Windows 7) the code works fine.  When I run it on the production box (Windows Server 2008 R2) the error occurs.<br />\n<br />\nSo just to be clear:<br />\n<ul>\n<li>When the target server was Windows Server 2008 R2, the code worked on both the Windows 7 and Windows Server 2008 R2 boxes.</li>\n<li>\nNow that the target server is Windows Server 2008 R2, the code still works on Windows 7 but not on Windows Server 2008 R2.<br />\n</li>\n</ul>\nAlso, searching this site, I did find <a href=\"https://taskscheduler.codeplex.com/discussions/276408\" rel=\"nofollow\">this</a> thread about the same error (although slightly different situation) but unfortunately neither of the fixes suggested (forceV1 = true, Firewall settings) has resolve the issue for me.<br />\n<br />\nAny help is appreciated.<br />\n",
+    "PostedDate": "2014-06-03T17:12:08.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1252909",
+    "ThreadId": "547481",
+    "Html": "My guess is that the new server is not configured to allow remote task management. See the first portion of this article for info: <a href=\"http://technet.microsoft.com/en-us/library/cc766266.aspx\" rel=\"nofollow\">http://technet.microsoft.com/en-us/library/cc766266.aspx</a><br />\n",
+    "PostedDate": "2014-06-04T09:12:34.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-06-06T08:00:49.383-07:00"
+  },
+  {
+    "Id": "1252914",
+    "ThreadId": "547481",
+    "Html": "dahall, thanks for the reply.  Question, though: If that is the case, why am I able to run the code when calling from my dev box?  I would think if the target computer wasn't configured correctly, it wouldn't matter what the calling computer was.<br />\n<br />\nI'll check to make sure that the target computer is set up correctly, though, just in case.<br />\n<br />\nEDIT: I stand corrected.  Based on that article, the calling computer's OS does matter.  OK.  I'll look in to it.<br />\n<br />\nThanks again.<br />\n",
+    "PostedDate": "2014-06-04T09:33:38.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1252928",
+    "ThreadId": "547481",
+    "Html": "Just wanted to update to confirm that this <strong>did</strong> fix the issue.<br />\n\r<br />\nSo thanks very much, dahall!\r<br />\n<br />\nHopefully if others run into this problem they will find this thread.<br />\n",
+    "PostedDate": "2014-06-04T10:17:02.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

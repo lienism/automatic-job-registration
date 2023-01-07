@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "I believe this is fixed in the 2.5.18 release.",
+    "ClosedDate": "2016-04-12T17:01:48.967-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Steps to reproduce:\n\n1) Create a new Console Application using .NET Framework 4.5.1\n2) Install TaskScheduler NuGet-package version 2.5.17 (Install-Package TaskScheduler)\n3) Add following line to Main-method:\nusing (var ts = new TaskService()) {}\n4) Build the solution. Build fails on compiler error:\nwarning MSB3274: The primary reference \"Microsoft.Win32.TaskScheduler, Version=2.5.17.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL\" could not be resolved because it was built against the \".NETFramework,Version=v4.5.2\" framework. This is a higher version than the currently targeted framework \".NETFramework,Version=v4.5.1\".\nerror CS0234: The type or namespace name 'TaskScheduler' does not exist in the namespace 'Microsoft.Win32' (are you missing an assembly reference?)\n\nI suspect this is because the binaries in the NuGet-package are located under lib\\net45 (instead of lib\\net452) and NuGet determines that it's ok to use them in .NET Framework 4.5.1 project. I don't know how  (or if it's even possible) to force NuGet to use binaries targeted for framework 4.0 form example.",
+    "LastUpdatedDate": "2016-04-12T17:01:48.967-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-04-11T00:54:46.167-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Project targeted for .NET Framework 4.5.1 won't build if TaskScheduler NuGet-package 2.5.17 is installed",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12369
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

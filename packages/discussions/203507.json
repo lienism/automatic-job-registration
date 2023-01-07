@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "413009",
+    "ThreadId": "203507",
+    "Html": "<p>I want my scheduler to run when on &quot;At SystemStartup&quot; and also on&nbsp; &quot;At Logon&quot;. This is because, when the application starts at StartUp and user logs off than the application stops. So, I want to start it again on UserLogon.</p>\r\n<p>Here is the code.</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = &quot;MyApplication&quot;;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(new Microsoft.Win32.TaskScheduler.BootTrigger());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(new Microsoft.Win32.TaskScheduler.LogonTrigger());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(&quot;My Application Path&quot;, null, &quot;C:\\\\Documents and Settings\\\\All Users\\\\Start Menu\\\\Programs\\\\Startup&quot;));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(&quot;MyApplication&quot;, td);</p>\r\n<p>But it is not creating multiple schedules.</p>",
+    "PostedDate": "2010-03-01T22:26:25.723-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413726",
+    "ThreadId": "203507",
+    "Html": "<p>The code is correct, so&nbsp;I'm guessing there is a permission problem. You need to make sure that the user credentials supplied when instantiating the TaskService have Administrator rights for the system. If that is the case, you may want to check code permissions if this is running under Windows 7 or Server 2008 R2.</p>",
+    "PostedDate": "2010-03-03T09:10:21.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413950",
+    "ThreadId": "203507",
+    "Html": "<p>I dont think that there is any permission problem. Because the above code is creating multiple schedules but,</p>\r\n<p>1. &quot;Show Multiple Schedules&quot; check box is not getting checked, infact it becomes disabled.</p>\r\n<p>2. Both the schedules (one at the top drop down and other at the middle drop down) show the same schedule as &quot;At System Startup&quot;.</p>\r\n<p>Please try the same at your end using the above code snippet and you will get to know the problem.</p>",
+    "PostedDate": "2010-03-03T20:23:08.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413968",
+    "ThreadId": "203507",
+    "Html": "<p>I think I need more information then. I have run the snippet under Vista (and the 2.0 library) and it works as expected. Can you provide the OS you are working under and ensure you are running the latest version of this managed library?</p>",
+    "PostedDate": "2010-03-03T22:14:40.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414080",
+    "ThreadId": "203507",
+    "Html": "<p>I tried this on both XP and 2003 server. It didn't worked.</p>\r\n<p>I am using the release version 1.4.2</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-04T04:20:43.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "414306",
+    "ThreadId": "203507",
+    "Html": "<p>I just ran this code on an XP SP2 machine and it worked correctly. I'm not sure why yours if failing.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n   TaskDefinition td = ts.NewTask();\r\n   td.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;MyApplication&quot;</span>;\r\n   td.Triggers.Add(<span style=\"color:Blue\">new</span> BootTrigger());\r\n   td.Triggers.Add(<span style=\"color:Blue\">new</span> LogonTrigger());\r\n   td.Actions.Add(<span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;calc.exe&quot;</span>, <span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">null</span>));\r\n   Task t = ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;MyApplication&quot;</span>, td);\r\n   t.ShowPropertyPage();\r\n   ts.RootFolder.DeleteTask(<span style=\"color:#A31515\">&quot;MyApplication&quot;</span>);\r\n}\r\n</pre>\r\n</div>\r\n<p>This was run while logged into an account in the Adminstrators group. When looking at the &quot;Schedule&quot; property page, it does show the disabled &quot;Show Multiple Schedules&quot; check box, and there are two items in the combobox on top: &quot;1. Run at system startup&quot;, and &quot;2. Run at user logon&quot;.</p>",
+    "PostedDate": "2010-03-04T12:25:14.307-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

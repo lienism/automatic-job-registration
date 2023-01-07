@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "User resolved problem in their own code.",
+    "ClosedDate": "2011-04-11T22:10:57.913-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "First up - I love this library, takes a lot of the pain out of programatically creating scheduled tasks.\n \nI'm having a problem saving a task with a weekly trigger - when I call task.Definition.Triggers.Add(myTrigger), I'm getting the following exception:\n \n \nSystem.ArgumentException was unhandled by user code\n  Message=The parameter is incorrect. (Exception from HRESULT: 0x80070057 (E_INVALIDARG))\n  Source=\"\"\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.Trigger.Bind(ITaskDefinition iTaskDef)\n       at Microsoft.Win32.TaskScheduler.TriggerCollection.Add(Trigger unboundTrigger)\n       at Domain.Manager.HostedService.SaveTask(Task task) in C:\\Current Projects\\DataManager\\Code\\branches\\UI.Client\\Domain\\Manager\\HostedService.TaskService.cs:line 71\n       at SyncInvokeSaveTask(Object , Object[] , Object[] )\n       at System.ServiceModel.Dispatcher.SyncMethodInvoker.Invoke(Object instance, Object[] inputs, Object[]& outputs)\n       at System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeBegin(MessageRpc& rpc)\n  InnerException: \n \nThe error is not occurring when I try to save a DailyTrigger/MonthlyTrigger/MonthlyDOWTrigger; it doesn't seem to make much difference what values I put in for DaysOfWeek or WeeksInterval.",
+    "LastUpdatedDate": "2013-05-16T04:49:12.717-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-04-11T17:43:15.053-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Getting an E_INVALIDARG when saving a weekly trigger",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8436
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "P.S. I am using v1.6.4097.31183 - nice work getting NuGet support in there, by the way - I came in this morning to find my code automagically updated to the new version.",
+      "PostedDate": "2011-04-11T17:54:46.75-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please post the code you are using to create the WeeklyTrigger. I know this code works:\r\n\r\ntd.Triggers.Add(new WeeklyTrigger(DaysOfTheWeek.Sunday, 3));",
+      "PostedDate": "2011-04-11T19:32:06.093-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've found the problem - I'd created a WCF-compatible library that maps to each of your classes (so adding DataContract/DataMember/EnumMember attributes to the classes/enums), and missed out a [DataMember] attribute on the WeeksInterval field, so it wasn't getting serialised and received at the server end when I mapped back to your classes.\r\n\r\nIt might be worth considering adding WCF support for a future release? There are quite a few hoops that I have to jump through with AutoMapper to fully create Task instances from the WCF messages (especially with the non-default constructors on some of the triggers).",
+      "PostedDate": "2011-04-11T21:48:07.513-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Glad you got it working. If you will zip up the WCF work you've done and post it here, I will absolutely look to include it in a future release.",
+      "PostedDate": "2011-04-11T22:10:26.843-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-04-11T22:10:57.913-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:06.33-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:12.717-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

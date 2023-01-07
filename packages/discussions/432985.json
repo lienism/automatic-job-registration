@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1000687",
+    "ThreadId": "432985",
+    "Html": "HI all ,<br />\nI am facing a problem, I have a process which is running in task scheduler for some reasons this task STATUS is getting disabled often, so I had to write a program to check this task is running or not, if not I need to set my task  <strong>Enabled = true;</strong>  here is the piece of code <br />\n<pre><code>  using (TaskService ts = new TaskService())\n {\n                bool isEnabled = false;\n                \n                isEnabled = ts.GetTask(&quot;testtask&quot;).Enabled; // check task status\n\n                if (isEnabled == false)\n                {\n\n                   // __I need to enable testtask__\n\n                }\n}</code></pre>\n\ncan some one help me on this?<br />\n",
+    "PostedDate": "2013-02-13T09:35:08.99-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1000882",
+    "ThreadId": "432985",
+    "Html": "You are almost there:<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  if (t != null)\n  {\n    if (!t.Enabled)\n    {\n      t.Enabled = true;\n      t.RegisterChanges();\n    }\n  }\n}\n</code></pre>\n\n",
+    "PostedDate": "2013-02-13T15:35:03.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-14T15:56:41.117-08:00"
+  },
+  {
+    "Id": "1000887",
+    "ThreadId": "432985",
+    "Html": "<strong>dahall wrote:</strong><br />\n<blockquote>\nYou are almost there:<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  if (t != null)\n  {\n    if (!t.Enabled)\n    {\n      t.Enabled = true;\n      t.RegisterChanges();\n    }\n  }\n}\n</code></pre>\n\n</blockquote>\nAMAZING that worked .... I thought I was close enough but coudnt get get worked ...your solution is a magic...:)<br />\n",
+    "PostedDate": "2013-02-13T15:44:49.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327273",
+    "ThreadId": "432985",
+    "Html": "Hi I have register a task with highest privelage.. When I try to use this code with my program, It is unable to disable it.. How do I disable it? Thanks<br />\n",
+    "PostedDate": "2014-11-29T12:17:14.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327700",
+    "ThreadId": "432985",
+    "Html": "When you register a task and specify HighestPrivilege, that setting applies to the running of the task and doesn't have any effect on registration. That right comes from the privileges assigned to the account used to connect to the TaskService. If you have permissions to modify tasks, you should be able to use the code above to enable or disable tasks. Of course to disable a task, you will set the Enabled property to false.<br />\n",
+    "PostedDate": "2014-12-01T07:19:07.78-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-14T15:56:43.47-08:00"
+  },
+  {
+    "Id": "1421278",
+    "ThreadId": "432985",
+    "Html": "Hi, All\r<br />\n<br />\nI also have problems with task edition. Shortly:<br />\n<ol>\n<li>\n&quot;RegisterChanges&quot; is not needed in case we want only to change &quot;Enabled&quot;. Moreover in case it will be called - &quot;Enabled&quot; flag will be returned to previous state. Don't know why this happens.<br />\n</li>\n<li>\nIn my case task contains only single action to start exe file. What I want to do is to modify path to exe file. Here it is reworked piece of code:<br />\n</li>\n</ol>\n<pre><code>using (var ts = new TaskService())\n{\n    var alreadyPresentTask = ts.FindTask(settings.TaskSchedulerTaskName);\n    foreach (var action in alreadyPresentTask.Definition.Actions)\n    {\n        if (action is ExecAction)\n        {\n            var execAction = action as ExecAction;\n            if (null != execAction)\n            {\n                var root = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);\n                var newPath = System.IO.Path.Combine(root, Path.GetFileName(execAction.Path));\n\n                string oldPath = execAction.Path;\n                execAction.Path = newPath;\n\n                string oldWorkingDirectory = execAction.WorkingDirectory;\n                execAction.WorkingDirectory = root;\n            }\n        }\n    }\n    alreadyPresentTask.RegisterChanges();\n    alreadyPresentTask.Enabled = true;\n}</code></pre>\n\nAs You can see &quot;RegisterChanges&quot; here called before modification of Enabled flag, because in opposite case task wouldn't be enabled. But <strong>main problem</strong> is what this code works in &quot;windows 8&quot; but <strong>work partially in &quot;windows xp&quot;</strong>: Modified only &quot;Enabled&quot; flag properly, but paths remains unchanged. Without any exceptions, errors etc... Simply do nothing. Can someone help me? <br />\n",
+    "PostedDate": "2015-04-29T02:17:22.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1422398",
+    "ThreadId": "432985",
+    "Html": "You can set <code>alreadyPresentTask.Definition.Settings.Enabled = true</code> before calling <code>RegisterChanges</code>. This will ensure the task is enabled and you do not have to set the <code>alreadyPresentTask.Enabled</code> property.\r<br />\n<br />\nAlso, <code>FindTask</code> is a bit of a risky method in that it is non-deterministic. It will return the first task in any folder it finds whose name matches the one provided to the method. You are much safer to use the <code>GetTask</code> method and provide the full path to the task as it is deterministic. Also, either your <code>if (action is ExecAction)</code> or your <code>if (null == execAction)</code> statement is unnecessary as they both check the same condition.\r<br />\n<br />\nI believe the problem is related to how C# handles references and potentially the wrapper not accommodating that well. To resolve, I would try something like:<br />\n<pre><code>// 1. If using the local instance of the Task Scheduler, you can use the static Instance property.\n// 2. Prepend the exact folder name in GetTask.\nvar alreadyPresentTask = TaskService.Instance.GetTask(&quot;\\\\&quot; + settings.TaskSchedulerTaskName);\nif (alreadyPresentTask != null)\n{\n  // 3. Avoid re-registering the task if not needed.\n  bool changed = false;\n  for (int i = 0; i &lt; alreadyPresentTask.Definition.Actions.Count; i++)\n  {\n    ExecAction execAction = alreadyPresentTask.Definition.Actions[i] as ExecAction;\n    if (execAction != null)\n    {\n      var root = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);\n      var newPath = System.IO.Path.Combine(root, Path.GetFileName(execAction.Path));\n\n      // 4. I believe that by creating a new action and replacing the old you\n      //    will avoid the reference problem.\n      alreadyPresentTask.Definition.Actions[i] = new ExecAction(newPath, execAction.Arguments, root);\n\n      changed = true;\n    }\n  }\n  if (changed)\n  {\n    // 5. Using this setting will ensure the task stays enabled\n    alreadyPresentTask.Definition.Settings.Enabled = true;\n    alreadyPresentTask.RegisterChanges();\n  }\n}</code></pre>\n\n",
+    "PostedDate": "2015-05-02T13:41:59.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-02T13:42:10.457-07:00"
+  },
+  {
+    "Id": "1423250",
+    "ThreadId": "432985",
+    "Html": "Thanks a lot, now it works.<br />\n",
+    "PostedDate": "2015-05-06T02:40:14.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

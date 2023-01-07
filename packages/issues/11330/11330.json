@@ -1,0 +1,156 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-02-14T07:15:31.343-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Is there any way to localize the TriggerEditDialog? And get the Trigger's details in German? \n \nAll of the editor dialogs and output strings can be localized and some have been already done. If you can do the translations, I'm happy to roll them into the source. There are three things needed to localize the TriggerEditDialog: You will need to add project based resources to both the TaskService and TaskEditor (under the EditorProperties folder) projects for German. You will then need to localize the TriggerEditDialog. All three resources are already localized into Italian and Chinese. Are you able to download the source code and then add those localizations?\n\nI did the translation, I could build the source code and the resources .dll have been generated. I copied them to my application under Debug\\de-DE but it seems that something doesn't work. What should I do? \n\n How can I attach the RESX files here? or how to send them to you? \nI did the translation, I could build the source code and the resources .dll have been generated. I copied them to my application under Debug\\de-DE but it seems that something doesn't work. What should I do?\n\nHow can I attach the RESX files here? or how to send them to you?",
+    "LastUpdatedDate": "2014-02-14T07:15:31.343-08:00",
+    "PlannedForRelease": "Release 2.0.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-10-11T07:47:35.1-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TriggerDialog in German",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 11330
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3712,
+      "FileName": "Resources de-DE.zip",
+      "DownloadUrl": ".\\3712"
+    },
+    {
+      "FileId": 3714,
+      "FileName": "TimeSpan.zip",
+      "DownloadUrl": ".\\3714"
+    },
+    {
+      "FileId": 3715,
+      "FileName": "Resources de-DE - v2.zip",
+      "DownloadUrl": ".\\3715"
+    },
+    {
+      "FileId": 3717,
+      "FileName": "TaskPropertiesControl.de-DE.resx",
+      "DownloadUrl": ".\\3717"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Please find the attached document. There are 3 RESX-files in the corresponding folders: TaskService/Properties, TaskService/TaskEditor, TaskService/TaskEditor/EditProperties.\r\n\r\n\nBy the way, there are some resource keys that get always the english value, although I have defined German text for them. For example, monthlyDaysRadio.Text, monthlyMonthsLabel.Text, monthlyOnRadio.Text, repeatCheckBox.Text, weeklyRecurLabel.Text, weeklyOnWeeksLabel.Text, and the Checkboxes for days (Saturday, Sunday....) under \"Weekly\"-RadioButton ",
+      "PostedDate": "2013-10-11T08:10:27.35-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You can see that those resource keys do not work under Italien and Chinese as well. You always get \"Recur every:\", \"days\"...",
+      "PostedDate": "2013-10-11T08:11:28.643-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ah yes. I forgot about some controls used by that dialog. Will you also please provide localizations for all the controls in the TaskEditor\\UIComponents directory. That is where those are being set.",
+      "PostedDate": "2013-10-11T09:37:16.973-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-10-11T09:40:17.447-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please also check my translations in the resx attached in TimeSpan.zip.",
+      "PostedDate": "2013-10-11T09:40:17.93-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-10-11T10:00:29.567-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-10-11T10:01:05.073-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Included English version in TimeSpan.zip for your reference. This is for any place where TimeSpan is expressed in natural language.",
+      "PostedDate": "2013-10-11T10:01:05.573-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I just found a tool which may dramatically simplify the localization process. \"ResX Manager\" is a VS2012 add-in that really helps. Just ship me all *.de-DE.resx files and I will add them to the official project. I have just updated all the Italian and posted it to source control.",
+      "PostedDate": "2013-10-12T14:43:11.65-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-10-14T04:26:00.493-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I added the missed resources to UIComponents folder. But I guess you still have to change the code in:\nTaskEditor\\UIComponents\\DailyTriggerUI.Designer.cs;\nTaskEditor\\UIComponents\\WeeklyTriggerUI.Designer.cs; and\nTaskEditor\\UIComponents\\MonthlyTriggerUI.Designer.cs.\r\n\r\nwhere you have to bind the Text of the labels to the keys in the resources files. For example, you have to add to InitializeComponent() method the following:\r\n\r\n            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DailyTriggerUI));\r\n\r\n            resources.ApplyResources(this.dailyDaysLabel, \"dailyDaysLabel\");\r\n\r\n\nNow the Text properties have hard-coded, like: this.dailyDaysLabel.Text = \"days\";\n",
+      "PostedDate": "2013-10-14T04:26:02.063-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Your translation in TimeSpan.resx is correct! :)",
+      "PostedDate": "2013-10-14T04:26:41.38-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Oh I forgot to add a key for: monthlyOnDOWDropDown.CheckAllText and monthlyMonthsDropDown.CheckAllText in MonthlyTriggerUI.de-DE.resx. Please add them with the following values (respectively): <alle Tage auswählen> and <alle Monate auswählen>.\r\n\r\n",
+      "PostedDate": "2013-10-14T05:13:09.873-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. I have incorporated your changes in the latest source code update. There are a number of other files in the Editor project that need translation if you have time.",
+      "PostedDate": "2013-10-14T09:30:28.837-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I did an automatic translation of TaskPropertiesControl. I'd appreciate your validation of those translations as well.",
+      "PostedDate": "2013-10-14T09:34:08.68-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I would like to help you translate the resources. The only problem is that I don't have much time. I am a fulltime employee. But I will try to do the translation on weekends :)",
+      "PostedDate": "2013-10-16T13:23:22.25-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-10-20T05:24:15.453-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I corrected the translation in TaskPropertiesControl.de-DE.resx. (attached)\r\n\r\nI should say that automatic translation is not really that good. Especially with the presence of \"&amp;\" that sometimes splits the text.\n",
+      "PostedDate": "2013-10-20T05:24:20.76-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-02-14T07:15:31.343-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

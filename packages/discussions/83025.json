@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "285335",
+    "ThreadId": "83025",
+    "Html": "<p>HI there.</p>\r\n<p>&nbsp;</p>\r\n<p>I get this error when trying to run TestTaskService.exe E</p>\r\n<p>System.Resources.MissingManifestResourceException: Could not find any resources appropriate for the specified culture or<br>&nbsp;the neutral culture.&nbsp; Make sure &quot;System.Properties.Resources.resources&quot; was correctly embedded or linked into assembly<br>&quot;TimeSpan2&quot; at compile time, or that all the satellite assemblies required are loadable and fully signed.</p>\r\n<p>&nbsp;</p>\r\n<p>/M</p>",
+    "PostedDate": "2010-02-03T07:58:15.037-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

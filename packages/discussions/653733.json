@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1470598",
+    "ThreadId": "653733",
+    "Html": "Hi ,<br />\nI am using 2.5.15.0 version.<br />\n<ol>\n<li>\nWhen I click the History button multiple times, the same event gets added again and again <br />\nThe sample code is given below.<br />\n</li>\n</ol>\nMicrosoft.Win32.TaskScheduler.Task newTask = ts.GetTask(taskName);<br />\nTaskDefinition td = newTask.Definition;<br />\nvar ted = new TaskEditDialog(ts, td, true, true);<br />\nted.TaskName = taskName;<br />\nted.MaxHistoryCount = 100;<br />\n ((System.Windows.Forms.Control)ted.AcceptButton).Enabled = true;<br />\nted.Task = newTask;<br />\nted.ShowDialog(); <br />\n<br />\nPlease let me know if I am missing something.<br />\nAny help would be greatly appreciated.<br />\n<br />\n<br />\nThanks<br />\nAntoni<br />\n",
+    "PostedDate": "2016-04-19T02:46:37.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1470660",
+    "ThreadId": "653733",
+    "Html": "Can you describe precisely the UI steps you are executing to get this error? I am not able to replicate it by running your code snippet and then repeatedly clicking the &quot;History&quot; tab.\r<br />\n<br />\nYou code inspired me to add code that will automatically validate the TaskName property value and set the AcceptButton state. You will see that in 2.5.19.\r<br />\n<br />\nBy the way, you can accomplish the above with much simpler code:<br />\n<pre><code>new TaskEditDialog(ts.GetTask(taskName)) { MaxHistoryCount = 100 }.ShowDialog();</code></pre>\n\nWhen setting the dialog up with a task, you don't need to pull apart the TaskDefinition nor set the TaskName or handle the AcceptButton.<br />\n",
+    "PostedDate": "2016-04-19T11:51:05.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1470766",
+    "ThreadId": "653733",
+    "Html": "Hi,\r<br />\nThank you very much for the details given. It was really helpful to me. I appreciate it.\r<br />\n<br />\nSteps to Reproduce the Event refresh issue in History tab<br />\n<ol>\n<li>Assume MaxHistoryCount  is set to 4</li>\n<li>Launch the editor using new TaskEditDialog(ts.GetTask(taskName)) { MaxHistoryCount = 4}.ShowDialog();</li>\n<li>Select History Tab.  Observe 4 events are listed. </li>\n<li>Now  Go To 'General&quot; tab  ( or any tab )</li>\n<li>Then click on 'History' tab</li>\n<li>\nNow we can see 8 events in History tabs ( Actually I expect the same 4 events to be  here )<br />\n</li>\n</ol>\nThanks\r<br />\nAntoni<br />\n",
+    "PostedDate": "2016-04-20T05:19:52.11-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1470845",
+    "ThreadId": "653733",
+    "Html": "Thanks for the detail. With it I was able to find the bug. It will be fixed in the next release (2.5.19), due in the next week or so.<br />\n",
+    "PostedDate": "2016-04-20T12:53:00.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T10:05:05.897-07:00"
+  },
+  {
+    "Id": "1470863",
+    "ThreadId": "653733",
+    "Html": "Thank you very much for your help. I really appreciate it.\r<br />\n<br />\n<br />\nThanks\r<br />\nAntoni<br />\n",
+    "PostedDate": "2016-04-20T19:45:34.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

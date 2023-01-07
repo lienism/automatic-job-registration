@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1341433",
+    "ThreadId": "577611",
+    "Html": "could anyone provide the db schema, so that Trigger information, and task information could be stored<br />\n",
+    "PostedDate": "2015-01-13T05:03:16.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1341476",
+    "ThreadId": "577611",
+    "Html": "The entire schema for a task can be exported from either the Task.Xml property or the TaskDefinition.XmlText property. This follows the schema outlined by Microsoft at <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa383609(v=vs.85).aspx\" rel=\"nofollow\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa383609(v=vs.85).aspx</a>. It is an extremely complex object model. The good thing about the XML is that you can immediately reconstitute a task from that XML using the TaskFolder.RegisterTask method.<br />\n",
+    "PostedDate": "2015-01-13T07:42:23.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-14T15:57:13.983-08:00"
+  }
+]

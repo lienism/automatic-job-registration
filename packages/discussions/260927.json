@@ -1,0 +1,122 @@
+[
+  {
+    "Id": "625985",
+    "ThreadId": "260927",
+    "Html": "\r\n<p>I hate to ask something so simple but I just can't figure it out and I have posted this on multiple forums.&nbsp; I am trying to set up a button that, when clicked, runs an existing task.&nbsp; I have created a variable that gets a selected task but when\r\n I try and set up the task, it always returns null.</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<pre>using (TaskService ts = new TaskService())\r\n                        {\r\n                            string task = rdr[&quot;TaskName&quot;].ToString();\r\n\r\n                            TaskDefinition td = ts.NewTask();\r\n                            td.RegistrationInfo.Description = &quot;Get Tasks&quot;;\r\n                            td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n                            t = ts.GetTask(task);\r\n                            td = t.Definition;\r\n                            if (t != null)\r\n                            {\r\n                                td.Triggers.Add(new TimeTrigger { StartBoundary = DateTime.Now });\r\n                            }\r\n                        }</pre>\r\ntask always shows the correct value but it never sets t to the correct value.&nbsp; It is always just null.\r\n<p></p>\r\n",
+    "PostedDate": "2011-06-10T07:14:51.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626038",
+    "ThreadId": "260927",
+    "Html": "<p>I believe this code will accomplish the task:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   <span style=\"color: blue;\">string</span> task = rdr[<span style=\"color: #a31515;\">\"TaskName\"</span>].ToString();\r\n   <span style=\"color: green;\">// This will find it even if its down in a folder. Alternately you could call:</span>\r\n   <span style=\"color: green;\">// Task t = ts.GetTask(task);</span>\r\n   Task t = ts.FindTask(task);\r\n   <span style=\"color: blue;\">if</span> (t != <span style=\"color: blue;\">null</span>)\r\n      t.Run();\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-06-10T08:13:56.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626062",
+    "ThreadId": "260927",
+    "Html": "<p>When stepping through, t is still null.&nbsp; I tried GetTask and FindTask.&nbsp; With t.Run, the application no longer crashes on me though.</p>",
+    "PostedDate": "2011-06-10T09:01:45.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626150",
+    "ThreadId": "260927",
+    "Html": "<p>When you go into the Task Scheduler Management Console, make sure the task name you're using matches exactly and doesn't have leading or trailing spaces. The FindTask method specifically will always find the task if the name matches. If t == null, then the name you have specified is not already registered (created) or you don't have permissions to see it.</p>",
+    "PostedDate": "2011-06-10T12:38:39.83-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626880",
+    "ThreadId": "260927",
+    "Html": "<p>The only thing that I have noticed is when it pulls the scheduled task, the name is ScheduledTask.job.&nbsp; Do you think the .job would throw it off?</p>",
+    "PostedDate": "2011-06-13T06:31:18.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626910",
+    "ThreadId": "260927",
+    "Html": "<p>I see an error on my FindTask statement.&nbsp; The error says \"v2InvalidDate: Cannot dereference expression.&nbsp; The pointer is not valid.\"&nbsp; Also, I have removed the \".job\" from the string.</p>",
+    "PostedDate": "2011-06-13T07:22:51.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "626961",
+    "ThreadId": "260927",
+    "Html": "<p>v2InvalidDate is only accessible when pulling the LastRunTime property from&nbsp;a task. I'm not sure how FindTask would even see it.</p>\r\n<p>And yes, having \".job\" as part of the name string will cause problem with version 1 tasks.</p>",
+    "PostedDate": "2011-06-13T08:43:33.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627032",
+    "ThreadId": "260927",
+    "Html": "<p>I had put in next run time in order to see if it was doing anything.&nbsp; It will not because t is always null.&nbsp; I stopped using my variable and manually put in the exact name of the task and it still does not work.&nbsp; This is Server 2003  so I believe it is Version 1 correct?&nbsp; Could it be that it can not find the path to the Scheduled Task?</p>\n<p>I can not figure out what I am doing wrong.</p>",
+    "PostedDate": "2011-06-13T11:37:14.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627109",
+    "ThreadId": "260927",
+    "Html": "<p>Maybe it will help if I post the whole code.</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<pre> using (SqlConnection myConnection2 = new SqlConnection(ConfigurationManager.ConnectionStrings[\"DBConnection\"].ConnectionString))\r\n            {\r\n                myConnection2.Open();\r\n                SqlCommand cmd2 = new SqlCommand(\"SELECT ID, TaskName, Permission, from ScheduledTasks s, Roles r WHERE s.ID=@ID \", myConnection2);\r\n                cmd2.Parameters.AddWithValue(\"@ID\", txtTaskID.Text);\r\n\r\n                SqlDataReader rdr;\r\n                rdr = cmd2.ExecuteReader();\r\n\r\n                if (rdr.HasRows)\r\n                {\r\n                    while (rdr.Read())\r\n                    {\r\n                        using (TaskService ts = new TaskService())\r\n                        {\r\n                            string task = rdr[\"TaskName\"].ToString();\r\n                            string newName = task.Remove(task.Length - 4, 4);\r\n\r\n                            t = ts.FindTask(newName);\r\n                            if (t != null)\r\n                            {\r\n                                t.Run();\r\n                            }\r\n                        }</pre>\r\n</p>",
+    "PostedDate": "2011-06-13T13:31:20.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627277",
+    "ThreadId": "260927",
+    "Html": "<p>Try the following and tell me if it works:</p>\r\n<p>t = ts.RootFolder.Tasks[newName];</p>",
+    "PostedDate": "2011-06-13T21:06:48.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627486",
+    "ThreadId": "260927",
+    "Html": "<p>It cannot find the path specified.</p>",
+    "PostedDate": "2011-06-14T06:07:33.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627600",
+    "ThreadId": "260927",
+    "Html": "<p>I just noticed that the target server is showing up as my PC.&nbsp; I am going to have to figure out a way for it to dynamically get the Server IP.</p>",
+    "PostedDate": "2011-06-14T09:09:15.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627780",
+    "ThreadId": "260927",
+    "Html": "<p>I pulled in the server variable and it works great.&nbsp; Thanks for all of your help.</p>",
+    "PostedDate": "2011-06-14T14:42:07.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663054",
+    "ThreadId": "260927",
+    "Html": "<p>I tried to run the task after i do a FindTask, but it seems not to be working in Windows7 pc. I checked in a XP machine, and it ran the task successfully.</p>\r\n<p>Can anyone pls help?</p>",
+    "PostedDate": "2011-08-24T23:48:22.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663072",
+    "ThreadId": "260927",
+    "Html": "<p>Its resolved.</p>",
+    "PostedDate": "2011-08-25T00:45:42.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

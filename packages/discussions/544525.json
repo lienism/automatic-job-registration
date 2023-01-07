@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1242354",
+    "ThreadId": "544525",
+    "Html": "I am using the Win32.TaskScheduler to run Windows Scheduled Tasks from my web application as mentioned in <a href=\"http://stackoverflow.com/questions/19243534/starting-a-remote-scheduled-task\" rel=\"nofollow\">this thread</a>.\r<br />\n<br />\nNow the difficulty I am facing is the machine which has the tasks scheduled is <strong>not in a network domain</strong>. (Since My Computer -&gt; Properties shows something like <strong>Workgroup : WORKGROUP</strong>) and my web application is throwing an error in this line\r<br />\n<br />\nTaskService tasksrvc = new TaskService(server.Name, login, domain, password);\r<br />\n<br />\n<strong>So if the machine is in a WorkGroup, this task scheduler will not work?</strong> . If its possible, can somebody help me with how to specify the target server, username, domain values in case of a work group machine?<br />\n",
+    "PostedDate": "2014-05-06T21:10:20.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242608",
+    "ThreadId": "544525",
+    "Html": "It will work, but the account running the code (usually a specific IIS account) needs to be a member of the Backup Operators or Administrators group.  If this account has those rights, then when connecting to the TaskService, you do not need to supply any parameters.<br />\n",
+    "PostedDate": "2014-05-07T07:26:45.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243369",
+    "ThreadId": "544525",
+    "Html": "Hi dahall,\r<br />\n<br />\nI guess I didn't explain the scenario correctly.  <strong>The web application and the scheduled tasks are actually running in different machines.</strong>  The machine which runs the scheduled tasks is a WORKGROUP machine as I have mentioned in my earlier post. So in this scenario, how can I remotely run the scheduled tasks using this Win32.TaskScheduler from my web application which is running in another machine and it will be helpful if you can give some sample code to illustrate how I can specify all those parameters esp the targetServer, domain, username.\r<br />\n<br />\nRegards\r<br />\nincubator226.<br />\n",
+    "PostedDate": "2014-05-08T23:21:00.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243538",
+    "ThreadId": "544525",
+    "Html": "Ok. When you instantiate the TaskService object, you will need to use the parameters allowing you to connect remotely (see Documentation for example code). You will only need to specify a valid Administrators or Backup Operators account on the remote WORKGROUP machine. For the user's domain name, use the remote machine's name.<br />\n",
+    "PostedDate": "2014-05-09T09:10:22.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243847",
+    "ThreadId": "544525",
+    "Html": "Hi dahall,\r<br />\n<br />\nThanks again for your support.\r<br />\n<br />\nPlease have a look into the specs of my server machine\r<br />\n<br />\nMachine name : develop100\r<br />\nUser name : sysadmin   (this is the Admin account)\r<br />\nWorkgroup : WORKGROUP\r<br />\n<br />\nHere is the code I tried\r<br />\n<br />\n<strong>TaskService tasksrvc = new TaskService(develop100, sysadmin, develop100, mypassword);</strong> \r<br />\n<br />\nAs you mentioned I have given the remote machine name (develop100) as the domain name, still i am getting an exception. Please help. Do you find any mistake in the code I tried?<br />\n",
+    "PostedDate": "2014-05-10T08:30:01.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1243956",
+    "ThreadId": "544525",
+    "Html": "That is the correct syntax. You may have firewall issues on develop100 that are preventing access.<br />\n",
+    "PostedDate": "2014-05-10T19:40:27.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244214",
+    "ThreadId": "544525",
+    "Html": "Hi dahall,\r<br />\n<br />\nI don't think this exception has something to do with the Windows Firewall. I have asked our System Admin to turn off the Windows Firewall in develop100 and then I tried, still ended up with the same exception &quot;Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))&quot;. \r<br />\n<br />\nAfter researching a lot on this issue, I saw an article which states &quot;You can use this only when the local and remote computers are <strong>in the same domain</strong> or the local computer is <strong>in a domain that the remote computer domain trusts</strong>. Otherwise, the remote computer cannot authenticate the user account specified and it cannot verify that the account is a member of the Administrators group.&quot;  (Unfortunately I cannot ask the admin to set up a domain for me just for this requirement :( )\r<br />\n<br />\nCan this be the reason?\r<br />\n<br />\nRegards,\r<br />\nIncubator226.<br />\n",
+    "PostedDate": "2014-05-12T00:23:58.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

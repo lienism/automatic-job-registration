@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "571718",
+    "ThreadId": "247469",
+    "Html": "\r\n<p>Running on Windows Server 2008 Standard SP1 installed, 32-bit</p>\r\n<p><span></p>\r\n<h2><em>Object reference not set to an instance of an object.</em></h2>\r\n</span><span style=\"font-family:Arial,Helvetica,Geneva,SunSans-Regular,sans-serif\"><strong>Description:\r\n</strong>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.\r\n<br>\r\n<br>\r\n<strong>Exception Details: </strong>System.NullReferenceException: Object reference not set to an instance of an object.</span>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Arial,Helvetica,Geneva,SunSans-Regular,sans-serif\"></p>\r\n<pre>using (TaskService ts = new TaskService(&quot;localhost&quot;, tsuser, tsdomain, tspass, false))<br>Line 20:         {<br><span style=\"color:red\">Line 21:             TaskDefinition td = ts.NewTask();<br></span>Line 22:             td.Principal.LogonType = TaskLogonType.ServiceAccount;<br>Line 23:             td.Principal.UserId = &quot;System&quot;;<br><br>Kind of weird, I already had application deployed and running on another Win2008 box. Not sure if it was SP1 or not. Don't think it was.<br>But now it's just acting weird. Error doesn't really explain much.<br>I checked TaskService ts - it is not NULL. ts.RootFolder is &quot;\\&quot;<br><br>Any help? :)</pre>\r\n</span>\r\n<p></p>\r\n",
+    "PostedDate": "2011-02-24T12:08:35.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "571899",
+    "ThreadId": "247469",
+    "Html": "<p>Can you check to confirm that ts.HighestSupportedVersion is higher than 1.1 and that the Connected property returns true? If so, then the failure has to be in the base COM object failing to call ITaskScheduler.NewTask(0) whilch shouldn't fail.</p>",
+    "PostedDate": "2011-02-24T19:13:11.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572088",
+    "ThreadId": "247469",
+    "Html": "<p>ts.HighestSupportedVersion = 1.1</p>\r\n<p>ts.Connected = true</p>\r\n<p>&nbsp;</p>\r\n<p>I'm assuming problem is with ts.HighestSupportedVersion?</p>",
+    "PostedDate": "2011-02-25T05:18:53.937-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572226",
+    "ThreadId": "247469",
+    "Html": "<p>In the constructor for the TaskService, try changing \"localhost\" to null. Going through the code, it appears that a potential problem may be related to that.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-02-25T09:17:18.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572285",
+    "ThreadId": "247469",
+    "Html": "<p>Thanks for reply dahall,</p>\r\n<p>Unfortunately, the same problem persists :(</p>",
+    "PostedDate": "2011-02-25T11:13:24.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "572464",
+    "ThreadId": "247469",
+    "Html": "<p>If this is happening only on one machine that is running Task Scheduler 1.1, it could be a permissions problem. You need to have SeBatchLogonRight permissions with the account for this machine. You also may need to check the file permissions on the \"%windir%\\Tasks\" directory.</p>",
+    "PostedDate": "2011-02-25T23:37:11.08-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "573232",
+    "ThreadId": "247469",
+    "Html": "<p>Yeah it's related to permissions. I couldn't find SeBatchLogonRight, but I went one group at a time locally, and when finally added RDP and Administrators group - it worked.</p>\r\n<p>Thanks dahall!</p>",
+    "PostedDate": "2011-02-28T05:46:23.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720443",
+    "ThreadId": "247469",
+    "Html": "<p>Hi!</p>\r\n<p>I understand I have a permission problem, becouse I cant see the Tasks list (only the folders).</p>\r\n<p>How can I set the permission to my user, where sould I do it?</p>\r\n<p>Thank you!</p>\r\n<p>Sara.</p>",
+    "PostedDate": "2012-01-04T11:54:55.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720589",
+    "ThreadId": "247469",
+    "Html": "<p>The permissions for enumerating tasks is determined by the account supplied to the constructor of the TaskService class. If not account information is provided, it will run using the permissions of the current user.</p>",
+    "PostedDate": "2012-01-04T17:58:55.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "720653",
+    "ThreadId": "247469",
+    "Html": "<p>Thank you!</p>\r\n<p>I gave permission to the iis user and its start to work.</p>\r\n<p>(right click on the task -&gt;properties-&gt;on the general tab click on change user or group, and add the iis user)</p>\r\n<p>Thank you!</p>\r\n<p>Sara.</p>",
+    "PostedDate": "2012-01-04T23:09:47.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

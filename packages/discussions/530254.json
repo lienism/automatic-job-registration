@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1205128",
+    "ThreadId": "530254",
+    "Html": "This library has been great for scheduling &amp; modifying tasks in Windows Scheduler, but I've run into a problem that I could not find a method for, it may not exist in your library.  How can a previously created and registered task be deleted or unregistered from Windows Scheduler?  I wanted to offer an option to clear out their previously created task, but am having trouble figuring out how to do this.\r<br />\n<br />\nThe TaskService only appears to offer AddTask methods, but not RemoveTask.  I do see that there is a DeleteTask method in the TaskFolder class, but I'm not 100% sure how to utilize this since I was not using any particular folders when I originally implemented scheduling.<br />\n",
+    "PostedDate": "2014-02-08T15:01:24.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206396",
+    "ThreadId": "530254",
+    "Html": "You found it. Removing a task is done through the TaskFolder.RemoveTask method. If a folder has not been specified when registering a task, then it will be found in the root folder. TaskService has a RootFolder property to expose this. See this link for an example: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation#editor\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation#editor</a>.<br />\n",
+    "PostedDate": "2014-02-10T08:19:52.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-02-10T17:26:07.22-08:00"
+  },
+  {
+    "Id": "1206597",
+    "ThreadId": "530254",
+    "Html": "Perfect.  Figured this out a bit before you posted, but thanks for confirming!<br />\n",
+    "PostedDate": "2014-02-10T17:26:45.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

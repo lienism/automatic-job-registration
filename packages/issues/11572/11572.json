@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Thank you for not only finding the issue, but reporting it with a fix. It has been corrected in the code and will be delivered with the next release.",
+    "ClosedDate": "2014-02-12T22:36:55.557-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The code for weeklyWedCheck_CheckedChanged does not have an implementation.\n\nLine 67 should be:\n\nSetWeeklyDay(sender as CheckBox, DaysOfTheWeek.Wednesday);",
+    "LastUpdatedDate": "2017-12-11T21:32:28.72-08:00",
+    "PlannedForRelease": "Release 2.0.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-02-12T13:34:53.41-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Weekly Wed Check is not recording a change",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11572
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

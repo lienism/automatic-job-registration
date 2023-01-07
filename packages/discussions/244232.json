@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "559095",
+    "ThreadId": "244232",
+    "Html": "\r\n<p>How do you create a schedule for the first day of every month with TaskScheduler.MonthlyTrigger?</p>\r\n",
+    "PostedDate": "2011-02-01T18:40:12.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "559146",
+    "ThreadId": "244232",
+    "Html": "\r\n<p>The default constructor for MonthlyTrigger does just that.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>td.Triggers.Add(<span style=\"color:blue\">new</span> MonthlyTrigger());\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-02-01T22:18:59.92-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909429",
+    "ThreadId": "244232",
+    "Html": "<p>Is MonthlyTrigger() no longer a valid constructor?&nbsp; It appears MonthlyTrigger(int dayOfMonth, MonthsOfTheYear monthsOfYear) is the only valid constructor now.</p>",
+    "PostedDate": "2012-09-06T20:07:43.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909621",
+    "ThreadId": "244232",
+    "Html": "<p>The default constructor overlapped with the other that has default parameters so the default was removed. It will still work though to just create one as in the example above. You will get a trigger for the 1st day of the month, every month of the year.</p>",
+    "PostedDate": "2012-09-07T06:53:40.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

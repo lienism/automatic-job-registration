@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "658324",
+    "ThreadId": "269114",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am new to C# world and just started to use this library. My company is a little behind on development tool so I am still on Visual Studio 2005. My&nbsp;OS is Windows XP SP3.</p>\r\n<p>Here is my test code snippet:</p>\r\n<p>TaskDefinition tDefinition = tService.NewTask();<br>\r\nMonthlyDOWTrigger trigger = new MonthlyDOWTrigger(DaysOfTheWeek.Monday, MonthsOfTheYear.January, WhichWeek.FirstWeek);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>\r\ntrigger.Enabled = true;<br>\r\ntDefinition.Triggers.Add(trigger);</p>\r\n<p>When it is executed, the last line gives me ArgumentException:</p>\r\n<p>System.Argumentexception: Value does not fall within the expected range.<br>\r\n&nbsp; at Microsoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger&amp; Trigger)<br>\r\n&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData()<br>\r\n&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.Bind(ITask iTask)<br>\r\n&nbsp; at Microsoft.Win32.TaskScheduler.TriggerCollection.Add(Trigger unboundTrigger)</p>\r\n<p>Any idea what I am doing wrong?</p>\r\n<p>Thanks for your help!</p>\r\n",
+    "PostedDate": "2011-08-15T06:39:33.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "658389",
+    "ThreadId": "269114",
+    "Html": "<p>You have uncovered a bug for V1. It is corrected in source release 69701 and will be released in version 1.6.4 of the library. Right now there is no simple workaround with 1.6.3 that can be identified.</p>",
+    "PostedDate": "2011-08-15T09:44:03.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

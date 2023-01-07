@@ -1,0 +1,80 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Reported to Microsoft.",
+    "ClosedDate": "2013-03-11T12:18:31.23-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I received the following exception when calling GetRunningTasks:\n \n\"The function attempted to use a name that is reserved for use by another transaction. (Exception from HRESULT: 0x80071A90)\"\n \nHere is the call stack:\nat Microsoft.Win32.TaskScheduler.V2Interop.TaskSchedulerClass.GetRunningTasks(Int32 flags)\nat Microsoft.Win32.TaskScheduler.TaskService.GetRunningTasks(Boolean includeHidden) in TaskService.cs:line 113\n \nSection of code (line 113 is the return statement):\n```\npublic RunningTaskCollection GetRunningTasks(bool includeHidden)\n{\n    return v2 ? new RunningTaskCollection(this, v2TaskService.GetRunningTasks(includeHidden ? 1 : 0)) : new RunningTaskCollection(this);\n}\n```\nThe next time I called GetRunningTasks it succeeded but I'm concerned this exception is going to happen again.\n \nThanks,\nMichael DePouw",
+    "LastUpdatedDate": "2013-05-16T04:49:10.627-07:00",
+    "PlannedForRelease": "Release 1.9.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-12-10T14:16:58.363-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "The function attempted to use a name that is reserved for use by another transaction. (Exception from HRESULT: 0x80071A90)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9711
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I have never heard of this error nor was I able to find any reference to it online related to the Task Scheduler. Please let me know if you ever see this error again as it has never been reported here.",
+      "PostedDate": "2011-12-10T22:48:32.34-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ok, thanks dahall.  And thanks for the quick response.\r\n\r\nMD",
+      "PostedDate": "2011-12-11T14:10:51.43-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I think it is related to me using the Display All Running Tasks via the MMC concurrently.\r\n\r\nI just had it happen to me again.  When it happened I had the Display All Running Tasks form from the Microsoft Task Schedule MMC open and I was repeated clicking refresh.\r\n\r\nI ran the task again and didn't open the form from the MMC and it didn't happen.  This doesn't prove it was the culprit but it is a piece of evidence.",
+      "PostedDate": "2011-12-11T19:32:57.22-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:03.737-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I ran this test with MMC up and found the same error. I have traced the problem back to the Microsoft native library. I will be posting the issue as a concurrency problem to Microsoft.",
+      "PostedDate": "2013-03-11T12:18:18.32-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-03-11T12:18:31.23-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks @dahall!  That's great news.  Thanks for following up on the matter.\r\n\r\nRegards,\nMike DePouw",
+      "PostedDate": "2013-03-11T12:57:45.69-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:10.627-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

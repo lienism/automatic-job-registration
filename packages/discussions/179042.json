@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "387397",
+    "ThreadId": "179042",
+    "Html": "<p>What is this particular property?</p>\r\n<p>I am trying to determine if a changed occured on a task and was wondering if this the the Date of last modified for a particular task.</p>",
+    "PostedDate": "2010-02-25T04:42:36.53-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "402164",
+    "ThreadId": "179042",
+    "Html": "<p>The documentation says it &quot;gets or sets the date and time when the task is registered.&quot; So, I assume you can use it to determine when it was last registered.</p>",
+    "PostedDate": "2010-02-25T09:15:41.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

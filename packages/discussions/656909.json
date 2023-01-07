@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "1480345",
+    "ThreadId": "656909",
+    "Html": "If you have a scheduled task and the task's program/script path has quotations in it, the library isn't returning a proper path using the Path() property (ie. it's keeping the quotations).<br />\n<pre><code>Dim execActionPath As String\nIf taskObject.Definition.Actions.Count = 1 Then\n  execActionPath = DirectCast(taskObject.Definition.Actions(0), TaskScheduler.ExecAction).Path\nEnd If</code></pre>\n\nAs a workaround to this issue I added this to my code...<br />\n<pre><code>If execActionPath.Contains(Chr(34)) = True Then\n  execActionPath = execActionPath.Replace(Chr(34), &quot;&quot;)\nEnd If</code></pre>\n\n",
+    "PostedDate": "2016-08-03T20:03:00.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480389",
+    "ThreadId": "656909",
+    "Html": "I have done some more testing. I set up two test tasks, one with an action with a path to an executable with no spaces in the path and another <strong>with</strong> spaces in the path. The TaskScheduler library returned a proper path (that is, one without quotes) for the first task but an incorrect path (that is, one <strong>with</strong> quotes) for the second task.\r<br />\n<br />\nWeird.<br />\n",
+    "PostedDate": "2016-08-04T13:01:17.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480390",
+    "ThreadId": "656909",
+    "Html": "I have confirmed that it will consistently return exactly what was put in. If the property was initially set with a quoted path, a quoted path will be returned. This is not a bug, but how the base Windows library works with the input strings.<br />\n",
+    "PostedDate": "2016-08-04T13:01:42.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-08-04T16:37:43.707-07:00"
+  },
+  {
+    "Id": "1480391",
+    "ThreadId": "656909",
+    "Html": "The way it appears is that the Windows Task Scheduler only includes quotes in the path when the path has spaces in it. Unfortunately the TaskScheduler library doesn't take this into account hence my hack-ish workaround.<br />\n",
+    "PostedDate": "2016-08-04T13:04:46.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480392",
+    "ThreadId": "656909",
+    "Html": "With the way that the TaskScheduler library handles paths, I would need to implement that code hack whenever my program goes to verify if the task action paths are valid.<br />\n<br />\nMy code path works like this...<br />\nCheck if the task exists which uses a call to the doesTaskExist() function. That function first checks to see if the actual task exists. It then checks the ExecAction path and makes sure that the associated ExecAction path exists or not. This is where things can break down. If the library returns a path with quotes in it and I just feed it to a call of IO.File.Exists() then the program will think that the executable doesn't exist thus making the task invalid.<br />\n",
+    "PostedDate": "2016-08-04T13:10:55.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480399",
+    "ThreadId": "656909",
+    "Html": "In other words, before taking the path from the library and feeding it into IO.File.Exists() I will have to strip off any and all quotes before calling it or IO.File.Exists() will return an incorrect response.<br />\n<br />\nGreat... gots to love Windows sometimes. There are times it just makes no damn sense.<br />\n",
+    "PostedDate": "2016-08-04T14:24:40.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480422",
+    "ThreadId": "656909",
+    "Html": "While the base library from Microsoft doesn't do any checking for the Path value, it appears their Management Console applet does validate the path and normalizes it as you indicated (i.e. quotes if spaces included, otherwise no quotes). I'm hesitant to force validation in this wrapper that differs from the behavior of the base library. However, I will make sure the UI library does that validation.<br />\n",
+    "PostedDate": "2016-08-04T16:49:18.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480424",
+    "ThreadId": "656909",
+    "Html": "You can make it an optional ability of the Path property. You can include a way to pass a Boolean value if you want it normalized. By default it returns a non-normalized value but if you pass a True value to the Path property it returns a normalized path.<br />\n",
+    "PostedDate": "2016-08-04T16:55:40.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480475",
+    "ThreadId": "656909",
+    "Html": "As a property, it can't take parameters. From a library standpoint, given that the native property will return whatever was put in, my inclination is to validate the input using a separate method like 'SetValidatedPath(string filePath)'. Then, the correct value would always be set and therefore always correct on return. What do you think?<br />\n",
+    "PostedDate": "2016-08-05T06:48:07.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480486",
+    "ThreadId": "656909",
+    "Html": "You mean... GetValidatedPath().<br />\n",
+    "PostedDate": "2016-08-05T10:39:49.29-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480488",
+    "ThreadId": "656909",
+    "Html": "You could put a new property into the ExecAction class.\r<br />\n<br />\nAdd this at the top of the Class right below the ScriptIdentifer variable.<br />\n<pre><code>        /// &lt;summary&gt;\n        /// Tells the Path property if it should return a fully validated executable path. The default setting is False.\n        /// &lt;/summary&gt;\n        public bool validatePath = false;</code></pre>\n\nAnd then finally put this in...<br />\n<pre><code>                if (this.validatePath)\n                {\n                    return GetProperty&lt;string, IExecAction&gt;(nameof(Path), &quot;&quot;);\n                }\n                else\n                {\n                    return GetProperty&lt;string, IExecAction&gt;(nameof(Path), &quot;&quot;).Replace(&quot;\\&quot;&quot;, &quot;&quot;);\n                }</code></pre>\n\n",
+    "PostedDate": "2016-08-05T11:08:35.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480495",
+    "ThreadId": "656909",
+    "Html": "SetValidatedPath is what I intended. If correct on input, then it will be correct on retrieval. It is more important to make sure it is correct on input so that the action will actually do something. Doing it this way will also maintain the integrity of the expected behaviors.<br />\n",
+    "PostedDate": "2016-08-05T13:19:54.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480500",
+    "ThreadId": "656909",
+    "Html": "Then basically you're telling me that I'm just going to have to include my own code to sanitize the output of the Path property when retrieving the path of the ExecAction. I need to do this since every run time of the program has a function that checks to see if the task's ExecAction path is valid in the sense that the file exists which involves sending the path property through IO.File.Exists() function. Without a sanitized path, that is, one without quotes, the IO.File.Exists() function returns an incorrect returned value.<br />\n<br />\nI was hoping that you would include it since you have far more knowledge of how a path passed from the Windows Task Scheduler than I do and how it could get mangled in the process.<br />\n<br />\nYes, I understand that when creating your task you should take care when setting things up for your task but what if someone decides to mangle the task that your program depends upon? They could change the path of the ExecAction thus making your task invalid. The purpose of the code that I have in my program is to make sure that that doesn't happen and if it does detect that the task has been mangled by the user, it deletes the task and re-creates it.<br />\n",
+    "PostedDate": "2016-08-05T18:58:48.823-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

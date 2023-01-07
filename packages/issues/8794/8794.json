@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Under V2 &#40;Vista and higher&#41;, whenever you assign a value to DeleteExpiredTaskAfter you must also assign a value to EndBoundary. I also noticed your use of Repetition.Duration without specifying Repetition.Interval. The DailyTrigger will already repeat each day based on the specified DaysInterval. I think that line may be extraneous. See dicussion entry for working code.",
+    "ClosedDate": "2011-06-13T13:32:25.243-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Code below, compiled either as .NET 3.0 or .NET 3.5, fails to execute in Windows 7 Professional SP1 64-bit. Works without problems in Windows XP computers.\n \nusing (TaskService taskService = new TaskService())\n{\n    TaskDefinition task = taskService.NewTask();\n \n    Trigger trigger = new DailyTrigger(1);\n    trigger.Repetition.Duration = new TimeSpan(24, 0, 0);\n \n    task.Triggers.Add(trigger);\n    task.Actions.Add(new ExecAction(\"notepad.exe\", String.Empty, @\"C:\\Windows\"));\n \n    // Ensures the task is marked with 'delete the task if it is not scheduled to run again'\n    task.Settings.DeleteExpiredTaskAfter = new TimeSpan(0, 1, 0);\n \n    // We want that the task is executed under a specific user even when the user is not logged in\n    taskService.RootFolder.RegisterTaskDefinition(\"Test Task\", task, TaskCreation.CreateOrUpdate, \"username\", \"password\", TaskLogonType.Password, null);\n}\n \nThe following exception is thrown:\n \nUnhandled Exception: System.Runtime.InteropServices.COMException (0x80041319): (41,4):EndBoundary:\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at VolvoIt.Waf.Tools.CreateScheduledTasks.Program.Main(String[] args)",
+    "LastUpdatedDate": "2013-05-16T04:49:11.837-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-06-13T12:16:45.657-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Not setting Trigger.EndBoundary throws exception in Win7",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8794
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

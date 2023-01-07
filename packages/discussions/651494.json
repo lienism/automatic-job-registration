@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1463691",
+    "ThreadId": "651494",
+    "Html": "I read the source code and found that is a API: GetTriggerString for V1, but not V2.\r<br />\nSo Task Scheduler Managed Wrapper implement it.\r<br />\nBut I found the output string of V2 is same with the windows &quot;task scheduler&quot;.\r<br />\nSo it is possible that is some API of V2 to getTriggerString, no need to implement it.<br />\n",
+    "PostedDate": "2016-02-19T00:14:52.623-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463728",
+    "ThreadId": "651494",
+    "Html": "The native V2 library does not include the trigger string output. It is implemented inside the &quot;Task Scheduler&quot; tool. I implemented it as part of the wrapper.<br />\n",
+    "PostedDate": "2016-02-19T08:17:14.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-19T08:20:54.887-08:00"
+  }
+]

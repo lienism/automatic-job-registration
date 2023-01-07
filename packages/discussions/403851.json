@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "944179",
+    "ThreadId": "403851",
+    "Html": "\r\n<p>I am not an expert coder by any means so forgive me if this question is obvious.</p>\r\n<p>I would like to create a object that stores all the task information from the editor UI.&nbsp; I see how to edit an existing task but can I use the editor GUI to enter information for a new task?</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you in Advance.</p>\r\n",
+    "PostedDate": "2012-11-19T12:27:37.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944584",
+    "ThreadId": "403851",
+    "Html": "\r\n<p>You can use either the TaskEditDialog or TaskSchedulerWizard and then just initialize them or construct them with just a TaskService instance. If you wish to register the task (make it effective on the system) you will need to set the RegisterTaskOnAccept\r\n property to true.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">// Get the service on the local machine</span>\r\n<span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n{\r\n   <span style=\"color:green\">// Setup editor so that it will create a new task definition,</span>\r\n   <span style=\"color:green\">// make it editable, and register it when user clicks Ok</span>\r\n   TaskEditDialog editorForm = <span style=\"color:blue\">new</span> TaskEditDialog(ts);\r\n   <span style=\"color:blue\">if</span> (editorForm.ShowDialog() == DialogResult.OK)\r\n   {\r\n      <span style=\"color:green\">// The editorForm.TaskDefinition now contains all the</span>\r\n      <span style=\"color:green\">// information the user input into the form.</span>\r\n   }\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2012-11-20T07:11:14.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "944609",
+    "ThreadId": "403851",
+    "Html": "\r\n<p>Thank you, this is exactly what I was looking for.</p>\r\n",
+    "PostedDate": "2012-11-20T07:52:19.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1102816",
+    "ThreadId": "460953",
+    "Html": "Hello, I have tried each overload of the TaskEventLog constructor, but each variation returns no results.  I know this cannot be true as when I look at the event history in Task Scheduler, there are all kinds of rows there.  I also tried using CorrelatedTaskEventLog, but when I tried enumerating the results from that, it timed out.  Is this simply a permissions thing?  I don't see why though as the user I'm logging in with has administrator rights.  Thanks in advance for any assistance anyone can provide.<br />\n",
+    "PostedDate": "2013-10-02T09:25:20.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1102932",
+    "ThreadId": "460953",
+    "Html": "Due to UAC, you may need to run your code as administrator in order to see the listing.<br />\n",
+    "PostedDate": "2013-10-02T14:00:19.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

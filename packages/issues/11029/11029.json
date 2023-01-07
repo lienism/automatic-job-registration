@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-05-18T21:41:00.713-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi Folks,\n\nI do have a requirement:\n\n1.Need to get the status of all scheduled tasks schduled in a remote machine\n2.Based on status need to send an alert email\n\n\nThis is my sample code:\n\n\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing Microsoft.Win32.TaskScheduler;\nusing System.Threading;\nusing System.Diagnostics;\nusing System.Net;\nusing System.Net.Mail;\nusing System.Data.SqlClient;\nusing System.Data;\nusing System.Devices;\n//using System.Devices.RemoteDeviceManager;\n//using System.Diagonistics.EventLog;\n\n\nnamespace TaskSchedulerRemote\n{\n    class Program\n    {\n        //TaskService  01_server = getTaskService(\"\\\\\\\\123.122.222.222\", \"administrator\", \"domain1\", \"pwd0\", true);\n        //TaskService 02_server = getTaskService(\"\\\\\\\\123.122.222.222\", \"administrator\", \"domain2\", \"pwd1\", true);\n        static void Main(string[] args)\n        {\n            using (TaskService task = new TaskService())\n            {\n                TaskDefinition td = task.NewTask();\n                td.RegistrationInfo.Description = \"RF Report\";\n                td.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\test.log\", null));\n                while (true)\n                {\n                    Task taskdDef = task.FindTask(\"RF Report\");\n                    //string registeredTask;\n                    //string[] taskCollection = { \"\", \"\", \"\" };\n                    //foreach (string str in taskCollection)\n                    //{\n\n                    //For Each registeredTask In taskCollection\n\n                    switch (taskdDef.State)\n                    {\n                        case TaskState.Queued:\n                            Console.WriteLine(\"Queued\");\n                            break;\n                        case TaskState.Ready:\n                            Console.WriteLine(\"Ready\");\n                            break;\n                        case TaskState.Unknown:\n                            Console.WriteLine(\"Unknown\");\n                            break;\n                        case TaskState.Disabled:\n                            Console.WriteLine(\"Disabled\");\n                            break;\n                        case TaskState.Running:\n                            Console.WriteLine(\"Running\");\n                            break;\n                    }\n                    Thread.Sleep(10000);\n                    //MailMessage Msg = new MailMessage();\n                    //MailAddress fromMail = new MailAddress(\"emailid\");\n                    //// Sender e-mail address.\n                    //Msg.From = fromMail;\n                    //// Recipient e-mail address.\n                    //Msg.To.Add(new MailAddress(\"emailid\"));\n                    //Msg.Priority = MailPriority.High;\n                    //// Subject of e-mail\n\n                    //Msg.Subject = \"Scheduled Task Status Report:\" + System.DateTime.Now;\n\n\n\n\n                    //Msg.Body += \"<html><body><Table><tr><td>Hi All,</td></tr><tr><td>Please find below the status report of schduled task :</td></tr></Table></body></html><html><body>\";\n                    //Msg.Body += \"<html><body><Table><tr><td>Regards,</td></tr><tr><td></td></tr><tr><td></td></tr>\" +\n                    //\"<tr><td><b>NOTE: This is an automated mail. Please, do not reply.</b> </td></tr></table></body></html>\";\n                    //Msg.IsBodyHtml = true;\n                    //string sSmtpServer = \"\";\n                    //sSmtpServer = \"mailservername\";\n                    //SmtpClient a = new SmtpClient();\n                    //a.Host = sSmtpServer;\n                    //a.EnableSsl = false;\n                    //try\n                    //{\n                    //    Console.WriteLine(\"Sending mail...\");\n                    //    a.Send(Msg);\n                    //    Console.WriteLine(\"Mail was sent successfully!\");\n                    //}\n                    //catch (Exception ep)\n                    //{\n                    //    Console.WriteLine(\"failed to send mail:\");\n                    //    Console.WriteLine(ep.Message);\n                    //}\n\n\n\n                    //}\n                }\n\n                string sSource = \"MyCustom Group\";\n                string sLog = \"Application\";\n                string sEvent = \"\";\n\n\n                if (!EventLog.SourceExists(sSource))\n                    EventLog.CreateEventSource(sSource, sLog);\n\n\n                EventLog.WriteEntry(sSource, sEvent, EventLogEntryType.Error, 234);\n\n\n\n            }\n        }\n    }\n}\n\n\nNot sure how to connect to the remote server/machine and read and get the task status details and also need to amend that status details in email.\n\nCould anyone please look into my code and suggest.\n\nMany Thanks,\nSisir",
+    "LastUpdatedDate": "2013-05-18T21:41:00.713-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-05-17T06:59:14.76-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Code to check the staus of scheduled task in remote machine and fire email",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11029
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm not clear what you are trying to accomplish. However, you can find examples of how to connect to a remote server and how to retrieve information about tasks in the Documentation on the [Examples page](https://taskscheduler.codeplex.com/wikipage?title=Examples). I don't believe this is an issue with the library so I will be closing this issue.",
+      "PostedDate": "2013-05-18T21:39:20.493-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-18T21:41:00.713-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

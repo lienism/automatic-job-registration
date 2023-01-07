@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "853087",
+    "ThreadId": "360761",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I recently read a post about connecting to remote servers where one of the ways to check credentials was to open my local task scheduler (windows 7), and connect to a remote server as another user. I'm connecting to a windows server 2008 r2 machine, and\r\n it works fine when i plug in my credentials - DOMAIN\\User, password, server name etc.</p>\r\n<p>When i use exactly the same credentials from within my c# application, i get an access denied error message. What i'm not sure about is why i would be able to connect via the task scheduler mmc, but not my application - am I missing rights or something along\r\n those lines?</p>\r\n<p>--- edit</p>\r\n<p>so, it seems that i can only do this using the overloaded constructor - if i just make a new instance of TaskService, and set the target server / username / password / domain separately, it doesn't work, but with all the details inside the constructor, it\r\n works fine.</p>\r\n",
+    "PostedDate": "2012-06-24T21:02:52.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

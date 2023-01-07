@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "207639",
+    "ThreadId": "61226",
+    "Html": "<p>Can you post an example of how to using the ComHandlerAction, including an implementation of the ITaskHandler COM interface.</p>\r\n<p>Thanks<span style=\"color:#2b91af;font-size:x-small\"></span></p>",
+    "PostedDate": "2009-07-01T10:43:02.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "208517",
+    "ThreadId": "61226",
+    "Html": "<div id=\"ctl00_ctl00_MasterContent_Content_PostRepeater_ctl00_BodyDiv\">\r\n<p>I am interested to use this library in my application for firing an event at a certain scheduled time. In this scenario I suppose that ComHandlerAction is good for me but I have no example how to use it.&nbsp; Besides&nbsp;surely the scheduling code will be implemented within a thread so it is important the library to be thread-safe. Have you never used the library in this context ?</p>\r\n<p>Thanks</p>\r\n</div>",
+    "PostedDate": "2009-07-04T06:52:20.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210120",
+    "ThreadId": "61226",
+    "Html": "<p>This library wraps (hides) the ITaskScheduler COM interface. The ComHandlerAction class wraps the functionality of the IComHandlerAction interface in the Task Scheduler 2.0 library. It effectively loads the specified COM object and executes methods found in the mandatory exposed interface ITaskHandler. For more information, go to <a href=\"http://msdn.microsoft.com/en-us/library/aa380613(VS.85).aspx\">http://msdn.microsoft.com/en-us/library/aa380613(VS.85).aspx</a>. To fire an event at a certain scheduled time you could create a COM object that exposes an ITaskHandler interface and set the GUID for the COM object in the ComHandlerAction.ClassId property. You then need to create&nbsp;the appropriate trigger to set the time to call the object. (See example code on home page and in other discussion threads.)</p>\r\n<p>As far as thread safety, I don't know as I've never tried it. To my recollection, there isn't much that would be affected if you are creating the instances of the TaskService and TaskDefinition within the same thread. If you try it and have problems, be sure to post an issue.</p>",
+    "PostedDate": "2009-07-08T12:10:57.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "210201",
+    "ThreadId": "61226",
+    "Html": "<p>This thread peaked my interest. I spent a few hours today figuring out how to create&nbsp;a COM library in C# that can be executed using the COMHandlerAction from the Task Scheduler.&nbsp;The sample project&nbsp;is now in the Downloads section.</p>",
+    "PostedDate": "2009-07-08T16:18:12.533-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "472145",
+    "ThreadId": "61226",
+    "Html": "<p>Thank you for supplying this interesting example.</p>\r\n<p>When starting your ComHandler task I get the error:<br>Task Scheduler failed to launch action &quot;&quot; in instance &quot;{b92b6d19-3e39-4561-a700-4309f8d8be28}&quot; of task &quot;\\Meinl\\TestComHandler&quot;. Additional Data: Error Value: 2147746132.<br>Last Run Result: 0x80040154</p>\r\n<p>Which seems to mean &quot;class not registered&quot;.</p>\r\n<p>What am I doing wrong?</p>\r\n<p>Here is what I did:</p>\r\n<p>1. Built your task in VS as admin<br>2. Ran the COMTask.reg file (had to convert it from UTF-8 to ASCII first)<br>3. Created a task via the Task Scheduler UI using the following TestComHandler.XML file<br>with:<br>&nbsp; &lt;Actions Context=&quot;Author&quot;&gt;<br>&nbsp;&nbsp;&nbsp; &lt;ComHandler&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ClassId&gt;{CE7D4428-8A77-4c5d-8A13-5CAB5D1EC734}&lt;/ClassId&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/ComHandler&gt;<br>&nbsp; &lt;/Actions&gt;</p>\r\n<p><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;<br>&lt;Task version=&quot;1.2&quot; xmlns=&quot;<a href=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">http://schemas.microsoft.com/windows/2004/02/mit/task</a>&quot;&gt;<br>&nbsp; &lt;RegistrationInfo&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Date&gt;2010-07-24T18:22:22.5119635&lt;/Date&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Author&gt;zulu\\pm&lt;/Author&gt;<br>&nbsp; &lt;/RegistrationInfo&gt;<br>&nbsp; &lt;Triggers&gt;<br>&nbsp;&nbsp;&nbsp; &lt;CalendarTrigger&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;StartBoundary&gt;2010-07-24T18:21:54.3523529&lt;/StartBoundary&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Enabled&gt;true&lt;/Enabled&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ScheduleByDay&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;DaysInterval&gt;1&lt;/DaysInterval&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ScheduleByDay&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/CalendarTrigger&gt;<br>&nbsp; &lt;/Triggers&gt;<br>&nbsp; &lt;Principals&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Principal id=&quot;Author&quot;&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;UserId&gt;zulu\\pm&lt;/UserId&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;LogonType&gt;InteractiveToken&lt;/LogonType&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/Principal&gt;<br>&nbsp; &lt;/Principals&gt;<br>&nbsp; &lt;Settings&gt;<br>&nbsp;&nbsp;&nbsp; &lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;<br>&nbsp;&nbsp;&nbsp; &lt;DisallowStartIfOnBatteries&gt;true&lt;/DisallowStartIfOnBatteries&gt;<br>&nbsp;&nbsp;&nbsp; &lt;StopIfGoingOnBatteries&gt;true&lt;/StopIfGoingOnBatteries&gt;<br>&nbsp;&nbsp;&nbsp; &lt;AllowHardTerminate&gt;true&lt;/AllowHardTerminate&gt;<br>&nbsp;&nbsp;&nbsp; &lt;StartWhenAvailable&gt;false&lt;/StartWhenAvailable&gt;<br>&nbsp;&nbsp;&nbsp; &lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;<br>&nbsp;&nbsp;&nbsp; &lt;IdleSettings&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Duration&gt;PT10M&lt;/Duration&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;WaitTimeout&gt;PT1H&lt;/WaitTimeout&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/IdleSettings&gt;<br>&nbsp;&nbsp;&nbsp; &lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Enabled&gt;true&lt;/Enabled&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Hidden&gt;false&lt;/Hidden&gt;<br>&nbsp;&nbsp;&nbsp; &lt;RunOnlyIfIdle&gt;false&lt;/RunOnlyIfIdle&gt;<br>&nbsp;&nbsp;&nbsp; &lt;WakeToRun&gt;false&lt;/WakeToRun&gt;<br>&nbsp;&nbsp;&nbsp; &lt;ExecutionTimeLimit&gt;P3D&lt;/ExecutionTimeLimit&gt;<br>&nbsp;&nbsp;&nbsp; &lt;Priority&gt;7&lt;/Priority&gt;<br>&nbsp; &lt;/Settings&gt;<br>&nbsp; &lt;Actions Context=&quot;Author&quot;&gt;<br>&nbsp;&nbsp;&nbsp; &lt;ComHandler&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ClassId&gt;{CE7D4428-8A77-4c5d-8A13-5CAB5D1EC734}&lt;/ClassId&gt;<br>&nbsp;&nbsp;&nbsp; &lt;/ComHandler&gt;<br>&nbsp; &lt;/Actions&gt;<br>&lt;/Task&gt;</p>",
+    "PostedDate": "2010-07-24T09:34:43.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "475483",
+    "ThreadId": "61226",
+    "Html": "<p>I just took my code which worked under XP and Vista and am seeing failures under Win7. I will post my solution once I work through the problem.</p>",
+    "PostedDate": "2010-08-02T09:00:14.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983817",
+    "ThreadId": "61226",
+    "Html": "\r\n<p>This is now working and is available under the Downloads area.</p>\r\n",
+    "PostedDate": "2013-01-07T09:18:40.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234287",
+    "ThreadId": "61226",
+    "Html": "Error: Task Scheduler failed to launch action &quot;&quot; ..................................\r<br />\n<br />\nI found one source of this error. I mean the reason why &quot;&quot; is blank and not appearing with task name.\r<br />\n<br />\nPossible Reason: The assembly is not registered for COM or Not made as COM visible.\r<br />\n<br />\nSteps:<br />\n<ol>\n<li>Go to the properties window of the your project where the COM Handler is registered.</li>\n<li>Click on 'Assembly Information' button.</li>\n<li>\nA checkbox appears which indicates &quot;Mark as COM Visible&quot;. Check this.<br />\n</li>\n</ol>\nI guess, some part of this info is provided by Mr. Dahall but I just wanted to share so that you guys can recheck this setting. Thanks.\r<br />\n<br />\nCHeers,\r<br />\nJojo<br />\n",
+    "PostedDate": "2014-04-15T06:15:39.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234648",
+    "ThreadId": "61226",
+    "Html": "Solution to Error:\r<br />\n<br />\nTask Scheduler failed to launch action &quot;..NotificationCOMService&quot; in instance &quot;{d9fa820c-da53-4ed3-8fc4-4df1e90ef1e1}&quot; of task &quot;\\NotiFicaTions&quot;. Additional Data: Error Value: 2148734217.\r<br />\n<br />\nIt needs a setting in Assembly properties:<br />\n<ol>\n<li>Select your project which has above COMHandler class. </li>\n<li>Go to properties. Then click on &quot;Build&quot; tab on left.</li>\n<li>\nAt bottom, there is checkbox called - Register for COM interop. Check it.<br />\n</li>\n</ol>\nNow compile the assembly and run the code. Hope your error gets resolved.<br />\n",
+    "PostedDate": "2014-04-16T03:58:19.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-23T20:56:32.957-07:00"
+  }
+]

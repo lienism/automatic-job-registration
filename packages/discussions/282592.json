@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "710665",
+    "ThreadId": "282592",
+    "Html": "\r\n<p>Hi, the property Settings.RunOnlyIfLoggedOn is used in v1 only.&nbsp; How do I check a task's RunOnlyIfLoggedOn flag in Windows 7?\r\n<br>\r\n<br>\r\nThanks</p>\r\n",
+    "PostedDate": "2011-12-11T17:23:29.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712819",
+    "ThreadId": "282592",
+    "Html": "<p>Tasks are registered under an account in Windows 7 and that account, if a password is provided, will be logged in and the task will run under its permissions.</p>",
+    "PostedDate": "2011-12-15T10:00:30.58-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "712906",
+    "ThreadId": "282592",
+    "Html": "<p>I'm write an application to update the existing tasks' RunOnlyIfLoggedOn flag.&nbsp; If it was set to true, then update it to be false.&nbsp; I'm having problem to get this value in Window7 environment.&nbsp; Any idea?</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2011-12-15T12:53:44.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "713328",
+    "ThreadId": "282592",
+    "Html": "<p>On Windows 7, you need to register the task with a TaskLogonType of either InteractiveToken or Group. See <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa380746(v=VS.85).aspx\">this link</a>&nbsp;for more information.</p>",
+    "PostedDate": "2011-12-16T11:06:00.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "686401",
+    "ThreadId": "276460",
+    "Html": "\r\n<p>ive got this code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">class</span> TaskEditor {\r\n\r\n        <span style=\"color:blue\">public</span> TaskEditor() {\r\n            DialogResult res;\r\n\r\n            <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService()) {\r\n                Task t = ts.GetTask(<span style=\"color:#a31515\">&quot;command&quot;</span>);\r\n                TaskEditDialog editorForm = <span style=\"color:blue\">new</span> TaskEditDialog(t, <span style=\"color:blue\">true</span>, <span style=\"color:blue\">true</span>);\r\n                res = editorForm.ShowDialog();\r\n            }\r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>and everything seems fine there, except when it compiles it cant seem to find Microsoft.Win32.TaskSchedulerEditor.</p>\r\n<p>Im using 1.7 and Visual Studio 2010. Ive added the .dll to my references and included the correct using directive, but it doesnt seem to want to work. Any ideas?</p>\r\n",
+    "PostedDate": "2011-10-19T08:00:14.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "686602",
+    "ThreadId": "276460",
+    "Html": "<p>TaskSchedulerEditor is a separate assembly. On the downloads page for 1.7, you also need to extract all the files from the second download (TaskSchedulerEditor.zip) and reference the TaskSchedulerEditor.dll.</p>\r\n<p>On another note, I'd make sure you have retrieved a valid task with the GetTask method before calling the editor.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">if</span> (t != <span style=\"color: blue;\">null</span>)\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-10-19T15:54:44.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "703483",
+    "ThreadId": "276460",
+    "Html": "<p>I have the same problem too.&nbsp; If I want to use TaskService and TaskEditDialog I cannot do it because both have the same name.</p>\r\n<p>Surely I am doing something basic wrong.&nbsp;</p>\r\n<p>How can I use both assemblies at the same time, in the same .cs&nbsp;?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2011-11-25T12:29:29.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "703994",
+    "ThreadId": "276460",
+    "Html": "<p>Yes, in fact you <em>must </em>use both in order to use TaskEditDialog. You need to extract all the assemeblies from both downloads and then add them all to your project. There are support assemblies for the TaskSchedulerEditor.dll.</p>",
+    "PostedDate": "2011-11-27T21:41:51-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "704822",
+    "ThreadId": "276460",
+    "Html": "<p>Sorry but I don't know what to do:</p>\r\n<p>On my WinFormsApplication-&gt;References, &nbsp;I have added;<br />&nbsp; -Microsoft.Win32.TaskScheduler<br />&nbsp;&nbsp;-Microsoft.Win32.TaskSchedulerEditor</p>\r\n<p>In the source-cs code:</p>\r\n<pre>using Microsoft.Win32.TaskScheduler;</pre>\r\n<p>But when I try to use it:</p>\r\n<pre>TaskEditDialog editForm = new TaskEditDialog();</pre>\r\n<p>Both references to class TaskEditDialog are marked with error and when I try to compile it I get:</p>\r\n<p>The type or namespace 'TaskEditDialog' could not be found (are you missing a ......);</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-11-29T08:16:37.817-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "705134",
+    "ThreadId": "276460",
+    "Html": "<ol>\r\n<li>From the Downloads page, download the TaskScheduler.zip and TaskSchedulerEditor.zip files and extract all their contents to a folder on your system.</li>\r\n<li>From your project within Visual Studio add references to all the assemblies in that folder\r\n<ul>\r\n<li>Microsoft.Win32.TaskScheduler.dll</li>\r\n<li>Microsoft.Win32.TaskSchedulerEditor.dll</li>\r\n<li>AeroWizard.dll</li>\r\n<li>GroupControls.dll</li>\r\n<li>TimeSpan2.dll</li>\r\n<li>CubicOrange.Windows.Forms.ActiveDirectory.dll</li>\r\n</ul>\r\n</li>\r\n<li>You should then be able to use any of the classes either using the 'using' directive or by using the full name of the class.</li>\r\n</ol>\r\n<p><strong>OR</strong></p>\r\n<ol>\r\n<li>Install NuGet from&nbsp;<a href=\"http://nuget.org/\">http://nuget.org/</a>.</li>\r\n<li>Using NuGet from within Visual Studio, add references to the TaskScheduler and TaskSchedulerEditor packages</li>\r\n<li>Enjoy the benefit of having NuGet automatically keep all your assemblies up to date!</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-11-29T22:35:53.047-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "705352",
+    "ThreadId": "276460",
+    "Html": "<p>Thanks for your help David,</p>\r\n<p>I have tried with your step-by-step instructions and with NuGet too, but TaskEditDialog is not \"recognized\" by my VS2010.&nbsp; If I remove Microsoft.Win32.TaskScheduler from my \"references\" list then it right recognize TaskEditDialog but then it doesn't recognize the others (TaskService&nbsp;for example).</p>\r\n<p>&nbsp;</p>\r\n<p>It is very curious because TaskEditDialog gets the 'ok-color' and when I compile it changes to underline-error-color.</p>\r\n<p>&nbsp;</p>\r\n<p>Don't worry, perhaps any \"collission\" with DevExpress or another package.</p>\r\n<p>Thanks again and regards.</p>",
+    "PostedDate": "2011-11-30T08:57:40.173-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "724146",
+    "ThreadId": "276460",
+    "Html": "<p>Currently the namespaces of the TaskEditor are a bit confused (Assemblynamespace <span style=\"color: #800000;\">'Microsoft.Win32.TaskSchedulerEditor'</span>, Defaultnamespace <span style=\"color: #800000;\">'Microsoft.Win32.TaskScheduler'</span>) and the projects <span style=\"color: #800000;\">'TaskEditor'</span> and <span style=\"color: #800000;\">'TaskService'</span> are compiled for different dotNET-Versions (TaskEditor: dotNET 3.5, TaskService: dotNET 2.0, That's a bad choice.). Changing that, will solve the problem.</p>",
+    "PostedDate": "2012-01-12T02:44:29.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "730370",
+    "ThreadId": "276460",
+    "Html": "<p>I have same problem too, i've solved downloading the sources and recompiling targeting .net 4 full, i'have also changed (as&nbsp;CKoewing noticed) the default namespace from '<span><span style=\"color: #800000;\">Microsoft.Win32.TaskScheduler</span>' to '<span style=\"color: #800000;\">Microsoft.Win32.TaskSchedulerEditor</span>'.</span></p>",
+    "PostedDate": "2012-01-25T01:50:50.787-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802113",
+    "ThreadId": "276460",
+    "Html": "<p>Same problem here. &nbsp;How is this possibly working for anyone? &nbsp;iLMax's suggestion did not work for me. &nbsp;Does anyone have updated code for this?</p>",
+    "PostedDate": "2012-02-27T09:42:09.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802306",
+    "ThreadId": "276460",
+    "Html": "<p>Make sure the project supports at least .NET 3.5 then follow the steps in my earlier post adding all the assemblies referenced there. I have done this with a number of projects and know this works and doesn't cause namespace collisions. Having different .NET dependencies also is not a problem unless your main executable is .NET 4.0. Then you will see some initial load delays as the .NET 4.0 runtime loads the .NET 3.5 assemblies.&nbsp;You only need to use the single namespace:&nbsp;</p>\r\n<pre style=\"font-family: Consolas; background: white; color: black; font-size: 13px;\"><span style=\"color: blue;\">using</span>&nbsp;Microsoft.Win32.TaskScheduler;</pre>\r\n<p>If you are missing the controls in the Toolbox, you need to manually add those from the assemblies.</p>",
+    "PostedDate": "2012-02-27T16:05:47.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802576",
+    "ThreadId": "276460",
+    "Html": "<p>I'm not sure what else to try. &nbsp;I guess it must be something on my end, but I don't know what. &nbsp;I am going to look for another library. &nbsp;If I solve the issue, I'll post something here. &nbsp;This is what I did:</p>\r\n<p>1. Extract files from TaskScheduler.zip, and TaskSchedulerEditor.zip (6 dll, 5 xml)<br />2. Add references to all to my project.<br />3. Add System.Windows.Forms as a reference (Otherwise I avoid this).<br />4. Add \"using Microsoft.Win32.TaskScheduler;\" to usings.<br />5. Create task service, and loop through tasks, searching for a specific one (called 't').<br />6. Add the following lines of code:&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;TaskEditDialog editorForm = new TaskEditDialog(t, true, true);&nbsp; &nbsp;editorForm.ShowDialog();</p>\r\n<p>&nbsp; &nbsp;The \"TaskEditDialog\" shows in light blue (my 'OK' color). &nbsp;No red/blue squigglies.<br />&nbsp; &nbsp;If I type \"TaskEditD\" and invoke intellisense it completes the rest of the &nbsp;word.<br />&nbsp; &nbsp;if I click on \"TaskEditDialog\" and press F12 it goes to the definition's metadata.</p>\r\n<p>7. Build. Instantly get an error:<br />&nbsp; &nbsp; &nbsp;\"The type or namespace name 'TaskEditDialog' could not be found (are you missing a using directive or an assembly reference?)\"</p>\r\n<p>8. The word now appears with a blue squiggly under it.</p>\r\n<p>&nbsp;</p>\r\n<p>I also tried changing the namespace of the editor (and all supporting files for it), and the targeted version to .Net 4.0. &nbsp;No luck.</p>",
+    "PostedDate": "2012-02-28T05:51:24.667-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "802668",
+    "ThreadId": "276460",
+    "Html": "<p>I have just included a very simple VS2010 C# project that works. It is at the bottom of this link:&nbsp;<a href=\"http://taskscheduler.codeplex.com/wikipage?title=Install\">http://taskscheduler.codeplex.com/wikipage?title=Install</a>. I hope this helps.</p>",
+    "PostedDate": "2012-02-28T08:46:57.85-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

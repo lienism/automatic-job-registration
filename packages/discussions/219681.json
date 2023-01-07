@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "468184",
+    "ThreadId": "219681",
+    "Html": "<p>Good evening,</p>\r\n<p>&nbsp;</p>\r\n<p><span id=\"result_box\"><span>Is it possible</span></span> to <span id=\"result_box\"><span>retrieve the task history (the informations and error messages)? I haven't seen any property to do this.</span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span><span>Also, I have created a task with some triggers; but their Id (by Trigger.Id) is always null. Why? I need them to update the triggers without deleting.</span></span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><span><span>Nevertheless, your library is really useful. I couldn't manage to use COM objects!<br></span></span></p>",
+    "PostedDate": "2010-07-16T05:19:23.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "470114",
+    "ThreadId": "219681",
+    "Html": "<p>Shame on me, this kind of messages are in the Event Viewer...</p>",
+    "PostedDate": "2010-07-21T01:24:47.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "473256",
+    "ThreadId": "219681",
+    "Html": "<p>You can find an example of how to get the event history for a task in the TaskEditor project in the TaskEvent.cs file. These classes should work outside of the project if you want to reuse them.</p>",
+    "PostedDate": "2010-07-27T09:17:32.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "474088",
+    "ThreadId": "219681",
+    "Html": "<p>Wonderful, I didn't expect an answer. I'll probably reuse this classes, it will simplify my work :)</p>\r\n<p>Thanks again!</p>",
+    "PostedDate": "2010-07-29T01:30:25.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

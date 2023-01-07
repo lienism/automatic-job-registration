@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1469045",
+    "ThreadId": "653235",
+    "Html": "on the Example Home page:\r<br />\n<a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation</a>\r<br />\n<br />\nI see that only the TaskService need to be disposed.\r<br />\nBut others classes, for example: Task, TaskDefinition, Trigger, Action, etc. They implemented interface “IDisposable” too.\r<br />\nDo I need to call method “IDisposable .Dispose” (or user “useing”) to release resource?\r<br />\n<br />\nThank you very much for your help!<br />\n",
+    "PostedDate": "2016-04-05T03:31:20.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469324",
+    "ThreadId": "653235",
+    "Html": "No. Those are created and disposed internally. Technically, due to the beauty of garbage disposal in C#, you don't need to manually dispose of anything. However, if you are worried about memory consumption while running your app, disposing the TaskService instance should clean up all memory previously used by the library.<br />\n",
+    "PostedDate": "2016-04-07T06:44:35.783-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-07T06:44:38.763-07:00"
+  }
+]

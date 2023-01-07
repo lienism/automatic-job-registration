@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "263178",
+    "ThreadId": "76982",
+    "Html": "<p>I&nbsp;am having problems connecting to the task scheduler when I&nbsp;specify a&nbsp;username &amp; password.&nbsp;&nbsp;Ultimately, I will need to connect to the task scheduler using a specific account.&nbsp; &nbsp;</p>\r\n<p>I am running the code whilst logged in&nbsp;under&nbsp;the local&nbsp;user which has administrator rights.&nbsp; This is&nbsp;on a Windows 7 machine&nbsp;(although I have experienced this on Vista as well.)&nbsp; If I don't specify username or password, i.e.</p>\r\n<p>TaskService ts = new TaskService(null, null, null, null, false);<br>TaskService ts = new TaskService(&quot;myMachine&quot;, null, null, null, false);</p>\r\n<p>then all is OK but if I specfiy the username &amp; password (with or without specifying the domain), i.e.:</p>\r\n<p>TaskService ts = new TaskService(&quot;myMachine&quot;, &quot;myUser&quot;, null, &quot;myPassword&quot;, false);<br>TaskService ts = new TaskService(&quot;myMachine&quot;, &quot;myUser&quot;, &quot;myDomain&quot;, &quot;myPassword&quot;, false);</p>\r\n<p>then I get E_ACCESSDENIED, despite actually being logged in as the account that I am specifying and running the app as Adminstrator.&nbsp; I am assuming that for a local account, the domain is the same as the machine name.</p>\r\n<p>&nbsp;&nbsp;</p>",
+    "PostedDate": "2009-12-03T06:13:00.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "263729",
+    "ThreadId": "76982",
+    "Html": "<p>I just confirmed this and even tried it natively with the COM interfaces with the same results. Supplying a username and password with a machine name set to the local machine on my Vista environment fails. If I use the same username and password to connect to a remote machine, it works. For the next release, I have added a line of code to null out the machine name if it matches the local machine. This appears to be&nbsp;a Microsoft related oddity.</p>",
+    "PostedDate": "2009-12-04T10:25:50.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

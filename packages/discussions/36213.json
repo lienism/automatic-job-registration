@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "120122",
+    "ThreadId": "36213",
+    "Html": "I'm trying to run a small program I wrote that enumerates the tasks.&nbsp; It outputs the info to a text file so I it can be read by a vb script (not a great solution, I know, but I'm stuck with it for a variety of reasons).<br>\r\n<br>\r\nSo, when I run, I get a permissons failure because it's not fully trusted code (run's fine off the local d: drive though).<br>\r\n<br>\r\nI tried added a [assembly: AllowPartiallyTrustedCallers] to the assemblyinfo.cs file.<br>\r\n<br>\r\nNow I get&nbsp;<br>\r\nUnhandled Exception: System.Security.SecurityException: System.Security.Permissi<br>\r\nons.SecurityPermission<br>\r\n&nbsp;&nbsp; at TaskLister.TaskService..ctor(String targetServer, String userName, String accountDomain, String password)<br>\r\n&nbsp;&nbsp; at TaskLister.TaskService..ctor(String targetServer)<br>\r\n&nbsp;&nbsp; at TaskLister.TaskService..ctor()<br>\r\n&nbsp;&nbsp; at TaskLister.Program.Main(String[] args)<br>\r\nThe type of the first permission that failed was:<br>\r\nSystem.Security.Permissions.SecurityPermission<br>\r\nThe demand was for:<br>\r\n&lt;IPermission class=&quot;System.Security.Permissions.SecurityPermission, mscorlib, Ve<br>\r\nrsion=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;<br>\r\nversion=&quot;1&quot;<br>\r\nFlags=&quot;UnmanagedCode&quot;/&gt;<br>\r\n<br>\r\nwhich leads me to believe I need to put&nbsp;<br>\r\n<span style=\"font-size:13px\">[</span><span style=\"font-size:13px;color:#008080\">SecurityPermission</span><span style=\"font-size:13px\">(</span><span style=\"font-size:13px;color:#008080\">SecurityAction</span><span style=\"font-size:13px\">.Assert, UnmanagedCode=</span><span style=\"font-size:13px;color:#0000ff\">true</span><span style=\"font-size:13px\">)]</span><br>\r\nin lots of places. Argh.<br>\r\n<br>\r\nAm I missing something, or is there an easier way?<br>\r\n<br>\r\nThanks<br>\r\nGregM<br>\r\n<br>\r\nP.S. - I'm trying to run from a network share so my scripts are visible from multiple servers.&nbsp; I realize I could just copy the exe/library to the local disk, but I'd like to avoid that.\r\n",
+    "PostedDate": "2008-09-22T11:41:51.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "125154",
+    "ThreadId": "36213",
+    "Html": "Try the release posted today. It may provide a fix, though I haven't tested it. Let me know.\r\n",
+    "PostedDate": "2008-10-14T16:44:14.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2008-10-30T14:38:56.653-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "As title, when the ts.RootFolder.RegisterTaskDefinition is called, no matter what the DaysInterval value is set, it will be reset to 1 when saved.\nIt seems like that the bug was caused by the Init() method of DailyTrigger class in Trigger.cs, the TaskDefinition.V1Save() rebinds all triggers, which will recreate all triggers through Trigger.CreateTrigger(), and the DailyTrigger.Init() has a statement \"this.DaysInterval = 1\", which made this bug.\nA fast workaround is to change the code to \"if (this.DaysInterval == 0) this.DaysInterval = 1;\", don't know if this is the right way to solve this problem.",
+    "LastUpdatedDate": "2013-05-16T04:49:16.55-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2008-10-28T03:26:41.117-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "DaysInterval is always 1 in V1",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 2520
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for finding this. It actually was a problem in a number of places. All the triggers now display accurate results and do not reinitialize some of the properties.",
+      "PostedDate": "2008-10-30T14:38:18.45-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2008-10-30T14:38:20.263-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2008-10-30T14:38:56.653-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-07T01:32:07.437-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:11.527-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:16.55-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

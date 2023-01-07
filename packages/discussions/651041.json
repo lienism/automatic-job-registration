@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1462410",
+    "ThreadId": "651041",
+    "Html": "When running a task and the task errors off I'm getting an unhandled exception error of:\r<br />\n<br />\nSystem.ArgumentException was unhandled\r<br />\nMessage: An unhandled exception of type 'System.ArgumentException' occurred in mscorlib.dll\r<br />\nAdditional information: The path is not of a legal form.\r<br />\n<br />\n<br />\nI have try catches in every method and cannot catch this error. I believe it is coming from the Task Scheduler but I'm unsure to why. \r<br />\n<br />\nHas anyone else run into this? Should I be handling task errors through my code? <br />\n",
+    "PostedDate": "2016-02-08T07:44:40.83-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462412",
+    "ThreadId": "651041",
+    "Html": "I should clarify that I'm running the task through my code but this also happens when the task tries to run on it's own while my application running and monitoring it.<br />\n",
+    "PostedDate": "2016-02-08T07:51:37.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462421",
+    "ThreadId": "651041",
+    "Html": "Here is my stack:\r<br />\n<br />\nApplication: TaskServiceMonitor.exe\r<br />\nFramework Version: v4.0.30319\r<br />\nDescription: The process was terminated due to an unhandled exception.\r<br />\nException Info: System.ArgumentException\r<br />\n   at System.IO.Path.NormalizePath(System.String, Boolean, Int32, Boolean)\r<br />\n   at System.IO.Path.GetDirectoryName(System.String)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskEventWatcher.Watcher_EventRecordWritten(System.Object, System.Diagnostics.Eventing.Reader.EventRecordWrittenEventArgs)\r<br />\n   at System.Diagnostics.Eventing.Reader.EventLogWatcher.IssueCallback(System.Diagnostics.Eventing.Reader.EventRecordWrittenEventArgs)\r<br />\n   at System.Diagnostics.Eventing.Reader.EventLogWatcher.HandleEventsRequestCompletion()\r<br />\n   at System.Diagnostics.Eventing.Reader.EventLogWatcher.RequestEvents()\r<br />\n   at System.Diagnostics.Eventing.Reader.EventLogWatcher.SubscribedEventsAvailableCallback(System.Object, Boolean)\r<br />\n   at System.Threading._ThreadPoolWaitOrTimerCallback.WaitOrTimerCallback_Context(System.Object, Boolean)\r<br />\n   at System.Threading._ThreadPoolWaitOrTimerCallback.WaitOrTimerCallback_Context_f(System.Object)\r<br />\n   at System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)\r<br />\n   at System.Threading.ExecutionContext.Run(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object, Boolean)\r<br />\n   at System.Threading._ThreadPoolWaitOrTimerCallback.PerformWaitOrTimerCallback(System.Object, Boolean)<br />\n",
+    "PostedDate": "2016-02-08T08:32:56.44-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462570",
+    "ThreadId": "651041",
+    "Html": "Thanks for the great detail. This is an error with the TaskEventWatcher and how it handles getting the task name from the System Event Log. It appears that in your case it cannot parse the task name. I'll look into those conditions. If you could reply and let me know if you are monitoring all tasks, all tasks in a folder or a single task (with it's name), that may help me diagnose the problem. I'll also add some error handling to that method to prevent the problem you're seeing. This is a relatively new addition to the library so I appreciate you helping me find the corner cases that can cause failures.<br />\n",
+    "PostedDate": "2016-02-09T09:54:50.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462631",
+    "ThreadId": "651041",
+    "Html": "I have adjusted the handler to a much more predictable behavior and have added a bunch of error handling. In 2.5.14, this should be fixed.<br />\n",
+    "PostedDate": "2016-02-09T20:21:37.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-02-10T11:01:17.857-08:00"
+  },
+  {
+    "Id": "1462699",
+    "ThreadId": "651041",
+    "Html": "You're welcome and I appreciate all of the hard work you are doing with this Task Scheduler wrapper it has come in really handy with the current project I'm working on. In regards to what tasks I'm watching, I'm watching all of the tasks in the root folder. \r<br />\n<br />\nThe TaskEvenWatcher is set up like this:\r<br />\n<br />\nTask Folder is set to &quot;\\&quot;\r<br />\nFilter is set to &quot;*&quot;\r<br />\nInclude Sub folders is set to True\r<br />\n<br />\nHope this helps. Any idea when 2.5.14 will be available to dl?<br />\n",
+    "PostedDate": "2016-02-10T07:14:49.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462725",
+    "ThreadId": "651041",
+    "Html": "Once I have done a few days of testing, I'll ship it out. I think I have it figured out and am just testing across all the environments.<br />\n",
+    "PostedDate": "2016-02-10T10:34:56.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462734",
+    "ThreadId": "651041",
+    "Html": "Perfect, thanks again.<br />\n",
+    "PostedDate": "2016-02-10T11:49:17.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

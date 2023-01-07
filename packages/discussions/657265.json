@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1481487",
+    "ThreadId": "657265",
+    "Html": "I am developing a scheduler application in C#. It reads a collection of user settable clock controls that specify hr.min.sec. When the system clock matches one of these timers I would like to execute a statement in my application. Is there a way to do this with TSMW?  It appears as though Actions only execute external .exe programs (or send emails). Is this correct?<br />\n",
+    "PostedDate": "2016-08-18T15:34:03.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1481576",
+    "ThreadId": "657265",
+    "Html": "There is an action, <code>ComHandlerAction</code> that calls a COM interface. You could build it into your program's executable and then register it as a COM server. Another trick is to have your program take an argument that will look for the running process and then call do whatever you need. You can then use the <code>ExecAction</code> to call the program with those arguments.<br />\n",
+    "PostedDate": "2016-08-19T09:59:09.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

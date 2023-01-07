@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Determined to a problem with debugging under Visual Studio while not running as Adminstrator.",
+    "ClosedDate": "2011-06-09T15:41:38.833-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Originally posted by Alger (see discussion). Try attached file and let me know if it produces different results. The executable is in the bin\\Release directory and this is a console app. If you run it from a console window, then you need to make sure you have started the console window in administrator mode. Let me know if this works. It works fine on two different Win7 systems here.",
+    "LastUpdatedDate": "2013-05-16T04:49:11.977-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-06-08T13:15:16.29-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "LogonTrigger registration causes Access Denied exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8769
+  },
+  "FileAttachments": [
+    {
+      "FileId": 2908,
+      "FileName": "SimpleTaskTest.zip",
+      "DownloadUrl": ".\\2908"
+    }
+  ],
+  "Comments": []
+}

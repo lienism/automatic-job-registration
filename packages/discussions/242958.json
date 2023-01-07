@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "554043",
+    "ThreadId": "242958",
+    "Html": "\r\n<p>I have tried what seems like a million ways to get the Service and Group TaskLogonType method to work on Windows 7 (I *have* been successful with ID/password using password method). With the Service method, I've tried &quot;SERVICE&quot; and &quot;NT AUTHORITY/SERVICE&quot;\r\n as well as NullChar for ID and password.</p>\r\n<p>As a side note, on Windows 7, I was able to get the ID/password method to work only with RunLevel set to LUA. It would not work with &quot;Highest Available&quot;.</p>\r\n<p>Anyone have any ideas how to get Service and Group methods to work on Windows 7 and/or some source code that you've gotten to work?</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-01-23T12:55:15.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554155",
+    "ThreadId": "242958",
+    "Html": "\r\n<p>You only need to create a TaskDefinition with the action and trigger you want. Once created, you need to register the task with the following code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(taskName, taskDef, TaskCreation.CreateOrUpdate,\r\n  <span style=\"color:#a31515\">&quot;SYSTEM&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount);</pre>\r\n<pre>OR</pre>\r\n<pre>ts.RootFolder.RegisterTaskDefinition(taskName, taskDef, TaskCreation.CreateOrUpdate,<br>&nbsp; <span style=\"color:#a31515\">&quot;Guests&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.Group);</pre>\r\n</div>\r\n",
+    "PostedDate": "2011-01-23T21:33:42.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554591",
+    "ThreadId": "242958",
+    "Html": "\r\n<p>Yeah, that was the code I already had. It seems as though some user accounts on Windows 7 do not have access to the Task Scheduler service account, even if they are in the Administrators group. My code has since been tested on Server 2008, and it worked\r\n just fine for creating a service account task.</p>\r\n<p>I plan on trying one more thing with Windows 7... using Run As Administrator on the EXE, then trying to set up the service account. Maybe that will &quot;fix&quot; it.</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-01-24T12:10:43.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "554669",
+    "ThreadId": "242958",
+    "Html": "\r\n<p>The code I posted did work when running as administrator on Window 7. Please post any specific instances you have come across that work and don't work so the community can enjoy the benefits of your testing.</p>\r\n",
+    "PostedDate": "2011-01-24T14:10:39.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

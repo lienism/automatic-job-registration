@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "650498",
+    "ThreadId": "267284",
+    "Html": "<p>I have learned a great deal about your wrapper in the past few days, and it's working great. I have a permissions question.<br />I am using your wrapper in a c#&nbsp;asp.net website, and creating a task for each customer, and giving them the rights to set the time of the daily trigger. <br />I've got it to work mostly on my dev machine, and haven't tried anything yet on my test server. I am wondering where how the access permissions work.<br />The users, and I in my test scenerio ((I think<span style=\"color: #000080;\">)*in test I am using my own user, not IUSR I found out</span>)&nbsp;are using the IUSR user through IIS. In code I am using a login/password with much more elevated rights than IUSR and&nbsp;I have been able to create/edit tasks so far. Also, I temporarily added IUSR to the administrators group. <span style=\"color: #000080;\">&lt;- this was apparently to help confuse me...</span></p>\n<p>My one caveat is that when I try to set the Highest Privledge, it doesn't work. That is why I am maybe confused. If I bring up the actual task scheduler as <br />my user, I can clearly check the box and everything is Ok.</p>\n<p>So, does the user I am need permissions or the user I pass through the principal?</p>\n<p>Let me add that I want to run the tasks as a service where no one is logged in, I could also run them as admin&nbsp;with a pwd, I just don't want to give my web app full admin rights thru impersonation.</p>\n<p><span style=\"color: #000080;\">EDIT: Ok, so I think I understand&nbsp;a bit more. I can set up the task with certain credentials, those are the ones used when the task is fired. But my IUSR user needs the right to add those tasks to the task scheduler. If I pass admin and password with the task, will the task run as a service (no one is logged in)? What rights does IUSR need to&nbsp;properly create the task, and why am I hitting a wall with:</span></p>\n<p><span style=\"color: #937a42;\">td.Principal.RunLevel&nbsp;=&nbsp;TaskRunLevel.Highest;</span></p>\n<p><span style=\"color: #000080;\">I realize this is more of a stream of thought, but I can't find any documentation relating to the fact that there are&nbsp;two levels of permissions. Any insight you have to my multitudes of questions would be welcome.</span></p>\n<p>Thanks!</p>",
+    "PostedDate": "2011-08-01T05:40:43.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "651483",
+    "ThreadId": "267284",
+    "Html": "<p>hullo?</p>",
+    "PostedDate": "2011-08-02T19:33:34.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "651875",
+    "ThreadId": "267284",
+    "Html": "<p>There are a number of other discussions where permissions for creating a task on&nbsp;any system are discussed. Please search through and find those. The run level is about thread priority and only is available on systems post Windows Vista/Server 2008.</p>",
+    "PostedDate": "2011-08-03T10:19:40.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "651907",
+    "ThreadId": "267284",
+    "Html": "<p>I honestly think I've read all 133 discussions by now. I was able to figure out my issue, I had to set the first parameter of the TaskService to 'Localhost'.<br />I am using Win7 / Win2008 R2. I did notice that tasks for these OSes&nbsp;are v1.3, and any task I make (including explicitly setting the last parameter to false) is always 1.2.</p>\r\n<p>Thanks again for the kick ass wrapper.</p>",
+    "PostedDate": "2011-08-03T11:17:41.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "653290",
+    "ThreadId": "267284",
+    "Html": "<p>Thanks for posting your solution. You are correct in your observation. The wrapper actually will report that tasks that return a value of 3 for Task.Definition.Settings.Compatibility will convert that to V2. This is mostly for backwards compatibility sake and will likely be corrected in a&nbsp;future release.</p>",
+    "PostedDate": "2011-08-05T10:26:59.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

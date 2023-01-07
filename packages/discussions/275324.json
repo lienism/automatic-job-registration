@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "682120",
+    "ThreadId": "275324",
+    "Html": "\r\n<p>How to delete only action instead of Task</p>\r\n<p>&nbsp;</p>\r\n<p>give some exmples</p>\r\n",
+    "PostedDate": "2011-10-10T07:45:39.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682271",
+    "ThreadId": "275324",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   <span style=\"color: green;\">// Get an instance of the task</span>\r\n   Task t = ts.GetTask(taskName);\r\n   <span style=\"color: green;\">// Get the task's definition</span>\r\n   td = t.Definition;\r\n   <span style=\"color: green;\">// If there is a second task defined, remove it</span>\r\n   <span style=\"color: blue;\">if</span> (td.Actions.Count &gt; 1)\r\n      td.Actions.RemoveAt(1);\r\n   <span style=\"color: green;\">// Register the updated task</span>\r\n   ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-10-10T13:25:26.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

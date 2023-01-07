@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "This is not an issue. You simply need to fetch the current task and then use the same TaskDefintion and Name to register the task once again using the desired credentials. There are multiple examples in the Documentation on how to register a task with a password. The \"Complex\" example shows how to retrieve a task and reuse the TaskDefinition.",
+    "ClosedDate": "2016-12-14T12:54:30.707-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi all,\n\nhow can i change the password for a scheduled Task that is associated to run with a certain account? Is this even possible? Thanks for any hint.\n\nyb",
+    "LastUpdatedDate": "2017-12-11T21:32:32.4-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-12-14T08:25:03.72-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Change password for user account",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12440
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "It seems i'm blind. I see a parameter for TaskService that is a password but not for a certain task's account.\nI have looked at the 'Complex\" example, but there is no password set in that code example. ",
+      "PostedDate": "2016-12-15T09:46:44.143-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "```\nvar t = TaskService.Instance.GetTask(\"TaskName\");\nTaskService.Instance.RootFolder.RegisterTaskDefinition(\"TaskName\", t.Definition,\n   TaskCreation.CreateOrUpdate, \"newUserDomain\\\\newUserName\", \"newUserPassword\",\n   TaskLogonType.Password);\n```",
+      "PostedDate": "2016-12-15T15:50:18.667-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It looks  so easy. Thank you for the example.",
+      "PostedDate": "2016-12-16T02:03:32.787-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:32.4-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

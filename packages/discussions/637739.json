@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1424709",
+    "ThreadId": "637739",
+    "Html": "Trying to create a task. And i need to uncheck the <br />\ncheck box  Do not store password. The task will only have access to local computer resources.<br />\n which is always checked for me. Here is the code<br />\n<pre><code>            // Get the service on the local machine\n            using (TaskService ts = new TaskService())\n            {\n                // Create a new task definition and assign properties)\n                TaskDefinition td = ts.NewTask();\n\n                td.Principal.RunLevel = TaskRunLevel.Highest;\n                td.Principal.LogonType=TaskLogonType.ServiceAccount;\n                 td.RegistrationInfo.Description = &quot;MyTask&quot;;\n\n                // Create a trigger that will fire the task at this time every other day\n                var dailytrigger = new DailyTrigger { DaysInterval = 1 };\n                var timespan = new TimeSpan(0, 0, 5, 0);\n                dailytrigger.SetRepetition(timespan, TimeSpan.Zero);\n                td.Triggers.Add(dailytrigger);\n                td.Settings.Compatibility = TaskCompatibility.V2_1;\n\n                var commandParam = GetPowershellParams();\n\n                td.Actions.Add(new ExecAction(&quot;Powershell&quot;, commandParam, null));\n\n\n\n                // Register the task in the root folder\n                ts.RootFolder.RegisterTaskDefinition(@&quot;My Task&quot;, td, TaskCreation.CreateOrUpdate, username,\n                    password);\n             \n            }</code></pre>\n\n",
+    "PostedDate": "2015-05-11T04:38:27.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424710",
+    "ThreadId": "637739",
+    "Html": "use TaskLogonType.Password<br />\n",
+    "PostedDate": "2015-05-11T05:01:59.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-11T05:02:06.693-07:00"
+  }
+]

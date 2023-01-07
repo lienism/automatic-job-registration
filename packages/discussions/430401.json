@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "990210",
+    "ThreadId": "430401",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>I need to create scheduled tasks, that runs whenever a user is logged on or not.</p>\r\n<p>I have been struggling with it for a while and I think I need some help.</p>\r\n<p>I have been following the discussion&nbsp;http://taskscheduler.codeplex.com/discussions/396537,</p>\r\n<p>but I get errors in both RegisterTaskDeffinition-calls.</p>\r\n<p>This is my code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n{\r\n    <span style=\"color:blue\">var</span> taskDefinition = ts.NewTask();\r\n    taskDefinition.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;This is a test.&quot;</span>;\r\n\r\n    taskDefinition.Triggers.Add(<span style=\"color:blue\">new</span> DailyTrigger { DaysInterval = 2 });\r\n    taskDefinition.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>));\r\n    <span style=\"color:green\">//ts.RootFolder.RegisterTaskDefinition(@&quot;Test&quot;, taskDefinition, TaskCreation.Create, &quot;lap-laser.local\\\\holtermann&quot;, password, TaskLogonType.Password);</span>\r\n    ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">@&quot;Test&quot;</span>, taskDefinition, TaskCreation.Create, <span style=\"color:#a31515\">&quot;SYSTEM&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.ServiceAccount);\r\n\r\n}</pre>\r\n</div>\r\n<p></p>\r\n<p>When using the first RegisterTaskDeffinition I get a COMException. ((41,4):LogonType)</p>\r\n<p>When using the second RegisterTaskDefinition I get an UnauthorizedAccessException.</p>\r\n<p>(HRESULT: 0x80070005 (E_ACCESSDENIED))</p>\r\n<p>&nbsp;</p>\r\n<p>I don't know how to solve this problem, for any help I would be very thankfull!</p>\r\n<p>This is the last problem of my project and right now I am not able to solve it.</p>\r\n<p>&nbsp;</p>\r\n<p>Thank you very much for any help.</p>\r\n<p>Best regards</p>\r\n<p>riehol</p>\r\n",
+    "PostedDate": "2013-01-22T02:19:31.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990342",
+    "ThreadId": "430401",
+    "Html": "\r\n<p>Try reading post <a href=\"http://taskscheduler.codeplex.com/discussions/277730\">\r\nhttp://taskscheduler.codeplex.com/discussions/277730</a>&nbsp;and see if that helps. My guess is that you have a permissions problem with the holtermann account.</p>\r\n",
+    "PostedDate": "2013-01-22T07:28:08.95-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "990795",
+    "ThreadId": "430401",
+    "Html": "\r\n<p>Thank you dahall, I will try your proposed post. I hope I can do it today.</p>\r\n<p>The holtermann account is my own account. I use the account every day, and the password is correct too.</p>\r\n<p>With this account / password I can log on and I am admin at my workstation.</p>\r\n<p>It is a domain-account of our company, could this be the reason?</p>\r\n<p>&nbsp;</p>\r\n<p>Best regards</p>\r\n",
+    "PostedDate": "2013-01-23T02:38:00.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

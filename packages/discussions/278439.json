@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "694246",
+    "ThreadId": "278439",
+    "Html": "\r\n<p>Hi Dahall,</p>\r\n<p>&nbsp;</p>\r\n<p>I get latest source code from this website, but cannot compile it using VS 2010. The error I get related to CubicOrange.Windows.Forms.ActiveDirectory and TimeSpan2, it cannot find these library. Can you give me link to these library, so that I can compile\r\n source file?</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-11-05T07:51:36.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "694874",
+    "ThreadId": "278439",
+    "Html": "<p>You can find both assemblies in the TaskSchedulerEditor download.</p>",
+    "PostedDate": "2011-11-07T11:32:35.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "695047",
+    "ThreadId": "278439",
+    "Html": "<p>Thanks a lot.</p>",
+    "PostedDate": "2011-11-07T17:51:45.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

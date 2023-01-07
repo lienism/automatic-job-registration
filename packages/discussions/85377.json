@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "290805",
+    "ThreadId": "85377",
+    "Html": "<p>I have modified the task wizard and editor control extensively to add some of the as of yet unsupported functionality (specifically todo with user accounts)</p>\r\n<p>to avoid the unsupported exceptions.</p>\r\n<p>I have sorted out which logon types to set for which combination of gui checks however I am running into a problem:</p>\r\n<p>The following line</p>\r\n<p>Task.Definition.Principal.LogonType = TaskLogonType.Password;</p>\r\n<p>executes with no problem, but the watch for Task.Definition.Principal.LogonType reports that the value stayed on TaskLogonType.InteractiveToken instead of the value I am setting.</p>\r\n<p>I have stepped throught the setter for Principal.LogonType:</p>\r\n<p>if (v2Principal != null)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; v2Principal.LogonType = value;</p>\r\n<p>}</p>\r\n<p>this line executes and both value and v2Principal.LogonType are set to Password like I want, but the second the setter function completes the value reverts back to InteractiveToken for some reason.</p>\r\n<p>Can anybody tell me why?</p>\r\n<p>I have duplicated the windows logon forms and everything and wrote all the support code i need so this is the only thing holding me back...</p>",
+    "PostedDate": "2010-02-15T05:04:11.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "291338",
+    "ThreadId": "85377",
+    "Html": "<p>If you are willing, please upload your changes as a patch under the Source Control area. I will incorporate your changes into the primary code base and look at your error further. If you would rather be added as a contributor and add your changes directly, I am glad to do that. Let me know either way.</p>",
+    "PostedDate": "2010-02-16T10:36:07.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

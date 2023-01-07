@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1472955",
+    "ThreadId": "654491",
+    "Html": "If I set the expire time of a trigger to 31 Dec. 9998 23:59:59, and then click OK to save it.\r<br />\nBut if I try to edit this trigger once again, it is a exception showed and cannot edit it.\r<br />\n<br />\nIt seem to all of the datetime picker counter the same problem<br />\n",
+    "PostedDate": "2016-05-10T01:52:15.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473341",
+    "ThreadId": "654491",
+    "Html": "I found the statement as blow(<a href=\"http://referencesource.microsoft.com/#System.Windows.Forms/winforms/Managed/System/WinForms/DateTimePicker.cs,85):\" rel=\"nofollow\">http://referencesource.microsoft.com/#System.Windows.Forms/winforms/Managed/System/WinForms/DateTimePicker.cs,85):</a><br />\n<pre><code>        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]\n        public static readonly DateTime MaxDateTime = new DateTime(9998, 12, 31);</code></pre>\n\nIt seem that the max value of the DateTimePicker is 9998-12-31, so the time older than 9998-12-31 0:00:00 will cause this exception(such as 9998-12-31 1:00:00).\r<br />\n<br />\nIn the source code of &quot;Task Scheduler Managed Wrapper&quot;, I find cod as blow in the FullDateTimePicker:<br />\n<pre><code>        private void DataToControls()\n        {\n            DateTime displayTime = currentValue.Kind == DateTimeKind.Utc ? currentValue.ToLocalTime() : currentValue;\n            dateTimePickerDate.Value = displayTime.Date;\n                       dateTimePickerTime.Value = displayTime;\n                       if (!string.IsNullOrEmpty(utcPrompt))\n                utcCheckBox.Checked = currentValue.Kind != DateTimeKind.Unspecified;\n        }</code></pre>\n\nWhen the day older than 9998-12-31 0:00:00, &quot;dateTimePickerTime.Value = displayTime;&quot; will throw a exception.\r<br />\n<br />\nAs I know, FullDateTimePicker is wrapper of Date and Time, and &quot;dateTimePickerTime&quot; just to save the time of days. so if change the statement into <br />\n<pre><code>dateTimePickerTime.Value = DateTime.Now.Date + displayTime.TimeOfDay;</code></pre>\n\nor<br />\n<pre><code>dateTimePickerTime.Value = dateTimePickerTime.MinDate + displayTime.TimeOfDay;</code></pre>\n\nMaybe the problem will be fixed.\r<br />\n<br />\nAnother option, limit the Datetime input in UI, just not allow to input the Datetime older than 9998-12-31 0:00:00.\r<br />\n<br />\nHope it be helpful.<br />\n",
+    "PostedDate": "2016-05-12T23:51:55.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473405",
+    "ThreadId": "654491",
+    "Html": "Thank you. This helped a great deal. I believe I have this remediated for 2.5.20.<br />\n",
+    "PostedDate": "2016-05-13T14:25:54.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-13T14:26:00.72-07:00"
+  }
+]

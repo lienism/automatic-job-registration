@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1083870",
+    "ThreadId": "454279",
+    "Html": "Hello, I have what I consider to be a very simple implementation. All I am doing is simply finding a task and getting info for it. When I run my program on Windows 8 it works great. When I try it on Windows XP Pro w/SP3 I get the following error message:\r<br />\n<br />\n[MyAppName]\r<br />\n<br />\n[MyAppName] has encountered a problem and needs to close.  We are sorry for this inconvenience.\r<br />\n<br />\nIt then gives me a choice of whether or not to &quot;Send Error Report&quot;...<br />\n<h2>Here's my code...</h2>\n<pre><code>     string TaskName = &quot;Crazy Task!&quot;;\n     using (TaskService ts = new TaskService())\n     {\n        Task t = ts.FindTask (TaskName, true);\n        if (t != null)\n        {\n           StringBuilder Message = new StringBuilder();\n           Message.AppendLine(&quot;Found task '&quot; + TaskName + &quot;':&quot;);\n           Message.AppendLine();\n           Message.AppendLine(&quot;Enabled = &quot; + t.Enabled.ToString());\n           Message.AppendLine(&quot;IsActive = &quot; + t.IsActive.ToString());\n           Message.AppendLine(&quot;LastRunTime = &quot; + t.LastRunTime.ToString());\n           Message.AppendLine(&quot;LastTaskResult = &quot; + t.LastTaskResult.ToString());\n           Message.AppendLine(&quot;Name = &quot; + t.Name);\n           Message.AppendLine(&quot;NextRunTime = &quot; + t.NextRunTime.ToString());\n           Message.AppendLine(&quot;NumberOfMissedRuns = &quot; + t.NumberOfMissedRuns.ToString());\n           Message.AppendLine(&quot;Path = &quot; + t.Path);\n           Message.AppendLine(&quot;State = &quot; + t.State.ToString());\n           MessageBox.Show(Message.ToString());\n        }\n        else\n        {\n           MessageBox.Show(&quot;Could not find task '&quot; + TaskName + &quot;'&quot;);\n        }\n     }\n\n</code></pre>\n\nWhat is causing the problem?<br />\n",
+    "PostedDate": "2013-08-22T15:38:43.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083872",
+    "ThreadId": "454279",
+    "Html": "I found the problem. It's the line containing t.NumberOfMissedRuns.ToString()\r<br />\n<br />\nNot sure what is happening, but when I comment out that line everything works fine.<br />\n",
+    "PostedDate": "2013-08-22T16:12:51.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1084210",
+    "ThreadId": "454279",
+    "Html": "If you look at the error, you will notice that it is a NotV1SupportedException. This exception will be thrown whenever you are accessing a portion of the library from older versions of Windows (like XP) that don't support all of the current functionality.<br />\n",
+    "PostedDate": "2013-08-23T08:21:17.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

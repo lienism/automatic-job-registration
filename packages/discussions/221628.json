@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "473432",
+    "ThreadId": "221628",
+    "Html": "<p>Progmatically in C#, how do you set the &quot;run as&quot; user to &quot;MyDomain\\Domain Users&quot;?&nbsp; I can set it in the task scheduler GUI, but can't seem to get it with the task scheduler library.</p>\r\n<p>When I try the code below (based on a best guess from the documentation hints), all it does is spit out a COM error message:</p>\r\n<p>\r\n<pre><em>(98,4): Task:</em></pre>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> login_user = <span style=\"color:#a31515\">&quot;domainusername&quot;</span>;\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> login_domain = <span style=\"color:#a31515\">&quot;mydomain&quot;</span>;\r\n<span style=\"color:blue\">private</span> <span style=\"color:blue\">string</span> login_pass = <span style=\"color:#a31515\">&quot;mypass&quot;</span>;\r\n\r\n\r\nTaskService ts = <span style=\"color:blue\">new</span> TaskService();\r\nTaskDefinition td = ts.NewTask();\r\ntd.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;C:\\scripts\\test.exe&quot;</span>, <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:blue\">null</span>));\r\n\r\n <span style=\"color:blue\">if</span> (login_user != <span style=\"color:blue\">string</span>.Empty)\r\n{\r\n\t<span style=\"color:blue\">if</span> (login_domain != <span style=\"color:blue\">string</span>.Empty)\r\n\t{\r\n\t\tlogin_user = login_domain + <span style=\"color:#a31515\">@&quot;\\&quot;</span> + login_user;\r\n\t\ttd.Principal.GroupId = login_domain + <span style=\"color:#a31515\">@&quot;\\Domain Users&quot;</span>;\r\n\t}\r\n\t<span style=\"color:blue\">else</span>\r\n\t{\r\n\t\ttd.Principal.GroupId = <span style=\"color:#a31515\">&quot;Users&quot;</span>;\r\n\t}\r\n\r\n        ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;test_task&quot;</span>, td, TaskCreation.Create, login_user, login_pass, TaskLogonType.Group, <span style=\"color:#a31515\">&quot;&quot;</span>);\r\n\r\n}\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Any thoughts? Thanks :)</p>",
+    "PostedDate": "2010-07-27T17:32:48.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "474811",
+    "ThreadId": "221628",
+    "Html": "<p>You're on the right track. I think you forgot to add a trigger and that may actually be the cause of the error. If not, I was able to get &quot;Domain Users&quot; as the principal with the following code.</p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>TaskService ts = <span style=\"color:blue\">new</span> TaskService();\r\nTaskDefinition td = ts.NewTask();\r\ntd.Triggers.Add(<span style=\"color:blue\">new</span> TimeTrigger() { StartBoundary = DateTime.Now + TimeSpan.FromHours(1), Enabled = <span style=\"color:blue\">false</span> });\r\ntd.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#a31515\">&quot;c:\\\\test.log&quot;</span>, &quot;C:\\\\&quot;));\r\nts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;MyTask&quot;</span>, td, TaskCreation.Create, <span style=\"color:#a31515\">@&quot;MYDOMAIN\\Domain Users&quot;</span>, <span style=\"color:blue\">null</span>, TaskLogonType.Group, <span style=\"color:blue\">null</span>);</pre>\r\n</div>\r\n<p>You don't have to set the Principal properties like GroupId as the registration will do that for you. Also, you cannot supply a&nbsp;password for groups.</p>",
+    "PostedDate": "2010-07-30T09:45:06.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "475575",
+    "ThreadId": "221628",
+    "Html": "<p>I left out the trigger just in the example code I posted.&nbsp; In my app, it works and gets added as a scheduled task when I provide an actual username and password.</p>\r\n<p>&nbsp;</p>\r\n<p>However, an error gets thrown when I try what you suggested:</p>\r\n<p><em>Access is denied (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))</em></p>",
+    "PostedDate": "2010-08-02T12:19:49.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "475600",
+    "ThreadId": "221628",
+    "Html": "<p>If I run the app using the &quot;run as administrator&quot; option, the code appears to work as expected.</p>\r\n<p>Thanks :)</p>",
+    "PostedDate": "2010-08-02T13:07:17.937-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

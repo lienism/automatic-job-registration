@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1084938",
+    "ThreadId": "454548",
+    "Html": "Hi all,\r<br />\n<br />\nHope doing well,\r<br />\nsir i am writing a code where i need to disable the particular task in task scheduler.\r<br />\nHere is my code:\r<br />\n<br />\n string taskName = &quot;Device&quot;;<br />\n<pre><code>        TaskService ts = new TaskService(@&quot;\\\\VIKASH&quot;, &quot;VICKY&quot;, &quot;VIKASH&quot;, &quot;securax&quot;, true);\n        using ( ts = new TaskService())\n        {\n\n            Task t = ts.GetTask(taskName);\n            if (t != null)\n            {\n                if (t.Enabled)\n                {\n                    t.Enabled = false;\n                    t.RegisterChanges();\n                }\n            }\n        }\n</code></pre>\n\nbut getting error in this line &quot; t.Enabled = false;&quot; \r<br />\nError is Access is denied Exception from HResult: 0x80070005 (E_AccessDenied)\r<br />\n<br />\nhow to disable it?\r<br />\nThanks<br />\n",
+    "PostedDate": "2013-08-26T07:19:50.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1085590",
+    "ThreadId": "454548",
+    "Html": "This exact question has been asked and answered: <a href=\"https://taskscheduler.codeplex.com/discussions/442540\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/442540</a>.<br />\n",
+    "PostedDate": "2013-08-27T16:35:31.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086104",
+    "ThreadId": "454548",
+    "Html": "Hi all,\r<br />\n<br />\nthe issue is fixed but one other error is coming after using this function in other function of application getting error &quot;safe handle has been closed&quot;.\r<br />\n<br />\nhow to resolve this issue.\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-08-29T04:23:31.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086239",
+    "ThreadId": "454548",
+    "Html": "Typically this means that you have disposed of the object and then are trying to use it again. Look out for the use of &quot;using&quot; statements. Once a using block is complete, the underlying COM objects are released and you should not use references to the library object any longer.<br />\n<br />\nFor example, the code you posted above uses a using statement incorrectly and will result in errors when using the ts variable after the using block.<br />\n",
+    "PostedDate": "2013-08-29T08:42:35.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086452",
+    "ThreadId": "454548",
+    "Html": "Hi sir,\r<br />\n<br />\nInstead of using keyword what code we can use?\r<br />\n<br />\ncan u share some code here?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-08-29T21:15:06.67-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1086494",
+    "ThreadId": "454548",
+    "Html": "Hi sir,\r<br />\n<br />\nDiscribing some more about this issue.\r<br />\n<br />\ni copied the stack trace here which is below:\r<br />\n<br />\n at System.Security.Principal.Win32.ImpersonateLoggedOnUser(SafeTokenHandle hToken)\\r\\n   at System.Security.Principal.WindowsIdentity.SafeImpersonate(SafeTokenHandle userToken, WindowsIdentity wi, StackCrawlMark&amp; stackMark)\\r\\n   at System.Security.Principal.WindowsIdentity.Impersonate(StackCrawlMark&amp; stackMark)\\r\\n   at System.Security.SecurityContext.SetSecurityContext(SecurityContext sc, SecurityContext prevSecurityContext, StackCrawlMark&amp; stackMark)\\r\\n   at System.Threading.ExecutionContext.SetExecutionContext(ExecutionContext executionContext)\\r\\n   at System.Threading.ExecutionContext.runTryCode(Object userData)\\r\\n   at System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)\\r\\n   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)\\r\\n   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)\\r\\n   at System.Threading._TimerCallback.PerformTimerCallback(Object state)&quot;<br />\n",
+    "PostedDate": "2013-08-29T23:58:58.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087913",
+    "ThreadId": "454548",
+    "Html": "If you are putting TaskService inside a using clause like the following, you cannot use the variable outside the brackets.<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n   // All references to &quot;ts&quot; must be here. Outside of the brackets for the using clause, any reference to &quot;ts&quot; will cause errors.\n}</code></pre>\n\nIf you hold onto an instance of TaskService, then you must instantiate it and dispose of it manually.<br />\n<pre><code>class MyClass : IDisposable\n{\n   private TaskService ts;\n\n   public MyClass()\n   {\n      ts = new TaskService();\n   }\n\n   void Dispose()\n   {\n      ts.Dispose();\n      ts = null;\n   }\n\n   public void DoSomething()\n   {\n      ts.RootFolder.CreateFolder(&quot;NewFolder&quot;);\n   }\n}</code></pre>\n\n",
+    "PostedDate": "2013-09-03T13:44:06.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

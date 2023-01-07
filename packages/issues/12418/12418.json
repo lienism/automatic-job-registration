@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "Fixed in 2.5.22",
+    "ClosedDate": "2016-09-16T07:16:24.29-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I right-click a trigger in the trigger tab in the Editor UI and select New trigger, edit trigger or delete trigger, nothing happens. Enabling and disabling items with the right-click menu work.",
+    "LastUpdatedDate": "2017-12-11T21:32:32.177-08:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-09-15T10:55:25.873-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Editor: Trigger right-click menu items do nothing",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12418
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5078,
+      "FileName": "menu that does not work.png",
+      "DownloadUrl": ".\\5078"
+    }
+  ],
+  "Comments": []
+}

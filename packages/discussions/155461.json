@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "363089",
+    "ThreadId": "155461",
+    "Html": "<p>Hi,</p>\r\n<p>I am getting an error while trying to read Task.LastTaskResult information. This happens only in the case where task Status is &quot;Could not start&quot;. Also the Task.Status property is showing &quot;Ready&quot; instead of &quot;Could not start&quot; (this message is from %WINDIR%\\TASKS folder).</p>\r\n<p>I am using Windows Server 2003, x64 Edition, SP2</p>\r\n<p><strong>Error message:</strong></p>\r\n<p>LastTaskResult' threw an exception of type 'System.IO.FileNotFoundException'&nbsp;&nbsp; &nbsp;int {System.IO.FileNotFoundException}{&quot;The system cannot find the file specified. (Exception from HRESULT: 0x80070002)&quot;:null}</p>\r\n<p><strong>Following is the stack trace</strong> (nothing much):</p>\r\n<p>at Microsoft.Win32.TaskScheduler.V1Interop.ITask.GetExitCode()<br>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Task.get_LastTaskResult()<br>&nbsp;&nbsp; at DSS.TaskScheduler.GetJob(String name) in xxxxxxx.cs:line 57<br>&nbsp;&nbsp; at DSSTest.Program.Test_GetJob() in xxxxxxxxx.cs:line 116<br>&nbsp;&nbsp; at DSSTest.Program.Main(String[] args) in xxxxxxxxxx.cs:line 17<br>&nbsp;&nbsp; at System.AppDomain._nExecuteAssembly(Assembly assembly, String[] args)<br>&nbsp;&nbsp; at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()<br>&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)<br>&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart()</p>\r\n<p>&nbsp;</p>\r\n<p>The only way I can handle this is by using try-catch. Please let me know if there is something I am missing here.</p>\r\n<p>Thanks,</p>\r\n<p>Gopala</p>",
+    "PostedDate": "2010-02-23T02:26:04.833-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363177",
+    "ThreadId": "155461",
+    "Html": "<p>First of all, the FileNotFoundException that is being thrown is from the Microsoft library and I don't know why. The documentation says the ITask.GetExitCode() method is supposed to return 0 if the task has never been started. You will need to catch the exception in your code. Sorry.</p>\r\n<p>On your Status descrepancy, that one is my doing. Version 2.0 of the library from Microsoft reduced the status states dramatically. Below is the code that I used to dumb-down the 1.0 codes to 2.0 values. Let me know if you think I mis-categorized them.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">switch</span> (v1Task.GetStatus())\r\n{\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.Ready:\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.NeverRun:\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.NoMoreRuns:\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.Terminated:\r\n        <span style=\"color:Blue\">return</span> TaskState.Ready;\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.Running:\r\n        <span style=\"color:Blue\">return</span> TaskState.Running;\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.Disabled:\r\n        <span style=\"color:Blue\">return</span> TaskState.Disabled;\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.NotScheduled:\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.NoTriggers:\r\n    <span style=\"color:Blue\">case</span> V1Interop.TaskStatus.NoTriggerTime:\r\n    <span style=\"color:Blue\">default</span>:\r\n        <span style=\"color:Blue\">return</span> TaskState.Unknown;\r\n}\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2010-02-23T07:14:10.417-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,161 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-07-20T08:30:05.603-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I am running the example given on https://taskscheduler.codeplex.com/ on my localPC.\n__CODE:__\n     using (TaskService ts = new TaskService())\n      {\n         // Create a new task definition and assign properties\n         TaskDefinition td = ts.NewTask();\n         td.RegistrationInfo.Description = \"Does something\";\n\n         // Create a trigger that will fire the task at this time every other day\n         td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\n\n         // Create an action that will launch Notepad whenever the trigger fires\n         td.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\n\n         // Register the task in the root folder\n         ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\n      }\n\nI see this Behaviour:\n* This fails on Windows 10 PC. \n* This works on WIndows 7 PC.\n* This works on Windows 10 PC if I start the application as \"Run as administrator\"\n\n\nError Details:__\n__Microsoft.Win32.TaskScheduler - Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))__\nat Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition\nat Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition\n\n__I want to run the application without using \"Run as Administrator\" on windows 10. Can you suggest a fix.__\n__",
+    "LastUpdatedDate": "2017-07-20T08:30:05.603-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-20T10:53:23.66-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "RegisterTask fails on windows 10 (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 12466
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5097,
+      "FileName": "exception.JPG",
+      "DownloadUrl": ".\\5097"
+    },
+    {
+      "FileId": 5099,
+      "FileName": "accessDenied.JPG",
+      "DownloadUrl": ".\\5099"
+    },
+    {
+      "FileId": 5101,
+      "FileName": "TroubleShooter.JPG",
+      "DownloadUrl": ".\\5101"
+    },
+    {
+      "FileId": 5102,
+      "FileName": "TestTaskLibConsole.zip",
+      "DownloadUrl": ".\\5102"
+    },
+    {
+      "FileId": 5103,
+      "FileName": "highest.JPG",
+      "DownloadUrl": ".\\5103"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Same error in Windows Server 2016, version 1607.\nI'm working with the last release version of the task scheduled managed wrapper, 2.5.27",
+      "PostedDate": "2017-06-27T04:22:34.177-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "From the documentation (http://taskscheduler.codeplex.com/wikipage?title=TaskSecurity):\r\n\r\n* By default, to schedule a task, you must be a member of the Administrators, Backup Operators, or Server Operators group on the local computer.\n* By default, when creating a scheduled task, you cannot enter a user who belongs to a group that has more rights than the group you belong to.\n* By default, a user who creates a task can read, update, delete, and run the task.\n* Members of the Administrators group or the SYSTEM account can read, update, delete, and run any tasks. Members of the Users group, the LocalService account, and the NetworkService account can only read, update, delete, and run the tasks that they have created.",
+      "PostedDate": "2017-06-27T07:19:37.95-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-29T02:48:55.86-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The task is trying to be registered with an account who is member of the Administrator group.",
+      "PostedDate": "2017-06-29T02:48:56.42-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "See attachment, the user used is TestUser4.",
+      "PostedDate": "2017-06-29T05:03:20.67-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try running the troubleshooter @ https://taskscheduler.codeplex.com/releases/view/622295",
+      "PostedDate": "2017-07-01T09:32:25.07-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-03T07:40:22.093-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You can see the errors showed by the Troubleshooter, running with my user TestUser4 who belongs to the Administrator group. And also has full rights in the C:\\Windows\\Task folder. I don't understand why the troubleshooter is showing that.\nDo you have an idea?\r\n\r\n",
+      "PostedDate": "2017-07-03T07:40:24.763-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please see the attachment TroubleShooter.jpg",
+      "PostedDate": "2017-07-03T07:41:51.983-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Do you happen to know if, when run, the Troubleshooter either was run as Administrator or if they clicked the option to run as administrator in the first page of the wizard? Failing to do either could product the results you're seeing. Also, unless you are specifically calling the TaskService constructor with all 5 parameters and setting the last parameter to true (forceV1), then only the V2 related items in the Troubleshooter are relevant.\r\n\r\nAlso, is that happening with other accounts on other Windows 10 installations?",
+      "PostedDate": "2017-07-04T13:42:59.64-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The Troubleshooter was running with an administrator account. I have tested to click the option to run as administrator in the first page of the wizard, and the troubleshooter advise me to give the right \"Log on as a batch job\". This right is enabled by default for the Administrator group, to which my account belongs.\r\n\r\nThe behaviour is reproduced in other Windows 10 installations? Just, to be clear, I am logged as administrator in the machine (with a domain account), but not with the default administrator.\n",
+      "PostedDate": "2017-07-06T00:54:25.593-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-06T15:49:02.41-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Let's try this: I have uploaded a zip file with a small app that can run small code snippets against the Task Scheduler library (TestTaskLibConsole.zip). On an offending system, extract the files to a folder and then run TestTaskLibConsole.exe in the same account as your prior tests withing running the application as Administrator. Also in the zip file is a file \"testcode.cs\" that contains the snippet you have reported as failing. You can open this file from the console program or paste its contents into the console window and then click the Run button. If it fails, please send me a snapshot of the window.\r\n\r\nI have tried this snippet in the console on Win 10 (1703 & 1607) and Server 2016 (1607) without any failures. I am running in a domain account that is a member of the local machine's Administrators group. In the zip file is a \"capture.png\" image that has a clip of the output from Win 10.\r\n\r\nHopefully this will help us narrow your problem.",
+      "PostedDate": "2017-07-06T15:49:04.61-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It works. What have you changed?\n",
+      "PostedDate": "2017-07-10T08:14:39.927-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-10T08:24:03.91-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It doesn't work if I add running the task with highest privileges.\nAs you can see in the attachment \"highest.jpg\".\r\n\r\n",
+      "PostedDate": "2017-07-10T08:24:04.637-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "So it appears this is a security feature of the Windows base library and not this wrapper. Let me know if I can close this issue now.",
+      "PostedDate": "2017-07-12T03:43:31.007-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes, thanks for your help Dahall.",
+      "PostedDate": "2017-07-12T05:55:43.357-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-20T08:30:05.603-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

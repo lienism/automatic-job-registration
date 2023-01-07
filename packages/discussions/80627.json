@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "276479",
+    "ThreadId": "80627",
+    "Html": "<p>I see a lot of downloads and page views, but I am curious as to the value of this library to you in the community. I and some others have put a lot of time into fixing problems and adding enhancements. If you have used this library and have found it good or bad, I'd like to know so I can make sure I put the right amount of work into maintaining it. Please either reply to this thread or use the rating and/or review mechanism at the bottom of the page for the latest release.</p>",
+    "PostedDate": "2010-01-12T17:00:13.61-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363179",
+    "ThreadId": "80627",
+    "Html": "<p>This is a Great Library. This is exactly what I needed for reporting. However, I wish it had more examples of use but I have been able to deal.</p>",
+    "PostedDate": "2010-02-23T07:15:08.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363198",
+    "ThreadId": "80627",
+    "Html": "<p>I'm glad you've found it useful. There are a number of examples of how to use the library in the test harness within the source code <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/41280#19447\">here</a>.&nbsp;There are others sprinkled throughout the Discussions entries. If there are others that would be useful, let me know and I'll add them to the Documentation area.</p>",
+    "PostedDate": "2010-02-23T07:45:44.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "363515",
+    "ThreadId": "80627",
+    "Html": "<p>This is definitely&nbsp; a great library. It serves my purpose. Thanks for your effort in to creating this and maintaining it.</p>",
+    "PostedDate": "2010-02-23T21:02:08.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597416",
+    "ThreadId": "80627",
+    "Html": "<p>I really love it. Keep the good work.</p>",
+    "PostedDate": "2011-04-14T12:28:10.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "597646",
+    "ThreadId": "80627",
+    "Html": "<p>Me too; every place I've worked at seems to want to write their own service which runs tasks on schedules, yet Windows has its own perfectly functional scheduler built in. Your library makes working with the scheduler a piece of cake!</p>",
+    "PostedDate": "2011-04-14T19:50:45.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621394",
+    "ThreadId": "80627",
+    "Html": "<p>The Task Scheduler wrapper makes it possble for me to introduce the MS Scheduler into some of my projects. Writing native scripts to build schedule tasks is beyond my abilites so the wrapper helps. I'm having a little trouble with a couple of triggers, right now, but I feel I'll get them working in time. I have several small projects that run timers while minimized to a notifyIcon. Once I get the wrapper figured out I can simplify these projects. David has done some nice work here and his efforts are appreciated.</p>",
+    "PostedDate": "2011-06-01T07:05:38.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

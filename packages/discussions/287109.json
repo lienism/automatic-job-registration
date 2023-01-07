@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "729364",
+    "ThreadId": "287109",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I want to create MonthlyDOWTrigger using C#. I am using Microsoft.Win32.Scheduler.dll.</p>\r\n<p>On providing WhichWeek.AllWeeks , its throwing exception &quot;Only a single week can be set with Task Scheduler 1.0.&quot;</p>\r\n<p>We can assign multiple weeks if created MonthlyDOW Trigger through Task Scheduler, but could not be done using Microsoft.Win32.Scheduler.dll.</p>\r\n<p>Can anyone help, how to achieve this? Following is the code:</p>\r\n<p>&nbsp;static void Main(string[] args)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Get the service on the local machine<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create a new task definition and assign properties<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.RegistrationInfo.Description = &quot;Does something&quot;;<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create a trigger that will fire the task at this time every other day<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(new MonthlyDOWTrigger(DaysOfTheWeek.Monday|DaysOfTheWeek.Saturday, MonthsOfTheYear.AllMonths,&nbsp;&nbsp; WhichWeek.AllWeeks));<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create an action that will launch Notepad whenever the trigger fires<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null));<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Register the task in the root folder<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(@&quot;Test&quot;, td);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Remove the task we just created<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.DeleteTask(&quot;Test&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>Thanks</p>\r\n",
+    "PostedDate": "2012-01-23T08:41:03.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "729514",
+    "ThreadId": "287109",
+    "Html": "<p>The exception is correct. You are only able to use the Task Scheduler to create a MonthlyDOW trigger for mulitple weeks&nbsp;if the task is able to be used on Windows versions Vista and later. In the Task Scheduler, if you set the task to \"Configure for:\" = \"Windows Server 2003, Windows XP, or Windows 2000\" on the General tab, you will not be able to select multiple weeks when creating the trigger and create the task. This is a limitation of V1 of the Task Scheduler and I know of no work around other than creating multiple triggers.</p>",
+    "PostedDate": "2012-01-23T13:01:55.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731657",
+    "ThreadId": "287109",
+    "Html": "<p>Hi,</p>\r\n<p>I'm having the same problem as <a class=\"UserProfileLink\" href=\"http://www.codeplex.com/site/users/view/anandps1\">anandps1</a>. I directly create an instance of TaskEditDialog using</p>\r\n<p>TaskEditDialog ted = new TaskEditDialog();</p>\r\n<p>Upon selecting more than one week for a MonthlyDOWTrigger, the exception mentioned by <a class=\"UserProfileLink\" href=\"http://www.codeplex.com/site/users/view/anandps1\">anandps1</a> is thrown.</p>\r\n<p>&nbsp;</p>\r\n<p>Any help would be appreciated. Thanks,</p>\r\n<p>Ara43</p>",
+    "PostedDate": "2012-01-27T06:16:52.153-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731697",
+    "ThreadId": "287109",
+    "Html": "<p>Hi,</p>\r\n<p>Since there is limitation in selecting multiple weeks, I created multiple triggers for each week selected as indicated by dahall in the reply.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-01-27T07:40:11.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731770",
+    "ThreadId": "287109",
+    "Html": "<p>Yes, but the exception occurs with TriggerEditDialog.SupportV1Only = false, i.e., when the Windows Vista and 7 Task Scheduler *should* be supported. This seems wrong to me.</p>",
+    "PostedDate": "2012-01-27T11:09:13.8-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "731857",
+    "ThreadId": "287109",
+    "Html": "<p>That flag set to false enables the new triggers available in V2 and allows multiple weeks to be selected. When used in conjunction with the TaskEditDialog, that flag gets set based on the value of the Settings.Compatibility property of the TaskDefinition passed in to initialize the dialog.</p>",
+    "PostedDate": "2012-01-27T15:33:33.89-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732637",
+    "ThreadId": "287109",
+    "Html": "<p>Hi dahall,</p>\r\n<p>I have experimented a bit more. The following sample code fails for me:</p>\r\n<p>TaskService ts = new TaskService();<br />TaskDefinition td = ts.NewTask();<br />Trigger timeTrigger = td.Triggers.AddNew(TaskTriggerType.Time);<br />TriggerEditDialog triggerEditDialog = new TriggerEditDialog(timeTrigger, false);<br />triggerEditDialog.ShowDialog();</p>\r\n<p>The initial timeTrigger is V2, because (I'm using Win 7.) TriggerCollection.AddNew() calls Trigger(V2Interop.ITrigger iTrigger). When I use the dialog to change the TimeTrigger to a MonthlyDOWTrigger, I get an exception. It seems to be thrown because in TriggerEditDialog.monthlyDaysRadio_CheckedChanged(), new MonthlyDOWTrigger() is called, replacing the V2 trigger by a V1 trigger.</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-01-30T06:49:01.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732818",
+    "ThreadId": "287109",
+    "Html": "<p>Thank you Ara43 for helping me find a bug. It has been corrected in source code release <a id=\"ChangeSetLink0\" style=\"font-weight: bold;\" title=\"View change set 74464\" href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/changes/74464\">74464</a>.</p>",
+    "PostedDate": "2012-01-30T12:20:54.657-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733061",
+    "ThreadId": "287109",
+    "Html": "<p>Thank you for solving this issue!</p>",
+    "PostedDate": "2012-01-31T00:56:17.533-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

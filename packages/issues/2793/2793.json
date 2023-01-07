@@ -1,0 +1,95 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This issue was fixed in the source code drop from Nov. 10, 2008 but was not in the published assembly. It has now been published as part of Release 1.3 in the downloads area.",
+    "ClosedDate": "2009-04-30T11:21:33.027-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Code for registring a simple exec task in Root Folder with repetition values does not work under Vista Home.  The same code does work on Win2k SP4.\nThe task is registerd but the entire section of the repetition of the trigger is disabled. Begin and end times are registered correctly. \nIf attemtping to  re-read the  registered task in code, 0 appears in the interval and duration properties.\nIf changed repetition values manually in the Task Scheduler window,  the correct values *do* appear in the timespans.\nSo the problem is somewhere in the registring part of the code and only on Vista.\nNote that same code was used for both OS (2k and vista), and thus no Task Scheduler 2.0 functions were used.",
+    "LastUpdatedDate": "2013-05-16T04:49:15.99-07:00",
+    "PlannedForRelease": "Release 1.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2008-12-03T12:47:52-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Repetition not working on Vista",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 2793
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I believe this was the same problem reported and fixed on Nov 10, 2008. Please make sure you have downloaded the latest released code dated that same day. If you still experience the problem, add your comment to this thread.",
+      "PostedDate": "2008-12-03T23:23:03.293-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I still have the problem with V2 repetition durations on Windows Server 2008. V1 works fine, but I can't use new Vista Task Scheduler features.",
+      "PostedDate": "2009-01-22T04:25:51.56-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am also having this issue. At first I had suspected it was the issue reported last year, but I am using the newest version.",
+      "PostedDate": "2009-04-27T12:38:28.137-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-04-27T12:38:50.607-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-04-30T11:20:10.573-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2009-04-30T11:21:33.027-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks dahall, but it appears this may still be ongoing... repetition in Vista works when using a normal Trigger, but it does not work when using a DailyTrigger. I haven't tested with other trigger types yet.",
+      "PostedDate": "2009-04-30T15:39:44.313-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have run the following code on Vista with repeated success under the current code base. Could you maybe be forgetting to set both the Duration and the Interval?\r\n\r\n// Get the service on the local machine\r\nusing (TaskService ts = new TaskService())\r\n{\r\n\t// Create a new task definition and assign properties\r\n\tTaskDefinition td = ts.NewTask();\r\n\ttd.RegistrationInfo.Description = \"Does something\";\r\n\ttd.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n\t// Create a trigger that will fire the task at this time every other day\r\n\tDailyTrigger dt = (DailyTrigger)td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\tdt.Repetition.Interval = TimeSpan.FromHours(1);\r\n\tdt.Repetition.Duration = TimeSpan.FromHours(4);\r\n\r\n\t// Create an action that will launch Notepad whenever the trigger fires\r\n\ttd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\r\n\r\n\t// Register the task in the root folder\r\n\tts.RootFolder.RegisterTaskDefinition(\"Test\", td);\r\n}",
+      "PostedDate": "2009-08-22T19:55:50.373-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-07T01:31:31.437-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:10.753-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:15.99-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

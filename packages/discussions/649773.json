@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1458485",
+    "ThreadId": "649773",
+    "Html": "Clicking Cancel or OK from the <strong>Run Times</strong> tab of the editor causes a failure.<br />\nThe scenario I tested is with an existing task.<br />\n<br />\nSee image:  <a href=\"http://screencast.com/t/82oHIHSsN\" rel=\"nofollow\">http://screencast.com/t/82oHIHSsN</a><br />\n",
+    "PostedDate": "2016-01-08T08:36:06.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458807",
+    "ThreadId": "649773",
+    "Html": "I think I have this fixed for the next release. You'll have to let me know once I push the code.<br />\n",
+    "PostedDate": "2016-01-11T10:40:35.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-01-16T06:28:24.69-08:00"
+  },
+  {
+    "Id": "1459495",
+    "ThreadId": "649773",
+    "Html": "Confirmed.  Problem is Fixed.  Thanks!<br />\n",
+    "PostedDate": "2016-01-16T06:28:59.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

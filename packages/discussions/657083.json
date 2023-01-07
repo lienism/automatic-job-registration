@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1480922",
+    "ThreadId": "657083",
+    "Html": "without password and username, how do this task scheduler library set schedule in remote computer?\r<br />\n<br />\nany setting or configure need in remote computer before using this library?\r<br />\n<br />\ncan it upload python executable file to remote computer for set schedule?<br />\n",
+    "PostedDate": "2016-08-12T01:52:20.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480992",
+    "ThreadId": "657083",
+    "Html": "See this page for more information on connecting to remote computers as well as information and links about required preconditions: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity</a>\r<br />\n<br />\nThe only way to connect to remote computers without a username and password is to pass 'null' (Nothing on VB) as the parameters causing your current credentials to be used.\r<br />\n<br />\nThe library cannot upload an executable, but, with the right permissions, could potentially access one over the network. It can run any executable.<br />\n",
+    "PostedDate": "2016-08-12T10:28:06.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-08-12T10:28:10.953-07:00"
+  }
+]

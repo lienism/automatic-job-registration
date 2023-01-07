@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "728163",
+    "ThreadId": "286824",
+    "Html": "\r\n<p>Hi Everyone</p>\r\n<p>I am a asp.net newbie and need some help. I need to create functionality where I can schedule reading/moving of a file from one folder to another and thereafter delete the original file. I am hoping the Task Scheduler is my answer, if not any pointers will\r\n be highly appreciated.</p>\r\n<p>Thanx</p>\r\n",
+    "PostedDate": "2012-01-20T05:45:10.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "728695",
+    "ThreadId": "286824",
+    "Html": "<p>Task Scheduler will allow you to run any executable (including the command-line) under any account on a local or remote computer. ASP.NET is a little tricky in that the run-time user has very little privileges and often cannot even create a new task. There are a number of discussions discussing this for this project.</p>",
+    "PostedDate": "2012-01-21T09:21:26.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1426727",
+    "ThreadId": "638477",
+    "Html": "Why does build create de-DE, fr, it, zh-CN folders, each with their own version of Microsoft.Win32.TaskScheduler.resources.dll. \r<br />\n<br />\nI am guessing this has something to do with support for other languages besides English (German, French, Italian, and Chinese??), but I'm wondering whether there is a build option to prevent the creation of these folders?<br />\n\r<br />\nThank you in advance.<br />\n",
+    "PostedDate": "2015-05-20T14:47:20.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1426933",
+    "ThreadId": "638477",
+    "Html": "There is not a build option to prevent them, but you do not have to distribute those folders if you don't need the localization.<br />\n",
+    "PostedDate": "2015-05-21T11:51:00.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-22T07:34:40.797-07:00"
+  },
+  {
+    "Id": "1426935",
+    "ThreadId": "638477",
+    "Html": "Thank you for the reply. I wrote a set of commands to run as a post-build step to delete them. <br />\n",
+    "PostedDate": "2015-05-21T11:53:06.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

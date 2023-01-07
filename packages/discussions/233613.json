@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "517603",
+    "ThreadId": "233613",
+    "Html": "\r\n<p>Hello :)</p>\r\n<p>I want to ask if its possible to add an Message Field in an new Release. Actually you can get the LastReturnCode, but in the GUI Windows is showing some textMessage like &quot;Execution successfull&quot; , &quot;Could find the file&quot; etc.</p>\r\n<p>It would be really nice to have such error messages in the Wrapper :)</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2010-11-05T03:23:10.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "517769",
+    "ThreadId": "233613",
+    "Html": "\r\n<p>Sorry, but I can't find a LastReturnCode property anywhere in this project. Can you tell me the class and actual property name? If you are referring to Task.LastTaskResult, then you can use Win32Exception passing in the integer returned by LastTaskResult.\r\n The Message property will pull a localized string from Windows if it is a standard error.</p>\r\n",
+    "PostedDate": "2010-11-05T09:22:25.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

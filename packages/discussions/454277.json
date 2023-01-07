@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1083864",
+    "ThreadId": "454277",
+    "Html": "Hello,\r<br />\n<br />\ni am new on Codeplex. I find your great library and i needed to deploy on a old windows 2003 sp2 server with .NET 3.0 only installed.\r<br />\n<br />\nMy program enum the task and write the name to a file, and do different action on each task. It seems that task named with a name like &lt;name&gt;.&lt;something&gt; are ignored. After a step in debug mode, it seems that when the name of the job finish with an extension the com interface raise an exception, if the .job after the .&lt;something&gt; is kept the com interface looks work fine.\r<br />\n<br />\nI modify the MoveNext method to remove the folowing lines:\r<br />\nif (curItem.EndsWith(&quot;.job&quot;, StringComparison.InvariantCultureIgnoreCase))\r<br />\n   curItem = curItem.Remove(curItem.Length - 4);\r<br />\n<br />\nI think that the job's name didn't need to be parsed and remove the .job extension. It seem's that the com interface already do this work to return and activate task.\r<br />\n<br />\nI test this modification on a windows 7 system, windows 2003 SP2 server and seems to work fine.<br />\n",
+    "PostedDate": "2013-08-22T15:06:14.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1084209",
+    "ThreadId": "454277",
+    "Html": "That code should do nothing different if the task name does not end with &quot;.job&quot;. On the 1.0 version of the COM library, Microsoft's implementation is inconsistent, thus the need for this code. Are you having a problem with the code, or just looking for ways to optimize it? If there is a problem, please describe the problem and the failure or exception you get.<br />\n",
+    "PostedDate": "2013-08-23T08:19:15.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

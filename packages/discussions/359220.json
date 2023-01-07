@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "847645",
+    "ThreadId": "359220",
+    "Html": "\r\n<p>Environment:<br>\r\n32-bit Windows XP SP3 or 64-bit Windows XP SP2. This only reproduces on Windows XP.</p>\r\n<p>The Problem:<br>\r\nWhen a task is scheduled to run monthly on a specific weekday (like the 2nd Monday) of the month,&nbsp;&nbsp;an exception&nbsp;&quot;Value does not fall within the expected range&quot; is thrown when closing the Edit Trigger dialog. This only happens on Windows XP 32\r\n and 64-bit and does not appear with Vista and Windows 7. Also, it only happens when scheduling monthly for a specific weekday (for example, the second Monday) and the error does not appear if the project is scheduled monthly to run on a particular day of the\r\n month (the 11th) as opposed to a specific weekday.</p>\r\n<p>To Reproduce:<br>\r\nOn the Triggers tab, select the&nbsp;default trigger and choose &quot;Edit...&quot;. Choose Monthly. In the Months group, the Days radio button is selected so choose &quot;On&quot; instead and then choose &quot;Second&quot; and &quot;Tuesday&quot; or any values here and then click OK.&nbsp;&nbsp;</p>\r\n<p>Exception details:<br>\r\nValue does not fall within the expected range.</p>\r\n<p>Exception type:&nbsp; System.ArgumentException<br>\r\nMessage:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Value does not fall within the expected range.<br>\r\nSource:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Microsoft.Win32.TaskScheduler<br>\r\nTarget Site:&nbsp;&nbsp;&nbsp;&nbsp; SetTrigger</p>\r\n<p>Stack Trace:<br>\r\n&nbsp;&nbsp; at<br>\r\nMicrosoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger&amp; Trigger)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData()<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.Bind(ITask iTask)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TriggerCollection.Add(Trigger unboundTrigger)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TriggerCollection.Insert(Int32 index, Trigger trigger)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TriggerCollection.set_Item(Int32 index, Trigger value)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.triggerEditButton_Click(Obje<br>\r\nct sender, EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.OnClick(EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.OnClick(EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button,<br>\r\nInt32 clicks)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr<br>\r\nwparam, IntPtr lparam)</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-06-11T14:01:46.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "847955",
+    "ThreadId": "359220",
+    "Html": "<p>Looks like this has been corrected in source release 77874. Please disregard post. Thanks.</p>",
+    "PostedDate": "2012-06-12T06:58:36.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848109",
+    "ThreadId": "359220",
+    "Html": "<p>Ooopsss....I was just informed by my assigned&nbsp;tester that source release 77874 didn't fix the above-reported issue. Hoping to get a resolution from this thread. Thanks David!</p>",
+    "PostedDate": "2012-06-12T11:45:40.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848523",
+    "ThreadId": "359220",
+    "Html": "<p>Fixed in changeset 78634. Thanks for reporting this.<span style=\"font-family: Consolas; font-size: xx-small;\"></span></p>",
+    "PostedDate": "2012-06-13T10:06:03.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848546",
+    "ThreadId": "359220",
+    "Html": "<p>Awesome! Thanks David!</p>",
+    "PostedDate": "2012-06-13T10:50:27.53-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

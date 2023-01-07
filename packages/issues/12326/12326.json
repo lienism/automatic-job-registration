@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-02-07T09:53:30.703-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nwhen upgrading to latest version, I found out that the TaskScheduler library requires .NET 4.0 full instead of client profile since 2.5.6:\n- 2.5.5 works well with client profile\n- 2.5.6 requires System.Design assembly, and thus, requires the full profile.\nCurrently, I am stuck with 2.5.5 since my application is currently working with .NET 4.0 client profile (and widely deployed).\nIt this reference necessary?",
+    "LastUpdatedDate": "2016-02-07T09:53:30.703-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-01-15T06:07:04.487-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": ".NET 4.0 full required since 2.5.6",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12326
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I added TaskEventWatcher in that release which has a small design-time helper to tie it as a component to the TaskService component. It is not critical so I will remove the reference in 2.5.13, due shortly.",
+      "PostedDate": "2016-01-15T09:34:56.917-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-02-07T09:53:30.703-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

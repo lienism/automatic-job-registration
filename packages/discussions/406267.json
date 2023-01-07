@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "954043",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>Hi All,&nbsp;</p>\r\n<p>I have been trying to create a daily trigger with week days set in it, but I couldn't find an example or a way to do it. something like following:&nbsp;</p>\r\n<p>&nbsp;td.Triggers.Add(new DailyTrigger&nbsp;{</p>\r\n<p>StartBoundary = dtCalendar.Value&#43;dtTime.Value.TimeOfDay,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;DaysOfWeek = DaysOfTheWeek.Monday | DaysOfTheWeek.Tuesday | DaysOfTheWeek.Wednesday\r\n | DaysOfTheWeek.Thursday &nbsp;| DaysOfTheWeek.Friday&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });</p>\r\n<p>Any help appreciated.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2012-12-10T08:32:24.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954178",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>I think you are looking instead for a WeeklyTrigger. The following code will run the action every week on weekdays at the specified time.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger(DaysOfTheWeek.Monday | DaysOfTheWeek.Tuesday | DaysOfTheWeek.Wednesday |\r\n   DaysOfTheWeek.Thursday | DaysOfTheWeek.Friday) { StartBoundary = dtCalendar.Value+dtTime.Value.TimeOfDay });\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-12-10T13:22:06.42-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "954466",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>Hi dahall,</p>\r\n<p>Thanks for your reply,&nbsp;</p>\r\n<p>No, I am not looking for weekly trigger. Though I had created a weekly trigger to work around my problem. I am specifically looking for a daily trigger within which I can specify week days, since my application interface allows user to create a weekly schedule\r\n for days as they desire as well as daily schedule for weekdays only, and in the background for daily schedule with weekdays I create a weekly trigger so as for weekly schedule. Now the problem is that when I go for reading the task created via my application\r\n interface so I would not be able to read it correctly since both schedule will create same type of trigger, so there is no way I can differentiate in between them.&nbsp;</p>\r\n<p>This is why I specifically need to create a daily trigger with weekdays set, and I thought this is possible because using windows task scheduler it gives you option to set a daily trigger with weekdays set.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2012-12-11T03:41:17.54-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955248",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>I think if you look at the Task Scheduler system app, you will see that the weekly trigger (WeeklyTrigger) and the monthly days trigger (MonthlyDOWTrigger) are&nbsp;the only ones that support the specifying of week days. The DailyTrigger only supports an interval.\r\n You could always use the TaskDefinition.Data property to store something that will distinguish tasks for your application. It is supported across all operating systems.</p>\r\n",
+    "PostedDate": "2012-12-12T11:47:22.123-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955659",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>It didn't work. I set the data value to &quot;W&quot; or &quot;D&quot; as I create the schedule but when load the task for reading, I find blank string. &nbsp;</p>\r\n",
+    "PostedDate": "2012-12-13T08:16:33.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "955927",
+    "ThreadId": "406267",
+    "Html": "\r\n<p>Under XP and earlier versions of the Task Scheduler, the Data and Documentation properties overlap. Are you setting the Documentation property? If not, then this does work. Make sure you register the task after setting the Data property and before reading\r\n it again.</p>\r\n",
+    "PostedDate": "2012-12-13T21:08:34.43-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

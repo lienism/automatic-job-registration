@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-08T13:17:49.54-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Error using RegisterTaskDefinition on Window10 Professional When calling \"RegisterTaskDefinition\", the error I am getting is:\n\n\"Die angegebene Domäne ist nicht vorhanden, oder es konnte keine Verbindung hergestellt werden\"\nThe specified domain does not exist, or no connection could be made\n\n```\n           Using ts As New TaskService()\n                ' Create a new task definition and assign properties\n                Dim td As TaskDefinition = ts.NewTask\n                td.RegistrationInfo.Description = \"Does something\"\n\n                ' Add a trigger that will, starting tomorrow, fire every other week on Monday\n                ' and Saturday and repeat every 10 minutes for the following 11 hours\n                Dim wt As New WeeklyTrigger()\n                wt.StartBoundary = DateTime.Today.AddDays(1)\n                wt.DaysOfWeek = DaysOfTheWeek.Monday Or DaysOfTheWeek.Saturday\n                wt.WeeksInterval = 2\n                wt.Repetition.Duration = TimeSpan.FromHours(11)\n                wt.Repetition.Interval = TimeSpan.FromMinutes(10)\n                td.Triggers.Add(wt)\n\n                ' Add an action (shorthand) that runs Notepad\n                td.Actions.Add(New ExecAction(\"notepad.exe\", \"c:\\test.log\"))\n\n                ' Register the task in the root folder\n                ts.RootFolder.RegisterTaskDefinition(\"Test\", td, TaskCreation.Create, \"SYSTEM\",, TaskLogonType.ServiceAccount)\n            End Using\n```",
+    "LastUpdatedDate": "2016-04-08T13:17:49.54-07:00",
+    "PlannedForRelease": "Release 2.5.28",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-11-10T11:11:02.343-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Error using RegisterTaskDefinition on Window10 Professional When calling \"RegisterTaskDefinition\",",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12261
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "I'm using version 2.5.1 of taskscheduler",
+      "PostedDate": "2015-11-10T11:12:45.16-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try release 2.5.2 (just released) which I believe contains a fix. Please let me know if it works.",
+      "PostedDate": "2015-11-10T14:17:45.223-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-11-10T14:18:25.327-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-08T13:17:49.54-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

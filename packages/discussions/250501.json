@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "583618",
+    "ThreadId": "250501",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>&nbsp;</p>\r\n<p>This would be really handy to have a Nuget pacakge so it can be installed via nuget.</p>\r\n<p>&nbsp;</p>\r\n<p>I notice there is Fluent version of the Task Scheduler here on codeplex which has a nuget package but appears to only run in .net 4 and i am stuck currently in 3.5</p>\r\n<p>&nbsp;</p>\r\n<p>Just my 2 cents :-)</p>\r\n",
+    "PostedDate": "2011-03-21T03:15:55.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "584084",
+    "ThreadId": "250501",
+    "Html": "<p>Thanks for the pointer. I hadn't even heard&nbsp;of NuGet. Nice solution. I have uploaded the 1.6 files and they are now available through NuGet.</p>",
+    "PostedDate": "2011-03-21T17:14:28.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

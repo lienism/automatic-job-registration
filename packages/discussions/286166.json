@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "725269",
+    "ThreadId": "286166",
+    "Html": "\r\n<p>Hi.</p>\r\n<p>How can I get the&nbsp;TaskSchedulerWizard to create a task in a specific folder?</p>\r\n<p>/M</p>\r\n",
+    "PostedDate": "2012-01-14T12:49:27.003-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "725497",
+    "ThreadId": "286166",
+    "Html": "<p>Use something like the following code:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n  TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard();\r\n  wiz.Initialize(ts);\r\n  wiz.RegisterTaskOnFinish = <span style=\"color: blue;\">false</span>;\r\n  <span style=\"color: blue;\">if</span> (wiz.ShowDialog() == DialogResult.OK)\r\n  {\r\n    TaskFolder folder = ts.GetFolder(<span style=\"color: #a31515;\">@\"\\MyFolder\"</span>);\r\n    folder.RegisterTaskDefinition(wiz.TaskName, wiz.TaskDefinition);\r\n  }\r\n}\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-01-15T13:21:49.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "726273",
+    "ThreadId": "286166",
+    "Html": "<p>Thanks.</p>\r\n<p>That worked great.</p>\r\n<p>/M</p>",
+    "PostedDate": "2012-01-17T02:26:04.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

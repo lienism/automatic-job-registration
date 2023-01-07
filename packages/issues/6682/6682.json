@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2010-07-12T16:10:57.45-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Good Day:\n \nIf it use the TaskEditDialog, and edit a task it works fine the first time.  However, If I decide to edit the same task a second time I get the following error:\n \nValue of '12/31/9999 12:00:00 AM' is not valid for 'Value'. 'Value' should be between 'MinDate' and 'MaxDate'.\nParameter name: Value\n \nAll I'm doing is changing the time on a trigger.   The first time it works fine.  But trying to do anything with it after that it gives an error.  To get the error I have to edit a task.  then bring the task back up in the editor and then I get this error.\n \nAnyone have any ideas?\n \nMary.",
+    "LastUpdatedDate": "2013-05-16T04:49:13.443-07:00",
+    "PlannedForRelease": "Release 1.5",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-07-09T07:45:49.297-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEditDialog Getting error if I try and edit a second time",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 6682
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Fixed in build 54519. Problem with losing just enough accuracy in the DateTime string representation to make it not equal to MaxTime.",
+      "PostedDate": "2010-07-12T16:10:44.57-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-07-12T16:10:57.45-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:07.77-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:13.443-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

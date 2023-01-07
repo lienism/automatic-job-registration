@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1492760",
+    "ThreadId": "661389",
+    "Html": "Hey, I want to run powershell.exe to run a script. But the script in turn takes arguments. How do I achieve this ?\r<br />\n<br />\nthis doesnt work...<br />\n<pre><code>myTask.Actions.Add(&quot;powershell.exe&quot;,&quot;C:\\\\Users\\\\aqeel\\\\Desktop\\\\FYP\\\\sender.ps1&quot;, MyStringArgs);</code></pre>\n\n",
+    "PostedDate": "2017-02-16T02:05:15.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1492790",
+    "ThreadId": "661389",
+    "Html": "I've used this format in the past with success:<br />\n<pre><code>myTask.Actions.Add(&quot;powershell.exe&quot;, $&quot;-NoLogo -NonInteractive -WindowStyle Hidden -File \\&quot;{scriptFilePathWithNoQuotes}\\&quot; {MyStringArgs}&quot;, myWorkingDirectory);</code></pre>\n\nNote that if MyStringArgs contains paths that need quotes, you should supply them in the MyStringArgs variable.<br />\n<pre><code>var MyStringArgs = &quot;arg1 \\&quot;arg2 has spaces\\&quot;&quot;;</code></pre>\n\n",
+    "PostedDate": "2017-02-16T09:32:47.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-02-16T09:32:57.453-08:00"
+  }
+]

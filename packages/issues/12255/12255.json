@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Very sorry for introducing a bug in 2.5.0. This has been fixed in 2.5.1, now released.",
+    "ClosedDate": "2015-11-09T11:39:33.513-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The exception has apperad  on RegisterTaskDefinition method in version 2.5.0 (in 2.4.2 all was oK):\n\n_\"The name provided is not a properly formed account name\"_\n\n\n```C#\n        private const string taskName = \"MyCustomsPrintingServiceStarter\";\n        \n\n\n        public void Run(string installDir)\n        {            \n            using (var taskService = new TaskService())\n            {\n                var task = taskService.FindTask(taskName);\n                if (task == null)\n                {\n                    string pathToApplicationExeFile = GetPathToApplicationExeFile(installDir);\n\n                    var definition = taskService.NewTask();\n                    definition.Principal.RunLevel = TaskRunLevel.Highest;\n                    definition.Triggers.AddNew(TaskTriggerType.Logon);\n                    definition.Actions.Add(new ExecAction(pathToApplicationExeFile, workingDirectory: Path.GetDirectoryName(pathToApplicationExeFile)));\n                    definition.Settings.DisallowStartIfOnBatteries = false;\n                    definition.Settings.StopIfGoingOnBatteries = false;\n                    definition.Settings.ExecutionTimeLimit = TimeSpan.Zero;\n                    task = taskService.RootFolder.RegisterTaskDefinition(\n                        taskName, definition, TaskCreation.Create, \"Everyone\", LogonType: TaskLogonType.Group);                    \n                }                \n                task.Run();\n            }\n        }\n```",
+    "LastUpdatedDate": "2015-11-09T11:39:33.513-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-11-06T10:57:59.867-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Exception: the name provided is not a properly formed account name for v.2.5.0",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12255
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

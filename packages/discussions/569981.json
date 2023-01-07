@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1314050",
+    "ThreadId": "569981",
+    "Html": "Hello,\r<br />\n<br />\nTriggerEditDialog could not be resolved even  namespace Microsoft.Win32.TaskScheduler is added. I am trying to display  dialog in a user control. What could be the reason.\r<br />\n<br />\nPlease revert.\r<br />\n<br />\nThanks,\r<br />\nPabitra<br />\n",
+    "PostedDate": "2014-10-16T10:19:53.333-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314072",
+    "ThreadId": "569981",
+    "Html": "For all UI elements, including TriggerEditDialog, you must reference the Microsoft.Win32.TaskSchedulerEditor.dll assembly along with the Microsoft.Win32.TaskScheduler.dll assembly .<br />\n",
+    "PostedDate": "2014-10-16T11:38:50.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1317103",
+    "ThreadId": "569981",
+    "Html": "This is resolved after referencing to correct version assembly. Thank you. <br />\n",
+    "PostedDate": "2014-10-28T10:26:00.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-28T10:28:12.797-07:00"
+  }
+]

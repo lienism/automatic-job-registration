@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See Comments",
+    "ClosedDate": "2013-04-29T14:51:04.217-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "\"the selected task {0} no longer exists. to see the current task click refresh\" task scheduler throwing exception while  boot up and refreshing.",
+    "LastUpdatedDate": "2013-05-16T04:49:07.783-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-04-25T06:23:53.05-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "my scheduler task not working properly after then",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10951
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Please provide references to any code that is running, how you have created the task, how you're accessing the task, etc. The information you have provided is insufficient for me to act on.",
+      "PostedDate": "2013-04-27T09:49:26.373-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Its crushed when im debugging create simple task example. Im opened same time Windows schedule task window. ",
+      "PostedDate": "2013-04-27T12:25:45.36-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This error is not coming from this library. Are you seeing this error from the Windows Task Scheduler application? If so, then please contact Microsoft for support.",
+      "PostedDate": "2013-04-29T09:19:07.663-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes. Im seein this error on microsoft Windows task scheduler. But I tried explain, its happened by library. ",
+      "PostedDate": "2013-04-29T12:31:53.383-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "There is a potential race condition when multiple instances of the COM object access the same task. I handle this exception in the library, but the native application does not. This is the error you are seeing. The only way to avoid it is to not access the same task through the library that is being viewed in the native app.",
+      "PostedDate": "2013-04-29T14:49:44.577-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-04-29T14:51:04.217-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:07.783-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

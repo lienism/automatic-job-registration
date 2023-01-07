@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1352916",
+    "ThreadId": "581055",
+    "Html": "How do I get the delay time from a trigger?<br />\n<br />\nFor instance...<br />\n<pre><code>Dim delayTime as short\nUsing taskServiceObject As TaskService = New TaskService()\n  Dim taskObject As Microsoft.Win32.TaskScheduler.Task = taskServiceObject.GetTask(&quot;mytask&quot;)\n\n  If (taskObject Is Nothing) = False Then ' Makes sure that the task exists and we don't get a Null Reference Exception.\n    With taskObject.Definition.Triggers.Item(0)\n      If .TriggerType = TaskTriggerType.Logon Then\n        // Get Delay Time Here and store it in a variable\n        delayTime = .Delay????\n      End If\n    End With\n  End If\nEnd Using</code></pre>\n\nAnybody have a clue how to get that?<br />\n",
+    "PostedDate": "2015-02-15T09:28:40.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1353455",
+    "ThreadId": "581055",
+    "Html": "First of all, tasks do not have to have any triggers so unless you know there is at least one trigger, you should check Triggers.Count &gt; 0 before getting the indexed trigger.\r<br />\n<br />\nTo answer your question, I believe you are looking for the following:<br />\n<pre><code>Dim delayTime As TimeSpan\nUsing taskServiceObject As TaskService = New TaskService()\n   Dim taskObject As Microsoft.Win32.TaskScheduler.Task = taskServiceObject.GetTask(&quot;mytask&quot;)\n   ' Makes sure that the task exists and we don't get a Null Reference Exception.\n   If (taskObject IsNot Nothing) And (taskObject.Definition.Triggers.Count &gt; 0) Then\n      Dim trigger As Trigger = taskObject.Definition.Triggers.Item(0)\n      If (trigger.TriggerType = TaskTriggerType.Logon) And (TypeOf trigger Is ITriggerDelay) Then\n         ' Get Delay Time Here and store it in a variable\n         delayTime = CType(trigger, ITriggerDelay).Delay\n      End If\n   End If\nEnd Using</code></pre>\n\nTechnically, you don't need to check if the trigger type is Logon unless your code requires it. If you need seconds or milliseconds from the TimeSpan object, there are methods and properties on that object to extract that details.<br />\n",
+    "PostedDate": "2015-02-17T08:44:14.197-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-02-17T08:44:25.757-08:00"
+  }
+]

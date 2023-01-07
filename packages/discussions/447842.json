@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1059710",
+    "ThreadId": "447842",
+    "Html": "I've come across several threads related to this, but all of them state they're able to update until they change users.  I can't even do that.\r<br />\n<br />\nHere is the code below<br />\n<pre><code>\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\n\nusing Microsoft.Win32.TaskScheduler;\n\nnamespace ConsoleApplication1 {\n  class Program {\n    static void Main(string[] args) {\n      var p = new Program();\n      p.EnumAllTasks();\n\n    }\n    void EnumAllTasks() {\n      using (TaskService ts = new TaskService())\n        EnumFolderTasks(ts,ts.RootFolder);\n    }\n\n    void EnumFolderTasks(TaskService ts, TaskFolder fld) {\n      var tasks = fld.Tasks.Where(t =&gt; t.Name.Equals(&quot;test-task&quot;, StringComparison.OrdinalIgnoreCase));\n\n      foreach (Task task in tasks)\n        ActOnTask(ts, task);\n    }\n\n    void ActOnTask(TaskService ts, Task t) {\n      //ea.Path\n      Console.WriteLine(t.Name);\n      Console.WriteLine(t.Path);\n      Console.WriteLine(((ExecAction)t.Definition.Actions.First()).Path);\n      var ea = (ExecAction)t.Definition.Actions.First();\n      \n      ea.Path = ea.Path + &quot;.coolio/test.exe&quot;;\n      UpdateFirstAction(ts, t, new ExecAction(ea.Path+&quot;.coolio/test.exe&quot;,ea.Arguments,ea.WorkingDirectory));\n      //ts.s\n      // Do something interesting here\n    }\n\n    void UpdateFirstAction(TaskService ts, Task t, Microsoft.Win32.TaskScheduler.Action action) {\n      if (t.TaskService.HighestSupportedVersion &gt;= new Version(1, 2)) {\n        t.Definition.Actions.RemoveAt(0);\n      }\n      t.Definition.Actions.Add(action);\n      ts.RootFolder.RegisterTaskDefinition(&quot;test-task&quot;, t.Definition);\n    }\n\n  }\n}\n</code></pre>\n\nI've tried running this from VS 2012, and directly from the CLI.  I created the task manually from the same account that I'm trying to update it from (never logged out).  I checked the t.Definition.Principle.UserID and it matches what's being reported for the 'Author' from the task scheduler snapin itself.\r<br />\n<br />\nWhat am I missing?<br />\n",
+    "PostedDate": "2013-06-21T10:19:56.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1059797",
+    "ThreadId": "447842",
+    "Html": "You likely need to run the application as Administrator.<br />\n",
+    "PostedDate": "2013-06-21T14:53:25.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1060547",
+    "ThreadId": "447842",
+    "Html": "It's really hard for me to believe that 'run as admin' is the correct answer to this issue.  I have no doubt it would work, but I also have no doubt there are other less drastic measures that would work also.<br />\n",
+    "PostedDate": "2013-06-24T12:35:05.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

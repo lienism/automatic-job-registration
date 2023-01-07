@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1495052",
+    "ThreadId": "662364",
+    "Html": "Hi,<br />\n<br />\nI am trying to set task to be scheduled only once. Thus, I am using <strong>TimeTrigger</strong> , but I get the exception at <br />\n<pre><code>ts.RootFolder.RegisterTaskDefinition(Curr_Task.Name, Curr_Task.Definition, TaskCreation.CreateOrUpdate, str_username, str_password, TaskLogonType.Password);</code></pre>\n\n<strong>Edit</strong> : I get this error every time, I try to update the TaskDefinition using <strong>RegisterTaskDefinitiom</strong>. But for the very first time it works fine.<br />\n<br />\n<strong>Exception Details :-</strong><br />\nError Code : -2147216615<br />\nError msg : (10,8):StartBoundary<br />\nStack Trace :<br />\n<pre><code>   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String path, TaskDefinition definition, TaskCreation createType, String userId, String password, TaskLogonType logonType, String sddl) in D:\\Jeet\\Task Schedular API v2.5.22\\Source Code\\TaskService\\TaskFolder.cs:line 424\n   at SQScheduler.frmScheduleScenario.SetTriggerinTaskScheduler_New()</code></pre>\n\nPlease help why I get this exception and what can be done to stop it from coming...<br />\n",
+    "PostedDate": "2017-04-02T23:18:21.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495091",
+    "ThreadId": "662364",
+    "Html": "You need to set the StartBoundry of the Trigger to a value in the future.<br />\n",
+    "PostedDate": "2017-04-03T14:31:16.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-04-06T23:33:49.45-07:00"
+  },
+  {
+    "Id": "1495103",
+    "ThreadId": "662364",
+    "Html": "I just debug the code and got to know that <strong>Add(Trigger unboundTrigger)</strong> of TriggerCollection class, sets it to null while calling Bind(v2Def). Please check the below snaps for the same.<br />\n<br />\n<strong>Before Call</strong> <br />\n<a href=\"https://drive.google.com/open?id=0B5gc8M5EOKshMThSek9IQ1hBbzg\" rel=\"nofollow\">https://drive.google.com/open?id=0B5gc8M5EOKshMThSek9IQ1hBbzg</a><br />\n<br />\n<strong>After Call</strong><br />\n<a href=\"https://drive.google.com/open?id=0B5gc8M5EOKshTkxYY01WYnhDNlk\" rel=\"nofollow\">https://drive.google.com/open?id=0B5gc8M5EOKshTkxYY01WYnhDNlk</a><br />\n<br />\nI have scenario in which I clear all the triggers and add the triggers again to the Task. Some of them are the existing triggers while some can be new. In case of existing trigger(say T1), T1 does get added but with the time set as current Time(and not the future once), then I do different things and at last I call RegisterTaskDefinition. <br />\n<br />\nAt this moment, the StartBoundary of T1 is less than Current Time. Thus, the exception is thrown.<br />\n<br />\nNow. Please suggest a way to clear the existing triggers and add triggers again such that this issue does not occur.<br />\n",
+    "PostedDate": "2017-04-03T23:24:02.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

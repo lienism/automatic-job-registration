@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1472270",
+    "ThreadId": "654253",
+    "Html": "The MonthlyTrigger has a bool property &quot;RunOnLastDayOfMonth&quot;.\r<br />\nIf there is a MonthlyTrigger with last day is check, and then I want to uncheck it by using the editor, unfortunate, I click &quot;ok&quot; and reopen the editDialog, the last day is still checked.\r<br />\n<br />\nIs it a bug? Or I miss something?<br />\n",
+    "PostedDate": "2016-05-03T02:18:32.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472797",
+    "ThreadId": "654253",
+    "Html": "The MonthlyTrigger requires that at least one day is specified. If you uncheck, but do not select another day, the UI will default to the last valid selection.\r<br />\n<br />\nIf this is not the behavior you are seeing, please let me know.<br />\n",
+    "PostedDate": "2016-05-08T17:02:59.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472800",
+    "ThreadId": "654253",
+    "Html": "In fact, it is another day is checked as well, so I can sure that it isn't the behavior you are seeing.\r<br />\nAnd if none of other days is checked, it is impossible to uncheck the &quot;last&quot;.\r<br />\n<br />\nThe issue is:\r<br />\nIt is more than one day is checked(include last), and I just uncheck the &quot;last&quot; and then click OK, the UI looks everything is work well and it is not any error or exception showed. But unfortunately, when I reopen the trigger, the &quot;last&quot; is still checked.\r<br />\nAnd I check it with &quot;task scheduler&quot; in windows as well, and I think maybe there is a mistake to assign true to &quot;RunOnLastDayOfMonth&quot; property in MonthlyTrigger when click the &quot;OK&quot; button.<br />\n",
+    "PostedDate": "2016-05-08T18:31:32.177-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472874",
+    "ThreadId": "654253",
+    "Html": "Thank for the detail as it helped me find a bug in the logic that caused the problem you described. It will be fixed in the upcoming 2.5.20 release.<br />\n",
+    "PostedDate": "2016-05-09T10:53:19.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-09T10:58:02.107-07:00"
+  }
+]

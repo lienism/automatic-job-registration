@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1479653",
+    "ThreadId": "656650",
+    "Html": "Is there a way for you to provide official PDB files as part of the binary distribution of this project?<br />\n",
+    "PostedDate": "2016-07-23T08:35:18.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479829",
+    "ThreadId": "656650",
+    "Html": "I am unfamiliar with this practice. In the \\bin directory, I see the PDB files along with DLL and XML files. Where would you have me include them? In the .ZIP files I distribute on this site or in the NuGet package or both? I already publish the symbol files along with the NuGet push using the -Symbol option. Is that sufficient for your needs?<br />\n",
+    "PostedDate": "2016-07-26T06:16:23.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479831",
+    "ThreadId": "656650",
+    "Html": "When I downloaded both the TaskScheduler and TaskSchedulerEditor ZIP files that you provide for download they are both missing the PDB files. Yes, including PDB files could help in narrow down why some users of mine are having issues where others are not.<br />\n",
+    "PostedDate": "2016-07-26T06:37:36.853-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1480061",
+    "ThreadId": "656650",
+    "Html": "So, to my surprise, the PDB files are posted with the symbol files on SymbolSource.org when you use the NuGet package. Instructions to include that symbol repository in your debugging can be found at <a href=\"https://docs.nuget.org/create/creating-and-publishing-a-symbol-package\" rel=\"nofollow\">https://docs.nuget.org/create/creating-and-publishing-a-symbol-package</a>. In the next version posted here on this site with the ZIP files, I will include the PDB files.<br />\n",
+    "PostedDate": "2016-07-28T14:49:02.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-07-28T14:49:06.317-07:00"
+  }
+]

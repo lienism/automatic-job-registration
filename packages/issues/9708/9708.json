@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-01-12T10:22:51.35-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n \nWhen making a call to GetRunningTasks in Microsoft.Win32.TaskScheduler.TaskService I sometimes receive the following exception: \"There is no running instance of the task. (Exception from HRESULT: 0x8004130B)\".\n \nHere is the call stack:\n \n                   at Microsoft.Win32.TaskScheduler.V2Interop.IRunningTask.get_Path()\n   at Microsoft.Win32.TaskScheduler.RunningTaskCollection.RunningTaskEnumerator.get_Current() in D:\\Visual Studio 2008\\Projects\\NASP.Common\\NASP.Common.TaskService\\TaskCollection.cs:line 353\n   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)\n   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)\n \nIt apppears to be throwing the exception in the property:\n \npublic RunningTask Current\n\t\t\t{\n\t\t\t\tget\n\t\t\t\t{\n\t\t\t\t\tV2Interop.IRunningTask irt = (V2Interop.IRunningTask)iEnum.Current;\n\t\t\t\t\tV2Interop.IRegisteredTask task = TaskService.GetTask(v2Svc, irt.Path);\n\t\t\t\t\tif (task == null) return null;\n\t\t\t\t\treturn new RunningTask(svc, task, irt);\n\t\t\t\t}\n\t\t\t}\n \nspecifically at \"V2Interop.IRegisteredTask task = TaskService.GetTask(v2Svc, irt.Path);\"\n \nAm I doing something wrong?\n \nThanks,\nMichael DePouw",
+    "LastUpdatedDate": "2013-05-16T04:49:10.81-07:00",
+    "PlannedForRelease": "Release 1.7.1",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-12-09T12:14:42.797-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "There is no running instance of the task. (Exception from HRESULT: 0x8004130B)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9708
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "What is happening is that between the enumerating of all the running tasks and the request for a specific task, that task must finish running. I will look at the code to see what I can do to make sure the enumerator accounts for tasks spinning up and down. For now, the work around is to put a try/catch block around the call to get each running task so it can fail gracefully.",
+      "PostedDate": "2011-12-09T13:13:29.79-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-12-09T13:13:57.613-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for the quick and knowledgeable response.  I'll implement the work around.\r\n\r\nThanks,\r\nMD",
+      "PostedDate": "2011-12-10T09:32:23.403-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-12T10:22:43.093-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-12T10:22:51.35-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:03.907-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:10.81-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

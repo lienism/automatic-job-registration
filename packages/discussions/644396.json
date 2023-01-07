@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1442528",
+    "ThreadId": "644396",
+    "Html": "Is there any way to deserialize the Task XML of the created task using wrapper ? I'm actually working on an application, developed with C#.\r<br />\n<br />\nDoes Task Definition contains some kind of property or method which would help me to do this ?\r<br />\n<br />\n<br />\nThanks In Advance<br />\n",
+    "PostedDate": "2015-08-31T06:01:52.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442554",
+    "ThreadId": "644396",
+    "Html": "First you must have XML in the right format. This can be done via the library by capturing the output from an existing task via the Task.Xml property or by calling the task's Export method. If the task doesn't already exist, build up the TaskDefinition as outlined in the documentation and then capture the TaskDefinition instance's XmlText property. Note that all these suggestions return Xml using the <a href=\"https://msdn.microsoft.com/en-us/library/windows/desktop/aa383609.aspx\" rel=\"nofollow\">schema defined by Microsoft for tasks</a>.<br />\n<br />\nOnce you have the properly formatted Xml, you can create tasks by:<br />\n<ol>\n<li>Call the TaskService instance's NewTaskFromFile method passing the file path and then registering the returned TaskDefintion.</li>\n<li>Get an instance to the TaskFolder in which you want to create the task and call its RegisterTask method passing in the xml (not the file) as the second parameter.</li>\n<li>Get an instance to the TaskFolder in which you want to create the task and call its ImportTask method passing in the xml file path as the second parameter.</li>\n</ol>\n",
+    "PostedDate": "2015-08-31T09:44:14.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:26:45.443-07:00"
+  },
+  {
+    "Id": "1442613",
+    "ThreadId": "644396",
+    "Html": "@dahall: Thanks for the reply. \r<br />\nBut I don't want to create tasks using the XML. I have created a task and stored its Xml(using Task.Xml) in a sql db. I am retrieving this XML.\r<br />\nSo, now the problem is that I want to deserialize this XML. So is there any method provided by the wrapper to deserialize this XML ?\r<br />\n<br />\nThanks again<br />\n",
+    "PostedDate": "2015-08-31T22:10:32.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442703",
+    "ThreadId": "644396",
+    "Html": "Yes, step 1 above will accomplish what you are asking. It only creates a TaskDefinition and does not register it.<br />\n",
+    "PostedDate": "2015-09-01T09:26:34.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:26:48.423-07:00"
+  },
+  {
+    "Id": "1442738",
+    "ThreadId": "644396",
+    "Html": "Okay. And will it work with the Tasks present on some remote machine in my domain ? I mean I am able to create tasks on the remote machines, so how I do make sure that the tasks with their XML (on remote machines) can be deserialized as well ?\r<br />\nThanks for replying and taking time to solve all the queries .\r<br />\nReally appreciate it<br />\n",
+    "PostedDate": "2015-09-01T13:38:50.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442847",
+    "ThreadId": "644396",
+    "Html": "It will work as long as the XML have extracted complies with all the versions of Windows in your environment. You can do a few things to ensure this:<br />\n<ol>\n<li>Use the Task Scheduler applet from Windows on the oldest version of Windows in the environment to export the XML for your task.</li>\n<li>Use the same applet on any version, but make sure the OS selected on the first tab is the oldest in your environment.</li>\n<li>In the library, use the TaskDefintion's LowestSupportedVersion to confirm it complies or use the Validate method to get a list of reasons it doesn't.</li>\n</ol>\n",
+    "PostedDate": "2015-09-02T07:36:29.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-02T07:36:40.517-07:00"
+  }
+]

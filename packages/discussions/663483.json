@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497515",
+    "ThreadId": "663483",
+    "Html": "I can't find the property in the class hierarchy where I can adjust, that the job should also run when no user is logged in. Can anyone help ;-)\r<br />\n<br />\nThx Hans<br />\n",
+    "PostedDate": "2017-07-26T06:34:59.21-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497516",
+    "ThreadId": "663483",
+    "Html": "You need to register the task with a password or (on Win Vista and later) S4U. See <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&amp;referringTitle=Documentation#user\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity&referringTitle=Documentation#user</a> and supply the appropriate TaskLogonType.<br />\n",
+    "PostedDate": "2017-07-26T10:29:35.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-07-26T10:29:42.267-07:00"
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2010-01-13T17:16:37.22-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi there,\n \nI set up a test task on a Win7 box which runs an exe basically just returning the number of args passed in. \n \nFrom a seperate Win2008R2 box, I call td.Run(\"1\", \"2\").   It appears as though the parameter arguments are not getting passed into the task action.\n \nVerified the task runs successfully and is v2task.  Any idea what could be going on here?\n \nusing (TaskService ts = new TaskService(\"laptop\"))\n{\n\tusing (Task td = ts.GetTask(\"TestService\"))\n       \t{\n         \t\tRunningTask rt = td.Run(\"1\", \"2\");\n             \t                while (td.State == TaskState.Running)\n             \t                 {\n                  \t\tThread.Sleep(1000);\n             \t                 }\n\t\t// I would expect the line below to basically output the number 2\n\t\tLogger.Log(td.LastTaskResult);\n        }\n}\n \nMy Task on the target machine is just a basic task running my program test.exe\nthe code is \nstatic int Main(string[] args)\n{\n   return args.Length;\n}",
+    "LastUpdatedDate": "2013-05-16T04:49:14.803-07:00",
+    "PlannedForRelease": "Release 1.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-01-13T14:17:49.903-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Task.Run parameters not passed to action",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 5206
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is working as designed. To pull parameters used in the Run method, you must specify them using the syntax noted in [url:Microsoft's documentation|http://msdn.microsoft.com/en-us/library/aa380767(VS.85).aspx]. I will update the help file with their text, but basically you have you place a #(Arg0) in the Parameters property of the ExecAction action to pull out the first argument, #(Arg1) for the next, and so on. To do what you are trying, I would try the following code:\r\n{code:c#}\r\nusing (TaskService ts = new TaskService())\r\n{\r\n   const string taskName = \"TestService\";\r\n   ts.AddTask(taskName, new TimeTrigger() { StartBoundary = DateTime.Now + TimeSpan.FromHours(1), Enabled = false }, new ExecAction(@\"Test.exe\", \"$(Arg0)\", null));\r\n   using (Task td = ts.GetTask(taskName))\r\n   {\r\n      td.Run(\"1 2\"); // or td.Run(\"\\\"1\\\" \\\"2\\\"\")\r\n      while (td.State == TaskState.Running)\r\n      {\r\n         System.Threading.Thread.Sleep(1000);\r\n      }\r\n      ts.RootFolder.DeleteTask(taskName);\r\n   }\r\n}\r\n{code:c#}",
+      "PostedDate": "2010-01-13T17:14:46.33-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-01-13T17:16:37.22-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:09.377-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.803-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

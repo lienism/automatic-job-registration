@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1294100",
+    "ThreadId": "562292",
+    "Html": "I am using a <strong>DateTime</strong> value to set the <strong>StartBoundary</strong> of several <strong>Triggers</strong> (daily, weekly, monthly).\r<br />\n<br />\nI am loging the DateTime and StartBoundary after assignment.\r<br />\n<br />\nThe two values are equal.\r<br />\n<br />\nBut when I finally call the RootFolder.RegisterTaskDefinition method and check the Windows System Task Scheduler, I get correct trigger Days, however incorrect <strong>Start Time</strong><br />\n<pre><code>//example \nusing (TaskService ts = new TaskService())\n{\n\n    TaskDefinition taskDef = ts.NewTask();\n\n    taskDef.RegistrationInfo.Description = &quot;Any Description&quot;;\n\n    DailyTrigger dt = new DailyTrigger();\n\n    dt.StartBoundary = scheduleTime; //(DateTime Value\n\n    taskDef.Triggers.Add(dt);\n\n    taskDef.Actions.Add(new ExecAction(\n                &quot;my.exe&quot;, &quot;ags&quot;, null));\n\n    ts.RootFolder.RegisterTaskDefinition(@&quot;MyTask&quot;, taskDef);\n}</code></pre>\n\n",
+    "PostedDate": "2014-08-27T16:14:38.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1294348",
+    "ThreadId": "562292",
+    "Html": "Problem Solved.\r<br />\n<br />\nAfter some testing outside of the main project I found that there is a seven (7) hour difference in each time.\r<br />\n<br />\nTo fix this I just check the time difference and update the time just before registering the task.<br />\n",
+    "PostedDate": "2014-08-28T09:49:27.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-28T09:49:31.787-07:00"
+  },
+  {
+    "Id": "1294509",
+    "ThreadId": "562292",
+    "Html": "The DateTime structure that is passed to the StartBoundary property will be interpreted as the local time on the system running the tasks unless the DateTime value is constructed with a DateTimeKind value for Utc. A best practice to be very explicit about the DateTime value so that cross-system portability works consistently.<br />\n",
+    "PostedDate": "2014-08-28T14:33:21.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-28T14:33:25.417-07:00"
+  }
+]

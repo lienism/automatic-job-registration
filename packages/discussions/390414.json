@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "895964",
+    "ThreadId": "390414",
+    "Html": "\r\n<p>How can i Hide Window when running console application which running by TaskScheduler.</p>\r\n<p>Below the code i have written to create task.&nbsp;</p>\r\n<p>TaskDefinition td = ts.NewTask(); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p>&nbsp;td.RegistrationInfo.Description = &quot;Convert TO HL7 Message&quot;; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p>td.Settings.Hidden = true;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>TimeTrigger tt = new TimeTrigger();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>tt.StartBoundary = DateTime.Now;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>tt.Repetition.Interval = TimeSpan.FromMinutes(1);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>tt.Repetition.Duration = TimeSpan.FromDays(1);&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>td.Triggers.Add(tt);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>string argument = textBox1.Text.Replace(' ', '^');&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>argument = argument &#43; &quot;$&quot; &#43; textBox2.Text.Replace(' ', '^');&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>argument = argument &#43; &quot;$&quot; &#43; textBox3.Text.Replace(' ', '^');&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>string exePath = System.Configuration.ConfigurationManager.AppSettings[&quot;ConvertToHL7ExePath&quot;].ToString(); &nbsp; td.Actions.Add(new ExecAction(exePath, argument, null));&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ts.RootFolder.RegisterTaskDefinition(@&quot;Test&quot;,\r\n td); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-08-06T03:41:27.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896112",
+    "ThreadId": "390414",
+    "Html": "<p>I think you can try some combination of calling the cmd.exe with the start command. I haven't tested this, but I would try something like:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>cmd.exe <span style=\"color: gray;\">/</span>c start <span style=\"color: gray;\">/</span>min executable.exe\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-08-06T09:38:49.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "902939",
+    "ThreadId": "390414",
+    "Html": "<p>Hi, if you are using visual studio as you IDE, what you are looking for is:</p>\r\n<ul>\r\n<li>In the Solution Explorer, Right click on the project file (not the solution file)</li>\r\n<li>Properties</li>\r\n<li>Application tab (if you aren't there by default)</li>\r\n<li>Find the dropdown marked \"Output type:\"</li>\r\n<li>Change the selection from \"Console Application\" to \"Windows Application\"</li>\r\n<li>Save and run.</li>\r\n</ul>\r\n<p>That should sort you out :)</p>",
+    "PostedDate": "2012-08-23T03:00:58.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

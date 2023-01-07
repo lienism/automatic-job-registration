@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed for 2.0 release",
+    "ClosedDate": "2013-08-13T11:36:44.247-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hallo,\n\nI have a little problem with TaskScheduler.dll 1.9.4 when it runs on an XP-System (SP3)\n\nI get   HighestSupportedVersion = 1.1 from the sytem and work only with the function and property of this version.\n\nI add Task\n\n```\n Dim ts As TaskService = New TaskService()\n Dim td As TaskDefinition\n\n ' ....\n ts.RootFolder.RegisterTaskDefinition(taskName, td)\n\n```\nIt worked good and I found the task-file in the folder \"scheduled tasks\"\n\nBut when I try to get all tasks in a listView, I get always an execption when I read the last task Item data.\n\n```\nDim fc As Integer\n\nfc = ts.RootFolder.Tasks.Count\nFor i = 0 To fc - 1\nt = ts.RootFolder.Tasks(i)\n....\nnext\n```\n\nFor example: I get fc = 6 as tasks count.  I think that is task(0) to task(5) witch I found as scheduled task\nWith index 0 to 4 all its ok, but when I read task(5), I get an \"ArgumerntOutOfRangeException\" !??\nThe exception comes everytime on this command <t = ts.RootFolder.Tasks(i)>\n\nWhen I add an additional task, I get the task(5) !? (but the same problem then with index 6...)\n\nWhat can I do the get all scheduled task to my listview?\n\nregards\nClark",
+    "LastUpdatedDate": "2013-08-13T11:36:44.247-07:00",
+    "PlannedForRelease": "Release 1.9.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-08-13T02:42:52.99-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskScheduler 1.9.4 (on WindowsXP(SP3))",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 11204
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thank you. I have verified that this is a bug and am currently working on a fix.",
+      "PostedDate": "2013-08-13T10:41:11.173-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The problem is in the Count property. You can use the following code to avert the problem until I post a fix.\n```\nFor Each t As Task In ts.RootFolder.Tasks\n   ' Your code here\nNext\n```",
+      "PostedDate": "2013-08-13T10:44:28.373-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-08-13T11:36:44.247-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

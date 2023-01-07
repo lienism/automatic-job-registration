@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1423748",
+    "ThreadId": "637233",
+    "Html": "I created console application that call asmx web services. For example we give it a name &quot;CallWebService&quot;.<br />\n Now, I am creating single page web application for create, read, update, and delete tasks. I use Ext JS. When user create task, user choose(with checkboxes) web methods. Web Methods with parameters stored in ms sql database. For task action we set &quot;CallWebService&quot; path. For arguments of action i will write methods id. When task start, &quot;CallWebService&quot; will take arguments(method's id), then get method's parameters(web service url, namespace etc) and call specefic web methods.<br />\n My questions :<br />\n1) How i  can set task settings programmatically like :<br />\n<pre><code>wTrigger.DaysOfWeek = DaysOfTheWeek.Monday | DaysOfTheWeek.Friday;\nmTrigger.DaysOfMonth = new int[] { 3, 6, 10, 18 };</code></pre>\n\nif i can get only string variables(string Friday = &quot;Friday&quot;)  from CRUD web application ?<br />\n<br />\n2) How can i get all task parameters and save it to<br />\nList&lt;Dictionary&lt;string, object&gt;&gt; result = new List&lt;Dictionary&lt;string, object&gt;&gt;() ?<br />\nThis way i will display it in user intarface.<br />\n",
+    "PostedDate": "2015-05-06T23:56:12.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424488",
+    "ThreadId": "637233",
+    "Html": "1) I would say you'll have to convert strings to the enum or date or TimeSpan using the appropriate parse or Convert methods.\r<br />\n2) Reflection (Type.GetProperty) and recursion (get type of property and recurse if a class).<br />\n",
+    "PostedDate": "2015-05-10T12:41:19.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:00:01.123-07:00"
+  }
+]

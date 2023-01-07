@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1493602",
+    "ThreadId": "661716",
+    "Html": "I'm trying to use your plug to create a one-time task that will delete a folder owned by the user running this program when the PC boots before it logs in.\r<br />\n<br />\nThis means the task has to run before login at the windows authentication screen or sooner, with permissions from the AD user that created the task (which I believe is possible because it should gather that uses information before the reboot occurs.)\r<br />\n<br />\nany help would be appreciated as I've been unable to get anything to work that wasn't repeating task or set with some type of time to run.<br />\n",
+    "PostedDate": "2017-03-04T17:38:20.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493716",
+    "ThreadId": "661716",
+    "Html": "Boot triggers require that the task is registered by a member of the Administrators group and have the user's password.\r<br />\n<br />\nI haven't tested the following, but try this:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n      <span style=\"color:Green;\">// Create a new task definition for the local machine and assign properties</span>\n      <span style=\"color:Blue;\">var</span> td = TaskService.Instance.NewTask();\n      td.RegistrationInfo.Description = <span style=\"color:#A31515;\">&quot;Removes folder on next boot.&quot;</span>;\n\n      <span style=\"color:Green;\">// Add a boot trigger</span>\n      td.Triggers.Add(<span style=\"color:Blue;\">new</span> BootTrigger());\n\n      <span style=\"color:Green;\">// Create an action that will remove a folder (this will be whatever you&#39;re using)</span>\n      td.Actions.Add(<span style=\"color:#A31515;\">&quot;RemFldr.exe&quot;</span>, <span style=\"color:#A31515;\">@&quot;C:\\users\\thisuser\\userFldr&quot;</span>);\n\n      <span style=\"color:Green;\">// Register the task in the root folder of the local machine</span>\n      TaskService.Instance.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;Remove User Folder&quot;</span>, td, \n         TaskCreation.CreateOrUpdate, <span style=\"color:#A31515;\">&quot;userDomain\\\\userName&quot;</span>, <span style=\"color:#A31515;\">&quot;userPassword&quot;</span>,\n         TaskLogonType.Password);\r\n</pre></div>",
+    "PostedDate": "2017-03-07T08:14:11.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

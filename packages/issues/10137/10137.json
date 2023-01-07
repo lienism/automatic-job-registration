@@ -1,0 +1,71 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Corrected in source release 77874",
+    "ClosedDate": "2012-05-03T09:30:53.363-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello,\n \nI've found an exception when I add MonthlyDOWTrigger in task definition and set the DaysOfWeek property :\n \nValue does not fall within the expected range.\n   at Microsoft.Win32.TaskScheduler.V1Interop.ITaskTrigger.SetTrigger(TaskTrigger& Trigger)\n   at Microsoft.Win32.TaskScheduler.Trigger.SetV1TriggerData() in C:\\Users\\***\\Documents\\Visual Studio 2010\\Projects\\MonthlyDOWTriggerExceptionDemo\\TaskService\\Trigger.cs:line 646\n   at Microsoft.Win32.TaskScheduler.MonthlyDOWTrigger.set_DaysOfWeek(DaysOfTheWeek value) in C:\\Users\\***\\Documents\\Visual Studio 2010\\Projects\\MonthlyDOWTriggerExceptionDemo\\TaskService\\Trigger.cs:line 1280\n   at MonthlyDOWTriggerExceptionDemo.Program.Main(String[] args) in c:\\users\\***\\documents\\visual studio 2010\\Projects\\MonthlyDOWTriggerExceptionDemo\\MonthlyDOWTriggerExceptionDemo\\Program.cs:line 34\n \n \nI join the test program sources reproduce that bug if can help you.\n \nThank you",
+    "LastUpdatedDate": "2013-05-16T04:49:09.047-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-05-02T06:01:26.497-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Exception on MonthlyDOWTrigger added in Windows XP",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10137
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3324,
+      "FileName": "MonthlyDOWTriggerExceptionDemo.zip",
+      "DownloadUrl": ".\\3324"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Thank you for finding this relatively obscure bug. It has been corrected in source release 77874. The use of the Triggers.AddNew method is rarely used given that there are contructors that simplify the settings. For example, I would typically expect to see your code look more like this single line:\r\n\r\nMonthlyDOWTrigger mdTrigger = (MonthlyDOWTrigger)td.Triggers.Add(new MonthlyDOWTrigger(DaysOfTheWeek.Monday, MonthsOfTheYear.AllMonths, WhichWeek.AllWeeks) { StartBoundary = DateTime.Now.AddMinutes(1) });",
+      "PostedDate": "2012-05-03T09:30:19.68-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-05-03T09:30:53.363-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you for your answer and your correction. I integrate that new release.\r\n\r\nAnd thank you for your advices",
+      "PostedDate": "2012-05-04T05:44:28.91-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:02.07-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:09.047-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

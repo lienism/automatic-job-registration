@@ -1,0 +1,65 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Closing with no affirmative response from reporter.",
+    "ClosedDate": "2014-09-04T13:55:25.787-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The task scheduler keeps returning \nthe operation failed. Please copy the information below and provide it to your system administrator\nbut there is no information below to submit to the system administrator.  \n\nIt fails at this line in the code\n\nTaskFolder.RegisterTaskDefinition(\"Scheduled_Task\", DownloadTaskDefinition, TaskCreation.Update, <Username>, <password>, TaskLogonType.Password)\n\nThere is no errors to troubleshoot except that operation failure.  Even when I debug it just stops and my web page shows that.  \n\nAny and all help is appreciated.",
+    "LastUpdatedDate": "2014-09-04T13:55:25.787-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2013-10-04T13:37:55.17-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Getting operation failed when trying to update",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11315
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This is often related to either having a mix of properties set that are not supported or by having incorrect security access defined. It is not simple to troubleshoot as there is no information coming from the native library when this method fails.",
+      "PostedDate": "2013-10-07T12:11:54.137-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am positive the security access is fine.  The username and password being used works for many other scheduled tasks.  What do you mean by mixed properties set?",
+      "PostedDate": "2013-10-09T13:18:06.983-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The error is then likely due to setting a set of properties on the TaskDefinition that are incompatible with each other. Unfortunately, this is a very difficult problem to troubleshoot because, as you have noticed, there is almost no information provided by the native library. Often, when faced with this problem, I will go to the Task Scheduler application and try to duplicate the properties I'm setting in my code. On some rare occasions, that UI will provide some feedback that can help with your troubleshooting.",
+      "PostedDate": "2013-10-09T15:31:19.82-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The 2.1.1 release provides more feedback on compatibility issues. Please try with this new version and let me know if you are still seeing the problem.",
+      "PostedDate": "2014-04-17T16:28:54.98-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-09-04T13:55:25.787-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

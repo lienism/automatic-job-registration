@@ -1,0 +1,250 @@
+[
+  {
+    "Id": "235449",
+    "ThreadId": "69198",
+    "Html": "<p>how can i check my 7 checkbox's and then add each checked to the DayofWeek setting</p>\r\n<p>i tried this but it didn't work</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>td.Triggers.Add(<span style=\"color:Blue\">new</span> WeeklyTrigger() { WeeksInterval = 1, StartBoundary = <span style=\"color:Blue\">new</span> DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(comboBox3.Text), Convert.ToInt32(comboBox4.Text), 0), DaysOfWeek = (checkBox1.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Sunday : <span style=\"color:Blue\">null</span> | (checkBox2.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Monday : <span style=\"color:Blue\">null</span> | (checkBox3.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Tuesday : <span style=\"color:Blue\">null</span> | (checkBox4.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Wednesday : <span style=\"color:Blue\">null</span> | (checkBox5.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Thursday : <span style=\"color:Blue\">null</span> | (checkBox6.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Friday : <span style=\"color:Blue\">null</span> | (checkBox7.Checked == <span style=\"color:Blue\">true</span>) ? DaysOfTheWeek.Saturday : <span style=\"color:Blue\">null</span> });\r\n</pre>\r\n<pre>and how do i add repetition to that?</pre>\r\n<pre>&nbsp;</pre>\r\n<pre>i tried to create a repetition pattern then set Repetition = RP but it says that Repetition is read-only and there's not a way to select Repetition.Interval or Repetition.Duration.\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-09-16T22:25:06.73-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235490",
+    "ThreadId": "69198",
+    "Html": "<p>For the repetition property see this thread: http://taskscheduler.codeplex.com/Thread/View.aspx?ThreadId=68445</p>\r\n<p>and after download this nightly build because in the stable release there is a bug (repetition property is ignored): http://alancla.110mb.com/downloads/Microsoft.Win32.TaskScheduler.dll.zip</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-17T01:17:19.14-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235645",
+    "ThreadId": "69198",
+    "Html": "<p>Wow! Really long code statement. As alex783 mentioned, the source code drop from Sep. 16, 2009 contains the fixes to allow repetition to work.<br>I will be pushing that code out in binary form later this week. To answer your question about DaysOfWeek and setting the Repetition values, I would use this code:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>WeeklyTrigger wt = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:Blue\">new</span> WeeklyTrigger() { WeeksInterval = 1 });\r\nwt.StartBoundary = DateTime.Today + <span style=\"color:Blue\">new</span> TimeSpan(Convert.ToInt32(comboBox3.Text), Convert.ToInt32(comboBox4.Text), 0);\r\nwt.DaysOfWeek = (checkBox1.Checked) ? DaysOfTheWeek.Sunday : 0 |\r\n\t(checkBox2.Checked) ? DaysOfTheWeek.Monday : 0 |\r\n\t(checkBox3.Checked) ? DaysOfTheWeek.Tuesday : 0 |\r\n\t(checkBox4.Checked) ? DaysOfTheWeek.Wednesday : 0 |\r\n\t(checkBox5.Checked) ? DaysOfTheWeek.Thursday : 0 |\r\n\t(checkBox6.Checked) ? DaysOfTheWeek.Friday : 0 |\r\n\t(checkBox7.Checked) ? DaysOfTheWeek.Saturday : 0;\r\nwt.Repetition.Interval = TimeSpan.FromMinutes(Convert.ToDouble(textBox1.Text));\r\nwt.Repetition.Duration = TimeSpan.FromMinutes(Convert.ToDouble(textBox2.Text));</pre>\r\n</div>",
+    "PostedDate": "2009-09-17T09:12:26.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235806",
+    "ThreadId": "69198",
+    "Html": "<p>i tried the</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>wt.DaysOfWeek = (checkBox1.Checked) ? DaysOfTheWeek.Sunday : 0 |\r\n(checkBox2.Checked) ? DaysOfTheWeek.Monday : 0 |\r\n(checkBox3.Checked) ? DaysOfTheWeek.Tuesday : 0 |\r\n(checkBox4.Checked) ? DaysOfTheWeek.Wednesday : 0 |\r\n(checkBox5.Checked) ? DaysOfTheWeek.Thursday : 0 |\r\n(checkBox6.Checked) ? DaysOfTheWeek.Friday : 0 |\r\n(checkBox7.Checked) ? DaysOfTheWeek.Saturday : 0;\r\n</pre>\r\n<pre>it gives me build error's of</pre>\r\n<pre>&quot;Operator '|' cannot be applied to opernds of type 'int' and 'bool'&quot;</pre>\r\n<pre>bug? or just won't work?</pre>\r\n</div>",
+    "PostedDate": "2009-09-17T15:35:00.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235824",
+    "ThreadId": "69198",
+    "Html": "<p>Have you tried &quot;||&quot; instead &quot;|&quot; ?&nbsp; It is the &quot;conditional OR&quot; operator.</p>",
+    "PostedDate": "2009-09-17T16:30:46.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235867",
+    "ThreadId": "69198",
+    "Html": "<p>Same thing!</p>\r\n<p>&quot;Operator '||' cannot be applied to operands of type 'int' and 'bool'&quot;</p>",
+    "PostedDate": "2009-09-17T19:55:24.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235907",
+    "ThreadId": "69198",
+    "Html": "<p>oh! how can i disable the &quot;Stop the task if it runs more than&quot; option?</p>\r\n<p>i tried&nbsp;</p>\r\n<p><span style=\"font-size:x-small\">\r\n<p>td.Settings.ExecutionTimeLimit =</p>\r\n</span><span style=\"color:#0000ff;font-size:x-small\"><span style=\"color:#0000ff;font-size:x-small\">null</span></span><span style=\"font-size:x-small\">;</span></p>\r\n<p><span style=\"font-size:x-small\"></span>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n</p>\r\n<p>td.Settings.ExecutionTimeLimit = 0;</p>\r\n<p>td.Settings.ExecutionTimeLimit = TimeSpan.FromMinutes(0);</p>",
+    "PostedDate": "2009-09-18T00:00:45.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236754",
+    "ThreadId": "69198",
+    "Html": "<p>Sorry my post couldn't be compiled. Here is code that works. This is really just working with enums.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>wt.DaysOfWeek = (DaysOfTheWeek)((checkBox1.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Sunday : 0) |\r\n   (checkBox2.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Monday : 0) |\r\n   (checkBox3.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Tuesday : 0) |\r\n   (checkBox4.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Wednesday : 0) |\r\n   (checkBox5.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Thursday : 0) |\r\n   (checkBox6.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Friday : 0) |\r\n   (checkBox7.Checked ? (<span style=\"color:Blue\">int</span>)DaysOfTheWeek.Saturday : 0));</pre>\r\n</div>\r\n<p>To answer your other question, to&nbsp;disable &quot;Stop the task if it runs more than&quot; option,&nbsp;you actually are trying to set it to &quot;Infinite&quot;, so&nbsp;try:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>td.Settings.ExecutionTimeLimit = TimeSpan.Zero;\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-09-20T22:36:16.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "434121",
+    "ThreadId": "69198",
+    "Html": "<pre><div style=\"color:black;background-color:white\"><pre>td.Settings.ExecutionTimeLimit = TimeSpan.Zero;\r\n<br><br><span id=\"result_box\"><span title=\"這個設定沒有生效...\">This  setting does not take effect ...<br></span><span title=\"設定仍是 3天\">Set is still 3 days</span></span>?why?<br><span id=\"result_box\"><span style=\"background-color:#ffffff\" title=\"我該怎麼做?\">How can I do?</span></span><br><br>Thanks!</pre>\r\n</div>\r\n</pre>",
+    "PostedDate": "2010-04-22T03:40:32.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "435578",
+    "ThreadId": "69198",
+    "Html": "<p>A few questions: 1) After you make the change to ExecutionTimeLimit, are you re-registering the task definition to save it? See example on Home page if you need to see how to do this. 2) Which version of Windows are you running the code against?</p>",
+    "PostedDate": "2010-04-26T09:44:46.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "436847",
+    "ThreadId": "69198",
+    "Html": "<p>my code :</p>\r\n<p><span id=\"result_box\"><span style=\"background-color:#ffffff;color:#000000\">I am not fully aware  of, please remind.</span></span></p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre><span style=\"color:blue\">string</span> tmp = txtCommand[1].Trim(<span style=\"color:#a31515\">'\\&quot;'</span>);\r\n<span style=\"color:blue\">string</span>[] daytime = tmp.Split(<span style=\"color:#a31515\">'|'</span>); <span style=\"color:green\">//date and time</span>\r\nMSTask.TaskService ts = <span style=\"color:blue\">new</span> MSTask.TaskService();\r\nMSTask.TaskDefinition td = ts.NewTask();\r\n<span style=\"color:blue\">for</span> (<span style=\"color:blue\">int</span> i = 0; i &lt; daytime.Length; i++)<br>{\r\n   <span style=\"color:blue\">string</span>[] strDT = daytime[i].Split(<span style=\"color:#a31515\">','</span>);\r\n   MSTask.WeeklyTrigger wt = <span style=\"color:blue\">new</span> MSTask.WeeklyTrigger();\r\n   <span style=\"color:blue\">if</span> (strDT[0] == <span style=\"color:#a31515\">&quot;1&quot;</span>) <span style=\"color:green\">//running date and time</span>\r\n   {\r\n      wt.DaysOfWeek = (MSTask.DaysOfTheWeek)(System.Math.Pow(2, i)); <span style=\"color:green\">//day</span>\r\n      wt.StartBoundary = DateTime.Parse(strDT[1]);\r\n      td.Triggers.Add(wt);\r\n   }\r\n}\r\ntd.Settings.ExecutionTimeLimit = TimeSpan.Zero;\r\ntd.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;Task ShutDown&quot;</span>;\r\ntd.Actions.Add(<span style=\"color:blue\">new</span> MSTask.ExecAction(<span style=\"color:#a31515\">&quot;shutdown.exe&quot;</span>, <span style=\"color:#a31515\">&quot;-s -f -t 30&quot;</span>, <span style=\"color:blue\">null</span>));\r\nts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;TaskShutDown&quot;</span>, td);\r\n<br><br><span id=\"result_box\"><span style=\"background-color:#ffffff;color:#000000\">My OS  is Vista SP2 &amp; XP SP3</span></span></pre>\r\n</div>",
+    "PostedDate": "2010-04-28T19:33:27.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "438117",
+    "ThreadId": "69198",
+    "Html": "<p>Ok. Found the bug in ExecutionTimeLimit. The documentation says setting it to 'null' will result in infinite. The truth is that setting it to null makes it go to the default of 72 hours. Setting it to 'PT0S' makes it go to infinite. I have corrected the code and will include it in the next build.</p>",
+    "PostedDate": "2010-05-02T16:15:44.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "438600",
+    "ThreadId": "69198",
+    "Html": "<p>This set is successful in task v2 (<span id=\"result_box\"><span style=\"background-color:#ffffff;color:#000000\">Vista SP2)</span></span></p>\r\n<p>But in the task v1 (XP SP3) is wrong out of a warning message in the [If executed _ will stop working] in the time setting should be greater than zero</p>\r\n<p>Can I suggest a more simple? If We give property to &quot;ExecutionTimeLimit.enabled = false&quot; possible?﻿</p>\r\n<p>Thanks!</p>",
+    "PostedDate": "2010-05-03T19:50:38.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660770",
+    "ThreadId": "69198",
+    "Html": "<p>Hi dahall,</p>\r\n<p>i am using ver 1.6.3, the latest version of the dll and i cant uncheck the \"Stop task if it runs for..\" options in general settings. In your post you mentioned about setting it to&nbsp;'PT0S' for infinite. But the poroperty requires an Timespan.</p>\r\n<p>what do i need to set it to infinite or uncheck that option?</p>",
+    "PostedDate": "2011-08-19T12:58:14.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660836",
+    "ThreadId": "69198",
+    "Html": "<p>To answer your other question, to disable \"Stop the task if it runs more than\" option, you actually are trying to set it to \"Infinite\", so try:</p>\r\n<div style=\"background-color: white; color: black;\">\r\n<pre>td.Settings.ExecutionTimeLimit = TimeSpan.Zero;\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-08-19T17:13:42.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660907",
+    "ThreadId": "69198",
+    "Html": "<p>Yes, have tried that and on doing so, in the minutes and seconds i see zero and when i open the task it complains that the values are invalid and prompts for atleast 1 sec time limit.&nbsp;</p>\r\n<p>This is offcourse not going to help my cause. I dont know, if min=0 and sec=0 settings will make it infinite or not. but isnt there a way to completely turn it off somehow?</p>",
+    "PostedDate": "2011-08-20T00:17:30.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660948",
+    "ThreadId": "69198",
+    "Html": "<p>koushikc: Are you opening the task in the Windows Task Scheduler tool or are you using my library's controls?</p>",
+    "PostedDate": "2011-08-20T05:44:50.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "660962",
+    "ThreadId": "69198",
+    "Html": "<p>I am using the windows task scheduler tool. Actually i am creating some tasks in my network machines from my pc and then i am trying to see the tasks with the windows task schedular tool.</p>",
+    "PostedDate": "2011-08-20T06:37:08.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "661321",
+    "ThreadId": "69198",
+    "Html": "<p>You have found a bug with Microsoft's Task Scheduler tool and V1 compatible tasks. If you will create the TaskService with the forceV1 parameter set to false the UI will work fine. If the task is created on an XP or earlier system, you can only create a V1 task and the UI will have the problem. The actual task has no execution time limit. You can check that programatically.</p>",
+    "PostedDate": "2011-08-21T15:52:03.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "661381",
+    "ThreadId": "69198",
+    "Html": "<p>Thanks dahall.</p>\r\n<p>So, what you mean is there is no way to create a generic task (because i dont know the machine type, i will be installing the task) ? If so, what happens if i do a generic task with forceV1=false? In that case will the the task that is created in XP machine will work or not?</p>\r\n<p>I will give it a try myself also.</p>\r\n<p>Another query : by execution time limit what is actually meant? Does that mean that a task becomes invalid and will not be executed after the time frame? Or, if a task is running continuously for that time frame, it will stop after that time frame?</p>\r\n<p>Actually , i am creating an OnIdle task. In the OnIdle condition my custom program gets started by the task. Now when Idle condition ceases, the tasks stops. So, do you think that i can have problems with the execution limit? Am i right in my asumption that my exe will stop executing only when i have crossed the time limit. But after that when machine becomes Idle again (if it does), the task will again fire.</p>\r\n<p>Also, if possible can you tell me, on what condition the system determines whether it is idle or not? i can understand that one would be mouse keyboard activity for specified time frame. But is cpu utilization also taken into account? If so, what is the threshold? Is it documented anywhere for task schedular?</p>",
+    "PostedDate": "2011-08-21T21:22:34.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "661580",
+    "ThreadId": "69198",
+    "Html": "<p>I'm not sure what you mean by \"generic task\". If you create the TaskService instance with the forceV1 parameter set to true, then all tasks will be V1 compatible. If you leave that parameter set to false, then tasks created on XP and earlier will be V1 and on Vista and later will be V2.</p>\r\n<p>Execution Time Limit is defined as the time that a task is allow to run before it is terminated.</p>\r\n<p>You are correct in that the OnIdle task will fire when the system is idle (defined as no user interactions) for defined period of time.</p>",
+    "PostedDate": "2011-08-22T08:15:54.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "662655",
+    "ThreadId": "69198",
+    "Html": "<p>Thanks dahall for all your communication and help. I would like to know another small thing. Is it possible to run a already scheduled task in remote machine with the wrapper?</p>",
+    "PostedDate": "2011-08-24T06:45:43.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "662658",
+    "ThreadId": "69198",
+    "Html": "<p>Sorry for a repeation query : i found your answer in one of the discussion :</p>\r\n<p>will try this as per you :</p>\r\n<pre><span>using</span> (TaskService ts = <span>new</span> TaskService())\r\n{\r\n   <span>string</span> task = rdr[<span>\"TaskName\"</span>].ToString();\r\n   <span>// This will find it even if its down in a folder. Alternately you could call:</span>\r\n   <span>// Task t = ts.GetTask(task);</span>\r\n   Task t = ts.FindTask(task);\r\n   <span>if</span> (t != <span>null</span>)\r\n      t.Run();\r\n}</pre>",
+    "PostedDate": "2011-08-24T06:48:13.467-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "662670",
+    "ThreadId": "69198",
+    "Html": "<p>dahall,</p>\r\n<p>i tried the code above to run a already scheduled service, but the task didnt start in remote machine, though t was not null and t.run was executed.</p>\r\n<p>Can you pls help me out?</p>",
+    "PostedDate": "2011-08-24T07:12:30.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "663645",
+    "ThreadId": "69198",
+    "Html": "<p>To connect to a remote machine, you must connect to it using the parameters to the TaskService constructor. You can then use the remainder of your code as is to run the task.</p>",
+    "PostedDate": "2011-08-25T23:29:20.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "665458",
+    "ThreadId": "69198",
+    "Html": "<p>dahall,</p>\r\n<p>The connection (creation and running) of task is hapenning perfectly in my domain computers. But how to connect to remote task service of a machine which is not in the domain, but belongs to a workgroup?</p>\r\n<p>I have the credentials with me, but what to pass in the domain param?</p>",
+    "PostedDate": "2011-08-30T12:22:58.697-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "665578",
+    "ThreadId": "69198",
+    "Html": "<p>If the account is a local machine account, then you pass in the name of the machine.</p>",
+    "PostedDate": "2011-08-30T19:11:57.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "665611",
+    "ThreadId": "69198",
+    "Html": "<p>My remote machine name is \"Test1\"</p>\r\n<p>The user id used is say \"Test1\\UID\" and we have a password for it \"PWD\"</p>\r\n<p>Now in the call i am sending these&nbsp;</p>\r\n<p>user : UID</p>\r\n<p>password :PWD</p>\r\n<p>machine : Test1</p>\r\n<p>domain: Test1</p>\r\n<p>But while accessing the task service, i am getting an exception.</p>",
+    "PostedDate": "2011-08-30T21:54:03.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "762083",
+    "ThreadId": "69198",
+    "Html": "<p>Hi Dahall,</p>\r\n<p>I try to set</p>\r\n<p>td.Settings.ExecutionTimeLimit = TimeSpan.Zero;</p>\r\n<p>on an XP machine but it cannot set the time to infinite. I can set on Windows Server 2008 machine.</p>\r\n<p>Is there anyway to set ExecutionTimeLimit to infinite on an XP machine? I also forceV1 parameter set to true but no result.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-13T22:55:58.797-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "762122",
+    "ThreadId": "69198",
+    "Html": "<p>Hi thientan0206,</p>\r\n<p>I also verified that setting ExecutionTimelimit to TimeSpan.Zero doesnt make it Infinite in XP/windows7.</p>\r\n<p>Alternatively you can try</p>\r\n<p>&nbsp;td.Settings.ExecutionTimeLimit = new TimeSpan(42949672950000);</p>",
+    "PostedDate": "2012-02-13T23:29:28.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "768598",
+    "ThreadId": "69198",
+    "Html": "<p>Thanks koushikc. It works.</p>",
+    "PostedDate": "2012-02-15T17:29:58.233-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

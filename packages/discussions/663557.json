@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497643",
+    "ThreadId": "663557",
+    "Html": "Hello, I am using your wonderful library in a class library where I am targeting .NET 4.5. I noticed that beginning with TaskScheduler 2.5.21 (and through 2.5.28)  I would receive the following compilation error (I am using IReadOnlyList in my code):\r<br />\n<br />\nThe type 'IReadOnlyList&lt;T&gt;' exists in both 'Microsoft.Win32.TaskScheduler, Version=2.5.21.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae' and 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'\r<br />\n<br />\n<br />\nSo for now I am just sticking with 2.5.20 which does not have the issue. I noticed from looking at code on GitHub that there is a constant defined based on the target framework but I'm guessing it is not quite working right, at least in my environment. Anyway, just wanted to point out, thank you!<br />\n",
+    "PostedDate": "2017-08-04T11:19:21.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497651",
+    "ThreadId": "663557",
+    "Html": "The NuGet package provides builds for .NET 2.0, 3.5, 4.0 and 4.5.2 as recommended by Microsoft. If you build against 4.5, NuGet Package Manager will pick the 4.0 package which does include the IReadOnlyList interface since it was not included in the full .NET library until 4.5. If you compile against 4.5.2, you will not see the problem and you will avoid some of security vulnerabilities that were fixed in 4.5.2.<br />\n",
+    "PostedDate": "2017-08-05T10:25:18.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1343124",
+    "ThreadId": "578020",
+    "Html": "Hi guys, I'm pretty new to coding and am trying to write a small app which shows a list of all the scheduled tasks on the local machine, along with the description and scheduled execution date/time. I'd like to have this info in a datagridview.<br />\n<br />\nI've been trying to use the below code to get a list of the tasks, but I'm not sure what to do in the &quot;do something here&quot;. What do I need to do now to get that info out?<br />\n<br />\nI should mention I'm using VB.<br />\n<pre><code>Private Sub EnumAllTasks()\n        Using ts As New TaskService()\n            EnumFolderTasks(ts.RootFolder)\n        End Using\n    End Sub\n\n    Private Sub EnumFolderTasks(ByVal fld As TaskFolder)\n        For Each task As Task In fld.Tasks\n            ActOnTask(task)\n\n        Next task\n        For Each sfld As TaskFolder In fld.SubFolders\n            EnumFolderTasks(sfld)\n        Next sfld\n    End Sub\n\n    Private Sub ActOnTask(ByVal t As Task)\n        'do something here\n    End Sub</code></pre>\n\n",
+    "PostedDate": "2015-01-18T19:00:19.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1345837",
+    "ThreadId": "578020",
+    "Html": "I think you may be able to use a ListView in Details mode with less overhead and then use the following code to pull the variables you need to load into that ListView.<br />\n<pre><code>Dim desc = t.RegistrationInfo.Description\nDim name = t.Name\nDim next = t.NextRunTime</code></pre>\n\n",
+    "PostedDate": "2015-01-26T08:41:15.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-01-26T08:41:52.357-08:00"
+  },
+  {
+    "Id": "1346410",
+    "ThreadId": "578020",
+    "Html": "Thanks dahall, I got it working using those exact same variables. <br />\n",
+    "PostedDate": "2015-01-27T12:12:46.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

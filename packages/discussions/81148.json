@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "278415",
+    "ThreadId": "81148",
+    "Html": "<p>Hi,&nbsp;&nbsp; I need to show the Property page for V 2.0, But i haven't seen any method which do that, I have seen one method ShowPropertyPage() which only works for V 1.0 , So what is the best way to show the Property Page for a particular task in&nbsp; Version2?.</p>",
+    "PostedDate": "2010-01-18T01:23:16.637-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "280159",
+    "ThreadId": "81148",
+    "Html": "<p>Microsoft removed any native support for programatically calling the editor interface in 2.0. For this reason, we have created the TaskSchedulerEditor control library as a suppliment to the TaskScheduler library. You will find the library as another file to download in the release area.</p>\r\n<p>To use the control, you effectively add it to a Form setup as a dialog or you can host it directly within your application. Assuming you have added it to a form, below is a small function that would call it:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">static</span> <span style=\"color:Blue\">void</span> ShowPropertyPage(<span style=\"color:Blue\">string</span> taskName)\r\n{\r\n  <span style=\"color:Green\">// Get the service on the local machine</span>\r\n  <span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n  {\r\n    <span style=\"color:Green\">// Edit task</span>\r\n    Task t = ts.GetTask(taskName);\r\n    TaskDefinition td = DisplayTask(t, <span style=\"color:Blue\">true</span>);\r\n\r\n    <span style=\"color:Green\">// Register if changed</span>\r\n    <span style=\"color:Blue\">if</span> (td != <span style=\"color:Blue\">null</span>)\r\n      ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n  }\r\n}\r\n\r\n<span style=\"color:Blue\">static</span> TaskDefinition DisplayTask(Task t, <span style=\"color:Blue\">bool</span> editable)\r\n{\r\n  System.Windows.Forms.Application.EnableVisualStyles();\r\n  Form1 frm = <span style=\"color:Blue\">new</span> Form1();\r\n  frm.taskPropertiesControl1.Editable = editable;\r\n  frm.taskPropertiesControl1.Initialize(t);\r\n  <span style=\"color:Blue\">return</span> (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK) ? frm.taskPropertiesControl1.TaskDefinition : <span style=\"color:Blue\">null</span>;\r\n}\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-21T10:34:38.017-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

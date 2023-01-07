@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1237493",
+    "ThreadId": "543178",
+    "Html": "Hello,\r<br />\n<br />\nI am using the task scheduler to start a little program which do some database work for me.\r<br />\nA service starts this task with an timer. If the timer is lower than the old, the newer will be used.\r<br />\nWhen I start the programm it works fine. When the service called it first it works fine. When the service called again it crashs with the following error.\r<br />\n<br />\nThe only thing I get is this:<br />\n<blockquote>\n(32,7):Command:<br />\n<br />\nMicrosoft.Win32.TaskScheduler.V2Interop.IRegisteredTask<br />\nRegisterTaskDefinition(System.String, <br />\n Microsoft.Win32.TaskScheduler.V2Interop.ITaskDefinition, Int32, System.Object, <br />\nSystem.Object, Microsoft.Win32.TaskScheduler.TaskLogonType, System.Object)<br />\n</blockquote>\nI post some code and hope you can help me. If you need more please ask for more.\r<br />\n<br />\nTo update/start the task i do this:<br />\n<pre><code>public static ExecAction WORKER_ACTION = new ExecAction(@&quot;C:\\aPath\\Worker\\Worker.exe&quot;, &quot;&quot;, null);\n...\nthis.CreateNewTask(&quot;Worker&quot;, &quot;&quot;, new TimeTrigger(newDate), TaskHelper.WORKER_ACTION);\n...\n\n        public bool CreateNewTask(string taskname, string description, Trigger trigger, ExecAction action)\n        {\n            try\n            {                \nusing (TaskService ts = new TaskService())\n                {\n                    TaskDefinition td = ts.NewTask();\n                    td.RegistrationInfo.Description = description;\n                    td.Triggers.Add(trigger);\n                    td.Actions.Add(action);\n\n                    ts.RootFolder.RegisterTaskDefinition(taskname, td, TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount, null);\n                }\n...</code></pre>\n\nI try it on a Windows Server 2008 R2.<br />\n",
+    "PostedDate": "2014-04-24T04:25:44.05-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237577",
+    "ThreadId": "543178",
+    "Html": "Just to be clear, this same code segment is called both times (first successfully and second failing), and the service that calls this code segment is the same and is running under the same user credentials with each call?<br />\n",
+    "PostedDate": "2014-04-24T07:57:47.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1237594",
+    "ThreadId": "543178",
+    "Html": "By the way, the error you are getting typically means that there is a problem with the command-line path you are supplying to the ExecAction. Check to make sure it is not blank or corrupted on your second pass.<br />\n",
+    "PostedDate": "2014-04-24T08:20:25.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:07:06.177-07:00"
+  },
+  {
+    "Id": "1237599",
+    "ThreadId": "543178",
+    "Html": "Hi,\r<br />\n<br />\nthanks for the answer. It was a corrupted ExecAction. Dont know why, but in the second call the static var  WORKER_ACTION is empty...\r<br />\nI change the code and declare this var just before i call the method.\r<br />\n<br />\nThanks for your help.<br />\n",
+    "PostedDate": "2014-04-24T08:32:04.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:07:00.607-07:00"
+  }
+]

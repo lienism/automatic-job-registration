@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1241989",
+    "ThreadId": "544426",
+    "Html": "scheduler should be start on same task<br />\n",
+    "PostedDate": "2014-05-06T04:29:31.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242079",
+    "ThreadId": "544426",
+    "Html": "Daily trigger with a 3pm start time and a repetition of every 4 hours with a 4 hour duration.<br />\n",
+    "PostedDate": "2014-05-06T07:55:48.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-06T07:55:51.287-07:00"
+  },
+  {
+    "Id": "1242383",
+    "ThreadId": "544426",
+    "Html": "i have written this code\r<br />\n<br />\ndt.StartBoundary = DateTime.Today + TimeSpan.FromHours(23);\r<br />\ndt.Repetition.Interval = TimeSpan.FromHours(3);<br />\n<pre><code>                       dt.Repetition.Duration = TimeSpan.FromHours(4);</code></pre>\n\nit it correct........<br />\n",
+    "PostedDate": "2014-05-06T23:32:58.017-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242396",
+    "ThreadId": "544426",
+    "Html": "and also tell me how can i check next schedule star  time<br />\n",
+    "PostedDate": "2014-05-06T23:57:37.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242397",
+    "ThreadId": "544426",
+    "Html": "also tell me How can i check next schedule start time <br />\n",
+    "PostedDate": "2014-05-06T23:58:13.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242604",
+    "ThreadId": "544426",
+    "Html": "This is the correct code:<br />\n<pre><code>// Create a daily trigger that will start running today at 3pm\nvar dt = new DailyTrigger() { StartBoundary = DateTime.Today.AddHours(15) };\n// Have that trigger repeat 4 hours from its start time and then not repeat again\ndt.Repetition.Interval = TimeSpan.FromHours(4);\ndt.Repetition.Duration = TimeSpan.FromHours(4);</code></pre>\n\n",
+    "PostedDate": "2014-05-07T07:23:49.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-07T07:23:52.74-07:00"
+  },
+  {
+    "Id": "1242875",
+    "ThreadId": "544426",
+    "Html": "it work fine thanks dahall ......<br />\n",
+    "PostedDate": "2014-05-07T22:09:32.42-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "797611",
+    "ThreadId": "343321",
+    "Html": "\r\n<p>Hi to all,</p>\r\n<p>&nbsp; I tried to retrieve the last status of a job after it was terminated by scheduler because of exceeded time limit on W2K3 Server.<br>\r\nI noticed that in this condition scheduler doesn't set the status as &quot;terminated&quot;, but it leaves the last status before the last timed-out execution.</p>\r\n<p>I don't know if this is the expected behavior or if it's a bug, but after a job is timed out the last status is not referred to last run but to the run before!</p>\r\n<p>Anyone can confirm this &quot;issue&quot; also on other SO?</p>\r\n<p>F.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-02-23T06:29:49.25-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "798291",
+    "ThreadId": "343321",
+    "Html": "<p>The Task.TaskState property will only provide the following states. Given that V1 (pre Vista) of the library returned a richer set of states, those are grouped into this simpler set. Check the code for Task.cs and find the Task.TaskState property to see how that is done.</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span><span style=\"color: green;\">The state of the task is unknown.&lt;/summary&gt;</span>\r\nUnknown,\r\n<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span><span style=\"color: green;\">The task is registered but is disabled and no instances of the task are queued or running. The task cannot be run until it is enabled.&lt;/summary&gt;</span>\r\nDisabled,\r\n<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span><span style=\"color: green;\">Instances of the task are queued.&lt;/summary&gt;</span>\r\nQueued,\r\n<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span><span style=\"color: green;\">The task is ready to be executed, but no instances are queued or running.&lt;/summary&gt;</span>\r\nReady,\r\n<span style=\"color: gray;\">///</span> <span style=\"color: gray;\">&lt;summary&gt;</span><span style=\"color: green;\">One or more instances of the task is running.&lt;/summary&gt;</span>\r\nRunning\r\n</pre>\r\n</div>\r\n<p>You may get some further information by looking at the Task.LastTaskResult value.</p>",
+    "PostedDate": "2012-02-23T13:58:00.097-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "799362",
+    "ThreadId": "343321",
+    "Html": "<p>I think isn't a bug in your code.</p>\r\n<p>I suppose that when MS Scheduler terminate the job because of a time limit, it update the last time but not the status.<br />I looked for a workaround using pid engine to retrieve exit status but I&nbsp;wasn't able to find&nbsp;the task&nbsp;pid...</p>\r\n<p>could you suggest anything?</p>\r\n<p>Thanks,<br />F.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2012-02-24T05:29:58.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

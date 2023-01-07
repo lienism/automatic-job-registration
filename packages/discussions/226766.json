@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "491799",
+    "ThreadId": "226766",
+    "Html": "<p>For both lines using Triggers.Add() in C#, I get this error:</p>\r\n<p>Microsoft.Win32.TaskScheduler.WeeklyTrigger' does not contain a constructor that takes '0' arguments</p>\r\n<p>&nbsp;</p>\r\n<p>\r\n<div style=\"color:black;background-color:white\">\r\n<pre>DateTime dt = Common.formatTimeForLoading(days_times.<span style=\"color:blue\">get</span>(day));\r\ndt = dt.AddMinutes(Convert.ToDouble(offset_delay));\r\n\r\nMicrosoft.Win32.TaskScheduler.DaysOfTheWeek theday = (Microsoft.Win32.TaskScheduler.DaysOfTheWeek)Enum.Parse(<span style=\"color:blue\">typeof</span>(Microsoft.Win32.TaskScheduler.DaysOfTheWeek), <span style=\"color:blue\">char</span>.ToUpper(day[0]) + day.Substring(1));\r\ntd.Triggers.Add(<span style=\"color:blue\">new</span> Microsoft.Win32.TaskScheduler.WeeklyTrigger { StartBoundary = dt, DaysOfWeek = theday });\r\ntd_bg.Triggers.Add(<span style=\"color:blue\">new</span> Microsoft.Win32.TaskScheduler.WeeklyTrigger { StartBoundary = dt, DaysOfWeek = theday });\r\n</pre>\r\n</div>\r\n</p>\r\n<p>&nbsp;</p>\r\n<p>These lines did not throw an error with build 54519.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-09-10T07:15:46.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "491990",
+    "ThreadId": "226766",
+    "Html": "<p>I just tested this code (as close as I could make it at least) and did not have an error when compiling or executing. Please try to clean and recompile and see if the error persists. The constructor and arguments did not change between the two versions.</p>",
+    "PostedDate": "2010-09-10T14:17:48.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "493453",
+    "ThreadId": "226766",
+    "Html": "<p>I cleared out all the built files and attempted to rebuild. Same error.</p>\r\n<p>I removed the dll reference from the project and re-added it, then attempted to rebuild.&nbsp; Same error.</p>",
+    "PostedDate": "2010-09-14T11:42:01.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,121 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-02-24T07:39:57.903-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "It's all in the title :)\nActions are always empty in v1 mode (XP/2003) since the version 2.5.0. The last working version is 2.4.2.",
+    "LastUpdatedDate": "2016-03-03T07:29:22.313-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-01-18T05:50:12.04-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskDefinition.Actions always empty in v1 since release 2.5.0",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12328
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5057,
+      "FileName": "TaskSchedulerConfig.zip",
+      "DownloadUrl": ".\\5057"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Thank you for your submission. I cannot duplicate this problem. Please provide:\r\n\r\n* OS version of executing process\n* OS version of target computer (if different)\n* Construction of TaskService object\n* Construction of Actions\n* If case before and after registration",
+      "PostedDate": "2016-01-18T10:02:52.987-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The application runs in the target computer which is 2003 server on x86 architecture.\nIn this server, there are scheduled tasks which run an application.\nThen it is easy:\n- I create a new TaskService() (default ctor)\n- Then I enumerate taks using AllTasks\n- The tasks returned never have any Action\nThe strange thing it that it used to work until version 2.5.0 (so I'm currently stuck to 2.4.2).\n",
+      "PostedDate": "2016-01-18T10:30:01.327-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. That helps immensely. I have that environment in a VM and should get a fix out by tomorrow.",
+      "PostedDate": "2016-01-18T12:08:01.043-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Which version of .NET are you using?",
+      "PostedDate": "2016-01-21T07:13:54.727-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am targeting .NET 4.0 client profile. However, the 4.0 full is installed.\n",
+      "PostedDate": "2016-01-21T07:59:09.613-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have tested this now on Windows Server 2003 R2, running .NET 4 Full and am consistently able to get the correct values for Task.Definition.Actions.Count and Task.Defintion.Actions[0]. I have run this against the library version 2.5.12. I have also tested against XP SP3 with the same results. Please try your code again and make sure you have the correct permissions to read the \"C:\\Windows\\Tasks\" directory.",
+      "PostedDate": "2016-01-27T16:13:21.557-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have the exact same issue running the latest version.. I can get all of the information from the task apart from the Actions.. I am testing on Win 2003 . I am targeting Net 2.0. Thanks",
+      "PostedDate": "2016-02-03T10:13:20.96-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "another note... the code works fine on win 7 / server 2008 devices. Thanks (i am forcing v1 when major version is <=5.)",
+      "PostedDate": "2016-02-03T10:14:44.61-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I downgraded to version  2.4.2 and it is working correctly now.",
+      "PostedDate": "2016-02-03T16:26:31.1-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have created a new .NET 2.0 project with this code:\n```\nusing (var ts = new TaskService(null, null, null, null, true))\n{\n   foreach (var t in ts.AllTasks)\n      Console.WriteLine($\"Task '{t.Name}' has {t.Definition.Actions.Count} actions.\");\n}\n```\nI have run this on Windows Server 2003 R2 with an account in the Domain Administrators group successfully with the 2.5.12 NuGet package. It correctly returns the expected number of actions. My only guess is that this has something to do with account permissions.\r\n\r\nI have also tried this with the following with success:\n```\nforeach (var t in TaskService.Instance.AllTasks)\n   Console.WriteLine($\"Task '{t.Name}' has {t.Definition.Actions.Count} actions.\");\n}\n```\r\n\r\nI really cannot figure out what would be causing your problem.",
+      "PostedDate": "2016-02-05T12:42:35.56-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "By the way, the library automatically determines whether V1 or V2 is required. You do not need to do anything specific with the constructor. TaskService.Instance should always be sufficient instead of using your own constructor for a TaskService instance.",
+      "PostedDate": "2016-02-05T12:44:41.237-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-02-07T09:53:13.743-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try it again now with released version 2.5.13. Also, I have posted here a diagnostic tool. Will you run it on both the systems (host and client) and let me know the results you get?",
+      "PostedDate": "2016-02-07T09:53:14.473-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-02-24T07:39:57.903-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi,\r\n\r\nsorry for huge delay!\nYes, this seems to work with latest version. Until further notice (as they use to say :)) it's OK.\r\n\r\nThanks!\n",
+      "PostedDate": "2016-03-03T07:29:22.313-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Closed due to inactivity.",
+    "ClosedDate": "2011-10-14T15:05:14.41-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi there,\n \nI created a task on Windows 2008R2 server and set configured it for Windows 7, Windows Server 2008 R2.\n \nI wrote this simple code after referencing the microsoft.win2k.taskscheduler to get a list of tasks on that server.\nImports Microsoft.Win32.TaskScheduler\nModule Module1\n \n    Sub Main()\n        Dim a As New TaskService\n        a.TargetServer = \"MyServer\"\n        Dim TaskCollection As TaskCollection = Nothing\n        TaskCollection = a.GetFolder(\"\\\").Tasks\n \n    End Sub\n \nBut it didn't return anything in the TaskCollection.\n \nCan you please advise where I am going wrong?\n \nThanks, \nRS\nEnd Module",
+    "LastUpdatedDate": "2013-05-16T04:49:11.243-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-07-28T22:49:06.2-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Doesn't diplay a Scheduled Task which is configured for Windows 7, Windows Server 2008R2 in the task collection",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9007
+  },
+  "FileAttachments": [
+    {
+      "FileId": 2956,
+      "FileName": "Task2008R2.png",
+      "DownloadUrl": ".\\2956"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Instead of calling a.GetFolder(\"\\\").Tasks to get the list of tasks from the root folder, call a.RootFolder.Tasks. The root folder under the Task Scheduler is not indicated the same way as the file system.",
+      "PostedDate": "2011-07-28T23:36:17.73-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Dahall,\r\n\r\nStill Didn't work mate. \r\nthe window7/windows server 2008r2 configured task wasn't returned in the taskcollection\r\n\r\nthis is my code now, after your suggestion.\r\n        Dim a As New TaskService\r\n        a.TargetServer = \"aubnesup11.au.ap.cbre.net\"\r\n        Dim TaskCollection As TaskCollection = Nothing\r\n        TaskCollection = a.RootFolder.Tasks\r\n\r\nCan you please reproduce this issue ?\r\nPlease create a task on a windows server 2008R2 (please don't create a basic task). on the configuration for, select windows 7, windows server 2008 r2, add a dummy action, schedule, save it.\r\nthen create a batch application, type my code after referencing Microsoft.Win2k.TaskScheduler.\r\n\r\nPlease advise,\r\n\r\nBest regards,\r\nrs",
+      "PostedDate": "2011-07-29T00:04:29.79-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I don't have WS2008R2 installation to test this on. I have tested it on Win7 and don't have any problems. There is a chance you have permission problems on the remote machine that may be preventing you from reading the tasks. Search through the discussions as there are a few responses on the permissions needed for connecting to remote machines.",
+      "PostedDate": "2011-07-30T08:32:07.533-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I've noticed on an export of a win7/2008R2 task that the version is 1.3, could this be why the task doesn't show, is it only looking for 1.1 and 1.2? (Just a shot in the dark)",
+      "PostedDate": "2011-08-03T18:52:29.877-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Just to be clear, do any of the other tasks in the root folder show up when you query the Tasks property? There are always a number of system tasks that are both 1.1 and 1.2 that should show up as well.",
+      "PostedDate": "2011-08-04T15:22:44.597-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2011-10-14T15:05:14.41-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Following works for me in Window Server 2003 and Windows Server 2008\r\n\r\nTaskService ts = new TaskService();\r\nVersion ver = ts.HighestSupportedVersion;\r\nbool newVer = (ver >= new Version(1, 2));\r\nTaskFolder tf = ts.RootFolder;\r\n\r\nHope it will help full?\r\n\r\nBest Regards\r\nAjay\r\n",
+      "PostedDate": "2012-07-16T05:57:24.403-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:04.393-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:11.243-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Unknown resolution",
+    "ClosedDate": "2015-02-17T08:46:39.2-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi, i have a problem with generating the code after execution\n\nMy code :\n\n```\nTaskService mgr = new TaskService();\nTaskEditDialog dlg = new TaskEditDialog(mgr.RootFolder.Tasks[0], false, false);\n```\n\n\nUne exception non gérée du type 'System.ArgumentOutOfRangeException' s'est produite dans Microsoft.Win32.TaskSchedulerEditor.dll\n\nInformations supplémentaires : L'argument spécifié n'était pas dans les limites de la plage des valeurs valides.\n\nThx\n\nJerem",
+    "LastUpdatedDate": "2015-02-17T08:46:39.2-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-12-06T02:39:30.123-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Problem to edit task with editor",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11937
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3929,
+      "FileName": "code.png",
+      "DownloadUrl": ".\\3929"
+    },
+    {
+      "FileId": 3933,
+      "FileName": "Microsoft.Win32.TaskSchedulerEditor.resources.dll",
+      "DownloadUrl": ".\\3933"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Hi\nthx for answer.\nIt's not a problem of UAC because in my mgr.RootFolder.Tasks[0] my psy view show me a task named Adobe Flash Player Updater.\r\n\r\nThx",
+      "PostedDate": "2014-12-09T01:32:40.393-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The problem is exactly as the additional exception information says. The error indicates that there is not a 0 indexed task in the root folder. You likely don't have permissions (check UAC) to enumerate the task list.\n\n** Closed by dahall 07/12/2014 22:41",
+      "PostedDate": "2014-12-09T01:34:04.257-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-12-09T01:34:04.577-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-12-09T01:38:25.147-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "In complement :\r\n\r\nlocale specific information about supported operating systems is insufficient",
+      "PostedDate": "2014-12-09T01:49:52.66-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Assuming you are using the .NET 4.0 compiled version of the library, try replacing the file \"Microsoft.Win32.TaskSchedulerEditor.resources.dll\" I uploaded as an attachment into the \"fr\" folder within the folder that contains \"Microsoft.Win32.TaskSchedulerEditor.dll\". I have replaced a resource value that may be the root of the problem when using the French locale.",
+      "PostedDate": "2014-12-25T16:39:12.97-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-12-25T16:41:25.703-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Attached file for last comment...",
+      "PostedDate": "2014-12-25T16:41:26.487-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Did the updated version of the assembly resolve your issue?",
+      "PostedDate": "2015-01-26T08:44:29.307-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-02-17T08:46:39.2-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

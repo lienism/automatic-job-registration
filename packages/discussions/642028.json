@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1436243",
+    "ThreadId": "642028",
+    "Html": "It looks like this may only be an issue for Windows Server 2008/2008R2, but the Task History is disabled by default. \r<br />\n<br />\nIs there an easy way to enable this via Task Scheduler Managed Wrapper?<br />\n",
+    "PostedDate": "2015-07-27T22:29:56.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1436492",
+    "ThreadId": "642028",
+    "Html": "Not currently. I know this can be enabled via the Task Scheduler system applet. For years I have intended to figure out what is being done there and add a check into the wrapper, but have never gotten there. If you find a way, please post back for inclusion.<br />\n",
+    "PostedDate": "2015-07-29T09:19:41.57-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1436647",
+    "ThreadId": "642028",
+    "Html": "Your comment inspired me to finally go look at this. I have added the code in the upcoming 2.4 release so that you can use the 'Enabled' property of a TaskEventLog instance to determine if the log is enabled and set it if not.<br />\n",
+    "PostedDate": "2015-07-30T08:25:54.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T09:27:43.757-07:00"
+  }
+]

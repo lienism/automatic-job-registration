@@ -1,0 +1,2777 @@
+[
+  {
+    "Id": "29867",
+    "Title": "Creating a job that runs on a specific week day at a specific time",
+    "LatestDate": "2008-07-18T10:39:06.667-07:00"
+  },
+  {
+    "Id": "33898",
+    "Title": "Specifying task account information",
+    "LatestDate": "2008-10-14T16:52:19.107-07:00"
+  },
+  {
+    "Id": "33899",
+    "Title": "Simple way to just update an existing task?",
+    "LatestDate": "2010-03-17T00:03:58.777-07:00"
+  },
+  {
+    "Id": "35867",
+    "Title": "Looping through tasks",
+    "LatestDate": "2008-10-14T16:51:30.217-07:00"
+  },
+  {
+    "Id": "36213",
+    "Title": "How to run library off a network share",
+    "LatestDate": "2008-10-14T16:44:14.767-07:00"
+  },
+  {
+    "Id": "38637",
+    "Title": "targetServer parameter of TaskService constructor in V1",
+    "LatestDate": "2008-10-30T14:35:35.233-07:00"
+  },
+  {
+    "Id": "39364",
+    "Title": "Unable to get Repetition Working",
+    "LatestDate": "2008-11-10T13:43:09.223-08:00"
+  },
+  {
+    "Id": "40129",
+    "Title": "Task properties that are not defined",
+    "LatestDate": "2008-12-03T02:29:03.327-08:00"
+  },
+  {
+    "Id": "40631",
+    "Title": "GetTask method",
+    "LatestDate": "2008-12-03T02:31:40.48-08:00"
+  },
+  {
+    "Id": "40647",
+    "Title": "Trigger.ToString() localization",
+    "LatestDate": "2008-12-03T02:29:58.997-08:00"
+  },
+  {
+    "Id": "42465",
+    "Title": "Creating a job that runs on everyday at a specific time",
+    "LatestDate": "2009-01-23T17:45:36.563-08:00"
+  },
+  {
+    "Id": "44391",
+    "Title": "How to delete an existing task   ",
+    "LatestDate": "2009-01-23T17:15:32.243-08:00"
+  },
+  {
+    "Id": "45013",
+    "Title": "Create a Task to Run as LocalSystem",
+    "LatestDate": "2009-10-27T07:16:00.91-07:00"
+  },
+  {
+    "Id": "46994",
+    "Title": "TaskScheduler 2.0 no 'ShowPropertyPage()', but 1.0 yes.",
+    "LatestDate": "2010-03-04T17:52:36.627-08:00"
+  },
+  {
+    "Id": "48334",
+    "Title": "Getting error while creating Task Scheduler interop assembly in XP",
+    "LatestDate": "2009-02-25T22:49:44.673-08:00"
+  },
+  {
+    "Id": "48711",
+    "Title": "td.Settings.RunOnlyIfLoggedOn Doesn´t work?",
+    "LatestDate": "2009-04-30T11:15:26.747-07:00"
+  },
+  {
+    "Id": "55224",
+    "Title": "Help me to set last week trigger.",
+    "LatestDate": "2009-07-08T22:17:34.38-07:00"
+  },
+  {
+    "Id": "56041",
+    "Title": "How to add a new trigger to an existing task?",
+    "LatestDate": "2009-05-15T10:38:07.083-07:00"
+  },
+  {
+    "Id": "57151",
+    "Title": "{\"Logon failure: unknown user name or bad password. (Exception from HRESULT: 0x8007052E)\"}",
+    "LatestDate": "2013-10-28T07:44:32.067-07:00"
+  },
+  {
+    "Id": "58221",
+    "Title": "How to set a schedule task with minutes accuracy",
+    "LatestDate": "2009-06-05T15:12:24.527-07:00"
+  },
+  {
+    "Id": "61226",
+    "Title": "ComHandlerAction Example",
+    "LatestDate": "2014-04-16T03:58:19.137-07:00"
+  },
+  {
+    "Id": "62418",
+    "Title": "How to setup one-time trigger",
+    "LatestDate": "2009-07-16T21:31:04.377-07:00"
+  },
+  {
+    "Id": "64175",
+    "Title": "New Controls in TaskEditor project",
+    "LatestDate": "2009-08-01T01:39:45.05-07:00"
+  },
+  {
+    "Id": "65116",
+    "Title": "Want to schedule a task that works on v1 or v2",
+    "LatestDate": "2009-08-13T11:13:58.033-07:00"
+  },
+  {
+    "Id": "65300",
+    "Title": "Error on task creation, about LoginType",
+    "LatestDate": "2010-06-15T10:43:16.243-07:00"
+  },
+  {
+    "Id": "65702",
+    "Title": "Timezone question",
+    "LatestDate": "2009-08-19T09:39:30.987-07:00"
+  },
+  {
+    "Id": "68336",
+    "Title": "logout trigger",
+    "LatestDate": "2009-09-08T22:27:19.513-07:00"
+  },
+  {
+    "Id": "68445",
+    "Title": "Unable to set Advanced Setting Property  Repetition Duration and Interval",
+    "LatestDate": "2010-05-19T07:07:10.207-07:00"
+  },
+  {
+    "Id": "69198",
+    "Title": "How Do I Add All Checked Days To The DAYofWeek Setting? & Add how do i Add Repetition",
+    "LatestDate": "2012-02-15T17:29:58.233-08:00"
+  },
+  {
+    "Id": "69318",
+    "Title": "Get trigger properties from an existing task",
+    "LatestDate": "2009-09-21T03:47:14.207-07:00"
+  },
+  {
+    "Id": "70122",
+    "Title": "GetTask for testing existence of task",
+    "LatestDate": "2009-09-29T20:19:58.103-07:00"
+  },
+  {
+    "Id": "70534",
+    "Title": "COMException was Unhandled (93;8):Logon Type:",
+    "LatestDate": "2009-09-30T22:51:29.923-07:00"
+  },
+  {
+    "Id": "72879",
+    "Title": "XP vs Vista Task modification error",
+    "LatestDate": "2009-11-03T10:23:29.523-08:00"
+  },
+  {
+    "Id": "73176",
+    "Title": "Having problem with login type",
+    "LatestDate": "2009-10-26T21:53:32.363-07:00"
+  },
+  {
+    "Id": "74190",
+    "Title": "Error on Scheduling as User in Vista",
+    "LatestDate": "2009-11-09T10:17:43.607-08:00"
+  },
+  {
+    "Id": "74819",
+    "Title": "Can't Enumerate Tasks as non-Admin User in XP",
+    "LatestDate": "2009-11-16T11:57:39.54-08:00"
+  },
+  {
+    "Id": "75267",
+    "Title": "Unable to use %systemroot% when scheduling a task",
+    "LatestDate": "2009-11-16T10:42:08.513-08:00"
+  },
+  {
+    "Id": "76982",
+    "Title": "Connect: access denied when supplying a username",
+    "LatestDate": "2009-12-04T10:25:50.127-08:00"
+  },
+  {
+    "Id": "77722",
+    "Title": "Task.NextRunTime not always reset",
+    "LatestDate": "2009-12-11T14:25:45.683-08:00"
+  },
+  {
+    "Id": "77783",
+    "Title": "Logon Trigger",
+    "LatestDate": "2014-01-07T09:02:53.24-08:00"
+  },
+  {
+    "Id": "80627",
+    "Title": "How do you rate this library?",
+    "LatestDate": "2011-06-01T07:05:38.213-07:00"
+  },
+  {
+    "Id": "80946",
+    "Title": "problem with log on trigger",
+    "LatestDate": "2010-01-21T10:56:46.1-08:00"
+  },
+  {
+    "Id": "80996",
+    "Title": "Windows Home Server?",
+    "LatestDate": "2010-01-25T01:15:52.477-08:00"
+  },
+  {
+    "Id": "81148",
+    "Title": "ShowPropertyPage()  for Version 2.0",
+    "LatestDate": "2010-01-21T10:34:38.017-08:00"
+  },
+  {
+    "Id": "82878",
+    "Title": "Monthly schedule problem",
+    "LatestDate": "2010-02-02T14:18:00.36-08:00"
+  },
+  {
+    "Id": "83025",
+    "Title": "MissingManifestResourceException",
+    "LatestDate": "2010-02-03T07:58:15.037-08:00"
+  },
+  {
+    "Id": "83027",
+    "Title": "TimeSpan2.dll? ",
+    "LatestDate": "2010-02-07T23:20:38.56-08:00"
+  },
+  {
+    "Id": "84859",
+    "Title": "Unable to register task which will run even if user is not logged in",
+    "LatestDate": "2012-01-12T08:38:20.74-08:00"
+  },
+  {
+    "Id": "85377",
+    "Title": "Task.Definition.Principal.LogonType refuses to set to InteractiveTokenOrPassword;",
+    "LatestDate": "2010-02-16T10:36:07.81-08:00"
+  },
+  {
+    "Id": "155345",
+    "Title": "Enumerate Commands",
+    "LatestDate": "2010-02-23T06:57:04.937-08:00"
+  },
+  {
+    "Id": "155461",
+    "Title": "System.IO.FileNotFoundException while trying to read Task.LastTaskResult property",
+    "LatestDate": "2010-02-23T07:14:10.417-08:00"
+  },
+  {
+    "Id": "179042",
+    "Title": "TaskRegistrationInfo.Date",
+    "LatestDate": "2010-02-25T09:15:41.063-08:00"
+  },
+  {
+    "Id": "203507",
+    "Title": "Multiple Triggers to create Multiple Schedules",
+    "LatestDate": "2010-03-04T12:25:14.307-08:00"
+  },
+  {
+    "Id": "203704",
+    "Title": "How to update the action on a v1 task?",
+    "LatestDate": "2010-03-04T13:01:17.203-08:00"
+  },
+  {
+    "Id": "205132",
+    "Title": "Cannot instantiate the TaskService on a WCF service",
+    "LatestDate": "2010-03-16T12:27:22.197-07:00"
+  },
+  {
+    "Id": "207849",
+    "Title": "TaskEditor WPF",
+    "LatestDate": "2010-03-30T20:14:28.627-07:00"
+  },
+  {
+    "Id": "211094",
+    "Title": "Error: The data area passed to a system call is too small.",
+    "LatestDate": "2010-05-06T20:18:16.287-07:00"
+  },
+  {
+    "Id": "211643",
+    "Title": "Error: on the 'Enabled' property",
+    "LatestDate": "2010-05-07T08:13:48.887-07:00"
+  },
+  {
+    "Id": "215253",
+    "Title": "Behavior between 2003 Server and 2008 Server",
+    "LatestDate": "2010-06-15T10:57:20.88-07:00"
+  },
+  {
+    "Id": "215362",
+    "Title": "Change password of user for tasks in 1.0 and 2.0",
+    "LatestDate": "2010-06-15T10:36:27.003-07:00"
+  },
+  {
+    "Id": "217188",
+    "Title": "Unable to create a task",
+    "LatestDate": "2010-08-08T09:08:03.86-07:00"
+  },
+  {
+    "Id": "217202",
+    "Title": "Run task without being logged on",
+    "LatestDate": "2010-07-04T08:26:01.643-07:00"
+  },
+  {
+    "Id": "217487",
+    "Title": "TaskEditorDialog.Initialize throws NullReferenceException",
+    "LatestDate": "2010-07-04T08:27:52.907-07:00"
+  },
+  {
+    "Id": "217896",
+    "Title": "Unable to initialize a TaskEditDialog  object",
+    "LatestDate": "2010-07-06T15:32:41.08-07:00"
+  },
+  {
+    "Id": "218822",
+    "Title": "using C#  how do you get a list of current Scheduled Tasks?",
+    "LatestDate": "2010-07-12T13:47:53.287-07:00"
+  },
+  {
+    "Id": "219681",
+    "Title": "How to get information messages?",
+    "LatestDate": "2010-07-29T01:30:25.853-07:00"
+  },
+  {
+    "Id": "221628",
+    "Title": "Run as \"Domain Users\"",
+    "LatestDate": "2010-08-02T13:07:17.937-07:00"
+  },
+  {
+    "Id": "222506",
+    "Title": "XP with System user, Interactive flag?",
+    "LatestDate": "2010-08-17T12:00:10.307-07:00"
+  },
+  {
+    "Id": "223222",
+    "Title": "Setting DailyTrigger.Repetition.Interval throws exception in V1",
+    "LatestDate": "2010-08-17T12:08:24.773-07:00"
+  },
+  {
+    "Id": "224440",
+    "Title": "Small bug in WeeklyTrigger",
+    "LatestDate": "2010-08-25T15:51:42.76-07:00"
+  },
+  {
+    "Id": "224858",
+    "Title": "Detect if app is running under Task Scheduler",
+    "LatestDate": "2010-08-26T07:35:00.743-07:00"
+  },
+  {
+    "Id": "226766",
+    "Title": "Triggers.Add() Throws Error in Build 56462",
+    "LatestDate": "2010-09-14T11:42:01.043-07:00"
+  },
+  {
+    "Id": "227623",
+    "Title": "Value does not fall within the expected range",
+    "LatestDate": "2010-09-20T10:16:03.96-07:00"
+  },
+  {
+    "Id": "228259",
+    "Title": "Immediately Running a Task via Task.Run(params String[] parameters)",
+    "LatestDate": "2010-09-28T14:56:38.743-07:00"
+  },
+  {
+    "Id": "229024",
+    "Title": "View Tasks: Object reference not set to an instance of an object",
+    "LatestDate": "2010-10-20T10:15:51.643-07:00"
+  },
+  {
+    "Id": "229162",
+    "Title": "Firing email when schedule task run",
+    "LatestDate": "2010-10-18T14:04:53.437-07:00"
+  },
+  {
+    "Id": "229963",
+    "Title": "Detecting if current user has access to the Windows Task Scheduler",
+    "LatestDate": "2010-10-21T05:50:28.197-07:00"
+  },
+  {
+    "Id": "231335",
+    "Title": "Strange code in Task.Stop()",
+    "LatestDate": "2010-10-18T10:24:53.963-07:00"
+  },
+  {
+    "Id": "231339",
+    "Title": "Suggestion for Task.LastTaskResult",
+    "LatestDate": "2015-12-21T16:09:40.873-08:00"
+  },
+  {
+    "Id": "231511",
+    "Title": "Compile error in your same sourc code",
+    "LatestDate": "2010-10-20T10:07:32.98-07:00"
+  },
+  {
+    "Id": "232355",
+    "Title": "Error creating a task",
+    "LatestDate": "2010-10-26T11:59:22.223-07:00"
+  },
+  {
+    "Id": "232404",
+    "Title": "Last week for monthlydowtrigger",
+    "LatestDate": "2010-10-27T11:05:47.363-07:00"
+  },
+  {
+    "Id": "233613",
+    "Title": "Message Field",
+    "LatestDate": "2010-11-05T09:22:25.27-07:00"
+  },
+  {
+    "Id": "237532",
+    "Title": "Using assembly in MSI installer",
+    "LatestDate": "2010-12-08T10:07:55.36-08:00"
+  },
+  {
+    "Id": "238506",
+    "Title": "Multiple schedules are created unexpectedly",
+    "LatestDate": "2010-12-15T15:00:34.35-08:00"
+  },
+  {
+    "Id": "239319",
+    "Title": "Entry for All Users?",
+    "LatestDate": "2011-01-12T12:54:05.543-08:00"
+  },
+  {
+    "Id": "239829",
+    "Title": "Connection problem from win server 2003 to win 7",
+    "LatestDate": "2011-09-01T05:28:40.277-07:00"
+  },
+  {
+    "Id": "240477",
+    "Title": "TaskEditDialog doesn't seem to work for me in vb.net?",
+    "LatestDate": "2011-01-04T16:56:02.537-08:00"
+  },
+  {
+    "Id": "240506",
+    "Title": "error when selecting \"run whether user is logged on or not\"",
+    "LatestDate": "2011-01-13T11:39:40.313-08:00"
+  },
+  {
+    "Id": "240853",
+    "Title": "Exception when using NETWORK SERVICE on Windows Server 2003",
+    "LatestDate": "2014-04-15T16:43:35.633-07:00"
+  },
+  {
+    "Id": "241346",
+    "Title": "Latest Beta - Editor References Different Scheduler Version",
+    "LatestDate": "2011-01-11T13:26:39.737-08:00"
+  },
+  {
+    "Id": "242484",
+    "Title": "Open Task Scheduler",
+    "LatestDate": "2011-01-24T14:08:59.073-08:00"
+  },
+  {
+    "Id": "242958",
+    "Title": "Windows 7 Service or Group Account",
+    "LatestDate": "2011-01-24T14:10:39.157-08:00"
+  },
+  {
+    "Id": "244232",
+    "Title": "1st Day of Every Month",
+    "LatestDate": "2012-09-07T06:53:40.88-07:00"
+  },
+  {
+    "Id": "244390",
+    "Title": "How to specify Username/Password with Task",
+    "LatestDate": "2011-07-02T13:20:04.08-07:00"
+  },
+  {
+    "Id": "244683",
+    "Title": "Using the library from a v1 environment forces v1 mode even for remote connections",
+    "LatestDate": "2011-02-04T15:12:53.917-08:00"
+  },
+  {
+    "Id": "246548",
+    "Title": "Com Handler Action not working in Win7x64",
+    "LatestDate": "2013-01-07T09:17:20.56-08:00"
+  },
+  {
+    "Id": "246663",
+    "Title": "How to set security options",
+    "LatestDate": "2011-02-23T12:57:34.927-08:00"
+  },
+  {
+    "Id": "246673",
+    "Title": "How to disable \"stop task if...\"",
+    "LatestDate": "2014-02-05T18:59:48.097-08:00"
+  },
+  {
+    "Id": "247469",
+    "Title": "Can't create task on Windows Server 2008",
+    "LatestDate": "2012-01-04T23:09:47.023-08:00"
+  },
+  {
+    "Id": "247607",
+    "Title": "Request for BIN installer with documentation",
+    "LatestDate": "2011-03-21T17:16:33.917-07:00"
+  },
+  {
+    "Id": "250501",
+    "Title": "How about a NuGet package?",
+    "LatestDate": "2011-03-21T17:14:28.72-07:00"
+  },
+  {
+    "Id": "250502",
+    "Title": "Namespace conflicts? Using Microsoft.",
+    "LatestDate": "2011-03-21T07:36:30.163-07:00"
+  },
+  {
+    "Id": "250856",
+    "Title": "Access to Trigger description",
+    "LatestDate": "2011-03-23T10:31:42.877-07:00"
+  },
+  {
+    "Id": "250891",
+    "Title": "Windows Server 2008R2  No Tasks Being Listed",
+    "LatestDate": "2011-04-23T22:53:57.43-07:00"
+  },
+  {
+    "Id": "251456",
+    "Title": "Setting Enabled on task returns Access Denied?",
+    "LatestDate": "2011-03-28T09:14:43.857-07:00"
+  },
+  {
+    "Id": "251472",
+    "Title": "Unauthrorized Access Exception while editing the task.",
+    "LatestDate": "2011-03-29T10:13:40.263-07:00"
+  },
+  {
+    "Id": "252797",
+    "Title": "Can i access to the editor in asp.net?",
+    "LatestDate": "2011-04-06T16:30:29.857-07:00"
+  },
+  {
+    "Id": "252876",
+    "Title": "V1 Performance issue",
+    "LatestDate": "2011-04-11T19:36:42.547-07:00"
+  },
+  {
+    "Id": "254053",
+    "Title": "Problem between Version 1 and Version 2",
+    "LatestDate": "2011-04-18T12:44:51.877-07:00"
+  },
+  {
+    "Id": "254098",
+    "Title": "Integrated Windows Security?",
+    "LatestDate": "2011-04-15T12:04:37.28-07:00"
+  },
+  {
+    "Id": "256611",
+    "Title": "COMException (0x80070534): (45,4):LogonType",
+    "LatestDate": "2011-05-08T16:43:54.687-07:00"
+  },
+  {
+    "Id": "256692",
+    "Title": "TaskEditorDialog does not display correctly",
+    "LatestDate": "2011-05-07T04:20:35.677-07:00"
+  },
+  {
+    "Id": "257300",
+    "Title": "Can I use this wrapper on windows Server 2008.",
+    "LatestDate": "2011-05-12T11:53:04.123-07:00"
+  },
+  {
+    "Id": "257431",
+    "Title": "Serialize a Taskdefinition",
+    "LatestDate": "2011-05-12T15:53:34.76-07:00"
+  },
+  {
+    "Id": "258792",
+    "Title": "Triggering a task on other application's startup",
+    "LatestDate": "2011-05-24T09:57:40.84-07:00"
+  },
+  {
+    "Id": "258992",
+    "Title": "Creating Task using System Account",
+    "LatestDate": "2011-06-06T10:09:03.77-07:00"
+  },
+  {
+    "Id": "259058",
+    "Title": "Assemblies not signed",
+    "LatestDate": "2011-05-26T23:35:27.52-07:00"
+  },
+  {
+    "Id": "259237",
+    "Title": "Сreate DailyTrigger() runs everyday from specified time n times each n minutes.",
+    "LatestDate": "2011-05-27T11:31:46.587-07:00"
+  },
+  {
+    "Id": "259398",
+    "Title": "TaskEditDialog and Access is Denied",
+    "LatestDate": "2011-06-09T15:43:16.353-07:00"
+  },
+  {
+    "Id": "260927",
+    "Title": "Run existing task",
+    "LatestDate": "2011-08-25T00:45:42.837-07:00"
+  },
+  {
+    "Id": "261189",
+    "Title": "Task is created in WinXP but not in Win7",
+    "LatestDate": "2011-06-14T13:27:15.897-07:00"
+  },
+  {
+    "Id": "262008",
+    "Title": "how to view the status of a Scheduled Task",
+    "LatestDate": "2011-06-20T14:22:00.98-07:00"
+  },
+  {
+    "Id": "263336",
+    "Title": "Deleting a task and then Registering it again gives FileNotFound exception",
+    "LatestDate": "2011-06-29T22:11:37.533-07:00"
+  },
+  {
+    "Id": "264807",
+    "Title": "Adding an interactive task on startup",
+    "LatestDate": "2011-07-15T12:58:06.1-07:00"
+  },
+  {
+    "Id": "264838",
+    "Title": "enable/disable task",
+    "LatestDate": "2011-07-18T11:43:26.72-07:00"
+  },
+  {
+    "Id": "265399",
+    "Title": "How to create subfolder?",
+    "LatestDate": "2011-07-16T21:13:46.453-07:00"
+  },
+  {
+    "Id": "266601",
+    "Title": "\"Run with highest privileges\" not getting checked",
+    "LatestDate": "2012-10-10T08:51:34.507-07:00"
+  },
+  {
+    "Id": "266756",
+    "Title": "DaysOfWeek",
+    "LatestDate": "2011-07-27T13:29:29.887-07:00"
+  },
+  {
+    "Id": "267011",
+    "Title": "task / folder manipulation",
+    "LatestDate": "2011-07-30T12:48:48.987-07:00"
+  },
+  {
+    "Id": "267012",
+    "Title": "import / export tasks",
+    "LatestDate": "2011-07-30T12:47:07.61-07:00"
+  },
+  {
+    "Id": "267226",
+    "Title": "apostrophe in folder name",
+    "LatestDate": "2011-08-05T10:36:09.437-07:00"
+  },
+  {
+    "Id": "267284",
+    "Title": "who needs permissions?",
+    "LatestDate": "2011-08-05T10:26:59.27-07:00"
+  },
+  {
+    "Id": "267964",
+    "Title": "LogonTrigger delay property missing?",
+    "LatestDate": "2011-08-06T07:44:14.24-07:00"
+  },
+  {
+    "Id": "268199",
+    "Title": "How to Repetition.Duration indefinitely",
+    "LatestDate": "2015-03-13T06:53:53.817-07:00"
+  },
+  {
+    "Id": "268261",
+    "Title": "COMException: the task has been configured (...)",
+    "LatestDate": "2011-08-09T05:27:51.697-07:00"
+  },
+  {
+    "Id": "268490",
+    "Title": "COMException (18,8) LogonType trying to create task with user id and password",
+    "LatestDate": "2011-08-11T06:53:21.583-07:00"
+  },
+  {
+    "Id": "268655",
+    "Title": "Problem adding a task on a windows server 2003",
+    "LatestDate": "2011-08-11T07:20:51.34-07:00"
+  },
+  {
+    "Id": "268726",
+    "Title": "How do I store a password when adding task?",
+    "LatestDate": "2017-01-26T05:53:20.63-08:00"
+  },
+  {
+    "Id": "269010",
+    "Title": "NT AUTHORITY\\SYSTEM",
+    "LatestDate": "2011-08-15T07:12:45.327-07:00"
+  },
+  {
+    "Id": "269114",
+    "Title": "Getting ArgumentException when adding MonthlyDOWTrigger to Triggers collection",
+    "LatestDate": "2011-08-15T09:44:03.94-07:00"
+  },
+  {
+    "Id": "271153",
+    "Title": "Task doesnt get triggered",
+    "LatestDate": "2011-09-08T16:08:03.877-07:00"
+  },
+  {
+    "Id": "271693",
+    "Title": "Which .NET Framework Task Scheduler Managed Wrapper support",
+    "LatestDate": "2011-09-06T21:16:19.253-07:00"
+  },
+  {
+    "Id": "271766",
+    "Title": "ArgumentException when running FindTask function",
+    "LatestDate": "2011-09-09T06:46:20.623-07:00"
+  },
+  {
+    "Id": "271970",
+    "Title": "FileNotFoundException on WinXP",
+    "LatestDate": "2011-09-09T07:02:10.053-07:00"
+  },
+  {
+    "Id": "272089",
+    "Title": "Recurring triggers and compile errors",
+    "LatestDate": "2011-09-13T13:47:20.083-07:00"
+  },
+  {
+    "Id": "273322",
+    "Title": "Failure in creating tasks",
+    "LatestDate": "2011-10-13T13:58:56.007-07:00"
+  },
+  {
+    "Id": "274182",
+    "Title": "Cannot create task in Windows Vista and Windows Server 2003",
+    "LatestDate": "2011-09-29T13:33:12.153-07:00"
+  },
+  {
+    "Id": "274716",
+    "Title": "Binary download : assembly not strong named",
+    "LatestDate": "2011-10-04T16:48:52.277-07:00"
+  },
+  {
+    "Id": "275288",
+    "Title": "Task Scheduler Daily Trigger",
+    "LatestDate": "2011-10-10T07:46:54.037-07:00"
+  },
+  {
+    "Id": "275324",
+    "Title": "How to delete only action instead of Task",
+    "LatestDate": "2011-10-10T13:25:26.72-07:00"
+  },
+  {
+    "Id": "275337",
+    "Title": "how to use actioncollection in taskscheduler",
+    "LatestDate": "2011-10-10T22:10:33.373-07:00"
+  },
+  {
+    "Id": "275412",
+    "Title": "Create One Task in that i want to create Multiple Actions and Delete Too.",
+    "LatestDate": "2011-10-11T15:19:40.12-07:00"
+  },
+  {
+    "Id": "276408",
+    "Title": "The request is not supported 0x80070032",
+    "LatestDate": "2014-05-02T12:52:49.65-07:00"
+  },
+  {
+    "Id": "276460",
+    "Title": "TaskSchedulerEditor Issues",
+    "LatestDate": "2012-02-28T08:46:57.85-08:00"
+  },
+  {
+    "Id": "277704",
+    "Title": "Running tasks in windows server 2008",
+    "LatestDate": "2011-10-31T07:13:27.237-07:00"
+  },
+  {
+    "Id": "277730",
+    "Title": "Cannot register task using standard user account ",
+    "LatestDate": "2012-10-11T00:49:33.087-07:00"
+  },
+  {
+    "Id": "278439",
+    "Title": "Cannot compile when getting source code",
+    "LatestDate": "2011-11-07T17:51:45.36-08:00"
+  },
+  {
+    "Id": "279013",
+    "Title": "Cannot create task running as Service Account",
+    "LatestDate": "2011-11-10T09:26:18.873-08:00"
+  },
+  {
+    "Id": "280066",
+    "Title": "How to check if task already exists?",
+    "LatestDate": "2011-11-22T14:16:58.68-08:00"
+  },
+  {
+    "Id": "281118",
+    "Title": "NetworkProfile RegPath not exists in WinXP",
+    "LatestDate": "2011-11-28T23:41:27.187-08:00"
+  },
+  {
+    "Id": "281537",
+    "Title": "Catastrophic failure",
+    "LatestDate": "2011-12-06T08:42:51.453-08:00"
+  },
+  {
+    "Id": "281990",
+    "Title": "TaskEditDialog SecurityException thrown",
+    "LatestDate": "2011-12-09T00:28:40.45-08:00"
+  },
+  {
+    "Id": "282288",
+    "Title": "The task XML contains a value which is incorrectly formatted or out of range",
+    "LatestDate": "2011-12-09T09:26:35.463-08:00"
+  },
+  {
+    "Id": "282315",
+    "Title": "Cannot register Task from WCF Service",
+    "LatestDate": "2011-12-15T09:59:09.263-08:00"
+  },
+  {
+    "Id": "282592",
+    "Title": "Check task's RunOnlyIfLoggedOn flag in Windows 7",
+    "LatestDate": "2011-12-16T11:06:00.733-08:00"
+  },
+  {
+    "Id": "283038",
+    "Title": "Problem with 'Hidden' property",
+    "LatestDate": "2011-12-16T09:02:03.667-08:00"
+  },
+  {
+    "Id": "283539",
+    "Title": "Build instructions",
+    "LatestDate": "2011-12-20T17:49:34.177-08:00"
+  },
+  {
+    "Id": "283711",
+    "Title": "Change Password for Task",
+    "LatestDate": "2011-12-21T12:03:24.997-08:00"
+  },
+  {
+    "Id": "284210",
+    "Title": "Implementation of Delay vs RandomDelay",
+    "LatestDate": "2011-12-27T08:13:43.037-08:00"
+  },
+  {
+    "Id": "285667",
+    "Title": "source code - Cubic Orange missing reference",
+    "LatestDate": "2012-01-10T19:11:51.013-08:00"
+  },
+  {
+    "Id": "285987",
+    "Title": "Unhandled Exception in Wizard",
+    "LatestDate": "2012-06-15T00:48:04.42-07:00"
+  },
+  {
+    "Id": "286166",
+    "Title": "How to create a Task using TaskSchedulerWizard for a specific folder?",
+    "LatestDate": "2012-01-17T02:26:04.457-08:00"
+  },
+  {
+    "Id": "286824",
+    "Title": "Scheduled File Writing & Deleting",
+    "LatestDate": "2012-01-21T09:21:26.21-08:00"
+  },
+  {
+    "Id": "286916",
+    "Title": "Not supported on Task scheduler 1.0",
+    "LatestDate": "2012-01-21T17:46:33.697-08:00"
+  },
+  {
+    "Id": "287109",
+    "Title": "Only a single week can be set with Task Scheduler 1.0 for MonhlyDOW trigger",
+    "LatestDate": "2012-01-31T00:56:17.533-08:00"
+  },
+  {
+    "Id": "287336",
+    "Title": "Problems creating daily trigger",
+    "LatestDate": "2012-01-30T11:23:02.35-08:00"
+  },
+  {
+    "Id": "287423",
+    "Title": "TaskService.FindTask() Method returns a single result",
+    "LatestDate": "2012-03-16T13:36:52.347-07:00"
+  },
+  {
+    "Id": "287651",
+    "Title": "Updating/Deleting Tasks with \"elevated\" privileges",
+    "LatestDate": "2012-01-30T12:54:58.13-08:00"
+  },
+  {
+    "Id": "287906",
+    "Title": "Access Denied Reading a Task on Windows 2008",
+    "LatestDate": "2012-01-31T07:09:30.967-08:00"
+  },
+  {
+    "Id": "290532",
+    "Title": "Task being deleted when Run Times tab is selected (XP)",
+    "LatestDate": "2012-02-02T13:10:09.29-08:00"
+  },
+  {
+    "Id": "292214",
+    "Title": "NextRunTime is Never!",
+    "LatestDate": "2012-02-04T21:22:02.887-08:00"
+  },
+  {
+    "Id": "297182",
+    "Title": "Daily Trigger adding 5 Hours (XP)",
+    "LatestDate": "2012-02-08T08:20:30.803-08:00"
+  },
+  {
+    "Id": "300519",
+    "Title": "Code works on windows 7 but not on XP",
+    "LatestDate": "2012-02-13T12:30:45.227-08:00"
+  },
+  {
+    "Id": "307466",
+    "Title": "Add new trigger to a existing task",
+    "LatestDate": "2012-02-13T09:19:49.19-08:00"
+  },
+  {
+    "Id": "307583",
+    "Title": "Unable to connect to server",
+    "LatestDate": "2012-02-22T17:10:07.22-08:00"
+  },
+  {
+    "Id": "313798",
+    "Title": "RunningTask Parameters/Arguments",
+    "LatestDate": "2013-01-21T08:57:44.813-08:00"
+  },
+  {
+    "Id": "315943",
+    "Title": "Task Scheduler not running XP machine",
+    "LatestDate": "2012-02-14T22:33:02.64-08:00"
+  },
+  {
+    "Id": "328338",
+    "Title": "Problems w/V1 disabling task after RegisterTaskDefinition",
+    "LatestDate": "2012-02-20T05:03:58.31-08:00"
+  },
+  {
+    "Id": "330811",
+    "Title": "Refresh method issue",
+    "LatestDate": "2012-02-22T05:39:13.683-08:00"
+  },
+  {
+    "Id": "330817",
+    "Title": "Log On trigger for logon of any user",
+    "LatestDate": "2012-02-20T02:58:25.617-08:00"
+  },
+  {
+    "Id": "342550",
+    "Title": "example for updating trigger",
+    "LatestDate": "2012-02-23T05:32:48.773-08:00"
+  },
+  {
+    "Id": "343321",
+    "Title": "Unexpected behavior with ExecutionTimeLimit set",
+    "LatestDate": "2012-02-24T05:29:58.48-08:00"
+  },
+  {
+    "Id": "348489",
+    "Title": "How to schedule task at specific time",
+    "LatestDate": "2012-03-20T16:04:11.53-07:00"
+  },
+  {
+    "Id": "348695",
+    "Title": "How do I create a task that only run with a particular user account?",
+    "LatestDate": "2012-03-18T23:06:22.8-07:00"
+  },
+  {
+    "Id": "350161",
+    "Title": "It's work in Win XP 32bit but not in Win XP 64bit",
+    "LatestDate": "2012-03-27T09:54:24.353-07:00"
+  },
+  {
+    "Id": "350181",
+    "Title": "Unable to connect to remote server",
+    "LatestDate": "2012-03-30T18:02:41.487-07:00"
+  },
+  {
+    "Id": "350343",
+    "Title": "v2Folder and definition.v1Task are null",
+    "LatestDate": "2012-03-29T07:23:40.253-07:00"
+  },
+  {
+    "Id": "350352",
+    "Title": "Interface not registered exception",
+    "LatestDate": "2012-03-29T21:47:17.323-07:00"
+  },
+  {
+    "Id": "351002",
+    "Title": "Non-Interactive for current user?",
+    "LatestDate": "2012-04-11T09:19:03.163-07:00"
+  },
+  {
+    "Id": "351065",
+    "Title": "Saving user password for TaskLogonType.Password",
+    "LatestDate": "2012-04-04T06:57:15.967-07:00"
+  },
+  {
+    "Id": "351121",
+    "Title": "NextRunTime returning 30/12/1899 00:00:00",
+    "LatestDate": "2012-04-10T00:06:31.003-07:00"
+  },
+  {
+    "Id": "351141",
+    "Title": "TaskPropertiesControl",
+    "LatestDate": "2012-04-09T23:36:03.617-07:00"
+  },
+  {
+    "Id": "351280",
+    "Title": "Enable XP/Vista/Windows7 Visual Style for Editor/Wizard in WPF application",
+    "LatestDate": "2012-04-05T02:15:47.137-07:00"
+  },
+  {
+    "Id": "351311",
+    "Title": "Task Editor with less Dependencies",
+    "LatestDate": "2012-04-11T09:17:27.333-07:00"
+  },
+  {
+    "Id": "351967",
+    "Title": "Issues after incorporating changes in 77281 ",
+    "LatestDate": "2012-04-11T22:36:14.933-07:00"
+  },
+  {
+    "Id": "352103",
+    "Title": "HighestSupportedVersion values",
+    "LatestDate": "2012-04-12T11:57:37.097-07:00"
+  },
+  {
+    "Id": "352398",
+    "Title": "Schedule via ASP.NET",
+    "LatestDate": "2012-07-16T06:12:39.553-07:00"
+  },
+  {
+    "Id": "352536",
+    "Title": "How to run task under the SYSTEM account without E_ACCESSDENIED?",
+    "LatestDate": "2012-04-18T16:22:33.75-07:00"
+  },
+  {
+    "Id": "353193",
+    "Title": "Work station lock/unlock triggers",
+    "LatestDate": "2012-04-25T03:36:57.677-07:00"
+  },
+  {
+    "Id": "353378",
+    "Title": "Get the Process ID for the newly spawned process",
+    "LatestDate": "2012-04-24T14:24:54.17-07:00"
+  },
+  {
+    "Id": "353477",
+    "Title": "remote access with version 1",
+    "LatestDate": "2012-04-30T09:55:52.383-07:00"
+  },
+  {
+    "Id": "353584",
+    "Title": "Synchronize across time zones question",
+    "LatestDate": "2012-04-27T06:07:16.063-07:00"
+  },
+  {
+    "Id": "356474",
+    "Title": "[vb.net] Doesn't work in XP",
+    "LatestDate": "2012-05-23T17:55:16.927-07:00"
+  },
+  {
+    "Id": "357141",
+    "Title": "DaysInterval not working on XP",
+    "LatestDate": "2012-06-13T10:25:36.51-07:00"
+  },
+  {
+    "Id": "357667",
+    "Title": "Remote Computer Subfolders not available",
+    "LatestDate": "2012-06-13T10:28:47.747-07:00"
+  },
+  {
+    "Id": "357957",
+    "Title": "FileNotFoundException",
+    "LatestDate": "2012-06-13T10:07:26.267-07:00"
+  },
+  {
+    "Id": "359167",
+    "Title": "System.IO.FileNotFoundException when selecting run times From/To dates on Vista and Win 7",
+    "LatestDate": "2015-07-09T18:09:27.067-07:00"
+  },
+  {
+    "Id": "359220",
+    "Title": "Unexpected range exception when scheduling monthly projects for day of week on XP Pro",
+    "LatestDate": "2012-06-13T10:50:27.53-07:00"
+  },
+  {
+    "Id": "360021",
+    "Title": "WeeklyTrigger with different times for each day",
+    "LatestDate": "2012-06-19T07:55:37.627-07:00"
+  },
+  {
+    "Id": "360103",
+    "Title": "Copy to Many",
+    "LatestDate": "2012-07-02T10:15:44.58-07:00"
+  },
+  {
+    "Id": "360183",
+    "Title": "VPN connection?",
+    "LatestDate": "2012-06-19T10:57:59.09-07:00"
+  },
+  {
+    "Id": "360542",
+    "Title": "Where is TaskEventLog",
+    "LatestDate": "2012-06-21T17:36:20.54-07:00"
+  },
+  {
+    "Id": "360761",
+    "Title": "Unable to connect to remote servers",
+    "LatestDate": "2012-06-24T21:02:52.34-07:00"
+  },
+  {
+    "Id": "360857",
+    "Title": "Application error if two values for x day of week in month chosen in Vista/Win7 ",
+    "LatestDate": "2012-07-02T12:29:02.793-07:00"
+  },
+  {
+    "Id": "361687",
+    "Title": "Getting tasks and modifying their useraccounts",
+    "LatestDate": "2012-07-05T00:14:41.327-07:00"
+  },
+  {
+    "Id": "370130",
+    "Title": "Unauthorized Exception when creating/deleting tasks",
+    "LatestDate": "2012-07-18T04:53:38.897-07:00"
+  },
+  {
+    "Id": "370445",
+    "Title": "How to get execution time of a task?",
+    "LatestDate": "2012-07-16T09:41:04.743-07:00"
+  },
+  {
+    "Id": "370549",
+    "Title": "How to connect remote servers tasks scheduler",
+    "LatestDate": "2012-07-17T14:41:50.91-07:00"
+  },
+  {
+    "Id": "374159",
+    "Title": "Displayed Tasks not showing correct Status nor NextRunTime",
+    "LatestDate": "2012-08-03T09:29:08.9-07:00"
+  },
+  {
+    "Id": "378502",
+    "Title": "How can I edit the NextRunTime for an existing Task",
+    "LatestDate": "2012-07-22T19:47:52.803-07:00"
+  },
+  {
+    "Id": "388890",
+    "Title": "how to get task from remote server",
+    "LatestDate": "2012-07-25T02:36:00.277-07:00"
+  },
+  {
+    "Id": "390043",
+    "Title": "Configure for: <OS>",
+    "LatestDate": "2012-08-16T09:18:08.527-07:00"
+  },
+  {
+    "Id": "390414",
+    "Title": "Hide Window when running console application exe by TaskScheduler",
+    "LatestDate": "2012-08-23T03:00:58.107-07:00"
+  },
+  {
+    "Id": "390635",
+    "Title": "weekly trigger with mutiple days",
+    "LatestDate": "2012-08-10T14:46:18.127-07:00"
+  },
+  {
+    "Id": "390691",
+    "Title": "Riskware?",
+    "LatestDate": "2012-08-08T17:16:06.563-07:00"
+  },
+  {
+    "Id": "392331",
+    "Title": "Exception when selecting an \"On An Event\" trigger log source in Chinese",
+    "LatestDate": "2012-08-22T10:47:35.653-07:00"
+  },
+  {
+    "Id": "392474",
+    "Title": "'Select COM Object' dialog runs indefinitely and bombs if cancelled.",
+    "LatestDate": "2012-08-21T07:09:11.967-07:00"
+  },
+  {
+    "Id": "393340",
+    "Title": "Application error when editing new custom event trigger",
+    "LatestDate": "2014-04-28T08:35:10.68-07:00"
+  },
+  {
+    "Id": "393341",
+    "Title": "On Workstation Lock/Unlock triggers can't be selected ",
+    "LatestDate": "2012-08-28T12:51:31.86-07:00"
+  },
+  {
+    "Id": "393385",
+    "Title": "From Coordinator: Help me with Windows 8 functionality design",
+    "LatestDate": "2012-08-28T10:38:35.153-07:00"
+  },
+  {
+    "Id": "394720",
+    "Title": "Last Day of Month Only",
+    "LatestDate": "2012-09-07T07:28:57.887-07:00"
+  },
+  {
+    "Id": "394786",
+    "Title": "Error Scheduling Task on 2008 R2",
+    "LatestDate": "2012-09-09T11:20:50.83-07:00"
+  },
+  {
+    "Id": "394994",
+    "Title": "Creating Tasks per a User Defined Calendar",
+    "LatestDate": "2012-09-11T06:06:19.817-07:00"
+  },
+  {
+    "Id": "395023",
+    "Title": "Access denied when scheduling a task from windows phone application",
+    "LatestDate": "2012-09-10T22:53:18.19-07:00"
+  },
+  {
+    "Id": "395793",
+    "Title": "A required privilege is not held by the client Exception from HRESULT: 0x80070522 ",
+    "LatestDate": "2012-09-21T09:14:04.067-07:00"
+  },
+  {
+    "Id": "396294",
+    "Title": "Scheduling a remote task using TaskLogonType.Password results in COMException",
+    "LatestDate": "2016-06-08T06:29:59.863-07:00"
+  },
+  {
+    "Id": "396537",
+    "Title": "How to set the \"Run whether user is logged on or not\"",
+    "LatestDate": "2012-09-25T09:03:50.31-07:00"
+  },
+  {
+    "Id": "396744",
+    "Title": "Cannot get list of tasks from Windows 2008 Standard R2 Server",
+    "LatestDate": "2012-10-01T18:36:02.647-07:00"
+  },
+  {
+    "Id": "397023",
+    "Title": "Configure for: Different Dropdowns",
+    "LatestDate": "2012-11-08T09:12:47.77-08:00"
+  },
+  {
+    "Id": "397149",
+    "Title": "Microsoft.Win32.TaskScheduler.dll produces Virus Warnings - Why?",
+    "LatestDate": "2012-09-29T16:46:40.72-07:00"
+  },
+  {
+    "Id": "397671",
+    "Title": "Priority property",
+    "LatestDate": "2012-10-02T16:47:32.227-07:00"
+  },
+  {
+    "Id": "397754",
+    "Title": "Creating Daily Triggers with multiple start time using Taskservice 2.0",
+    "LatestDate": "2012-10-04T14:41:11.19-07:00"
+  },
+  {
+    "Id": "398027",
+    "Title": "Task does not start if scheduled start is missed.",
+    "LatestDate": "2012-10-04T12:55:09.283-07:00"
+  },
+  {
+    "Id": "398173",
+    "Title": "TaskCreation.CreateOrUpdate does not work on XP",
+    "LatestDate": "2012-10-05T08:51:42.853-07:00"
+  },
+  {
+    "Id": "399586",
+    "Title": "Strange Behaviour - DisplayName and FormatDescription",
+    "LatestDate": "2012-10-16T07:38:03.963-07:00"
+  },
+  {
+    "Id": "400413",
+    "Title": "Task Scheduler TaskRunLevel",
+    "LatestDate": "2012-10-23T08:11:20.057-07:00"
+  },
+  {
+    "Id": "400525",
+    "Title": "Reading fields from Actions",
+    "LatestDate": "2012-10-23T14:50:53.387-07:00"
+  },
+  {
+    "Id": "401262",
+    "Title": "Unable to create tasks from ASP.NET under W2008",
+    "LatestDate": "2012-10-31T08:29:36.803-07:00"
+  },
+  {
+    "Id": "402297",
+    "Title": "How to auto-delete a task after running once?",
+    "LatestDate": "2012-11-08T19:58:54.39-08:00"
+  },
+  {
+    "Id": "402461",
+    "Title": "How to determine if a task is OneTime task or not?",
+    "LatestDate": "2012-11-09T18:45:02.723-08:00"
+  },
+  {
+    "Id": "402828",
+    "Title": "RegisterTaskDefinition failing with a System.IO.DirectoryNotFoundException, The system cannot find the path specified. (Exception from HRESULT: 0x80070003)",
+    "LatestDate": "2012-11-12T08:02:16-08:00"
+  },
+  {
+    "Id": "403183",
+    "Title": "Is possible to run existing task with argument?",
+    "LatestDate": "2013-06-13T08:29:45.86-07:00"
+  },
+  {
+    "Id": "403304",
+    "Title": "COMException: \"(37,8):LogonType\" when changing user",
+    "LatestDate": "2012-11-29T02:15:33.543-08:00"
+  },
+  {
+    "Id": "403457",
+    "Title": "AC Power Conditions",
+    "LatestDate": "2012-11-22T02:32:03.7-08:00"
+  },
+  {
+    "Id": "403678",
+    "Title": "How to add checked CheckBoxes to the DaysOfWeek setting?",
+    "LatestDate": "2012-11-20T08:13:28.47-08:00"
+  },
+  {
+    "Id": "403851",
+    "Title": "create a task using UI",
+    "LatestDate": "2012-11-20T07:52:19.017-08:00"
+  },
+  {
+    "Id": "404768",
+    "Title": "COMException connecting to Windows 2012 Task Scheduler remotely",
+    "LatestDate": "2013-10-05T10:37:43.297-07:00"
+  },
+  {
+    "Id": "405063",
+    "Title": "Run whether user is logged on or not",
+    "LatestDate": "2012-11-29T12:57:10.28-08:00"
+  },
+  {
+    "Id": "405210",
+    "Title": "Converting TaskDefinition to work with Server 2003 R2",
+    "LatestDate": "2015-03-13T10:03:23.453-07:00"
+  },
+  {
+    "Id": "405211",
+    "Title": "Saving a Task",
+    "LatestDate": "2012-12-03T19:52:15.923-08:00"
+  },
+  {
+    "Id": "405333",
+    "Title": "Do not store password",
+    "LatestDate": "2012-12-03T11:21:11.51-08:00"
+  },
+  {
+    "Id": "405486",
+    "Title": "Problem with accessing Administrator task",
+    "LatestDate": "2012-12-12T11:51:08.517-08:00"
+  },
+  {
+    "Id": "406267",
+    "Title": "Daily Trigger with weekdays set",
+    "LatestDate": "2012-12-13T21:08:34.43-08:00"
+  },
+  {
+    "Id": "406815",
+    "Title": "The data area passed to a system call is too small. (Exception from HRESULT: 0x8007007A).",
+    "LatestDate": "2012-12-17T14:46:50.53-08:00"
+  },
+  {
+    "Id": "407018",
+    "Title": "Scheduled task in our 32-bit application fails to run when user is logged out",
+    "LatestDate": "2012-12-20T12:29:00.633-08:00"
+  },
+  {
+    "Id": "407332",
+    "Title": "Conditions tab option \"Start the task only if the computer is idle for:\" does not persist",
+    "LatestDate": "2012-12-21T12:27:07.62-08:00"
+  },
+  {
+    "Id": "423405",
+    "Title": "Access is denied error in RegisterTaskDefinition method...",
+    "LatestDate": "2013-01-02T07:40:08.437-08:00"
+  },
+  {
+    "Id": "428736",
+    "Title": "TaskEditDialog taking too much time,",
+    "LatestDate": "2013-01-11T12:38:03.373-08:00"
+  },
+  {
+    "Id": "429708",
+    "Title": "Scheduler dialog will not close after selecting the \"Run with highest privileges\" option",
+    "LatestDate": "2013-01-16T10:58:17.917-08:00"
+  },
+  {
+    "Id": "430046",
+    "Title": "Task schedular OXFF Error  ",
+    "LatestDate": "2013-05-21T15:46:07.343-07:00"
+  },
+  {
+    "Id": "430401",
+    "Title": "COMException in RegisterTaskDefinition",
+    "LatestDate": "2013-01-23T02:38:00.913-08:00"
+  },
+  {
+    "Id": "431916",
+    "Title": "Checking \"Run with highest privileges\" option raises access denied error",
+    "LatestDate": "2013-02-06T06:57:18.923-08:00"
+  },
+  {
+    "Id": "431942",
+    "Title": "TaskSchedulerWizard crashes w. NullReferenceException",
+    "LatestDate": "2013-02-05T11:30:36.057-08:00"
+  },
+  {
+    "Id": "432332",
+    "Title": "Querying remote servers with various OS",
+    "LatestDate": "2013-02-07T10:28:30.353-08:00"
+  },
+  {
+    "Id": "432344",
+    "Title": "IIS integration?",
+    "LatestDate": "2013-02-13T09:23:57.573-08:00"
+  },
+  {
+    "Id": "432985",
+    "Title": "How to enable a task in task scheduler using C#?",
+    "LatestDate": "2015-05-06T02:40:14.693-07:00"
+  },
+  {
+    "Id": "433076",
+    "Title": "I want to create a schedule that will run every 1 hour in a day.",
+    "LatestDate": "2014-02-14T01:29:27.543-08:00"
+  },
+  {
+    "Id": "433288",
+    "Title": "Task history filter or sort",
+    "LatestDate": "2013-02-19T15:54:10.103-08:00"
+  },
+  {
+    "Id": "434504",
+    "Title": "Small code improvement in Trigger.cs",
+    "LatestDate": "2013-02-26T16:06:37.923-08:00"
+  },
+  {
+    "Id": "434883",
+    "Title": "Create Task in Specific Folder",
+    "LatestDate": "2013-03-03T00:03:59.903-08:00"
+  },
+  {
+    "Id": "435162",
+    "Title": "Calling URL ",
+    "LatestDate": "2013-03-12T09:29:44.437-07:00"
+  },
+  {
+    "Id": "435861",
+    "Title": "Create task start time from datetimepicker, and execaction multiple arguments",
+    "LatestDate": "2013-03-08T09:19:26.81-08:00"
+  },
+  {
+    "Id": "436312",
+    "Title": "Dynamically add days to DaysOfWeek",
+    "LatestDate": "2013-03-12T09:41:08.53-07:00"
+  },
+  {
+    "Id": "436331",
+    "Title": "Create trigger runs every hour in specific minute",
+    "LatestDate": "2013-03-12T09:35:41.93-07:00"
+  },
+  {
+    "Id": "436744",
+    "Title": "Load balancing Task schedular",
+    "LatestDate": "2013-04-09T08:52:42.203-07:00"
+  },
+  {
+    "Id": "440549",
+    "Title": "questions on querying server for a single task ",
+    "LatestDate": "2013-04-17T07:38:55.593-07:00"
+  },
+  {
+    "Id": "441641",
+    "Title": "no task scheduler is created when deploy on IIS server",
+    "LatestDate": "2013-05-02T19:36:33.44-07:00"
+  },
+  {
+    "Id": "441722",
+    "Title": "TriggerEditDialog StartBoundary is not showing 24h format.",
+    "LatestDate": "2013-04-29T09:24:16.54-07:00"
+  },
+  {
+    "Id": "442540",
+    "Title": "Error during Enabling/Disabling task",
+    "LatestDate": "2013-05-04T09:35:10.967-07:00"
+  },
+  {
+    "Id": "442908",
+    "Title": "Need a ExecutionTimeLimit???",
+    "LatestDate": "2013-05-08T07:29:07.373-07:00"
+  },
+  {
+    "Id": "442968",
+    "Title": "Cannot have windows with handles (eg NativeWindow) when running at boot in system account???",
+    "LatestDate": "2013-05-09T08:21:32.473-07:00"
+  },
+  {
+    "Id": "443358",
+    "Title": "show hidden tasks and get all tasks in root and all subfolders(server 2012, 2008)",
+    "LatestDate": "2013-05-13T14:21:56.067-07:00"
+  },
+  {
+    "Id": "443928",
+    "Title": "Hung Scheduled Task Won't Stop",
+    "LatestDate": "2014-08-18T07:50:06.03-07:00"
+  },
+  {
+    "Id": "445383",
+    "Title": "Problem creating a new task",
+    "LatestDate": "2013-05-31T08:40:20.557-07:00"
+  },
+  {
+    "Id": "445711",
+    "Title": "About V2",
+    "LatestDate": "2013-06-16T05:02:27.66-07:00"
+  },
+  {
+    "Id": "445919",
+    "Title": "DeleteExpiredTaskAfter?",
+    "LatestDate": "2013-06-27T06:31:13.047-07:00"
+  },
+  {
+    "Id": "445931",
+    "Title": "Error after change Task Settings",
+    "LatestDate": "2013-06-15T14:17:55.353-07:00"
+  },
+  {
+    "Id": "447842",
+    "Title": "Unable to update task (E_ACCESSDENIED)",
+    "LatestDate": "2013-06-24T12:35:05.8-07:00"
+  },
+  {
+    "Id": "448748",
+    "Title": "Remote TaskHistoryLog",
+    "LatestDate": "2014-02-27T12:56:20.713-08:00"
+  },
+  {
+    "Id": "448890",
+    "Title": "SecurityException when enumerating V1 tasks and displaying tasks' info using a DataGrid",
+    "LatestDate": "2013-07-03T17:15:58.047-07:00"
+  },
+  {
+    "Id": "449439",
+    "Title": "ASP.NET: Run Task as IIS 7 Application Pool Identity",
+    "LatestDate": "2013-07-15T15:01:42.577-07:00"
+  },
+  {
+    "Id": "454277",
+    "Title": "Error on TaskCollection Movenext Method on windows 2003",
+    "LatestDate": "2013-08-23T08:19:15.207-07:00"
+  },
+  {
+    "Id": "454279",
+    "Title": "Unexplained Error On Windows XP Pro SP3",
+    "LatestDate": "2013-08-23T08:21:17.09-07:00"
+  },
+  {
+    "Id": "454548",
+    "Title": "How to disable task scheduler in c#",
+    "LatestDate": "2013-09-03T13:44:06.1-07:00"
+  },
+  {
+    "Id": "455214",
+    "Title": "Thanks for this project",
+    "LatestDate": "2013-09-10T12:40:43.847-07:00"
+  },
+  {
+    "Id": "455281",
+    "Title": "FindAllTasks In Windows Server 2008 R2",
+    "LatestDate": "2013-09-03T12:26:38.347-07:00"
+  },
+  {
+    "Id": "456760",
+    "Title": "Examples how to include license notice in our project",
+    "LatestDate": "2013-09-13T07:50:49.563-07:00"
+  },
+  {
+    "Id": "457410",
+    "Title": "Unable to invoke task.Run",
+    "LatestDate": "2013-09-24T22:29:29.907-07:00"
+  },
+  {
+    "Id": "458801",
+    "Title": "Build a Trigger from its Description String",
+    "LatestDate": "2013-09-26T02:03:00.27-07:00"
+  },
+  {
+    "Id": "460953",
+    "Title": "Creating new TaskEventLog yields no results.",
+    "LatestDate": "2013-10-02T14:00:19.857-07:00"
+  },
+  {
+    "Id": "461380",
+    "Title": "COMException when choosing other user in TaskEditDialog",
+    "LatestDate": "2014-03-12T08:10:31.427-07:00"
+  },
+  {
+    "Id": "461778",
+    "Title": "TriggerDialog in German",
+    "LatestDate": "2013-10-11T07:48:41.8-07:00"
+  },
+  {
+    "Id": "462224",
+    "Title": "Access Denied On Remote Machine",
+    "LatestDate": "2013-10-15T06:33:17.75-07:00"
+  },
+  {
+    "Id": "462233",
+    "Title": "Selecting the \"last day\" of a specific month.",
+    "LatestDate": "2013-10-16T09:40:44.463-07:00"
+  },
+  {
+    "Id": "462236",
+    "Title": "Running a task from a windows service",
+    "LatestDate": "2013-10-15T08:03:55.227-07:00"
+  },
+  {
+    "Id": "462640",
+    "Title": "Access Denied when logged into ASP Net site with Basic Auth",
+    "LatestDate": "2013-10-17T19:12:21.703-07:00"
+  },
+  {
+    "Id": "466214",
+    "Title": "How to create Task into Task Scheduler?",
+    "LatestDate": "2014-09-04T12:04:35.443-07:00"
+  },
+  {
+    "Id": "466374",
+    "Title": "How to create an action of my C# program function?",
+    "LatestDate": "2013-11-06T16:50:51.16-08:00"
+  },
+  {
+    "Id": "467969",
+    "Title": "Getting COMExcpetion when attempting to register changes in a Windows 8.1 PC",
+    "LatestDate": "2014-01-07T08:53:47.19-08:00"
+  },
+  {
+    "Id": "468764",
+    "Title": "Cant find the Task",
+    "LatestDate": "2013-11-18T07:47:58.997-08:00"
+  },
+  {
+    "Id": "476957",
+    "Title": "TaskScheduler NuGet package includes NCrontab.dll",
+    "LatestDate": "2014-01-07T09:04:02.413-08:00"
+  },
+  {
+    "Id": "494698",
+    "Title": ".NET 4.0/4.5 targeting",
+    "LatestDate": "2014-01-31T13:20:38.577-08:00"
+  },
+  {
+    "Id": "500974",
+    "Title": "Some tasks not running",
+    "LatestDate": "2014-01-15T14:43:25.207-08:00"
+  },
+  {
+    "Id": "528848",
+    "Title": "Weird exception",
+    "LatestDate": "2014-02-14T06:49:19.927-08:00"
+  },
+  {
+    "Id": "528995",
+    "Title": "trigger when user is not logged in",
+    "LatestDate": "2014-02-06T03:52:37.063-08:00"
+  },
+  {
+    "Id": "529751",
+    "Title": "Create daily 9h Task Schedule in Windows 7",
+    "LatestDate": "2014-02-10T09:00:37.587-08:00"
+  },
+  {
+    "Id": "530254",
+    "Title": "Deletion/Unregister Task",
+    "LatestDate": "2014-02-10T17:26:45.363-08:00"
+  },
+  {
+    "Id": "532275",
+    "Title": "Maximum length of Command parameters in Windows 8 scheduler",
+    "LatestDate": "2014-02-25T20:45:10.333-08:00"
+  },
+  {
+    "Id": "535747",
+    "Title": "Minimal rights to connect remotely to a taskscheduler service",
+    "LatestDate": "2014-12-01T07:14:57.603-08:00"
+  },
+  {
+    "Id": "538645",
+    "Title": "Disable history on a new task?",
+    "LatestDate": "2014-03-12T08:05:17.49-07:00"
+  },
+  {
+    "Id": "538749",
+    "Title": "ArguementException: Trigger.Repetition.Interval Must be less than trigger.Repetition",
+    "LatestDate": "2014-03-13T00:28:16.337-07:00"
+  },
+  {
+    "Id": "538834",
+    "Title": "taskscheduler return next run time incorrect",
+    "LatestDate": "2014-03-17T17:06:14.337-07:00"
+  },
+  {
+    "Id": "539741",
+    "Title": "TaskEditDialog incorrectly updates weekly triggers",
+    "LatestDate": "2014-04-03T09:47:24.153-07:00"
+  },
+  {
+    "Id": "540014",
+    "Title": "TaskEditDialog throws NullReferenceException on OK button click if RegisterTaskOnAccept is true",
+    "LatestDate": "2014-03-26T05:57:58.793-07:00"
+  },
+  {
+    "Id": "540080",
+    "Title": "COMException when calling FindAllTasks on IIS",
+    "LatestDate": "2014-04-23T21:34:29.92-07:00"
+  },
+  {
+    "Id": "541975",
+    "Title": "OutOfMemoryException when creating a TaskService with wrong password",
+    "LatestDate": "2014-04-17T09:06:00.617-07:00"
+  },
+  {
+    "Id": "543178",
+    "Title": "Getting error when RegisterTaskDefinition again",
+    "LatestDate": "2014-04-24T08:32:04.727-07:00"
+  },
+  {
+    "Id": "543258",
+    "Title": "Task History Control Activate Issue",
+    "LatestDate": "2014-06-03T11:42:13.69-07:00"
+  },
+  {
+    "Id": "543708",
+    "Title": "Windows XP SP3 System Account.",
+    "LatestDate": "2014-06-19T13:42:19.593-07:00"
+  },
+  {
+    "Id": "543969",
+    "Title": "(15,8):UserId: COMexception occured ",
+    "LatestDate": "2014-05-01T06:19:32.87-07:00"
+  },
+  {
+    "Id": "544426",
+    "Title": "I want create schedule that will run at 3 Pm and 7 pm on same task",
+    "LatestDate": "2014-05-07T22:09:32.42-07:00"
+  },
+  {
+    "Id": "544525",
+    "Title": "TaskScheduler to access task from a \"WORKGROUP\" machine",
+    "LatestDate": "2014-05-12T00:23:58.39-07:00"
+  },
+  {
+    "Id": "544563",
+    "Title": "User Login And Logout",
+    "LatestDate": "2014-05-07T22:02:36.057-07:00"
+  },
+  {
+    "Id": "544630",
+    "Title": "Ports needed for Task Scheduler Managed Wrapper",
+    "LatestDate": "2014-05-07T14:12:16.193-07:00"
+  },
+  {
+    "Id": "544868",
+    "Title": "Export... but no import?",
+    "LatestDate": "2014-05-10T11:34:30.467-07:00"
+  },
+  {
+    "Id": "545201",
+    "Title": "Error: \"Access is denied HRESULT: 0x80070005 (E_ACCESSDENIED)\" when connecting to remote server from IIS 7.",
+    "LatestDate": "2014-07-30T10:27:50.537-07:00"
+  },
+  {
+    "Id": "545520",
+    "Title": "Security Administrator assingn",
+    "LatestDate": "2014-05-17T10:12:47.667-07:00"
+  },
+  {
+    "Id": "545546",
+    "Title": "RegisterTaskDefinition with Windows Service credentials",
+    "LatestDate": "2014-06-04T05:20:47.49-07:00"
+  },
+  {
+    "Id": "545647",
+    "Title": "UnauthorizedAccessException was Handel",
+    "LatestDate": "2014-05-17T10:12:33.173-07:00"
+  },
+  {
+    "Id": "546939",
+    "Title": "Checking if Task Exists",
+    "LatestDate": "2014-05-30T09:37:33.327-07:00"
+  },
+  {
+    "Id": "547481",
+    "Title": "Getting \"The request is not supported 0x80070032\" after target changed to a server with a different OS",
+    "LatestDate": "2014-06-04T10:17:02.55-07:00"
+  },
+  {
+    "Id": "547669",
+    "Title": "Multilanguage SUpport",
+    "LatestDate": "2014-06-06T08:04:10.433-07:00"
+  },
+  {
+    "Id": "548388",
+    "Title": "Tracking Task State changes",
+    "LatestDate": "2014-06-16T07:43:42.643-07:00"
+  },
+  {
+    "Id": "551670",
+    "Title": "How to get the last run time of a specific task",
+    "LatestDate": "2014-07-17T07:32:19.65-07:00"
+  },
+  {
+    "Id": "554843",
+    "Title": "Taskscheduler file access problem in Windows Server 2012",
+    "LatestDate": "2014-08-01T08:15:05.93-07:00"
+  },
+  {
+    "Id": "560105",
+    "Title": "Crash on Edit Task using TaskEditDialog",
+    "LatestDate": "2014-08-11T05:52:00.483-07:00"
+  },
+  {
+    "Id": "560531",
+    "Title": "Create Task at LogOn",
+    "LatestDate": "2014-08-08T09:50:43.827-07:00"
+  },
+  {
+    "Id": "561037",
+    "Title": "doesn't show all tasks on win 2003",
+    "LatestDate": "2014-08-22T07:51:42.64-07:00"
+  },
+  {
+    "Id": "562292",
+    "Title": "setting the StartBoundary to a valid DateTime not working",
+    "LatestDate": "2014-08-28T14:33:21.213-07:00"
+  },
+  {
+    "Id": "567530",
+    "Title": "Allows remote task creation when forcev1 = true ONLY",
+    "LatestDate": "2015-03-19T16:40:37.403-07:00"
+  },
+  {
+    "Id": "567851",
+    "Title": "RegisterTaskDefinition throws 0x80070005 (E_ACCESSDENIED) exception",
+    "LatestDate": "2014-09-19T06:59:27.207-07:00"
+  },
+  {
+    "Id": "567974",
+    "Title": "Last Run Result of any task",
+    "LatestDate": "2014-09-20T08:36:31.14-07:00"
+  },
+  {
+    "Id": "568010",
+    "Title": "Subscribe to a local or remote TaskService?",
+    "LatestDate": "2014-09-22T09:31:32.043-07:00"
+  },
+  {
+    "Id": "568086",
+    "Title": "Changing schedule through UI library",
+    "LatestDate": "2014-09-24T09:07:58-07:00"
+  },
+  {
+    "Id": "568485",
+    "Title": "Setting Task Run-As Account and Settings",
+    "LatestDate": "2014-09-27T11:54:16.24-07:00"
+  },
+  {
+    "Id": "568593",
+    "Title": "Can I use   Microsoft.Win32.TaskScheduler.dll in web app(asp.net) for creating   task scheduler",
+    "LatestDate": "2014-10-01T05:24:37.063-07:00"
+  },
+  {
+    "Id": "568655",
+    "Title": "Task Scheduler connecting XP (SP3)",
+    "LatestDate": "2014-10-01T05:22:32.483-07:00"
+  },
+  {
+    "Id": "568819",
+    "Title": "C# how can I tell when a task is complete",
+    "LatestDate": "2014-10-01T13:55:01.82-07:00"
+  },
+  {
+    "Id": "568951",
+    "Title": "Server 2008 \"Do not store password\" being reset",
+    "LatestDate": "2014-10-03T05:46:29.797-07:00"
+  },
+  {
+    "Id": "569349",
+    "Title": "Need to run schedule task as \"not logged in\"",
+    "LatestDate": "2014-10-09T04:18:51.047-07:00"
+  },
+  {
+    "Id": "569473",
+    "Title": "How to  get  history list  of any task",
+    "LatestDate": "2014-10-13T08:00:29.587-07:00"
+  },
+  {
+    "Id": "569725",
+    "Title": "Time Triger Does not fire",
+    "LatestDate": "2014-10-14T15:02:01.08-07:00"
+  },
+  {
+    "Id": "569981",
+    "Title": "TriggerEditDialog could not be resolved.",
+    "LatestDate": "2014-10-28T10:26:00.93-07:00"
+  },
+  {
+    "Id": "569982",
+    "Title": "Yes, Remote Task Service even with firewall on",
+    "LatestDate": "2014-10-16T10:22:38.523-07:00"
+  },
+  {
+    "Id": "570178",
+    "Title": "what is the best way to deploy task scheduler with my .exe ? ",
+    "LatestDate": "2014-10-24T07:28:49.96-07:00"
+  },
+  {
+    "Id": "570198",
+    "Title": "Multiple Dos command through Task scheduler Action without using batch file.",
+    "LatestDate": "2014-10-28T10:08:29.963-07:00"
+  },
+  {
+    "Id": "570851",
+    "Title": "Creating a remote task in a Workgorup environment.",
+    "LatestDate": "2015-07-10T14:34:52.67-07:00"
+  },
+  {
+    "Id": "571428",
+    "Title": "How to set title of TriggerEditDialog.",
+    "LatestDate": "2014-11-06T09:32:58.113-08:00"
+  },
+  {
+    "Id": "571496",
+    "Title": "Creation of Task on Windows 7 remotely using Managed Wrapper.",
+    "LatestDate": "2015-05-29T13:55:28.97-07:00"
+  },
+  {
+    "Id": "573850",
+    "Title": "Showing only Tasks in Microsoft Folder?",
+    "LatestDate": "2014-12-20T11:54:47.333-08:00"
+  },
+  {
+    "Id": "577611",
+    "Title": "How can we store trigger details in sql server db?",
+    "LatestDate": "2015-01-13T07:42:23.853-08:00"
+  },
+  {
+    "Id": "577669",
+    "Title": "How to convert dateTimePicker format in winforms to match StartBoundary",
+    "LatestDate": "2015-01-14T15:38:30.587-08:00"
+  },
+  {
+    "Id": "578020",
+    "Title": "Get a list of tasks, descriptions and triggers into a datagrid",
+    "LatestDate": "2015-01-27T12:12:46.363-08:00"
+  },
+  {
+    "Id": "578041",
+    "Title": "Hi I want to store the created task information in sql server as tables not as standard xml part, Any Idea How to do that",
+    "LatestDate": "2015-01-19T12:21:59.897-08:00"
+  },
+  {
+    "Id": "578053",
+    "Title": "How can i add FullDateTimePicker into windows. ",
+    "LatestDate": "2015-01-19T12:31:20.923-08:00"
+  },
+  {
+    "Id": "579014",
+    "Title": "How do I unit test a class using TaskService",
+    "LatestDate": "2015-01-31T20:41:28.19-08:00"
+  },
+  {
+    "Id": "579560",
+    "Title": "Quartz.Net",
+    "LatestDate": "2015-02-22T13:47:18.603-08:00"
+  },
+  {
+    "Id": "579666",
+    "Title": "getting security information for a task",
+    "LatestDate": "2015-02-09T07:38:24.227-08:00"
+  },
+  {
+    "Id": "581055",
+    "Title": "Get Delay from Trigger?",
+    "LatestDate": "2015-02-17T08:44:14.197-08:00"
+  },
+  {
+    "Id": "581210",
+    "Title": "UserAccountDomain and UserName NULL when ConnectedDomain and ConnectedUser have values",
+    "LatestDate": "2015-02-18T08:17:27.813-08:00"
+  },
+  {
+    "Id": "581584",
+    "Title": "Access Denied while setting user to SYSTEM",
+    "LatestDate": "2015-02-23T19:26:58.903-08:00"
+  },
+  {
+    "Id": "581658",
+    "Title": "Long delay and high cpu usage constructing the edit dialog",
+    "LatestDate": "2015-02-24T15:56:51.09-08:00"
+  },
+  {
+    "Id": "581829",
+    "Title": "task launches as scheduled, but doesn't graphically show Notepad",
+    "LatestDate": "2015-03-02T14:39:56.407-08:00"
+  },
+  {
+    "Id": "584753",
+    "Title": "NAnt extension getting Inheritance security rules violated while overriding member error",
+    "LatestDate": "2015-03-06T12:33:23.72-08:00"
+  },
+  {
+    "Id": "584850",
+    "Title": "Windows 10 Support",
+    "LatestDate": "2015-04-22T01:57:49.537-07:00"
+  },
+  {
+    "Id": "584896",
+    "Title": "How to Query historical task log with  any conditions and  and how to list instances  of a task",
+    "LatestDate": "2015-03-11T09:55:12.69-07:00"
+  },
+  {
+    "Id": "585279",
+    "Title": "trying to simply change tasks to disabled.",
+    "LatestDate": "2015-03-19T13:09:38.643-07:00"
+  },
+  {
+    "Id": "609139",
+    "Title": "[Solved] Edit Task",
+    "LatestDate": "2015-03-24T19:04:05.657-07:00"
+  },
+  {
+    "Id": "611413",
+    "Title": "An exception of type 'System.Runtime.InteropServices.COMException' occurred in CubicOrange.Windows.Forms.ActiveDirectory.dll but was not handled in user code",
+    "LatestDate": "2015-03-24T13:02:28.54-07:00"
+  },
+  {
+    "Id": "616546",
+    "Title": "Setting and 'hide'",
+    "LatestDate": "2015-04-02T16:53:58.22-07:00"
+  },
+  {
+    "Id": "619265",
+    "Title": "Open to new trigger window",
+    "LatestDate": "2015-04-14T08:23:16.17-07:00"
+  },
+  {
+    "Id": "631340",
+    "Title": "Advanced settings->Repeat Task every - where can I find this setting the API?",
+    "LatestDate": "2015-04-18T03:32:08.877-07:00"
+  },
+  {
+    "Id": "631455",
+    "Title": "Add task from xml string",
+    "LatestDate": "2015-04-22T11:04:05.813-07:00"
+  },
+  {
+    "Id": "633848",
+    "Title": "Using 'RunOnluIfLoggedOn' is not working for me ",
+    "LatestDate": "2015-05-02T12:48:54.62-07:00"
+  },
+  {
+    "Id": "637183",
+    "Title": "cannot creating a task without running app as admin",
+    "LatestDate": "2015-05-10T12:29:36.233-07:00"
+  },
+  {
+    "Id": "637233",
+    "Title": "Task Sheduler Sinlge page web application",
+    "LatestDate": "2015-05-10T12:41:19.713-07:00"
+  },
+  {
+    "Id": "637739",
+    "Title": "How to set unset Do not store  password. The task will only have access  to local computer resources.",
+    "LatestDate": "2015-05-11T05:01:59.8-07:00"
+  },
+  {
+    "Id": "638132",
+    "Title": "on button (TaskEditDialog) is blank ",
+    "LatestDate": "2015-05-21T07:13:50.1-07:00"
+  },
+  {
+    "Id": "638169",
+    "Title": "return a value from an .exe to a task",
+    "LatestDate": "2015-05-20T11:09:41.28-07:00"
+  },
+  {
+    "Id": "638477",
+    "Title": "Why does build create de-DE, fr, it, zh-CN folders? Is there a build option to prevent this?",
+    "LatestDate": "2015-05-21T11:53:06.707-07:00"
+  },
+  {
+    "Id": "638560",
+    "Title": "implementing and  ITaskHandlerStatus",
+    "LatestDate": "2015-05-22T07:46:58.43-07:00"
+  },
+  {
+    "Id": "638617",
+    "Title": "TaskDefinition wil not run when not (live) connected to the sever",
+    "LatestDate": "2015-05-25T15:33:58.66-07:00"
+  },
+  {
+    "Id": "638636",
+    "Title": "Why not return a Null Object?",
+    "LatestDate": "2015-05-25T15:24:36.747-07:00"
+  },
+  {
+    "Id": "639046",
+    "Title": "How to get all runtimes from a task ( planned and manuel triggered)",
+    "LatestDate": "2015-06-02T07:40:53.337-07:00"
+  },
+  {
+    "Id": "639978",
+    "Title": "COMException Issue",
+    "LatestDate": "2015-06-27T19:19:19.99-07:00"
+  },
+  {
+    "Id": "642028",
+    "Title": "\"Enable All Tasks History\"",
+    "LatestDate": "2015-07-30T08:25:54.497-07:00"
+  },
+  {
+    "Id": "642066",
+    "Title": "System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))",
+    "LatestDate": "2015-11-18T07:45:09.147-08:00"
+  },
+  {
+    "Id": "642231",
+    "Title": "FileNotFoundException during RegisterTaskDefinition?",
+    "LatestDate": "2015-08-07T12:19:03.263-07:00"
+  },
+  {
+    "Id": "642615",
+    "Title": "Trying to disable a task (vb)",
+    "LatestDate": "2015-08-19T02:39:27.093-07:00"
+  },
+  {
+    "Id": "643912",
+    "Title": "Is that permission issue, then how do I fix this?",
+    "LatestDate": "2015-08-19T06:11:15.37-07:00"
+  },
+  {
+    "Id": "644218",
+    "Title": "How To Get the List of Network Connections [Conditions Tab]",
+    "LatestDate": "2015-08-27T03:21:15.947-07:00"
+  },
+  {
+    "Id": "644396",
+    "Title": "Deserialize Task Xml",
+    "LatestDate": "2015-09-02T07:36:29.503-07:00"
+  },
+  {
+    "Id": "644551",
+    "Title": "TaskOptionsEditor",
+    "LatestDate": "2015-09-03T19:15:35.75-07:00"
+  },
+  {
+    "Id": "644645",
+    "Title": "Gettings  a exception Error (15,8):userId:",
+    "LatestDate": "2015-09-08T06:53:11.86-07:00"
+  },
+  {
+    "Id": "644978",
+    "Title": "Moving to github?",
+    "LatestDate": "2015-09-15T08:15:05.687-07:00"
+  },
+  {
+    "Id": "645475",
+    "Title": "Change Task Name",
+    "LatestDate": "2015-09-28T06:52:12.497-07:00"
+  },
+  {
+    "Id": "647018",
+    "Title": "Error when task name is a number",
+    "LatestDate": "2015-11-08T08:38:43.813-08:00"
+  },
+  {
+    "Id": "647108",
+    "Title": "Change notification",
+    "LatestDate": "2015-11-11T10:35:19.14-08:00"
+  },
+  {
+    "Id": "647209",
+    "Title": "How to return TaskDefinition in WCF method?",
+    "LatestDate": "2015-11-11T08:20:08.63-08:00"
+  },
+  {
+    "Id": "647980",
+    "Title": "Error when running V1 - Unable to establish existence of the account specified",
+    "LatestDate": "2015-11-25T09:31:56.28-08:00"
+  },
+  {
+    "Id": "648524",
+    "Title": "Easy way to retrieve all tasks",
+    "LatestDate": "2015-12-08T14:57:45.26-08:00"
+  },
+  {
+    "Id": "648582",
+    "Title": "IsActive vs Enabled Properties of Task Class",
+    "LatestDate": "2015-12-10T08:07:13.107-08:00"
+  },
+  {
+    "Id": "648674",
+    "Title": "Some localized time units in Polish don't work when setting \"Repeat task every:\" feature.",
+    "LatestDate": "2015-12-12T07:41:00.033-08:00"
+  },
+  {
+    "Id": "648890",
+    "Title": "Nuget package of source",
+    "LatestDate": "2015-12-22T15:43:07.957-08:00"
+  },
+  {
+    "Id": "648891",
+    "Title": "Event for stop/Exit of started task",
+    "LatestDate": "2015-12-21T10:01:44.96-08:00"
+  },
+  {
+    "Id": "649041",
+    "Title": "\"(50,8):Command:\" Exception triggered on OK for Task Editor ",
+    "LatestDate": "2015-12-21T20:48:45.26-08:00"
+  },
+  {
+    "Id": "649160",
+    "Title": "TriggerEditDialog - how to add edited TimeTrigger to a Task Definition?",
+    "LatestDate": "2015-12-22T06:12:50.913-08:00"
+  },
+  {
+    "Id": "649189",
+    "Title": "Task creation issue and login issue ",
+    "LatestDate": "2016-03-28T08:42:27.99-07:00"
+  },
+  {
+    "Id": "649294",
+    "Title": "Setting Task Description: new line carriage return ignored.",
+    "LatestDate": "2015-12-26T13:05:43.77-08:00"
+  },
+  {
+    "Id": "649304",
+    "Title": "Problems with TaskEditor 'Description' multi-line edit",
+    "LatestDate": "2015-12-26T13:19:26.373-08:00"
+  },
+  {
+    "Id": "649322",
+    "Title": "'Created' Date is Blank",
+    "LatestDate": "2015-12-28T10:45:11.187-08:00"
+  },
+  {
+    "Id": "649348",
+    "Title": "Interval Validation",
+    "LatestDate": "2015-12-28T10:38:03.47-08:00"
+  },
+  {
+    "Id": "649381",
+    "Title": "RegisterTaskOnAccept is ignored",
+    "LatestDate": "2015-12-30T09:17:23.653-08:00"
+  },
+  {
+    "Id": "649440",
+    "Title": "TaskEditDialog Cancel button disabled unless Task Name is provided",
+    "LatestDate": "2015-12-30T09:10:34.61-08:00"
+  },
+  {
+    "Id": "649449",
+    "Title": "td.RegistrationInfo.Author in Blank",
+    "LatestDate": "2015-12-30T11:05:36.633-08:00"
+  },
+  {
+    "Id": "649451",
+    "Title": "Need Better Message to User when Password is wrong",
+    "LatestDate": "2015-12-30T11:28:28.583-08:00"
+  },
+  {
+    "Id": "649570",
+    "Title": "Duration bug when set to 'Indefinitely'",
+    "LatestDate": "2016-01-04T13:51:14.143-08:00"
+  },
+  {
+    "Id": "649773",
+    "Title": "Bug: exiting task editor from 'Run Times' tab ",
+    "LatestDate": "2016-01-16T06:28:59.073-08:00"
+  },
+  {
+    "Id": "649774",
+    "Title": "History Tab: Coping with Too Many History Records",
+    "LatestDate": "2016-01-11T10:39:57.833-08:00"
+  },
+  {
+    "Id": "649834",
+    "Title": "How to detect if v2 task is set to 'Run whether user is logged on or not'?",
+    "LatestDate": "2016-01-13T09:05:32.44-08:00"
+  },
+  {
+    "Id": "650139",
+    "Title": "Run admin task at boot time",
+    "LatestDate": "2016-01-18T10:13:50.413-08:00"
+  },
+  {
+    "Id": "650564",
+    "Title": "Error HRESULT E_FAIL has been returned from a call to a COM component",
+    "LatestDate": "2016-01-27T08:58:34.637-08:00"
+  },
+  {
+    "Id": "651041",
+    "Title": "Unhandled Exception",
+    "LatestDate": "2016-02-10T11:49:17.093-08:00"
+  },
+  {
+    "Id": "651124",
+    "Title": "Event Logs and Task Scheduler Event Triggers",
+    "LatestDate": "2016-02-11T08:38:24.953-08:00"
+  },
+  {
+    "Id": "651135",
+    "Title": "Task will only run if I manually add path in Start In (optional field)",
+    "LatestDate": "2016-02-10T07:42:08.21-08:00"
+  },
+  {
+    "Id": "651157",
+    "Title": "Task Trigger Start Boundary",
+    "LatestDate": "2016-02-11T15:43:24.76-08:00"
+  },
+  {
+    "Id": "651327",
+    "Title": "Task Scheduler on Windows Server 2012/IIS 8",
+    "LatestDate": "2016-02-15T17:20:12.317-08:00"
+  },
+  {
+    "Id": "651361",
+    "Title": "Unhandled exceptions on history tab ",
+    "LatestDate": "2016-02-17T06:59:52.487-08:00"
+  },
+  {
+    "Id": "651366",
+    "Title": "Enhancments for conversions ",
+    "LatestDate": "2016-02-17T10:25:05.1-08:00"
+  },
+  {
+    "Id": "651397",
+    "Title": "How to find out the version of a scheduler task?",
+    "LatestDate": "2016-02-16T21:28:45.467-08:00"
+  },
+  {
+    "Id": "651445",
+    "Title": "Delete IT After- Settings Tab - Immediately",
+    "LatestDate": "2016-02-19T08:36:33.88-08:00"
+  },
+  {
+    "Id": "651447",
+    "Title": "Wrapper is providing type 'NotifyCollectionChangedEventArgs'",
+    "LatestDate": "2016-02-23T01:22:36.127-08:00"
+  },
+  {
+    "Id": "651470",
+    "Title": "A password must be supplied",
+    "LatestDate": "2016-02-29T11:38:55.48-08:00"
+  },
+  {
+    "Id": "651494",
+    "Title": "About the TriggerString",
+    "LatestDate": "2016-02-19T08:17:14.49-08:00"
+  },
+  {
+    "Id": "652356",
+    "Title": "What is the proper way to check if a folder exists?",
+    "LatestDate": "2016-03-10T07:46:50.567-08:00"
+  },
+  {
+    "Id": "652422",
+    "Title": "Two UI exceptions about UI",
+    "LatestDate": "2016-03-12T15:46:54.497-08:00"
+  },
+  {
+    "Id": "652425",
+    "Title": "How can I create a Task in memory?",
+    "LatestDate": "2016-03-11T06:33:07.3-08:00"
+  },
+  {
+    "Id": "652529",
+    "Title": "Tick \"Run whether user is logged in or not\" Programmatically",
+    "LatestDate": "2016-04-07T06:38:22.303-07:00"
+  },
+  {
+    "Id": "652543",
+    "Title": "RunEx",
+    "LatestDate": "2016-05-03T11:43:33.353-07:00"
+  },
+  {
+    "Id": "652786",
+    "Title": "how to use a Group Managed service account to run a schedule task and make it \"Run whether user is logged on or not\"?",
+    "LatestDate": "2016-04-07T06:39:24.063-07:00"
+  },
+  {
+    "Id": "653235",
+    "Title": "Do I need to dispose all the instances (Task, Trigger, Action, etc) which implemented interface “IDisposable”?",
+    "LatestDate": "2016-04-07T06:44:35.783-07:00"
+  },
+  {
+    "Id": "653351",
+    "Title": "\"StartWhenAvailable\" not checked in Scheduler",
+    "LatestDate": "2016-04-08T11:47:14.227-07:00"
+  },
+  {
+    "Id": "653733",
+    "Title": "History Tab doest not refresh the events for every click",
+    "LatestDate": "2016-04-20T19:45:34.287-07:00"
+  },
+  {
+    "Id": "654027",
+    "Title": "error to save enabled property in task",
+    "LatestDate": "2016-04-27T09:25:01.253-07:00"
+  },
+  {
+    "Id": "654080",
+    "Title": "error load assembly",
+    "LatestDate": "2016-04-29T09:07:38.01-07:00"
+  },
+  {
+    "Id": "654126",
+    "Title": "LogonTrigger On Windows XP delay not set",
+    "LatestDate": "2016-04-29T09:01:20.99-07:00"
+  },
+  {
+    "Id": "654253",
+    "Title": "Cannot uncheck the last day",
+    "LatestDate": "2016-05-09T10:53:19.98-07:00"
+  },
+  {
+    "Id": "654295",
+    "Title": "Trigger changes on AZURE",
+    "LatestDate": "2016-05-04T18:25:41.27-07:00"
+  },
+  {
+    "Id": "654378",
+    "Title": "Languages supported for creating tasks?",
+    "LatestDate": "2016-05-11T00:26:11.623-07:00"
+  },
+  {
+    "Id": "654479",
+    "Title": "The problem about multiselect trigger",
+    "LatestDate": "2016-05-10T11:04:56.303-07:00"
+  },
+  {
+    "Id": "654488",
+    "Title": "The problem of DailyTrigger",
+    "LatestDate": "2016-05-16T10:09:11.017-07:00"
+  },
+  {
+    "Id": "654489",
+    "Title": "The problem of WeeklyTrigger",
+    "LatestDate": "2016-05-10T11:55:28.92-07:00"
+  },
+  {
+    "Id": "654490",
+    "Title": "The problem of MonthlyDOWTrigger",
+    "LatestDate": "2016-05-13T16:23:37.75-07:00"
+  },
+  {
+    "Id": "654491",
+    "Title": "The problem about expire time.",
+    "LatestDate": "2016-05-13T14:25:54.573-07:00"
+  },
+  {
+    "Id": "654588",
+    "Title": "Activate / Deactivate Task",
+    "LatestDate": "2016-05-13T02:33:42.717-07:00"
+  },
+  {
+    "Id": "654629",
+    "Title": "The question about Repetition in TaskEditDialog",
+    "LatestDate": "2016-05-13T16:20:26.29-07:00"
+  },
+  {
+    "Id": "654655",
+    "Title": "Start in (optional) Parameter",
+    "LatestDate": "2016-05-13T16:42:49.93-07:00"
+  },
+  {
+    "Id": "654774",
+    "Title": "Delete Task HRESULT: 0x80070005 (E_ACCESSDENIED))",
+    "LatestDate": "2016-05-18T18:56:44.477-07:00"
+  },
+  {
+    "Id": "655040",
+    "Title": "Access is denied when Registering a new task - HRESULT: 0x80070005 (E_ACCESSDENIED)",
+    "LatestDate": "2016-05-30T13:01:37.52-07:00"
+  },
+  {
+    "Id": "655055",
+    "Title": "How can I set the visibility of controls in TaskEditDialog and TriggerEditDialog ?",
+    "LatestDate": "2016-05-30T10:04:16.077-07:00"
+  },
+  {
+    "Id": "655201",
+    "Title": "How can I add Run whether user is logged on or not to my application",
+    "LatestDate": "2016-06-07T08:21:45.79-07:00"
+  },
+  {
+    "Id": "655405",
+    "Title": "Update User Credentials",
+    "LatestDate": "2016-06-16T09:27:23.32-07:00"
+  },
+  {
+    "Id": "655617",
+    "Title": "How to update the additional arguments of an existing task?",
+    "LatestDate": "2016-06-24T05:40:30.317-07:00"
+  },
+  {
+    "Id": "656226",
+    "Title": "Problem when compiling as DotNET 4.0 client profile",
+    "LatestDate": "2016-07-08T17:24:24.003-07:00"
+  },
+  {
+    "Id": "656345",
+    "Title": "Llaunching an un-elevated application from an elevated process",
+    "LatestDate": "2016-07-15T13:22:49.133-07:00"
+  },
+  {
+    "Id": "656346",
+    "Title": "TaskBrowserDialog System.IO.FileNotFoundException",
+    "LatestDate": "2016-07-20T03:33:23.3-07:00"
+  },
+  {
+    "Id": "656650",
+    "Title": "Debug Symbol Files (PDB Files)",
+    "LatestDate": "2016-07-28T14:49:02.387-07:00"
+  },
+  {
+    "Id": "656909",
+    "Title": "ExecAction.Path property isn't stripping off quotes when retrieved",
+    "LatestDate": "2016-08-05T18:58:48.823-07:00"
+  },
+  {
+    "Id": "656924",
+    "Title": "Very weird bug... Nevermind, I figured it out.",
+    "LatestDate": "2016-08-04T10:11:34.407-07:00"
+  },
+  {
+    "Id": "656978",
+    "Title": "Do not want to tick Do Not Store Password.",
+    "LatestDate": "2016-08-08T13:47:50.373-07:00"
+  },
+  {
+    "Id": "657083",
+    "Title": "without password and username, how do this task scheduler library set schedule in remote computer?",
+    "LatestDate": "2016-08-12T10:28:06.087-07:00"
+  },
+  {
+    "Id": "657141",
+    "Title": "why scheduled task do not run when time is reached",
+    "LatestDate": "2016-08-17T23:15:18.853-07:00"
+  },
+  {
+    "Id": "657186",
+    "Title": "Log non impersonated user",
+    "LatestDate": "2016-08-19T10:01:29.53-07:00"
+  },
+  {
+    "Id": "657230",
+    "Title": "Two Bugs...",
+    "LatestDate": "2016-08-22T09:53:26.47-07:00"
+  },
+  {
+    "Id": "657251",
+    "Title": "Error creating an event driven task",
+    "LatestDate": "2016-08-19T09:55:48.763-07:00"
+  },
+  {
+    "Id": "657265",
+    "Title": "Can TSMW trigger a program statement in my application?",
+    "LatestDate": "2016-08-19T09:59:09.88-07:00"
+  },
+  {
+    "Id": "657450",
+    "Title": "HRESULT: 0x8007007E",
+    "LatestDate": "2016-08-27T14:49:40.393-07:00"
+  },
+  {
+    "Id": "657470",
+    "Title": "Is there a way to find the logged in user's \"domain\\name\" when creating a task in code running as SYSTEM?",
+    "LatestDate": "2016-08-30T22:42:32.637-07:00"
+  },
+  {
+    "Id": "657546",
+    "Title": "System.IO.DirectoryNotFoundException... What?",
+    "LatestDate": "2016-09-17T12:27:05.917-07:00"
+  },
+  {
+    "Id": "657989",
+    "Title": "Exception when modifying task with Editor UI",
+    "LatestDate": "2016-09-18T18:12:47.973-07:00"
+  },
+  {
+    "Id": "658208",
+    "Title": "Task Scheduler Wizard - hide first page",
+    "LatestDate": "2016-09-24T10:10:06.123-07:00"
+  },
+  {
+    "Id": "658636",
+    "Title": "Help TaskDefinition.Data property",
+    "LatestDate": "2016-10-13T06:50:17.887-07:00"
+  },
+  {
+    "Id": "658682",
+    "Title": "BUG: String was not recognized as a valid DateTime",
+    "LatestDate": "2016-10-17T07:36:43.323-07:00"
+  },
+  {
+    "Id": "659067",
+    "Title": "Determine whether the task scheduler is execute by user or execute by schedule",
+    "LatestDate": "2016-10-31T07:05:13.213-07:00"
+  },
+  {
+    "Id": "659140",
+    "Title": "Get unique id for task",
+    "LatestDate": "2016-11-03T08:45:37.303-07:00"
+  },
+  {
+    "Id": "659231",
+    "Title": "Edit Triger Issue",
+    "LatestDate": "2016-11-18T07:28:00.09-08:00"
+  },
+  {
+    "Id": "659320",
+    "Title": "What does this mean?",
+    "LatestDate": "2016-11-18T07:24:55.523-08:00"
+  },
+  {
+    "Id": "659383",
+    "Title": "FileNotFoundException when running on Windows Xp",
+    "LatestDate": "2016-11-18T07:25:37.057-08:00"
+  },
+  {
+    "Id": "659552",
+    "Title": "LastRunResult column in Task Scheduler not the same as LastTaskResult in Wrapper",
+    "LatestDate": "2016-12-06T13:41:55.883-08:00"
+  },
+  {
+    "Id": "659562",
+    "Title": "Task Sheduler Microsoft.Win32.TaskScheduler",
+    "LatestDate": "2016-12-06T13:39:18.44-08:00"
+  },
+  {
+    "Id": "659770",
+    "Title": "Using DLL file",
+    "LatestDate": "2016-12-06T13:25:41.953-08:00"
+  },
+  {
+    "Id": "659917",
+    "Title": "Problems with Windows 10. Tasks are scheduled, repetitions is postponed on each cycle, but are not attempted to run",
+    "LatestDate": "2017-03-24T01:09:01.567-07:00"
+  },
+  {
+    "Id": "659957",
+    "Title": "add task in subfolder",
+    "LatestDate": "2016-12-06T13:23:39.497-08:00"
+  },
+  {
+    "Id": "660495",
+    "Title": "Edit existing tasks",
+    "LatestDate": "2017-01-05T12:46:21.813-08:00"
+  },
+  {
+    "Id": "660580",
+    "Title": "Set ExecutionTimeLimit to TimeSpan.Zero doesn't work",
+    "LatestDate": "2017-01-10T07:57:36.437-08:00"
+  },
+  {
+    "Id": "660726",
+    "Title": "No task found when running on remote Windows Server 2008 R2 from Windows Server 2003 R2",
+    "LatestDate": "2017-01-18T02:10:15.983-08:00"
+  },
+  {
+    "Id": "660753",
+    "Title": "Getting (16,8):StartBoundary: Exception when Schdeduling Task",
+    "LatestDate": "2017-01-18T17:31:29.247-08:00"
+  },
+  {
+    "Id": "661206",
+    "Title": "TriggerEditDialog StartBoundary is not showing correct format",
+    "LatestDate": "2017-02-12T23:26:53.377-08:00"
+  },
+  {
+    "Id": "661389",
+    "Title": "Passing arguments to a powershell script",
+    "LatestDate": "2017-02-16T09:32:47.25-08:00"
+  },
+  {
+    "Id": "661716",
+    "Title": "Help Creating a difficult, maybe impossible, one time task",
+    "LatestDate": "2017-03-07T08:14:11.013-08:00"
+  },
+  {
+    "Id": "662079",
+    "Title": "Bug Win10 Incorrect XML Value",
+    "LatestDate": "2017-05-17T06:32:31.527-07:00"
+  },
+  {
+    "Id": "662189",
+    "Title": "Encounter WnfStateChangeTrigger error",
+    "LatestDate": "2017-04-09T19:23:45.563-07:00"
+  },
+  {
+    "Id": "662318",
+    "Title": "Delete task permissions issues ",
+    "LatestDate": "2017-07-24T07:23:28.297-07:00"
+  },
+  {
+    "Id": "662364",
+    "Title": "Exception thrown in case of Trigger type \"TimeTrigger\"",
+    "LatestDate": "2017-04-03T23:24:02.28-07:00"
+  },
+  {
+    "Id": "662677",
+    "Title": "Having trouble getting task registered",
+    "LatestDate": "2017-04-25T06:38:40.403-07:00"
+  },
+  {
+    "Id": "662703",
+    "Title": "TriggerCollection.Contains() always returns False in case Monthly Trigger.",
+    "LatestDate": "2017-05-02T18:51:28.083-07:00"
+  },
+  {
+    "Id": "662739",
+    "Title": "Where will you go??",
+    "LatestDate": "2017-04-28T06:55:04.307-07:00"
+  },
+  {
+    "Id": "662787",
+    "Title": "TriggerCollection.Add() adds the Trigger but sets the StartBoundary to Current DateTime. ",
+    "LatestDate": "2017-05-04T07:56:38.667-07:00"
+  },
+  {
+    "Id": "662791",
+    "Title": "Task Scheduler 2.0 settings - Bug Found?",
+    "LatestDate": "2017-05-03T11:04:50.69-07:00"
+  },
+  {
+    "Id": "663130",
+    "Title": "TaskLogonType.Group  Error on Windows 7 professional",
+    "LatestDate": "2017-07-24T07:26:53.827-07:00"
+  },
+  {
+    "Id": "663439",
+    "Title": "Scheduled task not running in Windows 10 creators update",
+    "LatestDate": "2017-07-20T08:15:28.037-07:00"
+  },
+  {
+    "Id": "663483",
+    "Title": "Activate that the job runs without user login",
+    "LatestDate": "2017-07-26T10:29:35.637-07:00"
+  },
+  {
+    "Id": "663557",
+    "Title": "Targeting .NET 4.5",
+    "LatestDate": "2017-08-05T10:25:18.097-07:00"
+  },
+  {
+    "Id": "663680",
+    "Title": "Cannot create task with BootTrigger programmatically",
+    "LatestDate": "2017-08-30T07:47:23.197-07:00"
+  }
+]

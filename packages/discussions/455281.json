@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1087716",
+    "ThreadId": "455281",
+    "Html": "I'm having an issue with the taskservice FindAllTasks function.\r<br />\n<br />\nUsing Windows Server 2008 R2, it doesn't appear to enumerate any tasksk in the root folder?\r<br />\n<br />\nCan anyone help?<br />\n",
+    "PostedDate": "2013-09-03T07:23:42.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1087866",
+    "ThreadId": "455281",
+    "Html": "Usually this is a permissions problem. Check the permissions of both the executable and how you are connecting to the server with the TaskService constructor.<br />\n",
+    "PostedDate": "2013-09-03T12:26:38.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

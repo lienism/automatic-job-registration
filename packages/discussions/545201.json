@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1244810",
+    "ThreadId": "545201",
+    "Html": "Hi\r<br />\n<br />\nI am trying to retrieve scheduled tasks from our remote server, but i'm getting an &quot;Access is denied&quot; exception.\r<br />\nI am trying to access the tasks from a website on IIS 7 on Windows Server 2008.\r<br />\n<br />\nI have tried the following:\r<br />\n<em>1) Plain</em><br />\n<pre><code>var ts = new TaskService(&quot;RemoteServerName&quot;);</code></pre>\n\n<em>2) Use impersonation</em><br />\n<pre><code>var identity = HttpContext.Current.Request.LogonUserIdentity;\nWindowsImpersonationContext impersonation = identity.Impersonate();\n\nvar ts = new TaskService(&quot;RemoteServerName&quot;);\n\nimpersonation.Undo();</code></pre>\n\n<ul>\n<li>\nThe exception occurs when trying to initialize a new TaskService.<br />\n</li>\n<li>\nWhen trying to access the scheduled tasks on the <strong>local server</strong> (the server where the website is hosted) I get no errors, but can only retrieve all tasks if I use impersonation.<br />\n</li>\n<li>\nIf I test the same code in the Visual Studio (and IIS Express), it works fine (even without impersonation).<br />\n</li>\n</ul>\nI tried to monitor the Event viewer -&gt; Windows Logs -&gt; Security on the RemoteServer when executing the code. I noticed that the accountname is &quot;ANONYMOUS LOGON&quot; when executing from IIS7 (even when using impersonation). \r<br />\n<br />\nWhy is impersonation ignored?<br />\n",
+    "PostedDate": "2014-05-13T06:21:41.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244878",
+    "ThreadId": "545201",
+    "Html": "I'm not sure why impersonation isn't working, but do know that the underlying library has separate methods for connecting as the current user versus connecting as another identity. Try using the other parameters to the TaskService constructor that allow you to specify a username, domain and password.<br />\n",
+    "PostedDate": "2014-05-13T08:40:35.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-01T08:09:55.423-07:00"
+  },
+  {
+    "Id": "1244905",
+    "ThreadId": "545201",
+    "Html": "Hi dahall\r<br />\n<br />\nThanks for your answer!\r<br />\n<br />\nIf I use the other constructor, it works in all cases.<br />\n<pre><code>var ts = new TaskService(&quot;RemoteServerName&quot;, &quot;User&quot;, &quot;Domain&quot;, &quot;Password&quot;);</code></pre>\n\nBut since the user is already logged in on Windows 7, it is not very user friendly to ask for a password again each time the scheduled tasks are manipulated. It should be possible to use impersonation, right?\r<br />\n<br />\nI have located the error as comming from the call:<br />\n<pre><code> v2TaskService.Connect(targetServer, userName, userDomain, userPassword);</code></pre>\n\non line 523 in the source code. \r<br />\n<br />\nI tried to mess a bit with the source code and put the impersonation before the call to Connect, but it didn't work.\r<br />\n<br />\nAny clues?<br />\n",
+    "PostedDate": "2014-05-13T09:47:59.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245053",
+    "ThreadId": "545201",
+    "Html": "Yes, that line (523) is where the wrapper calls the native library. I'm not sure why it is failing. The Microsoft documentation says that if the username is not provided, &quot;the current token is used.&quot; Is the user that is being impersonated a domain user with rights on remote machine?<br />\n",
+    "PostedDate": "2014-05-13T16:01:53.663-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245231",
+    "ThreadId": "545201",
+    "Html": "Hi dahall\r<br />\n<br />\nThe user which is impersonated is indeed a domain user and even has admin rights on the server.\r<br />\n<br />\nI now tried to setup the same website on my Windows 7 machine on IIS 7.5 (not express). By default it uses the IIS APPPOOL[SiteName] dynamic account, when executing the application code. \r<br />\nIf I <em>don't</em> use impersonation, the same exception on line 523 occurs, but when I use impersonation it works!\r<br />\n<br />\nIt seems to be an issue with IIS7 on Windows Server 2008, in which the auth-token is not send correctly to the remote server. \r<br />\n<br />\nCould that really be the case?<br />\n",
+    "PostedDate": "2014-05-14T04:24:02.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1245327",
+    "ThreadId": "545201",
+    "Html": "It could be, but that seems unlikely. I would check to see if there is an IIS setting, group policy or firewall rule that may be causing the problem.<br />\n",
+    "PostedDate": "2014-05-14T07:49:17.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1279269",
+    "ThreadId": "545201",
+    "Html": "Hi dahall\r<br />\n<br />\nI found out that delegation was disabled on the server making the request. For this reason, the impersonated user was not carried on to the other server when making the request (since this is what delegation does).<br />\n",
+    "PostedDate": "2014-07-30T10:27:50.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-08-01T08:09:39.917-07:00"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "235826",
+    "ThreadId": "69318",
+    "Html": "<p>I need to get trigger properties (daily? weekly? startbounding? repetition? etc, etc) from an existing task.</p>\r\n<p>Actually I do this:</p>\r\n<p>TaskFolder mailBrowserBackupTasksFolder = backupTaskService.GetFolder(@&quot;\\&quot;);<br>TaskCollection listOfTasks = mailBrowserBackupTasksFolder.Tasks;</p>\r\n<p>foreach (Task theTask in listOfTasks)<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp; if (theTask.Name.Contains(titleOfTask))<br>&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nextBackupOn = theTask.NextRunTime.ToString();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disallowStartIfOnBatteriesFlag = theTask.Definition.Settings.DisallowStartIfOnBatteries;<br>&nbsp;&nbsp;&nbsp;&nbsp; }<br>}&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>I tried this statement in the &quot;if&quot; cycle:</p>\r\n<p>MessageBox.Show(theTask.Definition.Triggers.GetEnumerator().Current.ToString());</p>\r\n<p>&nbsp;</p>\r\n<p>but I got the NullReferenceException. Why? How can I obtain the trigger properties of an existing task?</p>\r\n<p>Many thanks!</p>\r\n<p>Regards,</p>\r\n<p>Alessandro.</p>",
+    "PostedDate": "2009-09-17T16:40:27.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "235914",
+    "ThreadId": "69318",
+    "Html": "<p>Well. I partially resolved.</p>\r\n<p>I used this code:</p>\r\n<p>TaskFolder mailBrowserBackupTasksFolder = backupTaskService.GetFolder(@&quot;\\&quot;);<br>TaskCollection listOfTasks = mailBrowserBackupTasksFolder.Tasks;<br> IEnumerator&lt;Trigger&gt; pippo;<br><br>&nbsp;foreach (Task theTask in listOfTasks)<br> {</p>\r\n<p style=\"padding-left:30px\">if (theTask.Name.Contains(titleOfTask))<br>{</p>\r\n<p style=\"padding-left:60px\">pippo=theTask.Definition.Triggers.GetEnumerator();<br>pippo.MoveNext();<br>MessageBox.Show(pippo.Current.ToString());<br>nextBackupOn = theTask.NextRunTime.ToString();<br>disallowStartIfOnBatteriesFlag = theTask.Definition.Settings.DisallowStartIfOnBatteries;</p>\r\n<p style=\"padding-left:30px\">}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p>}&nbsp; &nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-09-18T00:12:49.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236750",
+    "ThreadId": "69318",
+    "Html": "<p>Here's how I would do it:</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n   Task theTask = ts.GetTask(<span style=\"color:#A31515\">&quot;titleOfTask&quot;</span>);\r\n   <span style=\"color:Blue\">if</span> (theTask != <span style=\"color:Blue\">null</span> &amp;&amp; theTask.Definition.Triggers.Count &gt; 0)\r\n      MessageBox.Show(theTask.Definition.Triggers[0].ToString());\r\n}</pre>\r\n</div>",
+    "PostedDate": "2009-09-20T22:22:25.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "236829",
+    "ThreadId": "69318",
+    "Html": "<p>I tried to use the GetTask method but I got error with it.</p>\r\n<p>Now with your code runs very well. Thank you so much!</p>",
+    "PostedDate": "2009-09-21T03:47:14.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

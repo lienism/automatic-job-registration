@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed for release 1.7.2",
+    "ClosedDate": "2012-01-20T23:41:27.643-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Please sign the assembly",
+    "LastUpdatedDate": "2013-05-16T04:49:10.953-07:00",
+    "PlannedForRelease": "Release 1.7.1",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-11-14T15:47:06.997-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Sign the assembly",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 9560
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yes, please sign your assemblies with a strong key. Otherwise they're useless(especially NuGet) when working with a project that has strong key signed assemblies.\r\n",
+      "PostedDate": "2012-01-12T13:29:08.453-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-12T13:29:12.24-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-20T23:41:12.39-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-01-20T23:41:27.643-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:04.07-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:10.953-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

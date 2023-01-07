@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "827239",
+    "ThreadId": "353193",
+    "Html": "\r\n<p>How can we create a OnWorkStationLock or OnWorkstationUnlock task with code using this wrapper?<br>\r\nIn Windows station in the trigger drop down , triggers for this are available, but i cant find the corresponding trigger in the wrapper .</p>\r\n<p>&nbsp;</p>\r\n<p>Help please.....</p>\r\n",
+    "PostedDate": "2012-04-23T02:07:33.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "827573",
+    "ThreadId": "353193",
+    "Html": "<p>Add a SessionStateChangeTrigger to your task with the appropriate value assigned to the StateChange property.</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">new</span> SessionStateChangeTrigger(TaskSessionStateChangeType.SessionLock) { UserId = <span style=\"color: #a31515;\">\"joe\"</span> };\r\n<span style=\"color: blue;\">new</span> SessionStateChangeTrigger(TaskSessionStateChangeType.SessionUnlock);\r\n\r\n</pre>\n</div>",
+    "PostedDate": "2012-04-23T15:47:31.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "827646",
+    "ThreadId": "353193",
+    "Html": "<p>Dahall,</p>\r\n<p>I tried that last time also, but its creating a task as a one time task, unlike onworkstation task as created when i create it from the UI. Also when i lock the screen, this task is not getting fired.</p>\r\n<p>Here's my code snippet:</p>\r\n<p>using (TaskService ts = new TaskService(pc, userId, domain, pwd, forceV1))&nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; { &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TaskDefinition td = ts.NewTask();&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp;<span style=\"white-space: pre;\"> </span>&nbsp;td.RegistrationInfo.Description = \"On Workstation Lock\";&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"white-space: pre;\"> </span>td.Principal.LogonType = TaskLogonType.ServiceAccount;</p>\r\n<p><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Idle;&nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style=\"white-space: pre;\"> </span>td.Settings.RunOnlyIfLoggedOn = false; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;td.Settings.ExecutionTimeLimit = new TimeSpan(45, 0, 0, 0);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; td.Triggers.Add(new SessionStateChangeTrigger() { StateChange = TaskSessionStateChangeType.SessionLock, UserId = \"apt\\\\koushikch\" }); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style=\"white-space: pre;\"> </span>td.Actions.Add(new ExecAction(targetTask, \"\", null)); &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ts.RootFolder.RegisterTaskDefinition(taskName, td);</p>\r\n<p>&nbsp; }</p>",
+    "PostedDate": "2012-04-23T21:45:01.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828082",
+    "ThreadId": "353193",
+    "Html": "<p>When I use that trigger, it works as long as my action can be run by the SYSTEM account or if I specify an account and password when I register the task. The history will show failures and successes.</p>",
+    "PostedDate": "2012-04-24T14:01:53.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828216",
+    "ThreadId": "353193",
+    "Html": "<p>I already have a OnIdle task and that is executing the same action under the System account.<br />I need the same action to happen when the workstation is locked.</p>\r\n<p>As you can see, as my requirements of actions are same, so i have created the 2 tasks in the same way, but with different trigger conditions.</p>\r\n<p>The OnIdle task is working perfectly fine, but &nbsp;this is not working....</p>",
+    "PostedDate": "2012-04-24T23:54:30.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828247",
+    "ThreadId": "353193",
+    "Html": "<p>Dahall,</p>\r\n<p>When i export the tasks from task scheduler UI in xml format,</p>\r\n<p>I see difference in the cases:</p>\r\n<p>1. Case when its created by the wrapper :</p>\r\n<p><span style=\"white-space: pre;\"> &lt;Triggers&gt;&nbsp; &nbsp; &lt;TimeTrigger&gt;&nbsp; &nbsp; &nbsp; &lt;StartBoundary&gt;2012-04-25T13:24:00&lt;/StartBoundary&gt;&nbsp; &nbsp; &nbsp; &lt;Enabled&gt;true&lt;/Enabled&gt;&nbsp; &nbsp; &lt;/TimeTrigger&gt;&nbsp; &lt;/Triggers&gt;</span></p>\r\n<p><span style=\"white-space: pre;\">2</span>. Case when its manually created from the UI:</p>\r\n<p><span style=\"white-space: pre;\"> &lt;Triggers&gt;&nbsp; &nbsp; &lt;SessionStateChangeTrigger&gt;&nbsp; &nbsp; &nbsp; &lt;Enabled&gt;true&lt;/Enabled&gt;&nbsp; &nbsp; &nbsp; &lt;StateChange&gt;SessionLock&lt;/StateChange&gt;&nbsp; &nbsp; &lt;/SessionStateChangeTrigger&gt;&nbsp; &lt;/Triggers&gt;</span></p>\r\n<p><span style=\"white-space: pre;\">A</span>s you can see the problem is with the trigger type. Its not getting created as a StateChange trigger from the wrapper, as expected</p>",
+    "PostedDate": "2012-04-25T00:55:30.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828295",
+    "ThreadId": "353193",
+    "Html": "<p>I sorted it out...my mistake... i was having the forceV1 flag on. It should ve for v2</p>",
+    "PostedDate": "2012-04-25T03:36:57.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

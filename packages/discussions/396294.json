@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "915299",
+    "ThreadId": "396294",
+    "Html": "\r\n<p>I'm running the following code</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;Test&quot;</span>, td, TaskCreation.Create, <span style=\"color:#a31515\">&quot;domain\\\\user&quot;</span>, <span style=\"color:#a31515\">&quot;password&quot;</span>, TaskLogonType.Password);\n</pre>\r\n</div>\r\n<p>I get a COMException with the following message:</p>\r\n<p>A specified logon session does not exist. It may already have been terminated. (Exception from HRESULT: 0x80070520)</p>\r\n<p>The only solution I seem to be coming across if the following:</p>\r\n<p><a href=\"http://blogs.technet.com/b/askperf/archive/2012/04/18/task-scheduler-error-a-specified-logon-session-does-not-exist.aspx\">http://blogs.technet.com/b/askperf/archive/2012/04/18/task-scheduler-error-a-specified-logon-session-does-not-exist.aspx</a></p>\r\n<p>However, the GPO setting is disabled and I'm still receiving that error. If I change the TaskLogonType to InteractiveTokenOrPassword, it will create the task, but I absolutely require that the task be able to run when the user is not logged in.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2012-09-20T11:15:01.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "915764",
+    "ThreadId": "396294",
+    "Html": "<p>Can you create the task manually using the desired settings in the Task Scheduler applet under \"Start | All Program | Accessories | System Tools\"?</p>",
+    "PostedDate": "2012-09-21T09:09:56.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1475450",
+    "ThreadId": "396294",
+    "Html": "You can change the setting for that network access security policy in the registry as well if disabling it in local security isn't working.<br />\n",
+    "PostedDate": "2016-06-08T06:29:59.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

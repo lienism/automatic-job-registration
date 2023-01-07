@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1487712",
+    "ThreadId": "659320",
+    "Html": "<pre><code>The current version of the native library (1.1) does not support the version of the &quot;(Task Name Goes Here)&quot; task (0.0)\n\nThe exception occurred at Microsoft.Win32.TaskScheduler.Task.GetV2Definition(TaskService svc, IRegisteredTask iTask, Boolean throwError) in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\Task.cs:line 1515\nat Microsoft.Win32.TaskScheduler.Task.get_Definition() in C:\\Users\\dahall\\Documents\\Visual Studio 2010\\Projects\\TaskService\\Task.cs:line 850</code></pre>\n\nMy program made the task and saved the task, how can it not read it back?<br />\n",
+    "PostedDate": "2016-11-10T13:44:39.68-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487765",
+    "ThreadId": "659320",
+    "Html": "Will you supply the version of Windows on which this error occurred? Also, if possible, can you send me the XML of the created task? This is most securely done by sending me a personal message through this site.<br />\n",
+    "PostedDate": "2016-11-11T06:39:04.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488256",
+    "ThreadId": "659320",
+    "Html": "Windows 10 64-bit, unfortunately I don't have the XML data. Is there some way of getting the raw XML data from the exception object when such an exception occurs?<br />\n",
+    "PostedDate": "2016-11-17T18:43:58.2-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488322",
+    "ThreadId": "659320",
+    "Html": "Take the task you create and save, on any system, and collect the XML for it using the native &quot;Task Scheduler&quot; system applet. That will suffice. You cannot get it from the exception. That error is occurring because the wrapper cannot parse the XML in an expected format.<br />\n",
+    "PostedDate": "2016-11-18T07:24:55.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

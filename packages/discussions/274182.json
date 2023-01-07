@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "677960",
+    "ThreadId": "274182",
+    "Html": "\r\n<p>Hello everyone,</p>\r\n<p>I create a task in Windows Vista, but when it run to line RegisterTaskDefinition, it cause an exception &quot;Access is denied 0x80070005. I granr user TEST as Administrators but cannot fix it.</p>\r\n<p>The s.HighestSupportedVersion is 1.2 and ts.Connected is true.</p>\r\n<p>Can anyone help me? I spend 2 days to fix it but cannot. Thanks a lot.</p>\r\n<p>using (TaskService ts = new TaskService())<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Clear();<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DailyTrigger dailyTrig = new DailyTrigger();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.StartBoundary = DateTime.Now;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.DaysInterval = 1;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(dailyTrig);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExecAction ac = new ExecAction(&quot;D:\\\\a.exe&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(ac);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (Environment.OSVersion.Version.Major &gt; 5)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Principal.RunLevel = TaskRunLevel.Highest;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Register the task in the root folder<br>\r\n<span style=\"color:#ff0000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(&quot;TESTTASK&quot;, td, TaskCreation.CreateOrUpdate, Environment.MachineName &#43; &quot;\\\\TEST&quot;,\r\n &quot;123456&quot;, TaskLogonType.Password, null);</span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-09-28T18:37:41.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678193",
+    "ThreadId": "274182",
+    "Html": "<p>First of all, you have a lot of extra stuff in your code.</p>\n<ul>\n<li>When creating a new task, you don't need to Clear the triggers as they are already empty </li>\n<li>The default constructor for DailyTrigger sets the StartBoundary to Now and the DaysInterval to 1. You don't need to do it again. </li>\n</ul>\n<p>On your particular problem, what happens when you just call ts.RootFolder.RegisterTaskDefinition(\"TESTTASK\", td) without any user credentials? If that works, you may have a permissions problem with the account. Do you have the same problem if you run from the debugger or from the executable?</p>\n<p>If you don't need to supply user credentials, you can do all you're doing in many fewer lines:</p>\n<div style=\"background-color: white; color: black;\">\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   ts.AddTask(<span style=\"color: #a31515;\">\"Test\"</span>, <span style=\"color: blue;\">new</span> DailyTrigger(), <span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"D:\\\\a.exe\"</span>));\r\n}\r\n\r\n</pre>\n</div>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+    "PostedDate": "2011-09-29T07:15:10.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "678365",
+    "ThreadId": "274182",
+    "Html": "<p>I would strongly recommend reading the Microsoft documentation at <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx\">http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx</a>&nbsp;for even more information on Security Contexts for Tasks.</p>",
+    "PostedDate": "2011-09-29T13:33:12.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

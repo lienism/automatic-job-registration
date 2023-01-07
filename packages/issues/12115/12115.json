@@ -1,0 +1,131 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-06-22T13:45:45.36-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The UI for configuring the schedule of a task (once/daily/weekly/monthly) is very nice.  I'd like it to be a user control, please.  That way I could use it in a simpler interface, that is without the advanced settings.\n\n![Image](https://www.codeplex.com/Download/AttachmentDownload.ashx?ProjectName=taskscheduler&WorkItemId=12115&FileAttachmentId=3988)\n\nProposed patch follows.",
+    "LastUpdatedDate": "2015-06-22T13:45:45.36-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-05-27T02:00:12.61-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Separate out scheduler UI into user control",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12115
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3988,
+      "FileName": "ScheduledTaskUI.png",
+      "DownloadUrl": ".\\3988"
+    },
+    {
+      "FileId": 3989,
+      "FileName": "ScheduledTriggerUI.patch",
+      "DownloadUrl": ".\\3989"
+    },
+    {
+      "FileId": 3992,
+      "FileName": "v4.0.zip",
+      "DownloadUrl": ".\\3992"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Most of this patch is pretty boring.  It's mainly a copy paste job of some code from TriggerEditDialog into a new public user control, ScheduledTriggerUI.  Then the dialog is made to use the new control.  I've made sure that the layout and translations survived this copy-pasting.\r\n\r\nThere's only one nontrivial thing.  The DailyTriggerUI and WeeklyTriggerUI, etc, controls mutate the triggers they are given.  These controls are used by the new ScheduledTriggerUI control. However, ScheduledTriggerUI control should instead take a copy of the trigger it's given, similar to TriggerEditDialog.  The reason is that ScheduledTriggerUI has to instantiate new triggers when changing between daily and weekly, etc, so it can't always mutate the trigger it was given.\r\n\r\nBecaused ScheduledTriggerUI doesn't mutate the trigger it was given, the TriggerEditDialog needs to merge two triggers. Namely, the schedule (when a scheduled trigger) needs to come from ScheduledTriggerUI.Trigger, and as before the advanced properties need to come from TriggerEditDialog.trigger.  This explains the modifications to TriggerEditDialog.Trigger.get, plus the creation of two helper functions, TriggerEditDialog.TriggerMergeSchedule() and Trigger.CopyBaseClassProperties().\r\n\r\nHopefully that makes sense.",
+      "PostedDate": "2015-05-27T02:19:31.493-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-05-27T02:19:32.237-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-05-29T13:41:31.547-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The attached file (v4.0.zip) contains my work to do what you did. I approached it slightly differently as an effort to minimize changes. The control is called CalendarTriggerUI. If you get a TriggerTypeChanged event from the control, you will know that it has recreated the trigger. Thanks for your work on the patch as it saved me a great deal of time. On a positive note, I found bugs in two other controls while testing these changes. Try it out and let me know if it works for you.",
+      "PostedDate": "2015-05-29T13:41:35.9-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I totally support minimizing the changes, because you'll have to maintain this.  (Also: thanks for this well maintained software.  You must spend too much time on it ;)  If you're ever in Edinburgh I'll buy you a drink.)\r\n\r\nThis works well, although there is one important bug and two trivial issues.\r\n\r\nFirst, the new CalendarTriggerUI works well standalone.  It's easy to use because when the trigger type changes, it copies over advanced properties such as .EndBoundary and .Repetition to the new trigger.  There are just two small glitches with it:\r\n\r\n1. Should it auto initialize with this.Trigger = new TimeTrigger()?  At the moment, clicking around on an uninitialized CalendarTriggerUI causes a null reference exception.  (If you click on the Daily radio button before anything else, it won't crash.)\r\n\r\n2. Can we annotate ShowStartBoundary with [DefaultValue(false)]?  Right now if you add a new CalendarTriggerUI to a form, the WinForms Properties window shows the property name in bold, because it thinks that the value of ShowStartBoundary has changed.\r\n\r\nI've also tested the interaction of this refactoring with the TriggerEditDialog.  It almost works well, except for the following bug:\r\n\r\n3. Change from \"On a schedule\" to \"At log on\" back to \"On a schedule\".  Then:\r\n\r\n3a) As a minor point, the advanced Activate checkbox is visible.  It wasn't visible the first time we were on a schedule, because the .StartBoundary is shown in the CalendarTriggerUI.\r\n\r\n3b) Much more importantly, the return dialog.Trigger is incorrectly of type \"At log on\".  Obviously it should be of type \"On a schedule\".  And obviously if you then update the schedule properties such as start time or change it from daily to weekly, that should be reflected in the return dialog.Trigger.",
+      "PostedDate": "2015-06-01T04:20:53.63-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-06-01T09:45:42.5-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-06-01T10:04:19.133-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you for your testing. I have replaced the v4.0.zip attachment with updated code that fixes the problems you identified. The ShowStartBoundary property wasn't even necessary, so I hid it (#1). I made the code more robust so that it could handle a null Trigger value rather than initializing with an arbitrary value (#2). 3a and 3b were related and work correctly and like they did originally. Let me know if you find any other problems.",
+      "PostedDate": "2015-06-01T10:04:19.673-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "There's a minor problem with a null trigger.  Namely, when the trigger is null, click on a once/daily/weekly/monthly radio.  Then the startBoundary uses DateTime.Now instead of the date/time from the date/time pickers. (When you later change the date/time from the date/time pickers, it works).\r\n\r\nThe other changes LGTM.  Thanks.",
+      "PostedDate": "2015-06-02T02:18:05.937-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-06-02T07:37:51.55-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-06-02T07:38:33.607-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I believe to have corrected the StartBoundary issue and have posted an updated zip file.",
+      "PostedDate": "2015-06-02T07:38:34.123-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks, that's fixed.\r\n\r\nI found another issue when the trigger edit dialog is open:\n1. Change to \"At log on\"\n2. Click the drop down on the Activate calendar.  Then cancel the popup by losing focus by e.g. clicking on the Activate checkbox.\n3. Uncheck the Activate checkbox\n4. Change to \"On a schedule\"\n5. It might immediately throw an exception:\nValue of '0001-01-01 00:00:00' is not valid for 'Value'. 'Value' should be between 'MinDate' and 'MaxDate'\r\n\r\nWeirdly, this is only reproducible some of the time, maybe 1 in 5 times.  And I don't even know if step 2 is necessary.  I'll try to have a further look at reproducing this if you can't easily, but I might have to leave it until next week.\n",
+      "PostedDate": "2015-06-03T02:06:46.857-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "On further investigation, the bug I was talking about above is preexisting.  I'll open a separate issue for it.\r\n\r\nThis particular feature request---creating the user control---is now Guaranteed Bug Free.  Well, AFAICT.",
+      "PostedDate": "2015-06-03T08:56:03.597-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-06-22T13:45:45.36-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

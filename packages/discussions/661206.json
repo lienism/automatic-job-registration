@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1492341",
+    "ThreadId": "661206",
+    "Html": "Hello, thanks very much for the great wrapper. \r<br />\n<br />\nBut I find there is time format display issue exists on the latest TriggerEditDialog -- When I set Non-English Time format on 'Region and Language' of Control Panel, for example, set Format to 'Franch (France)', set Short time format to 'HH:mm' and  Long time format to 'HH:mm:ss', then the StartBoundary on TriggerEditDialog will show 12h format instead of 24h format. That is unable to determine if AM or PM time. \r<br />\nI find this issue and root cause has ever been posted as below link:\r<br />\n<a href=\"https://taskscheduler.codeplex.com/discussions/441722\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/441722</a>\r<br />\n<br />\nIs there any plan to fix this problem for the wrapper? Thanks.<br />\n",
+    "PostedDate": "2017-02-07T22:00:10.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1492383",
+    "ThreadId": "661206",
+    "Html": "Yes, please try the 2.5.22 release that was just pushed 2 days ago.<br />\n",
+    "PostedDate": "2017-02-08T08:20:04.743-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-02-12T23:26:59.303-08:00"
+  },
+  {
+    "Id": "1492572",
+    "ThreadId": "661206",
+    "Html": "That works, thank you very much!<br />\n",
+    "PostedDate": "2017-02-12T23:26:53.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

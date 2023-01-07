@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457890",
+    "ThreadId": "649570",
+    "Html": "When 'Repeat task every' is set to some normal interval (say '1 Hour') \r<br />\nand then 'for a duration of:' is set to 'Indefinitely', an error message pops, and the 'Repeat task every' is set to 'Indefinitely.'<br />\n",
+    "PostedDate": "2016-01-04T07:22:05.71-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457912",
+    "ThreadId": "649570",
+    "Html": "Fixed in today's 2.5.11 release. Thanks for identifying the problem.<br />\n",
+    "PostedDate": "2016-01-04T09:49:47.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-01-04T13:50:43.657-08:00"
+  },
+  {
+    "Id": "1457934",
+    "ThreadId": "649570",
+    "Html": "That was fast!  Thanks!<br />\n",
+    "PostedDate": "2016-01-04T13:51:14.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

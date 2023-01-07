@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "706105",
+    "ThreadId": "281537",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>Thanks for creating this api.&nbsp; I am experimenting with the example code that was provided below:</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Display version and server state<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version ver = ts.HighestSupportedVersion;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool newVer = (ver &gt;= new Version(1, 2));<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;Highest version: &quot; &#43; ver);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;Server: {0} ({1})&quot;, ts.TargetServer, ts.Connected ? &quot;Connected&quot; : &quot;Disconnected&quot;);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Output all of the running tasks<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;Running tasks:&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (RunningTask rt in ts.GetRunningTasks(true))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (rt != null)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;&#43; {0}, {1} ({2})&quot;, rt.Name, rt.Path, rt.State);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ver.Minor &gt; 0)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(&quot;&nbsp; Current Action: &quot; &#43; rt.CurrentAction);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>...</p>\r\n<p>and I get an error on this line:</p>\r\n<p>foreach (RunningTask rt in ts.GetRunningTasks(true))</p>\r\n<p>the ts.GetRunningTasks(true)) function throws this error:</p>\r\n<p>&nbsp;Catastrophic failure (Exception from HRESULT: 0x8000FFFF (E_UNEXPECTED))</p>\r\n<p>I am using Visual Studio 2010 with .NET Framework 4.0 and I used Nuget to reference the files in my Windows Form project.&nbsp;</p>\r\n<p>1) Task Scheduler Managed Wrapper UI Library</p>\r\n<p>2) Task Scheduler Managed Wrapper</p>\r\n<p>Is there another reference I am not setting?&nbsp; Any help would be appreciated.</p>\r\n<p>Thanks.</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2011-12-01T13:59:21.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "706484",
+    "ThreadId": "281537",
+    "Html": "<p>Which OS are you running this on? I doubt this is a&nbsp;configuration problem. It is more likely an operating system conflict.</p>",
+    "PostedDate": "2011-12-02T07:47:01.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "706562",
+    "ThreadId": "281537",
+    "Html": "<div id=\"yiv1397510623\">\r\n<div>\r\n<div style=\"color: #000000; background-color: #ffffff; font-family: arial,helvetica,sans-serif; font-size: 10pt;\">\r\n<div>Hi,</div>\r\n<div>Thanks for getting back to me.</div>\r\n<div>It's Windows 7 Enterprise. Version 6.1 on a 32-bit system</div>\r\n<div>Thanks,</div>\r\n<div>Mike</div>\r\n</div>\r\n</div>\r\n</div>",
+    "PostedDate": "2011-12-02T09:31:13.347-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "707673",
+    "ThreadId": "281537",
+    "Html": "<p>Here's something interesting, and offers a new clue.</p>\r\n<p>I created a new project, and added a reference to the tasksched.dll that is found in my system32 directory.&nbsp; Essentially, the code I run is this:</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskSchedulerClass sched = new TaskSchedulerClass();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sched.Connect(null, null, null, null);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (sched.Connected)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (IRunningTask rt in sched.GetRunningTasks(1))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (rt != null)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(\"+ {0}, {1} ({2})\", rt.Name, rt.Path, rt.State);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(\"&nbsp; Current Action: \" + rt.CurrentAction);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>the same line fails with the error</p>\r\n<p>Catastrophic failure (Exception from HRESULT: 0x8000FFFF (E_UNEXPECTED))</p>\r\n<p>when executing the line</p>\r\n<p>\"foreach (IRunningTask rt in sched.GetRunningTasks(1))\"</p>\r\n<p>So this problem exists with the native dll as well. Do you know where I should look for the operating system conflict?</p>\r\n<p>thanks.</p>",
+    "PostedDate": "2011-12-05T10:43:13.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "707855",
+    "ThreadId": "281537",
+    "Html": "<p>The only guess I have is that it may be a permissions problem. When you run the \"Task Scheduler\" app&nbsp;from \"Start Menu | Accessories | System Tools\" and select the \"Display All Running Tasks\" item on the right, do you get the error or do you see the list or running tasks? If you're not an Administrator, try running that same app under that account and see if you get the error. Thanks for verifying that the problem is a system problem.</p>",
+    "PostedDate": "2011-12-05T17:14:23.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "708198",
+    "ThreadId": "281537",
+    "Html": "<p>Thanks for the reply.&nbsp; That was a good idea to try the Task Scheduler app.&nbsp; You are probably right about the permissions since our workstations have been recently rolled out and we have already seen some issues with permissions on other projects already.</p>\r\n<p>I ran Task Scheduler as me, and then opened Task Scheduler as administrator, and it failed with the same error for both accounts.&nbsp; So I cleared out my event viewer error log, and then reran the application with this API and looked at the event viewer for errors and found this:</p>\r\n<p>Activation context generation failed for \"C:\\Windows\\system32\\conhost.exe\". Dependent Assembly Microsoft.Windows.SystemCompatible,processorArchitecture=\"x86\",publicKeyToken=\"6595b64144ccf1df\",type=\"win32\",version=\"6.0.7600.16816\" could not be found. Please use sxstrace.exe for detailed diagnosis.</p>\r\n<p>I don't know if this is the issue, but the conhost.exe file on my machine is version=\"6.1.7600.16816\".&nbsp; I wonder if this is the problem.&nbsp; Why would a newer file not work?</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-12-06T08:42:51.453-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

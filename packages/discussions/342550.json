@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "796621",
+    "ThreadId": "342550",
+    "Html": "\r\n<p>Hi all,</p>\r\n<p>I'm trying to enable/disable a specific trigger for one task. Does anybody have an example how to do this?</p>\r\n<p>TIA</p>\r\n",
+    "PostedDate": "2012-02-22T18:11:56.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "796915",
+    "ThreadId": "342550",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   Task t = ts.GetTask(taskName);\r\n   td = t.Definition;\r\n   td.Triggers[0].Enabled = <span style=\"color: blue;\">false</span>;\r\n   t.RegisterChanges();\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-02-22T22:12:49.36-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "797503",
+    "ThreadId": "342550",
+    "Html": "<p>thanks.</p>",
+    "PostedDate": "2012-02-23T05:32:48.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

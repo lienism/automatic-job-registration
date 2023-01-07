@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1215485",
+    "ThreadId": "535747",
+    "Html": "Hi,\r<br />\n<br />\nWhat are the minimal rights to connect remotely to a taskscheduler service on another server?\r<br />\nCode used:<br />\n<pre><code>            using (TaskService ts = new TaskService (&quot;\\\\servername&quot;, &quot;account&quot;, &quot;domain&quot;, &quot;password&quot;))\n            {\n                Task t = ts.GetTask(&quot;MyTask&quot;);\n                t.Run();\n            }</code></pre>\n\nThe &quot;account&quot; is a valid account on our domain.\r<br />\nIf the &quot;account&quot; is member of the local administrator group on the remote server, it works. The code can connect and run successfully the task.\r<br />\nBut I don't want to put this account in the local administrator group on the remote server!\r<br />\n<br />\nIf I give the account only the right &quot;Log on as batch job&quot;, I get\r<br />\nSystem.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\r<br />\n   at Microsoft.Win32.TaskScheduler.V2Interop.TaskSchedulerClass.Connect(Object serverName, Object user, Object domain, Object password)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskService.Connect()\r<br />\n<br />\nIn the Event Viewer I see a successful logon of the account and directly a logoff, probably because of the error.\r<br />\n(when the account is in the admin group, I see only a successful logon in the Event Viewer)<br />\n<ol>\n<li>Some mentioned on the internet to add read and execute rights for the used account on the c:\\windows\\system32\\tasks folder ==&gt; Like I thought already\r<br />\ndidn't work, the error appears on the first line of the code when trying to connect, before trying to execute a task.</li>\n<li>\nBecause of the word &quot;Interop&quot; in the error stack, I thought at a COM security problem, so I added the account to the COM security tab in the two sections\r<br />\n(run dcomcnfg, right-click on My Computer, take tab COM Security, add the account to Access Permissions and to Launch and Activation Permissions)\r<br />\n==&gt; didn't work.<br />\n</li>\n</ol>\nThe windows firewall is disabled on the remote server, so it can't play a role here.\r<br />\n<br />\nAny thoughts about this?\r<br />\nIs adding the account to the local administrator group the only way to connect remotely to the taskscheduler service?<br />\n",
+    "PostedDate": "2014-02-27T00:36:13.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1325603",
+    "ThreadId": "535747",
+    "Html": "Anyone been able to solve this?\r<br />\n<br />\nI'm looking to do the exact same thing, run a predefined task, remotely, as as user with bare minimum permissions as possible.\r<br />\n<br />\nI've successfully run the task programmatically as a user with administration privileges, however I'm having trouble with a stripped down account.\r<br />\n<br />\nKind Regards,\r<br />\n<br />\nLiam Flanagan<br />\n",
+    "PostedDate": "2014-11-24T09:27:37.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1327697",
+    "ThreadId": "535747",
+    "Html": "In theory, you need to connect to the remote server using the TaskService constructor and supply credentials that have Administrator rights. Of course to get this far, you will have to have all the firewall and rights specified at <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity</a>. Once connected, you can then create the task and register it as the account under which you want it to run. You will have to register the task using the username and password of the intended account and then use the TaskLogonType.Password.<br />\n",
+    "PostedDate": "2014-12-01T07:14:57.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:07.183-07:00"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "630053",
+    "ThreadId": "262008",
+    "Html": "\r\n<p>I have referenced teh microsoft.win32.taskscheduler, bersino n1.6.4141.23964 runtime version v2.0.50727.</p>\r\n<p>I am able to return the name of the Scheduled tasks, is there a way to return the task status ie &quot;could not start&quot;</p>\r\n",
+    "PostedDate": "2011-06-20T06:24:36.567-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630134",
+    "ThreadId": "262008",
+    "Html": "<p>There are a couple of properties on the Task object that may give you what you want. Task.State will indicate the current state of the registered task and Task.LastTaskResult will give you the return code from the last execution.</p>",
+    "PostedDate": "2011-06-20T09:14:28.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630144",
+    "ThreadId": "262008",
+    "Html": "<p>If a task is not running i am unable to gather any information about those tasks.</p>\n<p>the only operation i can get to loop though the list of tasks is<span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;there any other way to </span></span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">return Name and status (task.lasttaskresult)</span></span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;</span></span></span></p>\n<p><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\">foreach</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"> (</span></span><span style=\"font-size: x-small; color: #2b91af; font-family: Consolas;\"><span style=\"font-size: x-small; color: #2b91af; font-family: Consolas;\"><span style=\"font-size: x-small; color: #2b91af; font-family: Consolas;\">RunningTask</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"> rt </span></span><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\">in</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\"> ts.GetRunningTasks(</span></span><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\"><span style=\"font-size: x-small; color: #0000ff; font-family: Consolas;\">false</span></span></span><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">))</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">{</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">}</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;I have tried a foreach (task t in ts.gettask)</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">but get an error task does not contain a public definition for getenumerator</span></span></p>\n<p><span style=\"font-size: x-small; font-family: Consolas;\"><span style=\"font-size: x-small; font-family: Consolas;\">&nbsp;</span></span></p>",
+    "PostedDate": "2011-06-20T09:35:49.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630193",
+    "ThreadId": "262008",
+    "Html": "<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">foreach</span> (Task t <span style=\"color: blue;\">in</span> ts.RootFolder.Tasks)\r\n{\r\n   Console.WriteLine(<span style=\"color: #a31515;\">\"{0}: {1}\"</span>, t.Name, t.LastTaskResult);\r\n}\r\n</pre>\r\n</div>\r\n<p>Just as a reminder, under Windows Vista and later there are multiple subfolders below the root. You may need to recurse the ts.RootFolder and find the subfolders. There is an example at <a href=\"http://taskscheduler.codeplex.com/wikipage?title=Examples\">http://taskscheduler.codeplex.com/wikipage?title=Examples</a>. In the Documentation area of this site, there are a number of examples on how to use the various parts of the library.</p>",
+    "PostedDate": "2011-06-20T11:19:55.873-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630202",
+    "ThreadId": "262008",
+    "Html": "<p>well slap me silly and call me a idiot.</p>\r\n<p>Thanks.</p>\r\n<p>is there a list of what the lasttaskrusults are?</p>",
+    "PostedDate": "2011-06-20T11:39:39.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "630236",
+    "ThreadId": "262008",
+    "Html": "<p>Please see the discussion at <a href=\"http://taskscheduler.codeplex.com/discussions/231339\">http://taskscheduler.codeplex.com/discussions/231339</a>.</p>",
+    "PostedDate": "2011-06-20T14:22:00.98-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

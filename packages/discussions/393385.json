@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "905235",
+    "ThreadId": "393385",
+    "Html": "\r\n<p>There are some new features added in the Task Scheduler included with Windows 8 and Server 2012. I am asking for some feedback in regards to the UI. In the past, I have stayed true to the UI in the Task Scheduler provided in the OS. However, I have found\r\n it doesn't support the new features. I am looking for a debate on deviating from the UI to include the new features, or remaining true. Please comment.</p>\r\n<p>By the way, I have included those new features in the base library for programmatic access. This debate is on whether to update the UI library accordingly.</p>\r\n<div id=\"_mcePaste\" style=\"width:1px; height:1px; overflow:hidden; top:0px; left:-10000px\">\r\n&#65279;</div>\r\n",
+    "PostedDate": "2012-08-28T10:38:35.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

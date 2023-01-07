@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "626922",
+    "ThreadId": "261189",
+    "Html": "\r\n<p>Hi there,</p>\r\n<p>I've developed a tool to create scheduled tasks with WinXP in mind, but ended up that when I needed to use it in Win7, I receive an error.</p>\r\n<p>The exception message is: <strong>(47,4):EndBondary:</strong>, triggered when I call TaskService.RootFolder.RegisterTaskDefinition(string, TaskDefinition, TaskCreation, string, string, TaskLogonType, string).<br>\r\nI have to use that overload of RegisterTaskDefinition() since I need the created task to run under a specific username even when the user is not logged in.</p>\r\n<p>I even tried to set Trigger.EndBoundary explicitly to DateTime.MaxValue, but the error persists.</p>\r\n<p>As an additional information, the issue happens when either a WeeklyTrigger or DailyTrigger is used.</p>\r\n<p>Using Microsoft.Win32.TaskScheduler.dll v. 1.6.1.0.</p>\r\n<p>Can anyone please help me with that? I have no idea what is going on.</p>\r\n",
+    "PostedDate": "2011-06-13T07:38:09.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627029",
+    "ThreadId": "261189",
+    "Html": "<p>I think I will need to see more of your code to help troubleshoot. I personally have used the EndBoundary property of many different kinds of tasks under both XP and Win7 with success. Please create an issue and post your code that both creates the trigger and registers the task. If you are passing around a TaskDefinition, please also include that code in case there is a persistance error.</p>",
+    "PostedDate": "2011-06-13T11:29:37.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627031",
+    "ThreadId": "261189",
+    "Html": "<p>Thanks for the answer, dahall.&nbsp;I added the issue as you suggested, but as for now I figured out a workaround. I simply set Trigger.EndBoundary = new DateTime(2099, 12, 31) and the problem is gone.</p>\n<p>Not the most elegant solution, I know, specially because it can be visible in the scheduled task editor, but at least I can get it to work for now. Hopefully the scheduled task won't be necessary in 2100 :-)</p>",
+    "PostedDate": "2011-06-13T11:35:09.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627115",
+    "ThreadId": "261189",
+    "Html": "<p>Under Win7, whenever you assign a value DeleteExpiredTaskAfter you must also assign a value to EndBoundary. I also noticed your use of Repetition.Duration without specifying Repetition.Interval. The DailyTrigger will already repeat each day based on the specified DaysInterval. I think that line may be extraneous. Also, if you only need to run the trigger once, just use the TimeTrigger.&nbsp;The following code works:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService taskService = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   TaskDefinition task = taskService.NewTask();\r\n\r\n   task.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger { EndBoundary = DateTime.Now + TimeSpan.FromDays(7) });\r\n   task.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"notepad.exe\"</span>, String.Empty, <span style=\"color: #a31515;\">@\"C:\\Windows\"</span>));\r\n\r\n   <span style=\"color: green;\">// Ensures the task is marked with 'delete the task if it is not scheduled to run again'</span>\r\n   task.Settings.DeleteExpiredTaskAfter = TimeSpan.FromMinutes(1);\r\n\r\n   <span style=\"color: green;\">// We want that the task is executed under a specific user even when the user is not logged in</span>\r\n   taskService.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"Test Task\"</span>, task, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"username\"</span>, <span style=\"color: #a31515;\">\"password\"</span>, TaskLogonType.Password, <span style=\"color: blue;\">null</span>);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-06-13T13:37:58.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627540",
+    "ThreadId": "261189",
+    "Html": "<p>Setting Repetition.Duration is necessary to avoid the following exception in Windows XP: <strong>System.ArgumentException: Trigger.Repetition.Interval must be less than Trigger.Repetition.Duration under Task Scheduler 1.0</strong>.</p>\r\n<p>Any ideas how to avoid that without setting Repetition.Duration only?</p>",
+    "PostedDate": "2011-06-14T07:18:34.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "627754",
+    "ThreadId": "261189",
+    "Html": "<p>You're right about that problem under V1 and version 1.6.1 of the library. It is corrected in the 1.6.2 release that is forthcoming. Under 1.6.1, your addition of that line is an appropriate work-around.</p>",
+    "PostedDate": "2011-06-14T13:27:15.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

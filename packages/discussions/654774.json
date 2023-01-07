@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1473793",
+    "ThreadId": "654774",
+    "Html": "Hello,\r<br />\n<br />\nI wrote a small program to create and delete a task. Task creation works but when I try to delete the created task I get the error E_ACCESSDENIED. The code is:<br />\n<pre><code>TaskService ts = new TaskService();\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = &quot;Task Test&quot;;\nDailyTrigger dt = new DailyTrigger();\ndt.Repetition.Interval = TimeSpan.FromMinutes(1);\n \ntd.Triggers.Add(dt);\nExecAction action = new ExecAction(&quot;notepad.exe&quot;, &quot;c:\\\\test.log&quot;, null);\naction.Id = &quot;aaaaaaa&quot;;\ntd.Actions.Add(action);\n \nTaskFolder tf = ts.RootFolder;\n \nvar folderList = tf.SubFolders;\n \ntf.CreateFolder(&quot;\\\\MyFolder&quot;);\n \nTaskFolder sub = tf.SubFolders[&quot;MyFolder&quot;];\n           \nvar user = Path.Combine(Environment.UserDomainName, Environment.UserName);\nvar a = sub.RegisterTaskDefinition(_taskName, td, TaskCreation.CreateOrUpdate, user);\n \nsub.DeleteTask(_taskName, false);</code></pre>\n\nAny ideas why can I not delete the task? \r<br />\nThank you very much for your help.<br />\n",
+    "PostedDate": "2016-05-17T23:58:00.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473876",
+    "ThreadId": "654774",
+    "Html": "I run your code and everything looks OK~\r<br />\nYou can try to run your program as administrators(Right click .exe file of your program and click &quot;Run as administrator&quot;)<br />\n",
+    "PostedDate": "2016-05-18T18:56:44.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

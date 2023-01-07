@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "896718",
+    "ThreadId": "390635",
+    "Html": "\r\n<p>Does&nbsp;anyone know if there's a way to&nbsp;create a weekly trigger with multiple days? I have only been able to schedule with a weekly trigger on one specific day, or alternatievly on all days. So, for example, I can say:</p>\r\n<p>&nbsp;td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { StartBoundary = DateTime.Today &#43; TimeSpan.FromHours(2), DaysOfWeek = DaysOfTheWeek.Friday });<br>\r\n&nbsp;</p>\r\n<p>It's also possible to specify DayOfWeek = DaysOfTheWeek.AllDays</p>\r\n<p>But what about specifying more than one, but fewer than seven, days on each week (e.g. start the task on Tuesday, Wednesday, and Friday)?</p>\r\n<p>Of course, I could schedule three separate weekly tasks, one to run on Tuesday, one on Wednesday, and one on Friday, but that's a workaround I'll use as a last resort, as&nbsp;it would be cleaner to schedule one weekly task, to run on multiple days, if possible.</p>\r\n",
+    "PostedDate": "2012-08-07T16:35:30.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "896875",
+    "ThreadId": "390635",
+    "Html": "\r\n<p>I figured it out. This can be done using the or concatenator &quot;|&quot; between days so, for example, DaysOfTheWeek.Friday | DaysOfTheWeek.Saturday.</p>\r\n<p>A slight problem I've had, which is probably why I didn't figure this out right away, is that I'm working in&nbsp;VB and most of the examples on here are in C#, so I have been trying to understand the examples based on my rudimentary knowledge of C#, or\r\n by using the websites that translate beween VB and C#, but those websites don't always do the translation correctly. For those of you coding in VB, the method to include multiple days with a weekly trigger is to use the word &quot;Or&quot; as the concatenator, so for\r\n example, DaysOfTheWeek.Friday&nbsp;Or DaysOfTheWeek.Saturday.</p>\r\n<p>In any case, I've got this resolved. By the way, this scheduler is an excellent piece of software.</p>\r\n",
+    "PostedDate": "2012-08-08T04:24:36.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "897299",
+    "ThreadId": "390635",
+    "Html": "<p>Alas, I have the opposite problem in that I am much more proficient in C# than VB. If you end up with sample code in VB that you would like to share, please pass it along and I'll include it in the documentation.</p>\r\n<p>I'm glad you're finding value in the library. Please take the time to rate it on the download page.</p>",
+    "PostedDate": "2012-08-08T16:10:17.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "898257",
+    "ThreadId": "390635",
+    "Html": "<p>I did that. Actually, you ought to talk to Microsoft about incorporating it into the .Net framework. I'm surprised that the framework lacks&nbsp;classes natively that do what your libary does.</p>",
+    "PostedDate": "2012-08-10T14:46:18.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1457172",
+    "ThreadId": "649304",
+    "Html": "Problem 1: Hitting Enter causes the OK button to be clicked. \r<br />\n<br />\nProblem 2: if a user changes only task description, and hits enter, the changes are not recognized (unless some other changes were made as well).<br />\n",
+    "PostedDate": "2015-12-25T05:26:58.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457226",
+    "ThreadId": "649304",
+    "Html": "Thank you again. I have enabled TAB and ENTER for the Description and the Documentation text boxes. Doing so solved both reported problems. Fixes in next release.<br />\n",
+    "PostedDate": "2015-12-26T13:19:26.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T08:02:24.543-08:00"
+  }
+]

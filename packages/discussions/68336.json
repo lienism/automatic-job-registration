@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "232402",
+    "ThreadId": "68336",
+    "Html": "<p>I need a scheduled task to run on logout/shutdown from the currently signed in user (no prompt for credentials)</p>\r\n<p>&nbsp;</p>\r\n<p>I saw a logon trigger and a sessionstatechange trigger but no logout or shutdown.&nbsp; How can I make this work?</p>",
+    "PostedDate": "2009-09-08T14:18:14.157-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "232533",
+    "ThreadId": "68336",
+    "Html": "<p>I don't believe there is a trigger for logout or shutdown. Your best bet is to run a very small executable as a windowless program that detects those events and then fires off the action you want. I am not aware of any way to do it using the task library.</p>",
+    "PostedDate": "2009-09-08T22:27:19.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

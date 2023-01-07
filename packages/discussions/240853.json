@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "545432",
+    "ThreadId": "240853",
+    "Html": "\r\n<p>Here is a fragment of my code:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>taskDefinition.Principal.UserId = <span style=\"color:#a31515\">&quot;NETWORK SERVICE&quot;</span>;\r\ntaskDefinition.Principal.LogonType = TaskLogonType.ServiceAccount;\r\n\r\n...\r\n\r\ntaskScheduler.RootFolder.RegisterTaskDefinition(taskDefinition.RegistrationInfo.Description, taskDefinition);\r\n</pre>\r\n</div>\r\n<p>Here is the exception I receive:</p>\r\n<p><span style=\"font-size:xx-small\">Error: System.Runtime.InteropServices.COMException (0x80041314): The task has been configured with an unsupported combination of account settings and run time options. (Exception from HRESULT: 0x80041314)</span>\r\n</p>\r\n<p>Any thoughts?</p>\r\n<p>Thanks, and great wrapper!!!</p>\r\n<p></p>\r\n<p>at System.Runtime.InteropServices.ComTypes.IPersistFile.Save(String pszFileName, Boolean fRemember)</p>\r\n",
+    "PostedDate": "2011-01-07T08:02:33.387-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "545717",
+    "ThreadId": "240853",
+    "Html": "\r\n<p>Running a task under a group account is only supported on Vista or Server 2008 and higher.</p>\r\n",
+    "PostedDate": "2011-01-07T15:45:22.913-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "546659",
+    "ThreadId": "240853",
+    "Html": "\r\n<p>Cool, thanks!</p>\r\n",
+    "PostedDate": "2011-01-10T06:00:40.853-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1227139",
+    "ThreadId": "240853",
+    "Html": "Hi I am having the same issue. \r<br />\nOS = Win8 and Win Server 2008 R2. \r<br />\nI tried below code \r<br />\n<br />\ntd.Principal.GroupId = &quot;NT AUTHORITY\\NETWORK SERVICE&quot;;\r<br />\ntd.Principal.LogonType = TaskLogonType.S4U;\r<br />\n<br />\nalso tried the code above. \r<br />\nBut I get access denied error. \r<br />\n<br />\nHow can I create a task which can run as &quot;NETWORK SERVICE&quot; and &quot;user logged in or not&quot;\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2014-03-26T14:17:04.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1230002",
+    "ThreadId": "240853",
+    "Html": "Try the following:<br />\n<pre><code>td.Principal.UserId = &quot;NETWORK SERVICE&quot;; \ntd.Principal.LogonType = TaskLogonType.ServiceAccount; </code></pre>\n\n",
+    "PostedDate": "2014-04-03T11:06:31.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234514",
+    "ThreadId": "240853",
+    "Html": "Thanks dahall for your response. Appreciate it. \r<br />\nAfter posting this doubt I was able to figure out a solution. I am pasting the same line of code I am using here so that anyone can use if required.<br />\n<pre><code>        td.Principal.Id = &quot;any string&quot;;\n        td.Principal.GroupId = &quot;NETWORK SERVICE&quot;;\n        td.Principal.RunLevel = TaskRunLevel.LUA;\n        td.Principal.LogonType = TaskLogonType.S4U;\n</code></pre>\n\nFollowing things are applicable in my case\r<br />\n<br />\n  1) I run my application (the scheduler which schedule job using library ) under IIS. It is basically a a web service which can be used to schedule task in windows. \r<br />\n  2) IIS app pool runs as NETWORK SERVICE\r<br />\n  3) Task run even if no one is logged in into the machine \r<br />\n  4) Web service is running on the same machine where task are created\r<br />\n  5) Task uses only local resources when they run\r<br />\n<br />\nAll the above features are working and tested. It is on production. <br />\n",
+    "PostedDate": "2014-04-15T16:43:35.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-23T20:56:06.733-07:00"
+  }
+]

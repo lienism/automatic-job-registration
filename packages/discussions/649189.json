@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1456927",
+    "ThreadId": "649189",
+    "Html": "What is happening and I don't understand is when the user installs my app it doesn't use the user name but goes to &quot;System&quot; and with the settings &quot;Run whether user is logged on or not.&quot;\r<br />\n<br />\nWhen I delete the task using your code which works and I re create the task using the code below It then create the task using my Login name instead of System and is set to Run only when user is logged on. \r<br />\n<br />\n<br />\nThe task is created at first run in my program. \r<br />\nI don't understand why this is happening. \r<br />\n<br />\n<br />\nHere is the code that I am using. is below<br />\n<pre><code>Using ts As New TaskService\n\n            ' Create a new task definition and assign properties\n            Dim td As TaskDefinition = ts.NewTask\n            td.RegistrationInfo.Description = &quot;Test Startup&quot;\n            'Create trigger that fires 1 minutes after the system starts.\n            td.Principal.UserId = Environment.UserName\n            td.Principal.LogonType = TaskLogonType.InteractiveToken\n            td.Triggers.Add(New LogonTrigger())\n            td.Actions.Add(New ExecAction(&quot;C:\\test.exe&quot;)\n            td.Principal.RunLevel = TaskRunLevel.Highest\n            td.Settings.Compatibility = TaskCompatibility.V2_1\n            ts.RootFolder.RegisterTaskDefinition(&quot;test app&quot;, td)\n\n        End Using</code></pre>\n\nthank you for your help and support \r<br />\nBrock <br />\n",
+    "PostedDate": "2015-12-22T23:07:36.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456954",
+    "ThreadId": "649189",
+    "Html": "also forgot to mention I'm running windows 10 Pro 64 bit and the latest version for you DLL I believe its 2,5,8 I think.<br />\n",
+    "PostedDate": "2015-12-23T05:40:59.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456972",
+    "ThreadId": "649189",
+    "Html": "When no user information is provided to the <code>RegisterTaskDefinition</code> method, it first looks to those provided to the <code>Principal</code> property and then uses the credentials of those provided to the <code>TaskService</code> constructor. It cannot give privileges higher than those provided to the <code>TaskService</code> instance. When no user information is provided to the <code>TaskService</code> constructor, it uses those of the executing assembly. Unless you have specifically setup a manifest file for your executable or run it using &quot;Run as Administrator&quot;, then UAT will step in and reduce the account privileges dramatically.\r<br />\n<br />\nI believe the following will correct your code:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">&#39; Create a new task definition and assign properties</span>\n<span style=\"color:Blue;\">Dim</span> td <span style=\"color:Blue;\">As</span> TaskDefinition = TaskService.Instance.NewTask\ntd.RegistrationInfo.Description = <span style=\"color:#A31515;\">&quot;Test Startup&quot;</span>\n<span style=\"color:Green;\">&#39;Create trigger that fires 1 minutes after the system starts.</span>\n<span style=\"color:Blue;\">Dim</span> lt <span style=\"color:Blue;\">As</span> LogonTrigger = <span style=\"color:Blue;\">New</span> LogonTrigger()\nlt.Delay = TimeSpan.FromMinutes(1)\n<span style=\"color:Green;\">&#39;Set trigger to only fire for this account so elevated permissions are not needed</span>\nlt.UserId = Environment.UserName\ntd.Triggers.Add(lt)\n<span style=\"color:Green;\">&#39;The Add method assumes an ExecAction when the parameters are strings</span>\ntd.Actions.Add(<span style=\"color:#A31515;\">&quot;C:\\test.exe&quot;</span>)\ntd.Principal.RunLevel = TaskRunLevel.Highest\ntd.Settings.Compatibility = TaskCompatibility.V2_1\nTaskService.Instance.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;test app&quot;</span>, td)\r\n</pre></div>",
+    "PostedDate": "2015-12-23T08:24:35.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T08:03:08.893-08:00"
+  },
+  {
+    "Id": "1457093",
+    "ThreadId": "649189",
+    "Html": "What does this Exception mean ? \r<br />\n<br />\n(17,8):userId:\r<br />\n<br />\nI'm getting it at creation of a new task. <br />\n",
+    "PostedDate": "2015-12-23T20:30:08.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457139",
+    "ThreadId": "649189",
+    "Html": "Here is the exception text. I've even tried my old  code and still get the error after my program is installed. <br />\n<pre><code>System.Runtime.InteropServices.COMException (0x80070534): (17,8):UserId:\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)</code></pre>\n\n",
+    "PostedDate": "2015-12-24T11:11:04.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1457145",
+    "ThreadId": "649189",
+    "Html": "My guess is that there is something wrong with the format of the supplied LogonTrigger.UserId property value. The following is information from the Microsoft support page:<br />\n<blockquote>\nThe identifier of the user. For example, &quot;MyDomain\\MyName&quot; or for a local account, &quot;Administrator&quot;. <br />\nThis property can be in one of the following formats: <br />\n• User name or SID: The task is started when the user logs on to the computer.<br />\n• Group name or SID string: The task is started when a member of the user group logs on to the computer.<br />\n• NULL: The task is started when any user logs on to the computer.<br />\n</blockquote>\n",
+    "PostedDate": "2015-12-24T14:18:52.977-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-30T08:03:02.343-08:00"
+  },
+  {
+    "Id": "1467723",
+    "ThreadId": "649189",
+    "Html": "<strong>dahall wrote:</strong><br />\n<blockquote>\nWhen no user information is provided to the <code>RegisterTaskDefinition</code> method, it first looks to those provided to the <code>Principal</code> property and then uses the credentials of those provided to the <code>TaskService</code> constructor. It cannot give privileges higher than those provided to the <code>TaskService</code> instance. When no user information is provided to the <code>TaskService</code> constructor, it uses those of the executing assembly. Unless you have specifically setup a manifest file for your executable or run it using &quot;Run as Administrator&quot;, then UAT will step in and reduce the account privileges dramatically.<br />\n<br />\nI believe the following will correct your code:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">&#39; Create a new task definition and assign properties</span>\n<span style=\"color:Blue;\">Dim</span> td <span style=\"color:Blue;\">As</span> TaskDefinition = TaskService.Instance.NewTask\ntd.RegistrationInfo.Description = <span style=\"color:#A31515;\">&quot;Test Startup&quot;</span>\n<span style=\"color:Green;\">&#39;Create trigger that fires 1 minutes after the system starts.</span>\n<span style=\"color:Blue;\">Dim</span> lt <span style=\"color:Blue;\">As</span> LogonTrigger = <span style=\"color:Blue;\">New</span> LogonTrigger()\nlt.Delay = TimeSpan.FromMinutes(1)\n<span style=\"color:Green;\">&#39;Set trigger to only fire for this account so elevated permissions are not needed</span>\nlt.UserId = Environment.UserName\ntd.Triggers.Add(lt)\n<span style=\"color:Green;\">&#39;The Add method assumes an ExecAction when the parameters are strings</span>\ntd.Actions.Add(<span style=\"color:#A31515;\">&quot;C:\\test.exe&quot;</span>)\ntd.Principal.RunLevel = TaskRunLevel.Highest\ntd.Settings.Compatibility = TaskCompatibility.V2_1\nTaskService.Instance.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;test app&quot;</span>, td)\r\n</pre></div></blockquote>\nHi dahl, \r<br />\n<br />\nI'm still having the issue Where the task is registering the as System and not the username, I am using the code you supplied but still no go. \r<br />\n<br />\nWhen people install the App it asks for UAC prompt so it does install under administrator. but when I check the task it says system. If I restart my app and register the task it works as it should with the username and not SYSTEM. \r<br />\n<br />\nIt seems at install I'm having the issue. I'm using the a manifest file. I'll post it as well for you too see., It just a simple msi installer. <br />\n<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;\n&lt;asmv1:assembly manifestVersion=&quot;1.0&quot; xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv1=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv2=&quot;urn:schemas-microsoft-com:asm.v2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;\n  &lt;assemblyIdentity version=&quot;1.0.0.0&quot; name=&quot;MyApplication.app&quot;/&gt;\n  &lt;trustInfo xmlns=&quot;urn:schemas-microsoft-com:asm.v2&quot;&gt;\n    &lt;security&gt;\n      &lt;requestedPrivileges xmlns=&quot;urn:schemas-microsoft-com:asm.v3&quot;&gt;\n        &lt;!-- UAC Manifest Options\n            If you want to change the Windows User Account Control level replace the \n            requestedExecutionLevel node with one of the following.\n\n        &lt;requestedExecutionLevel  level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;\n        &lt;requestedExecutionLevel  level=&quot;requireAdministrator&quot; uiAccess=&quot;false&quot; /&gt;\n        &lt;requestedExecutionLevel  level=&quot;highestAvailable&quot; uiAccess=&quot;false&quot; /&gt;\n\n            Specifying requestedExecutionLevel node will disable file and registry virtualization.\n            If you want to utilize File and Registry Virtualization for backward \n            compatibility then delete the requestedExecutionLevel node.\n        --&gt;\n        &lt;requestedExecutionLevel  level=&quot;highestAvailable&quot; uiAccess=&quot;false&quot; /&gt;\n      &lt;/requestedPrivileges&gt;\n    &lt;/security&gt;\n  &lt;/trustInfo&gt;\n  \n  &lt;compatibility xmlns=&quot;urn:schemas-microsoft-com:compatibility.v1&quot;&gt;\n    &lt;application&gt;\n      &lt;!-- A list of all Windows versions that this application is designed to work with. Windows will automatically select the most compatible environment.--&gt;\n\n      &lt;!-- If your application is designed to work with Windows 7, uncomment the following supportedOS node--&gt;\n      &lt;!--&lt;supportedOS Id=&quot;{35138b9a-5d96-4fbd-8e2d-a2440225f93a}&quot;/&gt;--&gt;\n      \n    &lt;/application&gt;\n  &lt;/compatibility&gt;\n  \n  &lt;!-- Enable themes for Windows common controls and dialogs (Windows XP and later) --&gt;\n  &lt;!-- &lt;dependency&gt;\n    &lt;dependentAssembly&gt;\n      &lt;assemblyIdentity\n          type=&quot;win32&quot;\n          name=&quot;Microsoft.Windows.Common-Controls&quot;\n          version=&quot;6.0.0.0&quot;\n          processorArchitecture=&quot;*&quot;\n          publicKeyToken=&quot;6595b64144ccf1df&quot;\n          language=&quot;*&quot;\n        /&gt;\n    &lt;/dependentAssembly&gt;\n  &lt;/dependency&gt;--&gt;\n\n&lt;/asmv1:assembly&gt;\n\n\n</code></pre>\n\nthank you for your help\r<br />\nBrock<br />\n",
+    "PostedDate": "2016-03-22T19:02:39.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468224",
+    "ThreadId": "649189",
+    "Html": "Do you want the task to run when any user logs on or just when the current user logs on? If you're doing something like having some code check for updates or ensure something is running in the user session, then I would suggest you create the task as part of your installation that will run with elevate permissions.<br />\n",
+    "PostedDate": "2016-03-28T08:42:27.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

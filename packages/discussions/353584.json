@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "828554",
+    "ThreadId": "353584",
+    "Html": "\r\n<p>Is there a way to set the start time so that 'Synchronize across time zones' check box is not checked when creating new trigger? I want to create a weekly trigger that starts a process every day at 7:00pm local time (central time). I created weekly trigger\r\n and set Trigger.StartBoundary to 7pm local time. Prior to DST change, it was working correctly and starting process at 7pm local time. After DST change, it's firing up the process 1hour later (8pm local time). I suspect it's due to 'Synchronize across time\r\n zones' check box. If there is no way to change 'Synchronize across time zones' check box through code, should I be using UTC time for Trigger.StartBoundary? Would that take care of the DST problem?</p>\r\n<p>Thanks in advance!</p>\r\n",
+    "PostedDate": "2012-04-25T11:19:39.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828671",
+    "ThreadId": "353584",
+    "Html": "<p>Checking the \"Synchronize...\" check box will force an \"Unspecified\" DateTime value to a UTC value. If the DateTime value is either \"Local\" or \"UTC\", then it should be checked already. Setting the StartBoundary to a DateTime with Kind = \"Unspecified\" will leave the checkbox unchecked.</p>\r\n<p>I am not aware of anything in the library that specifically handles DST. I would try using UTC and see. Unfortunately, this is something handled by the native library and this wrapper has no control over that.</p>",
+    "PostedDate": "2012-04-25T15:05:05.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "829350",
+    "ThreadId": "353584",
+    "Html": "<p>Thanks for the reply. I tried using UTC time and noticed something interesting when I try to export a task. If I use UTC, the StartBoundary in XML file when I manually export the task is in the format '&lt;date&gt;&lt;utc time&gt;Z'. If I use local time, then it's in the format of '&lt;date&gt;&lt;local time&gt;+-&lt;utc offset&gt;'. It seems like the &lt;utc offset&gt; can be different based on whether the local time zone is in DST or not. I think that's what causing the start time of the task to be off by 1hour. Using UTC should work better I think.</p>",
+    "PostedDate": "2012-04-27T06:07:16.063-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

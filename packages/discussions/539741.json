@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1225251",
+    "ThreadId": "539741",
+    "Html": "When I open a task in the TaskEditDialog the Triggers don't seem to update properly.\r<br />\n<br />\nSteps to reproduce:\r<br />\n<br />\nCreate a new TaskEditDialog passing into the constructor the task, true for edit, and true for register on accept.\r<br />\n<br />\nWhen the user opens lets say a weekly task scheduled to run ever Wed. they can for example change the Description, hit OK and everything works great. HOWEVER if instead they go to the Triggers tab, Edit the existing weekly trigger. Then UNCHECK Wednesday and CHECK Sunday then hit OK in the Edit Trigger window you can see in the list of Triggers that the one you just edited has BOTH Sunday and Wednesday checked instead of just Sunday. No matter what you do you can't seem to unselect the day the trigger was initialized with yet it's NOT read only because you CAN add to it. I assume this is a bug.<br />\n",
+    "PostedDate": "2014-03-21T08:44:25.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229964",
+    "ThreadId": "539741",
+    "Html": "Yes this is a bug and is fixed in the current source code. It will roll into the next downloadable update.<br />\n",
+    "PostedDate": "2014-04-03T09:47:24.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-03T10:10:06.153-07:00"
+  }
+]

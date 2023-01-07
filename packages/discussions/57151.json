@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "193092",
+    "ThreadId": "57151",
+    "Html": "<p>I get this error when I run the following code on&nbsp; windows 2003 server. The code works fine on a windows vista machine.</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskService ts = new TaskService(&quot;\\\\buildserver&quot;);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskFolder tf = ts.RootFolder;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (Task t in tf.Tasks)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox.Show(&quot;Name : &quot; + t.Name + &quot;, Last Task Result : &quot; + t.LastTaskResult + &quot;, Last Run Date : &quot; + t.LastRunTime);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>I cannot get LastRunTime and LastTaksResult, but getting the next run time works. I have tried the code on the Windows</p>\r\n<p>2003 server and connecting from it remotely. I have specified a username and password and that also didn't work. I am</p>\r\n<p>trying to write a gui to manage windows scheduled task accross multiple servers.</p>\r\n<p>Cheers Rudolph</p>",
+    "PostedDate": "2009-05-22T00:24:13.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "194311",
+    "ThreadId": "57151",
+    "Html": "<p>By default, the library tries to use the v2 library which only works on Vista and Server 2008. You may want to try forcing the v1 library through the TaskService constructor:</p>\r\n<p>TaskService ts = new TaskService(&quot;<a>\\\\buildserver</a>&quot;, null, null, null, true);</p>\r\n<p>Please reply and let&nbsp;us all&nbsp;know if that works.</p>",
+    "PostedDate": "2009-05-26T08:29:57.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413616",
+    "ThreadId": "57151",
+    "Html": "<p>Hi,</p>\r\n<p>I've got the same exception when registering new Task.</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>Logon failure: unknown user name or bad password. (Exception <span style=\"color:Blue\">from</span> HRESULT: 0x8007052E)\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre>TaskService ts = <span style=\"color:Blue\">new</span> TaskService();\r\nTaskDefinition td = ts.NewTask();\r\n...\r\nts.RootFolder.RegisterTaskDefinition(\r\n\t\t\t\ttaskName, \r\n                                td, \r\n\t\t\t\tTaskCreation.CreateOrUpdate, \r\n\t\t\t\tWindowsIdentity.GetCurrent().Name, \r\n\t\t\t\t<span style=\"color:#A31515\">&quot;password&quot;</span>,\r\n\t\t\t\tTaskLogonType.Password, <span style=\"color:Blue\">null</span>);\r\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre>TaskService ts = <span style=\"color:Blue\">new</span> TaskService(&quot;<a>\\\\buildserver</a>&quot;, null, null, null, true);<br>Didn't help.<br><br>Do you have any suggestions how to fix this?<br></pre>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-03T03:32:48.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "413626",
+    "ThreadId": "57151",
+    "Html": "<p>Problem solved.</p>\r\n<p>Appropriate password must be set for the specified User</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-03-03T04:11:37.943-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1047607",
+    "ThreadId": "57151",
+    "Html": "Hi\r<br />\n<br />\ni too have the same issue, credentials which i have passed are correct but no joy. \r<br />\nCould you please tell me what do you mean by appropriate password?\r<br />\nPlease help me.<br />\n",
+    "PostedDate": "2013-05-23T02:52:29.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1047743",
+    "ThreadId": "57151",
+    "Html": "A valid username and password must be provided in both the TaskService constructor and in the RegisterTaskDefinition method.<br />\n",
+    "PostedDate": "2013-05-23T07:12:19.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1111331",
+    "ThreadId": "57151",
+    "Html": "Hi All,\r<br />\n<br />\nI'm developing a tool that needs to create a task in as part of it's functionality. I want to schedle the task using System account but don't want to ask user for any password. what is the solution?\r<br />\n<br />\nThanks,\r<br />\nMike<br />\n",
+    "PostedDate": "2013-10-23T17:23:29.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1113096",
+    "ThreadId": "57151",
+    "Html": "Use &quot;SYSTEM&quot; for the username and null for the password and set TaskLogonType to SystemAccount. There are a number of discussions about this if you search for SYSTEM.<br />\n",
+    "PostedDate": "2013-10-28T07:44:32.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

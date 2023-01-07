@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "483359",
+    "ThreadId": "224440",
+    "Html": "<p>Just noticed this while I was skimming the code, but I'm unfortunately on a deadline and don't have time to figure out how to submit a patch, so apologies for being lazy --</p>\r\n<p>Seems like the line:</p>\r\n<pre>            <span style=\"color:blue\">this</span>.WeeksInterval = 1;<br><br>in the constructor for WeeklyTrigger should read:<br><br><pre>            <span style=\"color:blue\">this</span>.WeeksInterval = weeksInterval;</pre>\r\n</pre>",
+    "PostedDate": "2010-08-22T17:09:23.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "484891",
+    "ThreadId": "224440",
+    "Html": "<p>Thanks for finding this bug. It has been fixed&nbsp;and posted in source drop 56462.</p>",
+    "PostedDate": "2010-08-25T15:51:42.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

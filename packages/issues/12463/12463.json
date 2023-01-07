@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "CustomTrigger is a read-only trigger and cannot be used to create a new trigger. Please read the documentation under the Documentation area, specifically all the detail for creating triggers. You should be using a TimeTrigger.",
+    "ClosedDate": "2017-06-08T07:27:51.643-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi~\n  I want to registe an one time task ,so I try to use customTrigger.\n  But I failed to create customTrigger by the code like :\n>  CustomTrigger custTrigger = (CustomTrigger)CustomTrigger.CreateTrigger(TaskTriggerType.Custom);\n the returned value  is null!\n\n  I import your dll by NuGet ,and the version is 2.5.26\n\nLook forward to your reply!",
+    "LastUpdatedDate": "2017-06-08T19:19:57.747-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-08T05:07:01.077-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Can not create a CustomTrigger!",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12463
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": " TimeTrigger  works  for me.\n Many Thanks ",
+      "PostedDate": "2017-06-08T19:19:57.747-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

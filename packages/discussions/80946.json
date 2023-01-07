@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "277557",
+    "ThreadId": "80946",
+    "Html": "<p>I have the codebase as below to start a program when the system logs in.</p>\r\n<p>TaskService ts = new TaskService();</p>\r\n<p>TaskFolder tf = ts.RootFolder;</p>\r\n<p>TaskDefinition td = ts.NewTask();<br>td.Principal.LogonType = TaskLogonType.InteractiveToken;<br><br>td.Actions.Add(new ExecAction(strInatalledPath, &quot;/s&quot;, null));<br><br>LogonTrigger lTrigger = (LogonTrigger)td.Triggers.Add(new LogonTrigger());<br><br>Task runningTask = ts.RootFolder.RegisterTaskDefinition(&quot;LogonTask&quot;, td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken, null);</p>\r\n<p>&nbsp;</p>\r\n<p>The task is creating perfectly with &quot;NT AUTHORITY\\SYSTEM&quot; account,</p>\r\n<p>but it works on some computers in our domain and for others as soon as the system logson, the task starts and it can also be seen in the task manager running, but will not show up the real program (like showing dialogs of the program )that has started. (all systems in the domain have been tested by users having administrator permissions)</p>\r\n<p>when we kill the process in task manager and start the actual program manually it runs perfectly showing up the dialogs of the program started.</p>\r\n<p>so, please tell me where I am doing wrong and kindly assist me to obtain the required functionality.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-01-15T06:06:54.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "280174",
+    "ThreadId": "80946",
+    "Html": "<p>Given what you've provided, my only guess is that it has to do with the permissions of the interactive user on the remote system. It may also have something to do with timing. I have seen on rare occasions where a task that begins immediately after login gets started before the UI can handle it. You may want to try adding a small delay to the trigger and see if that helps.</p>\r\n<p>Can you provide more information on anything common between those systems where it works and where it doesn't work? If there is more detail on the problem, I may be able to help formulate some other possible solutions.</p>",
+    "PostedDate": "2010-01-21T10:56:46.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

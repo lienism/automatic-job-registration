@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "842568",
+    "ThreadId": "357667",
+    "Html": "\r\n<p>I think this is a great project and I had used the previous 1.0 version for Windows 2003 server to view and manage tasks.&nbsp; I had recently found this and in trying it out I have been able to remotely connect to Windows 2008 R2 servers, and see tasks\r\n at the root level, but not able to see any tasks from any subfolder.</p>\r\n<p>I have tried form both a Windows XP 32bit and Windows 7 64bit system to see and get information from tasks.&nbsp; I would also want to be able to create tasks in those folders as well.</p>\r\n<p>Current the server tasks and folders were setup manually and not using any 3rd party product.&nbsp;</p>\r\n<p>I have tried many different ways of seeing remote tasks in folders using this class structure and had no success.&nbsp; Below is just an example of the variety of things I was trying.&nbsp; If I move the task I want to use in the root folder I do see it,\r\n but still nothing in the sub folders.</p>\r\n<p>Any help would be greatly appreciated.</p>\r\n<pre>   Dim mtask As TaskService = Nothing\r\n    Dim fold As TaskFolder\r\n    Dim f As TaskFolderCollection\r\n    If mtask Is Nothing Then\r\n      mtask = New TaskService(&quot;\\\\&quot; &amp; mTaskSrv)\r\n    End If\r\n    For Each tf As TaskFolder In mtask.RootFolder.SubFolders\r\n      Console.WriteLine(tf.Path)\r\n      For Each tf2 As TaskFolder In tf.SubFolders\r\n        Console.WriteLine(&quot;  -&quot; &amp; tf2.Path)\r\n        For Each tf3 As TaskFolder In tf2.SubFolders\r\n          Console.WriteLine(&quot;  -  - &quot; &amp; tf3.Path)\r\n        Next\r\n      Next\r\n    Next\r\n    fold = mtask.RootFolder\r\n    f = fold.SubFolders\r\n    For Each t As Task In mtask.RootFolder.Tasks\r\n\r\n    Next\r\n\r\n    mSchTask = mtask.FindTask(taskname)</pre>\r\n",
+    "PostedDate": "2012-05-30T07:41:28.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848532",
+    "ThreadId": "357667",
+    "Html": "\r\n<p>Do you see folders enumerated but no tasks are found within them or do you not even see folders?</p>\r\n",
+    "PostedDate": "2012-06-13T10:28:47.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

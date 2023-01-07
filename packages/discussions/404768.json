@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "947866",
+    "ThreadId": "404768",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am using TaskService class running on Windows server 2008 system&nbsp;to connect remotely&nbsp;to Task Scheduler on another Windows server system. The relevant code snippet follows:</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">var</span> ts = <span style=\"color:blue\">new</span> TaskService(IP address, userId, domain, password);\n<span style=\"color:blue\">foreach</span> (Task task <span style=\"color:blue\">in</span> ts.RootFolder.Tasks)\n{\nConsole.Writeline(task.Definition.Principal.UserId);\n}\n\n</pre>\r\n</div>\r\n<p>This works great when the target is Windows 2008, but with Windows server 2012 I get the following COM exception:</p>\r\n<p>&quot;The task XML contains a value which is incorrectly formatted or out of range. (Exception from HRESULT: 0x80041318)&quot;</p>\r\n<p>I examined the Task's Xml property returned above. The only difference I see is that it is&nbsp;&lt;Task version=\\&quot;1.4\\&quot; for Windows 2012, but&nbsp;&lt;Task version=\\&quot;1.3\\&quot; or lower when remote system is Windows 2008 or Windows 7.</p>\r\n<p>Is there a way to target Win 2012 Task Scheduler remotely from Windows 2008 system?</p>\r\n<p>Thanks, Vasu</p>\r\n",
+    "PostedDate": "2012-11-27T11:05:21.063-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949219",
+    "ThreadId": "404768",
+    "Html": "\r\n<p>I don't have two systems to test this on, but I'm curious which line in the code above is throwing the exception? Will you send me the stack information?</p>\r\n",
+    "PostedDate": "2012-11-29T12:59:17.773-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "950480",
+    "ThreadId": "404768",
+    "Html": "\r\n<p>The property accessor task.Definition is throwing the exception:</p>\r\n<p></p>\r\n<pre><span style=\"color:#ff0000\">System.Runtime.InteropServices.COMException (0x80041318): The task XML contains\r\na value which is incorrectly formatted or out of range. (Exception from HRESULT:\r\n 0x80041318)\r\n   at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.get_Definition()\r\n   at Microsoft.Win32.TaskScheduler.Task.get_Definition()</span>\r\n</pre>\r\n<p></p>\r\n<p>And task.Xml is:</p>\r\n<p><span style=\"color:#800000\">&lt;?xml version=\\&quot;1.0\\&quot; encoding=\\&quot;UTF-16\\&quot;?&gt;\\r\\n&lt;Task version=\\&quot;1.4\\&quot; xmlns=\\&quot;http://schemas.microsoft.com/windows/2004/02/mit/task\\&quot;&gt;\\r\\n &nbsp;&lt;RegistrationInfo&gt;\\r\\n &nbsp; &nbsp;&lt;Source&gt;$(@%SystemRoot%\\\\system32\\\\twinapi.dll,-8000)&lt;/Source&gt;\\r\\n\r\n &nbsp; &nbsp;&lt;Author&gt;$(@%SystemRoot%\\\\system32\\\\twinapi.dll,-8001)&lt;/Author&gt;\\r\\n &nbsp; &nbsp;&lt;Description&gt;$(@%SystemRoot%\\\\system32\\\\twinapi.dll,-8002)&lt;/Description&gt;\\r\\n &nbsp;&lt;/RegistrationInfo&gt;\\r\\n &nbsp;&lt;Triggers&gt;\\r\\n &nbsp; &nbsp;&lt;IdleTrigger&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;Enabled&gt;true&lt;/Enabled&gt;\\r\\n &nbsp; &nbsp;&lt;/IdleTrigger&gt;\\r\\n\r\n &nbsp;&lt;/Triggers&gt;\\r\\n &nbsp;&lt;Principals&gt;\\r\\n &nbsp; &nbsp;&lt;Principal id=\\&quot;AnyUser\\&quot;&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;UserId&gt;S-1-5-21-3496727714-3193957637-3381071595-500&lt;/UserId&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;LogonType&gt;InteractiveToken&lt;/LogonType&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;\\r\\n &nbsp; &nbsp;&lt;/Principal&gt;\\r\\n &nbsp;&lt;/Principals&gt;\\r\\n\r\n &nbsp;&lt;Settings&gt;\\r\\n &nbsp; &nbsp;&lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;\\r\\n &nbsp; &nbsp;&lt;DisallowStartIfOnBatteries&gt;false&lt;/DisallowStartIfOnBatteries&gt;\\r\\n &nbsp; &nbsp;&lt;StopIfGoingOnBatteries&gt;false&lt;/StopIfGoingOnBatteries&gt;\\r\\n &nbsp; &nbsp;&lt;AllowHardTerminate&gt;false&lt;/AllowHardTerminate&gt;\\r\\n\r\n &nbsp; &nbsp;&lt;StartWhenAvailable&gt;false&lt;/StartWhenAvailable&gt;\\r\\n &nbsp; &nbsp;&lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;\\r\\n &nbsp; &nbsp;&lt;IdleSettings&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;Duration&gt;PT0M&lt;/Duration&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;StopOnIdleEnd&gt;false&lt;/StopOnIdleEnd&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;\\r\\n\r\n &nbsp; &nbsp;&lt;/IdleSettings&gt;\\r\\n &nbsp; &nbsp;&lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;\\r\\n &nbsp; &nbsp;&lt;Enabled&gt;false&lt;/Enabled&gt;\\r\\n &nbsp; &nbsp;&lt;Hidden&gt;false&lt;/Hidden&gt;\\r\\n &nbsp; &nbsp;&lt;UseUnifiedSchedulingEngine&gt;false&lt;/UseUnifiedSchedulingEngine&gt;\\r\\n &nbsp; &nbsp;&lt;RunOnlyIfIdle&gt;true&lt;/RunOnlyIfIdle&gt;\\r\\n &nbsp; &nbsp;&lt;WakeToRun&gt;false&lt;/WakeToRun&gt;\\r\\n\r\n &nbsp; &nbsp;&lt;ExecutionTimeLimit&gt;PT0S&lt;/ExecutionTimeLimit&gt;\\r\\n &nbsp; &nbsp;&lt;Priority&gt;7&lt;/Priority&gt;\\r\\n &nbsp;&lt;/Settings&gt;\\r\\n &nbsp;&lt;Actions Context=\\&quot;AnyUser\\&quot;&gt;\\r\\n &nbsp; &nbsp;&lt;ComHandler&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;ClassId&gt;{2D3F8A1B-6DCD-4ED5-BDBA-A096594B98EF}&lt;/ClassId&gt;\\r\\n &nbsp; &nbsp; &nbsp;&lt;Data&gt;&lt;![CDATA[$(Arg0)]]&gt;&lt;/Data&gt;\\r\\n\r\n &nbsp; &nbsp;&lt;/ComHandler&gt;\\r\\n &nbsp;&lt;/Actions&gt;\\r\\n&lt;/Task&gt;&quot;</span></p>\r\n",
+    "PostedDate": "2012-12-03T03:52:46.713-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010024",
+    "ThreadId": "404768",
+    "Html": "Hi,\r<br />\nI got the same problem, The property task.Definition is throwing the same exception.\r<br />\nI'm trying to get Scheduled Tasks from Windows 2012 and Windows 8, and get the same exception.\r<br />\nAny idea how to fix this ?\r<br />\nI have tried with the latest Release version 1.9.3.\r<br />\n<br />\nThanks,\r<br />\nYossi<br />\n",
+    "PostedDate": "2013-03-04T08:11:21.11-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1010135",
+    "ThreadId": "404768",
+    "Html": "I'm trying to setup an environment that will let me test this. Until I can, I would try setting the TaskDefinition's Settings.Compatibility property to TaskCompatibility.V2_1 when registering the task. Unfortunately, this may be a limitation of the underlying COM library from Microsoft.<br />\n",
+    "PostedDate": "2013-03-04T11:35:59.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1040907",
+    "ThreadId": "404768",
+    "Html": "Hi dahall,<br />\nThank you for your effort, is there any progress with this issue ?<br />\n<br />\nI think that you are right, I suspect that the issue is caused by the underlying Task Scheduler COM library, I fear that this scenario is not supported.<br />\nCan we find some workaround for this limitation ?<br />\n<br />\nWindows 8 is able to talk to Windows 7/2008’s Task Scheduler - just the other way around is not working today.<br />\nThis is very surprising. my expectation would be that the ITaskService::Connect function negotiates the protocol that is used to talk between Windows 7/2008 and 8 - similar to what SMB does. (E.g. if one endpoint “speaks” Task Scheduler 1.3 and the other 1.4, then they should fall back to version 1.3)<br />\n<br />\n<br />\nThanks,<br />\nYossi<br />\n",
+    "PostedDate": "2013-05-08T08:00:15.16-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1041401",
+    "ThreadId": "404768",
+    "Html": "As I mentioned, I don't have a system to test this on, but I have an idea for someone to try. Instead of trying to get the Definition, will someone try getting the Xml and see if an exception is ever thrown? For example,<br />\n<pre><code>var ts = new TaskService(IP address, userId, domain, password);\nforeach (Task task in ts.RootFolder.Tasks)\n{\n  Console.Writeline(task.Xml);\n}</code></pre>\n\nMy theory is that the 1.3 library chokes on parsing the 1.4 XML. While Microsoft may not chose to fix this, I may be able to work around it in my code. I'm also curious if there are XML results that have the 1.3 version (or earlier) as then the library could just exclude those it can't understand and work with those it can.<br />\n",
+    "PostedDate": "2013-05-09T07:54:31.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1046902",
+    "ThreadId": "404768",
+    "Html": "Hi,\r<br />\nI tried the code, i can get the XML,  it's not throwing any exceptions and the XML is printed to the console.\r<br />\nI got 2 XML's with 1.4 version in the root folder.\r<br />\nI found some tasks with version 1.3 in sub folders.\r<br />\n<br />\nCan we try the work around ? i can check if it's works on my Windows 8 and Windows 2012 systems.\r<br />\n<br />\nThanks again,\r<br />\nYossi<br />\n",
+    "PostedDate": "2013-05-22T00:40:13.81-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1104021",
+    "ThreadId": "404768",
+    "Html": "Hi,\r<br />\n<br />\nThis library has been great except for a couple of issue. I tried to use TaskCompatibility.V2_1 by setting the RegisterOnAccept to false so I can change the compatibility before registering the task. That worked but introduced a whole new can of worms … the need for validating and getting passwords etc.\r<br />\n<br />\nIs there a resolution for this issue yet or a way to remove TaskCompatibility.V2_2 from the TaskEditDialog and initialize it to TaskCompatibility.V2_1? If I can do that then I can rely on the RegisterOnAccept being set to true and everything working correctly.\r<br />\n<br />\nThanks,\r<br />\nErwin<br />\n",
+    "PostedDate": "2013-10-05T10:37:43.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "The option for \"Start the task only if ... AC power\" is TaskDefinition.Settings.DisallowStartIfOnBatteries and for \"Stop if the computer switches to battery power\" is TaskDefinition.Settings.StopIfGoingOnBatteries.",
+    "ClosedDate": "2014-05-08T08:00:39.12-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\nI need to enable the task executions even if the notebook is using battery.\nI've seen that using the \"Task Conditions\" from the \"Windows Task Scheduler\" panel I can set the options needed, how I can perform this operation using the \"Task Scheduler Managed Wrapper\"?\nThanks.\n\n\n![Image](http://www.pcwintech.com/files/task_sched5.jpg)",
+    "LastUpdatedDate": "2017-12-11T21:32:29.42-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-05-08T05:58:05.043-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Personalize task conditions for battery use",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 11706
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "It works! \nThanks!!!",
+      "PostedDate": "2014-05-09T00:10:26.98-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-12-11T21:32:29.42-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

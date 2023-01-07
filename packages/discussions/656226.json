@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1478447",
+    "ThreadId": "656226",
+    "Html": "Hello! Thanks for the great work.\r<br />\n<br />\nI'm trying to compile under 4.0 client (which is the latest included by default in Windows 7 SP1) and I'm facing this error:<br />\n<blockquote>\n.NETFramework,Version=v2.0,Profile=Client&quot; were not found. To resolve this, install the SDK or Targeting Pack for this framework version or retarget your application to a version of the framework for which you have the SDK or Targeting Pack installed. Note that assemblies will be resolved from the Global Assembly Cache (GAC) and will be used in place of reference assemblies. Therefore your assembly may not be correctly targeted for the framework you intend.\t<br />\n</blockquote>\nIt is compiling, I see the 4.0 under bin updating.\r<br />\nThe problem is that after being sure it compiles correctly I'd like to include it directly into my project.\r<br />\nHow can I disable compiling for all architectures but 4.0 client?\r<br />\nI can't seem to find that configuration anywhere, I'm sorry if this is very basic or not directly related to your project.<br />\n",
+    "PostedDate": "2016-07-08T08:51:26.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478487",
+    "ThreadId": "656226",
+    "Html": "This library requires assemblies in the full .NET 4.0 library and does not support the .NET 4.0 Client Profile.<br />\n",
+    "PostedDate": "2016-07-08T17:24:24.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-07-20T11:12:50.66-07:00"
+  }
+]

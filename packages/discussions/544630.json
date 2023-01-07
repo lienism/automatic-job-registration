@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1242723",
+    "ThreadId": "544630",
+    "Html": "What ports need to be opened in order for this library to be fully functional? If I open up all ports on my server, everything works. If I do not open up all ports, I get &quot;The request is not supported&quot; exceptions.<br />\n",
+    "PostedDate": "2014-05-07T12:21:51.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242761",
+    "ThreadId": "544630",
+    "Html": "By using wireshark, I have concluded TCP ports 135 and 49155 are needed.<br />\n",
+    "PostedDate": "2014-05-07T14:12:16.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-07T14:12:24.26-07:00"
+  }
+]

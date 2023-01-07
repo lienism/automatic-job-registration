@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "608672",
+    "ThreadId": "256692",
+    "Html": "<p>Hello,<br /> <br /> First of all I'd like to thank all the developers of this project for the hard work, this was just what I was looking for.<br /> <br /> I've started experimenting with the library and having issues with TaskEditorDialog.<br /> Using the example of 'using the editor', here's what I'm getting:</p>\n<p><a href=\"http://imageshack.us/photo/my-images/98/taskeditordialog.jpg/\" target=\"_blank\"><img src=\"http://img98.imageshack.us/img98/1664/taskeditordialog.th.jpg\" border=\"0\" alt=\"\" /></a></p>\n<p>Even if I resize the window it doesn't help, it'll keep displaying wrong.<br /> I'm using version 1.61 by the way.</p>\n<p>Thanks!</p>",
+    "PostedDate": "2011-05-06T12:22:32.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608743",
+    "ThreadId": "256692",
+    "Html": "<p>It looks like automatic scaling of the dialog isn't working. Do you have any special settings for system font size or text size? I'd like to try and recreate your environment.</p>",
+    "PostedDate": "2011-05-06T15:29:45.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608747",
+    "ThreadId": "256692",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://taskscheduler.codeplex.com/workitem/8587\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2011-05-06T15:49:15.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608751",
+    "ThreadId": "256692",
+    "Html": "<p>Please check out the file attached to the work item linked above and tell me if it helps.</p>",
+    "PostedDate": "2011-05-06T15:52:19.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608865",
+    "ThreadId": "256692",
+    "Html": "<p>Fixed in 1.6.2</p>",
+    "PostedDate": "2011-05-06T22:57:19.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "608917",
+    "ThreadId": "256692",
+    "Html": "<p>I have posted some more feedback on the issue in the work item you created.</p>\n<p>EDIT: Forgot to mention, feedback is on 1.6.2.</p>\n<p><br /> Thanks again.&nbsp;</p>",
+    "PostedDate": "2011-05-07T04:20:35.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

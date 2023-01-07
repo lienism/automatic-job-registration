@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1051699",
+    "ThreadId": "445711",
+    "Html": "Thanks for your product.<br />\nI'm trying to use ShowMessageAction but an error happened when an Instance was created.<br />\nWhen will &quot;v2&quot; becomes available? And before that, how can I show a message at a specified time?<br />\nThank you.<br />\n",
+    "PostedDate": "2013-06-02T01:53:50.433-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1051879",
+    "ThreadId": "445711",
+    "Html": "ShowMessageAction has been working for many years and will display a message to the user at a specified time. The OS must be Vista or later. There is an example within the Documentation section that shows how to use it.<br />\n",
+    "PostedDate": "2013-06-02T16:37:13.89-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1051979",
+    "ThreadId": "445711",
+    "Html": "But when I use it, an error occurs like this image:\r<br />\n<img src=\"http://www.imagetoo.com/images/errorksk.png\" alt=\"Image\" />\r<br />\nI'm using windows 8 and Execaction works perfectly.\r<br />\nPlease help me. Thank you.<br />\n",
+    "PostedDate": "2013-06-03T00:16:17.617-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1052232",
+    "ThreadId": "445711",
+    "Html": "This could mean that you have an invalid character used in the message.<br />\n",
+    "PostedDate": "2013-06-03T09:22:32.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1053636",
+    "ThreadId": "445711",
+    "Html": "This is my code:\r<br />\n<a href=\"mailto:ts.AddTask(@&quot;HomeBot\\Task0&quot;,\" rel=\"nofollow\">ts.AddTask(@\"HomeBot\\Task0\",</a> new TimeTrigger(DateTime.Now.AddMilliseconds(15)), new ShowMessageAction(&quot;gdgd&quot;,&quot;Gdgd&quot;));\r<br />\nHelp me.<br />\n",
+    "PostedDate": "2013-06-06T09:30:19.753-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057297",
+    "ThreadId": "445711",
+    "Html": "Make sure than when you instantiate the TaskService object, you are not specifying &quot;true&quot; for the forceV1 parameter in the constructor or setting the HighestSupportedVersion property to something lower than or equal to 1.1.<br />\n",
+    "PostedDate": "2013-06-15T14:34:26.293-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1057383",
+    "ThreadId": "445711",
+    "Html": "I'm sure about that.\r<br />\nCause I just use Default Contructor of TaskService.\r<br />\nAnd no code change the  the HighestSupportedVersion property.\r<br />\nWhen I show this property, It's 1.4<br />\n",
+    "PostedDate": "2013-06-16T05:02:27.66-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

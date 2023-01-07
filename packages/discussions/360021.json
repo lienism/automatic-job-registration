@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "850468",
+    "ThreadId": "360021",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I am trying to set a new task with a weekly trigger. It should run every day, but at different times. For example Monday 8am, Tuesday 11am, Wednesday 8pm....</p>\r\n<p>With Win7 i have no problems, but with WindowsXP it does'nt work right. Perhaps I made a mistake?</p>\r\n<p>Here's my code</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n                {\r\n                   <span style=\"color:green\">// Retrieve the task, change the trigger and re-register it</span>\r\n                    Task t = ts.GetTask(strTaskName);\r\n                    TaskDefinition td = ts.NewTask();\r\n\r\n                    <span style=\"color:blue\">if</span> (t == <span style=\"color:blue\">null</span>)           <span style=\"color:green\">// TaskDefinition neu f�llen</span>\r\n                    {\r\n                        <span style=\"color:green\">// Display version and server state</span>\r\n                        Version ver = ts.HighestSupportedVersion;\r\n                        <span style=\"color:blue\">bool</span> newVer = (ver &gt;= <span style=\"color:blue\">new</span> Version(1, 2));\r\n\r\n                        <span style=\"color:green\">// Beschreibung</span>\r\n                        td.RegistrationInfo.Description = strTaskBeschreibung;\r\n\r\n                        <span style=\"color:green\">// Login-Typ</span>\r\n                        <span style=\"color:blue\">if</span> (newVer)\r\n                            td.Principal.LogonType = TaskLogonType.S4U;\r\n                        <span style=\"color:blue\">else</span>\r\n                            td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n                    }\r\n                    <span style=\"color:blue\">else</span>                    <span style=\"color:green\">// aktuelle TaskDefinition holen</span>\r\n                    {\r\n                        td = t.Definition;\r\n                    }\r\n                    \r\n                    <span style=\"color:green\">// Trigger hinzuf�gen</span>\r\n                    td.Triggers.Clear();\r\n\r\n                    DateTime dateNow = DateTime.Now;\r\n                    <span style=\"color:blue\">foreach</span> (<span style=\"color:blue\">var</span> item <span style=\"color:blue\">in</span> listTriggerWoche)\r\n                    {\r\n                        TriggerWoche triggerAktuell = (TriggerWoche)item;\r\n\r\n                        <span style=\"color:green\">// Startzeit</span>\r\n                        DateTime time = <span style=\"color:blue\">new</span> DateTime(dateNow.Year, dateNow.Month, dateNow.Day, triggerAktuell.Stunde, triggerAktuell.Minute, 0);\r\n\r\n                        <span style=\"color:green\">// w�chentlichen Trigger hinzuf�gen</span>\r\n                        <span style=\"color:blue\">switch</span> (triggerAktuell.Tag)\r\n                        {\r\n                            <span style=\"color:blue\">case</span> 0: WeeklyTrigger wt1 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Monday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 1: WeeklyTrigger wt2 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Tuesday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 2: WeeklyTrigger wt3 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Wednesday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 3: WeeklyTrigger wt4 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Thursday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 4: WeeklyTrigger wt5 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Friday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 5: WeeklyTrigger wt6 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Saturday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                            <span style=\"color:blue\">case</span> 6: WeeklyTrigger wt7 = (WeeklyTrigger)td.Triggers.Add(<span style=\"color:blue\">new</span> WeeklyTrigger { DaysOfWeek = DaysOfTheWeek.Sunday, StartBoundary = time }); <span style=\"color:blue\">break</span>;\r\n                        }\r\n                    }\r\n\r\n                    td.Actions.Clear();\r\n                    td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(strPfadExecuteDatei, <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:blue\">null</span>));\r\n\r\n                    <span style=\"color:green\">// Aufgabe (wieder) registrieren</span>\r\n                    ts.RootFolder.RegisterTaskDefinition(strTaskName, td);\r\n                }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>&nbsp;</p>\r\n<p>Now - if i try to get the days of the weekly triggers, i always get sunday?</p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<pre>using (TaskService ts = new TaskService())\r\n                {\r\n                    Task t = ts.GetTask(strTaskName);\r\n                    TaskDefinition td = ts.NewTask();\r\n\r\n                    if (t == null)           // TaskDefinition neu f�llen\r\n                    {\r\n                        return;\r\n                    }\r\n                    else                    // aktuelle TaskDefinition holen\r\n                    {\r\n                        td = t.Definition;\r\n                    }\r\n\r\n                   foreach (var item in td.Triggers)\r\n                    {\r\n                        Trigger trigger = (Trigger)item;\r\n                        TaskTriggerType typ = trigger.TriggerType;\r\n\r\n                        if (typ == TaskTriggerType.Weekly)\r\n                        {\r\n                            WeeklyTrigger weeklyTrigger = (WeeklyTrigger)trigger;\r\nDaysOfTheWeek = trigger.DaysOfWeek;\r\n// i always get sunday ?\r\n                    }\r\n                }</pre>\r\n<p></p>\r\n",
+    "PostedDate": "2012-06-18T11:05:22.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850485",
+    "ThreadId": "360021",
+    "Html": "<p>Will you try using the assemblies in the zip file found at <a href=\"http://taskscheduler.codeplex.com/workitem/10118\">http://taskscheduler.codeplex.com/workitem/10118</a>&nbsp;and let me know if you're still experiencing the problem under XP?</p>",
+    "PostedDate": "2012-06-18T11:40:02.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850721",
+    "ThreadId": "360021",
+    "Html": "<p>Wow, fast answer :-)</p>\r\n<p>I will try it and let you know!</p>",
+    "PostedDate": "2012-06-19T00:32:45.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850727",
+    "ThreadId": "360021",
+    "Html": "<p>Thank you very very much, it works!</p>",
+    "PostedDate": "2012-06-19T00:52:10.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850924",
+    "ThreadId": "360021",
+    "Html": "<p>I'll officially release those bits you tested as 1.8.3 later today.</p>",
+    "PostedDate": "2012-06-19T07:55:37.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

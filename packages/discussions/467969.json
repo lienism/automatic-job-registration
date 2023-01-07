@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1121825",
+    "ThreadId": "467969",
+    "Html": "I've create a task using this library, that worked.<br />\n<br />\nNow when I use the TaskEdit dialog in the following way:<br />\n<pre><code>Using D As New TaskEditDialog()\n    Using Tsk As Task = ts.GetTask(&quot;\\MyTasks\\Task1&quot;)\n        D.Editable = True\n        D.RegisterTaskOnAccept = True\n        D.Initialize(Tsk)\n    End Using\nEnd Using</code></pre>\n\nI get a COMException with __error code -2147216615 __and a message of <strong>(45,8):Period:</strong>. I have noticed that if I change the <strong>Configure For</strong> dropdown to Windows 7, Windows Server 2008 R2 it saves.<br />\n<br />\nWhat am I doing wrong or does this library not support Windows 8.1 as yet?<br />\n",
+    "PostedDate": "2013-11-11T07:22:53.467-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122435",
+    "ThreadId": "467969",
+    "Html": "I'm not sure what is causing your error. I would change your code sample to:<br />\n<pre><code>Using D as New TaskEditDialog(ts.GetTask(&quot;\\MyTasks\\Task1&quot;), True, True)\n   D.ShowDialog()\nEnd Using</code></pre>\n\nLet me know if that changes anything. I had tested this on 8.1. If you are seeing the error still, please post the result of the D.Task.Xml after calling the constructor (or Initialize) but before calling ShowDialog.<br />\n",
+    "PostedDate": "2013-11-12T09:16:07.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1122469",
+    "ThreadId": "467969",
+    "Html": "Hi thanks for the suggestion but unfortunately it didn't work. The output from D.Task.xml is:<br />\n<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;\n&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;\n    &lt;RegistrationInfo&gt;\n        &lt;Source&gt;MyApp&lt;/Source&gt;\n        &lt;Author&gt;Me&lt;/Author&gt;\n        &lt;Description&gt;Collect Totals&lt;/Description&gt;\n    &lt;/RegistrationInfo&gt;\n    &lt;Triggers&gt;\n        &lt;CalendarTrigger&gt;\n            &lt;StartBoundary&gt;2013-11-12T18:00:00&lt;/StartBoundary&gt;\n            &lt;Enabled&gt;true&lt;/Enabled&gt;\n            &lt;ScheduleByDay&gt;\n                &lt;DaysInterval&gt;1&lt;/DaysInterval&gt;\n            &lt;/ScheduleByDay&gt;\n        &lt;/CalendarTrigger&gt;\n    &lt;/Triggers&gt;\n    &lt;Settings&gt;\n        &lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;\n        &lt;DisallowStartIfOnBatteries&gt;false&lt;/DisallowStartIfOnBatteries&gt;\n        &lt;StopIfGoingOnBatteries&gt;true&lt;/StopIfGoingOnBatteries&gt;\n        &lt;AllowHardTerminate&gt;true&lt;/AllowHardTerminate&gt;\n        &lt;StartWhenAvailable&gt;true&lt;/StartWhenAvailable&gt;\n        &lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;\n        &lt;IdleSettings&gt;\n            &lt;Duration&gt;PT10M&lt;/Duration&gt;\n            &lt;WaitTimeout&gt;PT1H&lt;/WaitTimeout&gt;\n            &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;\n            &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;\n        &lt;/IdleSettings&gt;\n        &lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;\n        &lt;Enabled&gt;true&lt;/Enabled&gt;\n        &lt;Hidden&gt;true&lt;/Hidden&gt;\n        &lt;RunOnlyIfIdle&gt;false&lt;/RunOnlyIfIdle&gt;\n        &lt;WakeToRun&gt;true&lt;/WakeToRun&gt;\n        &lt;ExecutionTimeLimit&gt;PT72H&lt;/ExecutionTimeLimit&gt;\n        &lt;Priority&gt;7&lt;/Priority&gt;\n        &lt;RestartOnFailure&gt;\n            &lt;Interval&gt;PT1M&lt;/Interval&gt;\n            &lt;Count&gt;3&lt;/Count&gt;\n        &lt;/RestartOnFailure&gt;\n    &lt;/Settings&gt;\n    &lt;Actions Context=&quot;Author&quot;&gt;\n        &lt;Exec&gt;\n            &lt;Command&gt;C:\\Users\\darm\\Documents\\Visual Studio 2010\\Projects\\MyApp\\Deliverable\\Application\\Task Runner.exe&lt;/Command&gt;\n            &lt;Arguments&gt;action=1&lt;/Arguments&gt;\n        &lt;/Exec&gt;\n    &lt;/Actions&gt;\n    &lt;Principals&gt;\n        &lt;Principal id=&quot;Author&quot;&gt;\n            &lt;UserId&gt;DG750\\darm&lt;/UserId&gt;\n            &lt;LogonType&gt;InteractiveToken&lt;/LogonType&gt;\n            &lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;\n        &lt;/Principal&gt;\n    &lt;/Principals&gt;\n&lt;/Task&gt;\n</code></pre>\n\n",
+    "PostedDate": "2013-11-12T10:52:06.75-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126415",
+    "ThreadId": "467969",
+    "Html": "Hi is there any news on this issue?<br />\n",
+    "PostedDate": "2013-11-19T01:20:07.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1149659",
+    "ThreadId": "467969",
+    "Html": "I've also encountered this issue! I'm using C# and am getting the exact same exception for TaskEditDialog. When I change the dropdown to Windows 7, Windows Server 2008 R2, task saves fine.\r<br />\nThis error appears when using the example code snippet for TaskEditDialog on the website. \r<br />\nI'd be very interested to know of any updates.<br />\n",
+    "PostedDate": "2014-01-05T03:11:06.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1150506",
+    "ThreadId": "467969",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/11504\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2014-01-07T08:53:47.19-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

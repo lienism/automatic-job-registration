@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1312114",
+    "ThreadId": "569473",
+    "Html": "Hi everyone<br />\n<br />\nI have been testing creating/updating/deleting/getting task scheduler with Task Scheduler Managed Wrapper.<br />\n<br />\nIn the part of getting task . I would like to know how to  get  history list  of any task to display in web page as figure  shown in below.<br />\n<img src=\"http://i59.tinypic.com/2d7zvd3.png\" alt=\"Image\" /><br />\n<br />\nI have posted simple codes but now I have not found any solutions for this issue yet.<br />\nI am not sure whether &quot;Task Scheduler Managed Wrapper&quot; provide  class , method  property  or anyway for getting history of task.<br />\n<pre><code>protected void ButtonGetTask_Click(object sender, EventArgs e)\n    {\n        using (TaskService ts = new TaskService())\n        {\n            try\n            {\n                Microsoft.Win32.TaskScheduler.Task task = ts.GetTask(TextBoxTaskName.Text);\n      \n                TaskDefinition td = task.Definition;\n              \n                Label1.Text = &quot;Name=&quot; + task.Name + &quot;/IsActive=&quot; + task.IsActive + &quot;/State=&quot; + task.State.ToString()  + &quot;/Des=&quot; + td.RegistrationInfo.Description;\n              \n                ButtonDelete.Visible = true;\n\n            }\n            catch (Exception ex)\n            {\n\n                Response.Write(ex.Message);\n            }\n            \n        }\n    }\n</code></pre>\n\nPlease recommend me.<br />\nThank you for your help.<br />\nJohn<br />\n",
+    "PostedDate": "2014-10-10T03:25:56.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1312787",
+    "ThreadId": "569473",
+    "Html": "Look at <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation#history\" rel=\"nofollow\">this example</a> in the documentation.<br />\n",
+    "PostedDate": "2014-10-13T08:00:29.587-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-22T23:00:13.31-07:00"
+  }
+]

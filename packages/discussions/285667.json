@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "723264",
+    "ThreadId": "285667",
+    "Html": "\r\n<p>I downloaded V73186 and i get two missing references i can't resolve: Cubic.Orange.Windows.Forms and GroupControls. I search on CubicOrange and didn't see anything. Are these assemblies in codeplex somewhere?</p>\r\n",
+    "PostedDate": "2012-01-10T10:43:18.283-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "723440",
+    "ThreadId": "285667",
+    "Html": "<p>All dependent assemblies can be found in the TaskScheduleEditor download for the latest release.</p>",
+    "PostedDate": "2012-01-10T19:11:51.013-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

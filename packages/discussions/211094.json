@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "437356",
+    "ThreadId": "211094",
+    "Html": "<p>Hello guys,</p>\r\n<p>&nbsp;</p>\r\n<p>Im having problem creating more than 1024 task in my machine Windows Server 2003 SP2. It seems that there is a limit on the number of task that can be created in a specific account.</p>\r\n<p>Im trying to use system account but still im getting the same problem.</p>\r\n<p>If any of you encountered the same problem. Please help.</p>\r\n<p>Thanks guys,</p>\r\n<p>This is a great project !!! :)</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2010-04-29T17:05:29.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "438104",
+    "ThreadId": "211094",
+    "Html": "<p>I have just tested this under the 2.0 engine (Vista &amp; Win2K8 Server and later) and there is not this limitation. I would venture that this is a limitation of the 1.0 engine though I have never heard of it. I do not have a system to test this theory on though.</p>",
+    "PostedDate": "2010-05-02T14:32:05.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "440164",
+    "ThreadId": "211094",
+    "Html": "<blockquote style=\"border:solid .1em #ccc;font-style:italic;margin:.25em 1em 0 1em;padding:0 .25em 0 .25em\"><strong>dahall wrote:</strong><br>\r\n<p>I have just tested this under the 2.0 engine (Vista &amp; Win2K8 Server and later) and there is not this limitation. I would venture that this is a limitation of the 1.0 engine though I have never heard of it. I do not have a system to test this theory on though.</p>\r\n</blockquote>\r\n<p>Hi dahall,</p>\r\n<p>Thanks for your reply.</p>\r\n<p>I can now create 10,000 tasks in Win2k8 server but the problem the tasks are not triggered anymore.</p>\r\n<p>I scheduled the 10K tasks to run every 1minute.</p>\r\n<p>My machine is 68G RAM, 8 x processor...</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks,</p>\r\n<p>jemson</p>",
+    "PostedDate": "2010-05-06T20:18:16.287-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

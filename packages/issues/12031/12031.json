@@ -1,0 +1,95 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-03-19T11:46:54.553-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I've created a task with a trigger that starts a custom Windows Form application \"At log on\" of a specific user. In order for the task to succeed in running the application upon log on of the specific user, I must specify the specific user and their password when registering the task definition (ie:  ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate...). I'm able to save/register the task, but the \"Run whether user is logged on or not\" option gets enabled under the \"General > Security options\" tab in the Task Manager. Thus, my application cannot start. When I manually change the Security option to \"Run only when user is logged on\" my application starts fine upon login. The problem is that I cannot set this option programmatically in ver 2.0 of the library.\n\nIn addition, I should not have to specify a password in the definition of the task if the \"Run only when user is logged on\" option is enabled because the user enters a password upon log on. When creating the task in the Task Scheduler manually, it does not prompt for a password.\n\nHow can I get this working so my application will start.",
+    "LastUpdatedDate": "2015-03-19T11:46:54.553-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-03-04T09:00:56.963-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Need to Set \"RunOnlyIfLoggedOn\" in Ver 2.0",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12031
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Have you tried to set the TaskDefinition.Settings.RunOnlyIfLoggedOn property?",
+      "PostedDate": "2015-03-06T07:51:54.157-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes, but it does not allow it under v2",
+      "PostedDate": "2015-03-06T09:22:13.467-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "My mistake. To get the effect of that property, you will need to register the task using a TaskLogonType of InteractiveToken or InteractiveTokenOrPassword. The first takes no username or password and the second requires both. Under v2, the logon type determines the state of that checkbox.",
+      "PostedDate": "2015-03-06T12:56:17.073-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes, but the problem is I cant use the InteractiveToken because I must run the task as a different user. Also, the different user's password is unknown. This task definition can be set up manually the way I'm describing, or via the schtasks.exe command line utility. For now, I've written a supplemental addition to the taskscheduler code as a workaround using the schtasks utility. But this is less than desirable:\r\n\r\n        private void setLaunchTaskLogonUser()\n        {\n            ProcessStartInfo procSchtaskInfo = new ProcessStartInfo(Environment.SystemDirectory + \"\\\\schtasks.exe\", \"/change /RU \" + settings.Default.Gen_StartOnLoginUser + \" /TN Launch_Network_Manager\")\n            {\n                CreateNoWindow = true,\n                RedirectStandardOutput = true,\n                RedirectStandardError = true,\n                RedirectStandardInput = true,\n                UseShellExecute = false\n            };\r\n\r\n            Process procSchtask = Process.Start(procSchtaskInfo);\n            procSchtask.Start();\r\n\r\n            procSchtask.StandardInput.WriteLine((char)Keys.Return); //required to enter no password when prompted\n            procSchtask.WaitForExit();\n            procSchtask.Close();\n            \n            return;\n        }\r\n\r\nUsing this workaround, I know have a task that was created by an administrator, but run as a Standard User under the standard user's account.",
+      "PostedDate": "2015-03-09T08:30:52.85-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "On a machine that has used this last bit of schtasks code, will you then go into the Task Scheduler applet and export the XML for the task and post it. I should then be able to tell you how to get that same result using the API.",
+      "PostedDate": "2015-03-09T09:22:04.35-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thank you. Here it is...\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n<Task version=\"1.3\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">\n  <RegistrationInfo>\n    <Author></Author>\n    <Description>Launches Newtwork Connection Manager upon login.</Description>\n  </RegistrationInfo>\n  <Triggers>\n    <LogonTrigger>\n      <StartBoundary>1900-01-01T00:00:00</StartBoundary>\n      <Enabled>true</Enabled>\n      <UserId>JEFFL-PC\\GUEST</UserId>\n    </LogonTrigger>\n  </Triggers>\n  <Principals>\n    <Principal id=\"Inteset_Launch_Network_Connection_Manager\">\n      <UserId>JEFFL-PC\\GUEST</UserId>\n      <LogonType>InteractiveToken</LogonType>\n      <RunLevel>HighestAvailable</RunLevel>\n    </Principal>\n  </Principals>\n  <Settings>\n    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>\n    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>\n    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>\n    <AllowHardTerminate>false</AllowHardTerminate>\n    <StartWhenAvailable>false</StartWhenAvailable>\n    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>\n    <IdleSettings>\n      <Duration>PT10M</Duration>\n      <WaitTimeout>PT1H</WaitTimeout>\n      <StopOnIdleEnd>false</StopOnIdleEnd>\n      <RestartOnIdle>false</RestartOnIdle>\n    </IdleSettings>\n    <AllowStartOnDemand>true</AllowStartOnDemand>\n    <Enabled>true</Enabled>\n    <Hidden>true</Hidden>\n    <RunOnlyIfIdle>false</RunOnlyIfIdle>\n    <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>\n    <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>\n    <WakeToRun>false</WakeToRun>\n    <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>\n    <Priority>5</Priority>\n  </Settings>\n  <Actions Context=\"Network_Connection_Manager\">\n    <Exec>\n      <Command>\"M:\\NetworkConnectionManager\\NetworkConnectionManager.EXE\"</Command>\n      <WorkingDirectory>M:\\NetworkConnectionManager\\</WorkingDirectory>\n    </Exec>\n  </Actions>\n</Task>",
+      "PostedDate": "2015-03-11T14:39:06.613-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You cannot use UseUnifiedSchedulingEngine = true and interactive account. Set that value to false and all should work.",
+      "PostedDate": "2015-03-14T20:49:56.44-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The exported xml is from the task that works. I'm confused.",
+      "PostedDate": "2015-03-16T08:12:10.13-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The code below should generate the exact format of the XML file you provided:\n```\nusing (var ts = new TaskService())\n{\n   var td = ts.NewTask();\n   td.RegistrationInfo.Description = \"Launches Network Connection Manager upon login.\";\n   td.Principal.RunLevel = TaskRunLevel.Highest;\n   td.Settings.DisallowStartIfOnBatteries = false;\n   td.Settings.StopIfGoingOnBatteries = false;\n   td.Settings.AllowHardTerminate = false;\n   td.Settings.IdleSettings.StopOnIdleEnd = false;\n   td.Settings.Hidden = true;\n   td.Settings.UseUnifiedSchedulingEngine = true;\n   td.Settings.ExecutionTimeLimit = TimeSpan.Zero;\n   td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;\n   td.Actions.Add(@\"M:\\NetworkConnectionManager\\NetworkConnectionManager.EXE\",\n      null, @\"M:\\NetworkConnectionManager\\\");\n   td.Triggers.Add(new LogonTrigger { UserId = @\"JEFFL-PC\\GUEST\" });\n   ts.RootFolder.RegisterTaskDefinition(\"TaskName\", td, TaskCreation.CreateOrUpdate,\n      @\"JEFFL-PC\\GUEST\", null, TaskLogonType.InteractiveToken, null);\n}\n```\n",
+      "PostedDate": "2015-03-18T16:56:15.333-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "It now works! Thanks for your help.",
+      "PostedDate": "2015-03-19T10:49:02.273-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-03-19T11:46:54.553-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

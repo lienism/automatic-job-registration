@@ -1,0 +1,86 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-09-17T09:29:22.863-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi all, is this UI version working at all? I ask before I start getting into the source code and trying to find what may be happening. I just don't get any of the controls filled with the data (I tried the exact same code with TaskEditorDialog instead and it seems to work). Below is the code I'm using.\n```\nUsing TS As New TaskService()\n    Dim aTaskEditDialog As TaskOptionsEditor\n    Dim aTaskDef As TaskDefinition = TS.NewTask\n    aTaskDef.XmlText = tbTaskDef.Text 'this can be blank, but usually have the XML from a TaskDefinition.XML\n    Dim aTaskOptionsEditor As TaskOptionsEditor = New TaskOptionsEditor(TS, aTaskDef, True, False)\n    aTaskEditDialog = New TaskOptionsEditor(TS, aTaskDef, True, False)\n    aTaskEditDialog.TaskFolder = \"\\\" + TScourmanService.TASK_SCHEDULER_FOLDER\n    aTaskEditDialog.TaskName = PlugInDef.Name 'PlugInDef.Name is a string\n    'aTaskEditDialog.ReinitializeControls() 'not doing aything\n    If aTaskEditDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then\n        'aTaskEditDialog always appears empty, not even the task name shows \n        tbTaskDef.Text = FormatXML(aTaskEditDialog.TaskDefinition.XmlText)\n    End If\n    'remove the task we just added - we don't want this task registered in the client machine\n    TS.GetFolder(\"\\\" + TScourmanService.TASK_SCHEDULER_FOLDER).DeleteTask(PlugInDef.Name, False)\nEnd Using\n```",
+    "LastUpdatedDate": "2015-09-17T09:29:22.863-07:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-09-03T19:15:35.283-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "TaskOptionsEditor",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12198
+  },
+  "FileAttachments": [
+    {
+      "FileId": 4010,
+      "FileName": "TSMW2.4.1beta2.zip",
+      "DownloadUrl": ".\\4010"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Thank you for finding this bug. I have updated the code and have attached a build here. Please test and let me know if this resolves the problem.",
+      "PostedDate": "2015-09-03T19:35:08.353-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-04T14:56:38.553-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-04T14:57:01.15-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "More fixes, including the one you mentioned for TaskPropertiesControl, in beta2 attachment.",
+      "PostedDate": "2015-09-04T14:57:02.9-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Dahall, I'm not sure why, but I cannot test the code you send. If I replace the files with the corresponding ones you sent, I still get the same behavior. I found what seems to be another issue, this time using the TaskEditorDialog. In the checkbox \"If the task is not scheduled to run again, delete it after:\" is you set the time to, for example, 1 second or 30 minutes, it'll not update the task definition accordingly! This one is sort of s show stopper for me.",
+      "PostedDate": "2015-09-07T00:40:35.357-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I the code I posted, I have checked that error with a number of values and find that it retains the value each time. Please clean build your code, do not reference the NuGet package, and instead directly reference the assemblies I provided.",
+      "PostedDate": "2015-09-07T11:51:31.677-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Any status on your testing?",
+      "PostedDate": "2015-09-15T12:33:57.987-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-17T09:29:22.863-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

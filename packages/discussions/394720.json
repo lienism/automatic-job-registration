@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "909449",
+    "ThreadId": "394720",
+    "Html": "\r\n<p>Would someone be kind enough to show me the necessary code to create a MonthlyTrigger on the last day of the month only?&nbsp; MonthlyTrigger() no longer appears to be a valid constructor, and it appears MonthlyTrigger(int dayOfMonth, MonthsOfTheYear monthsOfYear)\r\n is the only valid constructor now, resulting in a forced providing of a hard day upon initialization.</p>\r\n<p>The first parameter, dayOfMonth, must be a value between 1 and 31, which results in the DaysOfMonth property containing whatever value was passed at initiation. Null cannot be passed at initiation, and attempting to set DaysOfMonth to a null value after\r\n the constructor causes an exception.</p>\r\n<p>I would prefer not to have to specify a hard date while initiating, as this would cause problems in February every leap year.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>MonthlyTrigger mt = <span style=\"color:blue\">new</span> MonthlyTrigger(31, <span style=\"color:blue\">this</span>.Trigger.Months);\nmt.RunOnLastDayOfMonth = <span style=\"color:blue\">true</span>;\n</pre>\r\n</div>\r\n<p>&nbsp;</p>\r\n<p>The code above results in a trigger for both the 31st and the Last day of the month.</p>\r\n",
+    "PostedDate": "2012-09-06T22:01:11.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909629",
+    "ThreadId": "394720",
+    "Html": "\r\n<div style=\"background-color:white; color:black\">\r\n<pre><span style=\"color:blue\">new</span> MonthlyTrigger(1, <span style=\"color:blue\">this</span>.Trigger.Months) { DaysOfMonth = <span style=\"color:blue\">new</span> <span style=\"color:blue\">int</span>[0], RunOnLastDayOfMonth = <span style=\"color:blue\">true</span> };</pre>\r\n<p>I know that seems unintuitive, but it works. Effectively you are allowing the constructor to set the DaysOfMonth to a value (1 in this code) and then undoing it by setting it to an empty array. I made the change because I had other users that were using\r\n the default constructor and it was failing to register. Their argument was that a default constructor should never cause code to break and I agreed.</p>\r\n</div>\r\n",
+    "PostedDate": "2012-09-07T07:10:49.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "909637",
+    "ThreadId": "394720",
+    "Html": "<p>Thank you very much. The above code does work.</p>",
+    "PostedDate": "2012-09-07T07:28:57.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

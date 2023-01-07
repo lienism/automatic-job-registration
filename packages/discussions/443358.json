@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1042299",
+    "ThreadId": "443358",
+    "Html": "Hi,\r<br />\n<br />\nThis is very cool. I am trying to setup an example console app that will list all tasks from root and subfolders. I have come so far that is has displayed the first tasks, but I can see it excludes the hidden. It requires regex it said. ? can some please help me in getting all tasks also the hidden and maybe how to retrive all tasks beneth layers of subfolders recursively.\r<br />\n<br />\nThanks in advance. <br />\n",
+    "PostedDate": "2013-05-11T13:07:35.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1042466",
+    "ThreadId": "443358",
+    "Html": "You must be trying to use the GetTasks method. There is an easier way. Please see the &quot;Enumerate all tasks&quot; sample code on the <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples\" rel=\"nofollow\">Examples</a> page.<br />\n",
+    "PostedDate": "2013-05-12T09:38:25.867-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1043076",
+    "ThreadId": "443358",
+    "Html": "I was using the GetTasks method.\r<br />\nThanks, don't know why I missed that :) I have now all tasks and I can toggle if I wanna see the ones that are hidden.\r<br />\n<br />\nI now will try to see if I can search for a task by name and list that. <br />\n",
+    "PostedDate": "2013-05-13T14:21:56.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

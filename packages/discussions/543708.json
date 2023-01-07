@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1239240",
+    "ThreadId": "543708",
+    "Html": "Hi,\r<br />\n<br />\nI have a problem registering a task in windows XP SP3 and run it under system account.\r<br />\nThe task is created but when i hit run nothing happens: no entry in log file and &quot;LastRunTime&quot; is Never.\r<br />\n<br />\n<br />\nCan anybody tell me what are the correct commands in order to achieve this ?<br />\n<pre><code>                using (TaskService ts = new TaskService())\n                {\n                    isVersionOne = ts.HighestSupportedVersion &lt; new Version(1, 2);\n\n                    TaskDefinition td = ts.NewTask();\n                    td.RegistrationInfo.Description = &quot;Task&quot;;\n                    td.RegistrationInfo.Author = &quot;Me&quot;;\n                    td.Principal.UserId = @&quot;System&quot;;\n                    td.Principal.LogonType = TaskLogonType.ServiceAccount;\n                    td.Settings.RunOnlyIfLoggedOn = true;\n                    td.Triggers.Add(new DailyTrigger\n                    {\n                        StartBoundary = DateTime.Now,\n                        DaysInterval = 2\n                    });\n\n                    td.Actions.Add(new ExecAction(&quot;\\&quot;&quot; + @&quot;C:\\ConsoleApplication.exe&quot; + &quot;\\&quot;&quot;));\n                    var task = ts.RootFolder.RegisterTaskDefinition(&quot;Test Task&quot;, td, TaskCreation.Create, null, null, TaskLogonType.ServiceAccount, null);\n                }\n\n</code></pre>\n\nThank you !<br />\n",
+    "PostedDate": "2014-04-29T04:46:16.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239355",
+    "ThreadId": "543708",
+    "Html": "You cannot combine RunOnlyIfLoggedOn and service accounts. You also have a problem with V1 on how you are using Principal. You will get a more consistent result by putting all the account information for new tasks in the registration:<br />\n<pre><code>using (TaskService ts = new TaskService())\n{\n    TaskDefinition td = ts.NewTask();\n    td.RegistrationInfo.Description = &quot;Task&quot;;\n    td.RegistrationInfo.Author = &quot;Me&quot;;\n    td.Triggers.Add(new DailyTrigger(2));\n    td.Actions.Add(new ExecAction(@&quot;C:\\ConsoleApplication.exe&quot;));\n    var task = ts.RootFolder.RegisterTaskDefinition(&quot;Test Task&quot;, td,\n        TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount,\n        null);\n}</code></pre>\n\n",
+    "PostedDate": "2014-04-29T07:54:58.02-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239377",
+    "ThreadId": "543708",
+    "Html": "Removing that line it generates the following error:\r<br />\n<br />\n&quot;Test Task.job&quot; (ConsoleApplication.exe) 4/29/2014 6:12:41 PM ** ERROR **<br />\n<pre><code>The attempt to log on to the account associated with the task failed, therefore, the task did not run.\nThe specific error is:\n0x80041314: The task has been configured with an unsupported combination of account settings and run time options.\nVerify that the task's Run-as name and password are valid and try again.\n</code></pre>\n\nI can't find any solution for this error.<br />\n",
+    "PostedDate": "2014-04-29T08:15:02.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239386",
+    "ThreadId": "543708",
+    "Html": "Same error running your sample:<br />\n<pre><code>&quot;Test Task.job&quot; (ConsoleApplication.exe) 4/29/2014 6:28:10 PM ** ERROR **\nThe attempt to log on to the account associated with the task failed, therefore, the task did not run.\nThe specific error is:\n0x80041314: The task has been configured with an unsupported combination of account settings and run time options.\nVerify that the task's Run-as name and password are valid and try again.\n[ ***** Most recent entry is above this line ***** ]\n\n</code></pre>\n\nI've tested on another XP SP3 machine and the same result.<br />\n",
+    "PostedDate": "2014-04-29T08:30:28.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239529",
+    "ThreadId": "543708",
+    "Html": "Will you try the sample just the way I posted it in my reply and let me know if you get the same error?<br />\n",
+    "PostedDate": "2014-04-29T13:37:52.167-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239675",
+    "ThreadId": "543708",
+    "Html": "I've tried the sample but still the same error:<br />\n<pre><code>&quot;Test Task.job&quot; (ConsoleApplication.exe) 4/30/2014 10:45:23 AM ** ERROR **\nThe attempt to log on to the account associated with the task failed, therefore, the task did not run.\nThe specific error is:\n0x80041314: The task has been configured with an unsupported combination of account settings and run time options.\nVerify that the task's Run-as name and password are valid and try again.\n[ ***** Most recent entry is above this line ***** ]\n</code></pre>\n\n<img src=\"http://s27.postimg.org/7451nrpfn/Task.png\" alt=\"Image\" />\r<br />\n<br />\nAfter some investigations I've realized that running the AT command the task will run under the local system account but the properties window is read only.\r<br />\n<br />\n<img src=\"http://s13.postimg.org/v8srghkvr/Task_AT.png\" alt=\"Image\" />\r<br />\n<br />\nIs there a way to achieve this using this library ? Maybe there is a XP setting that I don't know about it ?\r<br />\n<br />\nThank you again.<br />\n",
+    "PostedDate": "2014-04-30T01:06:25.137-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239764",
+    "ThreadId": "543708",
+    "Html": "Has this something to do with: <a href=\"https://support.microsoft.com/kb/223375\" rel=\"nofollow\">https://support.microsoft.com/kb/223375</a> ?<br />\n",
+    "PostedDate": "2014-04-30T05:45:11.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1239958",
+    "ThreadId": "543708",
+    "Html": "I have just run the following code on XP SP3 (as an Administrator) with complete success.<br />\n<pre><code>TaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = &quot;Test for XP SP3&quot;;\ntd.RegistrationInfo.Author = &quot;incaunu&quot;;\ntd.Triggers.Add(new DailyTrigger() { StartBoundary = new DateTime(2014, 1, 15, 9, 0, 0), EndBoundary = DateTime.Today.AddMonths(1) });\ntd.Actions.Add(new ExecAction(&quot;cmd.exe&quot;, &quot;/c \\&quot;date /t &gt; c:\\\\cmd.txt\\&quot;&quot;));\nTask t = ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);</code></pre>\n\n",
+    "PostedDate": "2014-04-30T10:59:11.153-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1241495",
+    "ThreadId": "543708",
+    "Html": "I solved my problem following these <a href=\"https://social.technet.microsoft.com/Forums/en-US/50a0f07d-4be0-4e30-b18e-af3b2065e8a5/windows-schedule-tasks-not-running-throwing-error-if-try-to-open-propertiesgeneral-page?forum=winservergen\" rel=\"nofollow\">steps</a>. Now your code works like a charm.<br />\n",
+    "PostedDate": "2014-05-05T05:03:51.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-05-05T12:44:15.45-07:00"
+  },
+  {
+    "Id": "1257769",
+    "ThreadId": "543708",
+    "Html": "I am trying to create task on Windows XP machine SP3, Using DLL version 2.2.0.18504.The above code creates schedule task on &quot;NT AUTHORITY\\System&quot;  .  The Last Run Time is always Never whereas next run time changes as it should be. The action doesn't seem to run. When I right click on task and click Run, it says Could not start. Can you help me fix this?\r<br />\n<br />\nThanks\r<br />\nMano<br />\n",
+    "PostedDate": "2014-06-19T00:26:49.537-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1258042",
+    "ThreadId": "543708",
+    "Html": "incaunu,\r<br />\n<br />\nI am experiencing the same issue as posted here.\r<br />\n<br />\nCan you please help me to fix it? what did you do? the link you have for steps points to another error message.\r<br />\n<br />\nThanks in advance.\r<br />\nMano<br />\n",
+    "PostedDate": "2014-06-19T13:42:19.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

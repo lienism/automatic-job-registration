@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1237778",
+    "ThreadId": "543258",
+    "Html": "I have a task history control on a form with a task list view. I've included a refresh option on the task list to try and update the task history. When the form first loads and fires the .activate it loads the history just fine. When I call the same method via the refresh menu option it will update the number of events count but does not show the new history in the control.\r<br />\n<br />\nHere is the code I use<br />\n<pre><code>        void ActOnTask(Task t)\n        {\n            if (t != null)\n            {\n                currentTask = t;\n                currentTaskInterval = t.Definition.Triggers[0].Repetition.Interval.TotalMilliseconds;\n                taskHistory.Activate(t);\n            }\n        }\n</code></pre>\n\n",
+    "PostedDate": "2014-04-24T16:32:49.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1252537",
+    "ThreadId": "543258",
+    "Html": "After being able to do some more research I have found that the following is thrown when trying to refresh from an installed client.\r<br />\n<br />\nThis BackgroundWorker is currently busy and cannot run multiple tasks concurrently.<br />\n",
+    "PostedDate": "2014-06-03T11:42:13.69-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:05:14.433-07:00"
+  }
+]

@@ -1,0 +1,136 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-04-08T13:19:59.88-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "At the moment I'm running into this problem on 64 bit Windows 10 Pro Insider Preview Build 10158. Same call works on 64 bit Windows 8.1 Pro.\n\nSystem.IO.FileNotFoundException, The system cannot find the file specified. (Exception from HRESULT: 0x80070002)\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n\nUsed .NET-Framework 2.0 - Version 2.3.4.0\n\nIn fact I'm using the TaskCreation.CreateOrUpdate enum value and the process is elevated. Let me give you some more information: \n\nI'm using a RegistrationTrigger, with a delay of 8 seconds and a EndBoundary of 20 seconds.\n* RunLevel is TaskRunLevel.LUA \n* DeleteExpiredTaskAfter is 40 seconds \n* Principal.UserId is the UserName of the Win32_ComputerSystem ManagementObject (Example: WIN-GVLEGB4ESV6\\Test )\n\n```\nusing System;\nusing Microsoft.Win32.TaskScheduler;\nusing System.Management;\n\nnamespace TestTaskScheduler\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n\n            var ts = new TaskService();\n\n            TaskDefinition td = ts.NewTask();\n            td.RegistrationInfo.Description = \"some description\";\n            td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n            var computerSystemClass = new ManagementClass(\"Win32_ComputerSystem\");\n            var computerSystems = computerSystemClass.GetInstances();\n            var enumerator = computerSystems.GetEnumerator();\n            while (enumerator.MoveNext())\n            {\n                var computerSystem = enumerator.Current;\n                td.Principal.UserId = (string)computerSystem[\"UserName\"];\n            }\n\n            td.Actions.Add(new ExecAction(\"cmd.exe\", \"-someparameter\"));\n\n            // Create Trigger\n            var trigger = new RegistrationTrigger { Enabled = true };\n            trigger.Delay = TimeSpan.FromSeconds(8);\n            trigger.EndBoundary = DateTime.Now + TimeSpan.FromSeconds(20);\n            td.Triggers.Add(trigger);\n\n            TaskFolder tf = ts.RootFolder;\n\n            td.Principal.RunLevel = TaskRunLevel.LUA;\n\n            td.Settings.StartWhenAvailable = true;\n            td.Settings.Hidden = false;\n            td.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;\n            td.Settings.DisallowStartIfOnBatteries = false;\n            td.Settings.StopIfGoingOnBatteries = false;\n            td.Settings.IdleSettings.StopOnIdleEnd = false;\n            td.Settings.DeleteExpiredTaskAfter = TimeSpan.FromSeconds(40);\n\n            TaskFolder testFolder = null;\n\n            foreach (TaskFolder taskFolder in tf.SubFolders)\n            {\n                if (taskFolder.Name.Equals(\"TEST\", StringComparison.OrdinalIgnoreCase))\n                {\n                    testFolder = taskFolder;\n                }\n            }\n\n            if (testFolder == null)\n                testFolder = tf.CreateFolder(\"TEST\");\n\n            testFolder.RegisterTaskDefinition(\"Start\", td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken);\n            Console.ReadKey();\n        }\n    }\n}\n```",
+    "LastUpdatedDate": "2016-04-08T13:19:59.88-07:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-07-09T18:08:38.503-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Microsoft Issue"
+    },
+    "Summary": "System.IO.FileNotFoundException when registering task under 64 bit Windows 10 Pro Insider Preview Build 10158",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 12142
+  },
+  "FileAttachments": [
+    {
+      "FileId": 4004,
+      "FileName": "2.3.5 beta.zip",
+      "DownloadUrl": ".\\4004"
+    },
+    {
+      "FileId": 4005,
+      "FileName": "TestTaskScheduler.zip",
+      "DownloadUrl": ".\\4005"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I think I have this fixed. Please try out assembly files in attached zip and let me know.",
+      "PostedDate": "2015-07-09T18:17:29.717-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I tried it on 64bit Windows 10 Pro Insider Preview Build 10158 and Build 10162 and I still have this exception.\r\n\r\nI also did some tests and found out that it crashes only, after the tasks removes itself from the task folder and you want to create the task in that folder again (2nd run). FYI: After the task's removal even an administrator can't remove the task folder.\r\n\r\nBut if you change the folder, it will work again until the task deletes itself after 40 seconds.",
+      "PostedDate": "2015-07-10T00:38:54.14-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-10T01:02:40.83-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have run this code with repeated success on Win10 build 10159 and the assemblies I posted here (v2.3.5 beta). Please confirm this works for you.\r\n\r\n```\nstring taskName = \"Start\", taskFolder = \"Test\";\r\n\r\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"some description\";\n// No need to set td.Principal.LogonType (done in registration)\n// No need to set td.Principal.UserId with InteractiveToken\ntd.Actions.Add(\"cmd.exe\", \"-someparameter\");\r\n\r\ntd.Triggers.Add(new RegistrationTrigger { Delay = TimeSpan.FromSeconds(8),\n   EndBoundary = DateTime.Now + TimeSpan.FromSeconds(20) });\r\n\r\ntd.Settings.StartWhenAvailable = true;\ntd.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;\ntd.Settings.DisallowStartIfOnBatteries = false;\ntd.Settings.StopIfGoingOnBatteries = false;\ntd.Settings.IdleSettings.StopOnIdleEnd = false;\ntd.Settings.DeleteExpiredTaskAfter = TimeSpan.FromSeconds(5);\r\n\r\n// CreateFolder will now create or retrieve the folder with these parameters\nTaskFolder testFolder = ts.RootFolder.CreateFolder(taskFolder, null, false);\nvar t = testFolder.RegisterTaskDefinition(taskName, td,\n   TaskCreation.CreateOrUpdate, null, null,\n   TaskLogonType.InteractiveToken);\n```",
+      "PostedDate": "2015-07-10T09:43:49.04-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi dahall,\r\n\r\nI only get your code example to work if I don't wait for the created task to delete itself afterwards. If I do, then it throws the exception again (and the task folder cannot be deleted (Got quiet a good amount of test folders in my test machine ;-) )). I don't know if it is a problem on MS side or on your library.",
+      "PostedDate": "2015-07-12T23:56:54.127-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Addition: Tested on Preview 10158 and 10162.",
+      "PostedDate": "2015-07-12T23:58:12.79-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I had a thought that this may be caused by holding onto the COM object. Try the following for the last block and let me know your results:\n```\nusing (TaskFolder testFolder = ts.RootFolder.CreateFolder(taskFolder, null, false))\n{\n   testFolder.RegisterTaskDefinition(taskName, td,\n      TaskCreation.CreateOrUpdate, null, null,\n      TaskLogonType.InteractiveToken);\n   td = null;\n}\n```\nAlso, you will need to make sure the task's action is not still running when it is trying to delete itself. I have seen one other instance where that caused a problem.",
+      "PostedDate": "2015-07-14T07:44:35.35-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-15T00:20:30.433-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Unfortunately it still throws the exception. The task's action is not a problem I think. It opens the \"cmd.exe\" and I close it every time it spawns.\r\n\r\nI will attach my VS project to this post.",
+      "PostedDate": "2015-07-15T00:20:32.73-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Also happens on Windows 10 Pro Insider Preview Build 10240.",
+      "PostedDate": "2015-07-22T05:05:09.56-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "hi guys, i have met the same issue on my win10 entreprise.\nthe scenario is as below:\n 1: use local account to register a task 'task a' under root folder\n 2: use admin account to delete 'task a', then register a new 'task a' (with the same task name) under root folder.\r\n\r\nthe admin account could delete the task a without any issue, but get failed while trying to register task a again, the exception and error message are the same as the top of this thread. i am wondering whether it is a lib issue or come from win10? i have this doubt since this never happned on win7 or win8.\r\n\r\ndo we have a feasible solution to this yet? if not, I am going to try native API which I really don't want to :(\n ",
+      "PostedDate": "2015-09-08T00:25:06.37-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have now verified this happens across all Win10 builds and product versions and I have tested it with the library and C++ code calling the native COM library directly with the same results. This is a Microsoft bug. I have submitted it but have not received a reply.",
+      "PostedDate": "2015-09-08T06:27:59.62-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "__everrr__: In your steps, you said you \"use local account\" or \"use admin account\". Does that mean you are connecting to the TaskService using those accounts, running the executable under those accounts, or registering the task with those account's credentials?",
+      "PostedDate": "2015-09-08T21:04:32.243-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "__everrr__: Is there a possibility that the system presenting the problem was upgraded from a Windows 10 Technical Preview build?",
+      "PostedDate": "2015-09-08T21:05:55.207-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "i agree its a microsoft issue, but i just figured out a workaround to avoid this issue.\r\n\r\nbasically, as you discussed previously, the issue will only happen after the task remove itself and re create the task again in the same folder. so we could prevent the task from removing itself, to do that just set a long EndBoundary.\r\n\r\n``` \nTimeTrigger timeTrigger = new TimeTrigger();\n timeTrigger.StartBoundary = DateTime.Now + TimeSpan.FromSeconds(2);\n timeTrigger.EndBoundary = DateTime.Now + TimeSpan.FromSeconds(1000);\n```\nand after the task get registered successfully, then delete the task\n```\n using (TaskService ts = new TaskService())\n {\n     if (TaskExist(ReminderTaskName, ts)) {\r\n\r\n            ts.RootFolder.DeleteTask(ReminderTaskName, false);\n             _logger.LogError(ReminderTaskName + \" task deleted --------------------\");\n     }                  \n }\n```\nand then ,next when we re create the task again, it works properly.",
+      "PostedDate": "2015-09-08T21:18:01.777-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "when I say \"use admin account\", it just mean \"Run as administrator\"\r\n\r\ni installed the win10 enterprise directly, not by an upgrade",
+      "PostedDate": "2015-09-08T21:21:10.807-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-04-08T13:19:59.88-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

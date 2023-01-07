@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "560875",
+    "ThreadId": "244683",
+    "Html": "\r\n<p>Hello,</p>\r\n<p>First, thank you for the Task Scheduler Managed Wrapper - it has been very useful to me and my company.</p>\r\n<p>We are using the TSMW in order to monitor the state of Scheduled Tasks on remote servers. It is currently often the case that the client (on which the application, and the library are located) has Windows XP while the remote server has Windows Server 2008.</p>\r\n<p>After a rather quick look at the code, I believe that at the instantiation of TaskService in such a situation, TaskService forces V1 mode - because it is the only one available on Windows XP, and TaskService makes a check against the local machine's OS version,\r\n even though the remote server has version 2 of TaskScheduler.</p>\r\n<p>Would it be possible to fix that, and launch the TaskService in V2 mode if it is supported by the server, regardless of the client Windows version?</p>\r\n",
+    "PostedDate": "2011-02-04T09:27:42.273-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "561041",
+    "ThreadId": "244683",
+    "Html": "\r\n<p>There is no way to fix that as the COM library that the TSMW uses under the hood on the XP client is only V1. The V2 COM library is not configured for remote&nbsp;instantiation so that is not even possible. We are limited by Microsoft's design.</p>\r\n<p>You could create a web service that runs on&nbsp;Windows Server 2008 that could use the TSMW to call the local V2 COM object and convey the results back to the XP client.</p>\r\n",
+    "PostedDate": "2011-02-04T15:12:53.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

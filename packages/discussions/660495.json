@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490644",
+    "ThreadId": "660495",
+    "Html": "I cant find anything in the documentation that tells me how to edit tasks I have already registered? I have tried:\r<br />\n<br />\nmatchingJob.Definition.Settings.Enabled = false;\r<br />\n<br />\nmatchingJob.Definition.Triggers.Clear();\r<br />\nmatchingJob.Definition.Triggers.Add(trigger);\r<br />\n<br />\nI get no errors but my tasks are not amended?<br />\n",
+    "PostedDate": "2017-01-04T23:18:56.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490687",
+    "ThreadId": "660495",
+    "Html": "Check out the following link: <a href=\"https://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation#get\" rel=\"nofollow\">https://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation#get</a>\r<br />\n<br />\nYou need to use the RegisterChanges method after making changes to the properties exposed via the Definition. You can also call the RegisterTaskDefinition method from the task's parent folder with the same task name and then you have the ability to change the user or password.<br />\n",
+    "PostedDate": "2017-01-05T12:46:21.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-10T07:58:16.933-08:00"
+  }
+]

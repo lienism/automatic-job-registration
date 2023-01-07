@@ -1,0 +1,116 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-04-08T08:58:11.89-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm trying to write a NAnt extension that uses this library but I get this exception on my first method that loads the taskscheduler objects.\n\nSystem.TypeLoadException: Inheritance security rules violated while overriding member: 'Microsoft.Win32.TaskScheduler.TaskService.System.Runtime.Serialization.ISerializab\nle.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)'. Security accessibility of the overriding method must mat\nch the security accessibility of the method being overriden.\n\nI'm assuming this is related to NAnt dynamically loading the extension dll but I'm not sure how to get around it.  Previously we were using the taskscheduler 1.0 library via NAnt without any issues.\n\n```\n        public void test()\n        {\n            using (Microsoft.Win32.TaskScheduler.TaskService ts = new Microsoft.Win32.TaskScheduler.TaskService())\n            {\n                // Create a new task definition and assign properties\n                Microsoft.Win32.TaskScheduler.TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = \"Does something\";\n\n                // Create a trigger that will fire the task at this time every other day\n                td.Triggers.Add(new Microsoft.Win32.TaskScheduler.DailyTrigger { DaysInterval = 2 });\n\n                // Create an action that will launch Notepad whenever the trigger fires\n                td.Actions.Add(new Microsoft.Win32.TaskScheduler.ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\n\n                // Register the task in the root folder\n                ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\n\n            }\n        }\n```",
+    "LastUpdatedDate": "2015-04-08T08:58:11.89-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-03-05T11:43:49.557-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Inheritance security rules violated while overriding member",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12037
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3974,
+      "FileName": "Microsoft.Win32.TaskScheduler.zip",
+      "DownloadUrl": ".\\3974"
+    },
+    {
+      "FileId": 3977,
+      "FileName": "NAnt.Example.Tasks.zip",
+      "DownloadUrl": ".\\3977"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I believe this is related to a change in the security model for .NET 4.0. I have added the SecurityCritical attribute to the method in your exception and have posted a .NET 4.0 build under attachments. Please check it and confirm it resolves your issue and then I'll get it added into the next release (2.3.1).",
+      "PostedDate": "2015-03-06T12:33:12.647-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks for the prompt response.  Unfortunately I'm still getting the same error.\r\n\r\nAdditional information: Inheritance security rules violated while overriding member: 'Microsoft.Win32.TaskScheduler.TaskService.System.Runtime.Serialization.ISerializable.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)'. Security accessibility of the overriding method must match the security accessibility of the method being overriden.",
+      "PostedDate": "2015-03-06T12:42:51.06-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "If you will detail what you are doing with NAnt, maybe I can recreate environment and find a resolution.",
+      "PostedDate": "2015-03-09T09:23:35.677-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-03-09T13:35:49.767-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi,\r\n\r\nI put together a example project.  Here's the steps to get it going.  (I think this is everything)\r\n\r\n- download and install nant http://nant.sourceforge.net/\n- update reference to nant.core to your installed nant bin folder\n- update build path to your installed nant bin folder\n- updated path to nant in the cmd file\n- build and then run the cmd file\r\n\r\nThere's 2 tasks so that will tell you if you have a nant setup issue or not if that first \"hello world\" task runs or not.\r\n\r\nThanks!",
+      "PostedDate": "2015-03-09T13:35:50.94-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have followed your instructions and cannot get the cmd file to do anything but return \"BUILD FAILED\". I'm completely blind here. I can't even tell you what NAnt is supposed to be doing.",
+      "PostedDate": "2015-03-09T21:25:08.283-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "NAnt 0.91 (Build 0.91.3881.0; alpha2; 8/17/2010)\nCopyright (C) 2001-2010 Gerry Shaw\nhttp://nant.sourceforge.net\r\n\r\nBuildfile: file:///D:/CADev/CI.trunk.02/Deployment/Libraries/NAnt/NAnt.Example.Tasks/testscheduledtasktest.nant\nTarget framework: Microsoft .NET Framework 4.0\nTarget(s) specified: test\r\n\r\n\ntest:\r\n\r\nHello, you have successfully run a NAnt extension task!\nAttempting to create windows scheduled task\r\n\r\nBUILD FAILED\r\n\r\nINTERNAL ERROR\r\n\r\nSystem.TypeLoadException: Inheritance security rules violated while overriding member: 'Microsoft.Win32.TaskScheduler.TaskService.System.Runtime.Serialization.ISerializab\nle.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)'. Security accessibility of the overriding method must mat\nch the security accessibility of the method being overriden.\n   at NAnt.Example.Tasks.ScheduledTaskTest.CreateTestScheduledTask()\n   at NAnt.Example.Tasks.ScheduledTaskTest.ExecuteTask() in d:\\CADev\\CI.trunk.02\\Deployment\\Libraries\\NAnt\\NAnt.Extension.Example\\ScheduledTaskTest.cs:line 20\n   at NAnt.Core.Task.Execute()\n   at NAnt.Core.Target.Execute()\n   at NAnt.Core.Project.Execute(String targetName, Boolean forceDependencies)\n   at NAnt.Core.Project.Execute()\n   at NAnt.Core.Project.Run()\r\n\r\nPlease send bug report to nant-developers@lists.sourceforge.net.\r\n\r\nTotal time: 0 seconds.\r\n\r\n\nD:\\CADev\\CI.trunk.02\\Deployment\\Libraries\\NAnt\\NAnt.Example.Tasks>pause\nPress any key to continue . . .",
+      "PostedDate": "2015-03-10T07:13:18.567-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Above is the output you should get.  The first \"hello\" line is just a test extension task to verify that nant can load tasks from the assembly.  The 2nd line \"attempting to create\" is the create scheduled task test which throws that inheritance security exception.\r\n\r\nIf your not getting that let me know what you are seeing.",
+      "PostedDate": "2015-03-10T07:13:45.093-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "After \"test:\", instead of getting the \"Hello...\" text, I get\r\n\r\nBUILD FAILED\r\n\r\nC:\\Users\\dahall\\Documents\\Visual Studio 2013\\Projects\\NAnt.Example.Tasks\\testscheduledtasktest.nant(6,6):\nInvalid element <testtask>. Unknown task or datatype.\r\n\r\nAlso, when I went to get the NAnt bits, I got version 0.92 and not the 0.91 from your text.",
+      "PostedDate": "2015-03-23T10:58:48.173-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That would mean nant can't see the built dll.  Did you update the build path in the project to your nant bin folder?  Nant automatically looks for any dlls in its bin folder that has tasks in the name.  If that's correct then maybe you need to update the reference to NAnt.Core.dll to the 0.92 version since that's what your running.  ",
+      "PostedDate": "2015-03-23T11:34:51.527-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ok. Changing the build directory, adding the reference to the Task Scheduler assembly to the project, and building the project solved the problem. Once I did that, I was able to execute CMD file and the task was created. I am using the assembly I attached earlier.",
+      "PostedDate": "2015-03-23T14:52:27.783-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi, I went back and looked at this again today.  I was still getting the same error but then deleting Microsoft.Win32.TaskScheduler.dll and replacing it with the one attached again (even though they were same size and datestamp) fixed my issue.  So, somehow it must have been calling into the old version of the dll.  \r\n\r\nSo, that solves my problem. Thanks!!!\n",
+      "PostedDate": "2015-04-06T13:20:58.83-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-04-08T08:58:11.89-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

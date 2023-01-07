@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "816007",
+    "ThreadId": "350181",
+    "Html": "\r\n<p>I have my code working great on Windows XP both locally and remotely to another XP system using my current logon credentials. I am now trying to connect to a remote Windows 2003 (that is standalone) server using different credentials (but ones that have\r\n admin privileges on that system), but I am receiving 'Unknown username or bad password'. I am using the following code snippet</p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<pre>                    if (server.IsRemoteServer)\r\n                    {\r\n                        using (TaskService ts = new TaskService(server.Name, &quot;userhere&quot;,server.Name,&quot;passwordhere&quot;,true))\r\n                        {</pre>\r\n<pre>                            TaskFolder tf = ts.RootFolder;\r\n                            foreach (Task tsk in tf.Tasks)\r\n                            {\r\n                                taskNames.Add(tsk.Name);\r\n                            }\r\n                        }\r\n                    }</pre>\r\n</span>\r\n<p></p>\r\n<p>&nbsp;etc</p>\r\n<p><span style=\"font-size:x-small\">If I log onto the server running the application using credentials that are identical to the remote server using the following code then I can&nbsp;return a&nbsp;list of tasks running</span></p>\r\n<p><span style=\"font-size:x-small\"></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>                    <span style=\"color:blue\">if</span> (server.IsRemoteServer)\r\n                    {\r\n                        <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n                        {\r\n                            ts.TargetServer = server.IP; \r\n                            TaskFolder tf = ts.RootFolder;\r\n                            <span style=\"color:blue\">foreach</span> (Task tsk <span style=\"color:blue\">in</span> tf.Tasks)\r\n                            {\r\n                                taskNames.Add(tsk.Name);\r\n                            }\r\n                        }\r\netc\r\n</pre>\r\n</div>\r\n</span>\r\n<p></p>\r\n<p><span style=\"font-size:x-small\">I can use the schtasks command with&nbsp;any credentials that have the correct privileges on the remote server&nbsp;and it returns the list of tasks fine</span></p>\r\n<p><span style=\"font-size:x-small\">Any help appreciated</span></p>\r\n",
+    "PostedDate": "2012-03-27T04:08:04.463-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816197",
+    "ThreadId": "350181",
+    "Html": "<p>For V1, I am using the Windows API call LogonUser to get&nbsp;a token and then am impersonating that identity for the call to the COM object. Here are the parameters I'm passing to that call:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>LogonUser(userName, domainName, password, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, <span style=\"color: blue;\">out </span>token)</pre>\r\n</div>\r\n<p>I'm not sure how schtasks is doing it. I made a slight change to the impersonation code to match some Microsoft samples that I'll release in 1.8.2, but I'm doubtful that will address the problem you're having. My only guess is that it has something to do with the domain name being passed.</p>",
+    "PostedDate": "2012-03-27T11:42:27.187-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816383",
+    "ThreadId": "350181",
+    "Html": "<p><span style=\"font-family: sans-serif; font-size: x-small;\">Thanks for the quick reply</span> <br /><br /><span style=\"font-family: sans-serif; font-size: x-small;\">I have tried various ways to pass the domain name (null and \"\"), but so far have been unsuccessful</span> <br /><br /><span style=\"font-family: sans-serif; font-size: x-small;\">The remote server(s) are all stand-alone, so not part of a domain, so when you connect you either leave the domainName out completely or pass servername</span> <br /><br /><span style=\"font-family: sans-serif; font-size: x-small;\">What I believe is happening is that for the domainName it is passing my current logon domain which is why it will only work if log onto my PC (or where the application is running from) using a local account and not a domain account</span> <br /><br /><span style=\"font-family: sans-serif; font-size: x-small;\">Is there a way I can see what is being passed in the background to the API call</span> <br /><br /><br /><span style=\"font-family: Verdana; font-size: x-small;\">From: dahall</span></p>\n<p><span style=\"font-family: Verdana; font-size: x-small;\">For V1, I am using the Windows API call LogonUser to get a token and then am impersonating that identity for the call to the COM object. Here are the parameters I'm passing to that call:</span></p>\n<p><span style=\"font-family: Verdana; font-size: small;\">LogonUser(userName, domainName, password, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, </span><span style=\"font-family: Verdana; color: #0000ff; font-size: small;\">out </span><span style=\"font-family: Verdana; font-size: small;\">token)</span></p>\n<p><span style=\"font-family: Verdana; font-size: x-small;\">I'm not sure how schtasks is doing it. I made a slight change to the impersonation code to match some Microsoft samples that I'll release in 1.8.2, but I'm doubtful that will address the problem you're having. My only guess is that it has something to do with the domain name being passed.</span></p>",
+    "PostedDate": "2012-03-27T23:48:45.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816449",
+    "ThreadId": "350181",
+    "Html": "<p>I also have another issue whereby if I create a new task and then edit&nbsp;that task&nbsp;(using the editor wizards), I receive the following error</p>\r\n<p>'Tasks which have been registered previously with stored passwords must use the TaskFolder.RegisterTaskDefinition method for updates'</p>\r\n<p>This is the code I use to edit a task</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(server.Name, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">true</span>))\r\n                        {\r\n                            Task tsk = ts.GetTask(task);\r\n                            <span style=\"color: blue;\">if</span> (tsk != <span style=\"color: blue;\">null</span>)\r\n                            {\r\n                                TaskEditDialog editorform = <span style=\"color: blue;\">new</span> TaskEditDialog(tsk, <span style=\"color: blue;\">true</span>, <span style=\"color: blue;\">true</span>);\r\n                                res = editorform.ShowDialog();\r\n                            }\r\n                            <span style=\"color: blue;\">else</span>\r\n                            {\r\n                                MessageBox.Show(<span style=\"color: #a31515;\">\"No task has been selected\"</span>, <span style=\"color: #a31515;\">\"Edit Scheduled Task\"</span>, MessageBoxButtons.OK, MessageBoxIcon.Error);\r\n                            }\r\n                        }\r\n</pre>\r\n</div>\r\n<p>Is there a way to register when using the editor wizard that is the same as when you create a new task (code for a new task below)</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>                    <span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(server.Name, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">true</span>))\r\n                    {\r\n                        <span style=\"color: blue;\">using</span> (TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard())\r\n                        {\r\n                            TaskDefinition newTaskDef = ts.NewTask();\r\n                            wiz.Initialize(ts, newTaskDef);\r\n\r\n                            <span style=\"color: blue;\">if</span> (wiz.ShowDialog() == DialogResult.OK)\r\n                            {\r\n                                <span style=\"color: green;\">// save task</span>\r\n                                ts.RootFolder.RegisterTaskDefinition(newTaskDef.Data, newTaskDef);\r\n                            }\r\n                        }\r\n                    }\r\n</pre>\r\n<pre>Thanks</pre>\r\n</div>",
+    "PostedDate": "2012-03-28T02:41:58.373-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "816664",
+    "ThreadId": "350181",
+    "Html": "<p>To answer the first question, whatever you pass into the TaskService constructor for domain is what is passed to LogonUser for the domain. If you don't pass any parameters into the constructor, then it grabs the token from the interactive account and doesn't call LogonUser. I think the code you presented in your first post is correct.</p>\r\n<p>On your second question, you can set the TaskSchedulerWizard.RegisterTaskOnFinish property to True before calling ShowDialog and it will perform the same as TaskEditDialog.</p>",
+    "PostedDate": "2012-03-28T10:13:56.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "817560",
+    "ThreadId": "350181",
+    "Html": "<p>Could you please supply a snippet of code for the 'TaskSchedulerWizard.RegisterTaskOnFinish' and how to use it with the editor wizard</p>\r\n<p>Thanks</p>",
+    "PostedDate": "2012-03-30T00:08:05.227-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "818005",
+    "ThreadId": "350181",
+    "Html": "<p>In your code above, are you intentionally making sure that all tasks are created with the V1 library? If not, then I would set the last parameter of the TaskService constructor to false thus allowing for the highest version of the library to be used to create the task. The code for using the wizard to create a new task&nbsp;is actually very simple:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(server.Name))\r\n{\r\n   TaskSchedulerWizard wiz = <span style=\"color: blue;\">new</span> TaskSchedulerWizard(ts);\r\n   wiz.RegisterTaskOnFinish = <span style=\"color: blue;\">true</span>;\r\n   wiz.ShowDialog();\r\n}</pre>\r\n</div>\r\n<p>In the next release of the library (1.8.2 probably), you will be able to simply do:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService(server.Name))\r\n{\r\n   <span style=\"color: blue;\">new</span> TaskSchedulerWizard(ts, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">true</span>).ShowDialog();\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-03-30T18:02:41.487-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

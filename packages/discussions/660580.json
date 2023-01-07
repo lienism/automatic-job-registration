@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1490835",
+    "ThreadId": "660580",
+    "Html": "I'm using the TaskScheduler.dll (version 2.5.21) in order to create a new task.<br />\nI want my task to run indefinitely, for that I'm setting the ExecutionTimeLimit property to  TimeSpan.Zero. <br />\nWhen I execute my code in windows10 It works perfectly but in windows7 it doesn't work: &quot;Stop the task if runs longer than&quot; is checked and the value is 3 days.... <br />\nHere is the code where I set all taslSettings:<br />\n<pre><code>   settings.AllowHardTerminate = true;\n  settings.DisallowStartIfOnBatteries = false;\n  settings.Enabled = true;\n  settings.IdleSettings.RestartOnIdle = false;\n  settings.IdleSettings.StopOnIdleEnd = false;\n  settings.MultipleInstances = TaskInstancesPolicy.IgnoreNew;\n  settings.RunOnlyIfIdle = false;\n  settings.StopIfGoingOnBatteries = false;\n  settings.ExecutionTimeLimit = TimeSpan.Zero;\n  settings.Compatibility = TaskCompatibility.V1;\n</code></pre>\n\nIs there a known issue for that? How could I manage to solve my problem?<br />\nThanks!!<br />\n",
+    "PostedDate": "2017-01-09T07:39:47.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490850",
+    "ThreadId": "660580",
+    "Html": "Additional information: I just see that It does not work since I change the Compatibility to TaskCompatibility.V1<br />\nAny idea to solve this problem?<br />\n",
+    "PostedDate": "2017-01-09T08:15:37.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490911",
+    "ThreadId": "660580",
+    "Html": "When the TaskCompatibility.V1 is set (and I would recommend against it as the library will auto downgrade for XP) then you are working with the 15 year old task library and the ITask.SetMaxRunTime method which has proven a bit inconsistent in Vista and later. One of the bugs I've tried to work around may be causing your trouble. Here's the code from the workaround (in Task.cs) so you can see what's happening:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Due to an issue introduced in Vista, and propagated to Windows 7, setting the</span>\n<span style=\"color:Green;\">// MaxRunTime to INFINITE results in the task only running for 72 hours. For</span>\n<span style=\"color:Green;\">// these operating systems, setting the RunTime to &quot;INFINITE - 1&quot; gets the</span>\n<span style=\"color:Green;\">// desired behavior of allowing an &quot;infinite&quot; run of the task.</span>\n<span style=\"color:Blue;\">uint</span> ms = value == TimeSpan.Zero ? InfiniteRunTimeV1 : Convert.ToUInt32(value.TotalMilliseconds);\nv1Task.SetMaxRunTime(ms);\n<span style=\"color:Blue;\">if</span> (value == TimeSpan.Zero &amp;&amp; v1Task.GetMaxRunTime() != InfiniteRunTimeV1)\n   v1Task.SetMaxRunTime(InfiniteRunTimeV1 - 1);\r\n</pre></div>I would strongly recommend not setting the V1 flag and letting the library choose the best version of the native implementation to do the work.<br />\n",
+    "PostedDate": "2017-01-10T07:57:36.437-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-10T07:58:02.113-08:00"
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in release 1.7",
+    "ClosedDate": "2011-08-29T23:03:43.153-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm working on a project to remove tasks (so we can be sure they don't trigger during the second step), edit/copy/remove some files, and restore the task, and so I have a bit of code that looks like so:\n \nstring taskName = \"ExampleTask\";\n \nusing{TaskService ts = new TaskService())\n{\n  Task t = ts.GetTask(taskName);\n  TaskDefinition td = t.Definition;\n  ts.RootFolder.DeleteTask(taskName);\n \n... And the code goes on to do the actual work.\n \nThen later:\n \nts.RootFolder.RegisterTaskDefinition(taskName, td);\n \nIs the point where the exception is thrown from IPersist in the Win32 library.  The odd part is that if I change taskName before re-registering the Task it works fine, however it breaks other applications that depend on knowing about this Task's status and is thus Not A Valid Solution.  I've tried breaking out of the first using block and instantiating a second TaskService, that doesn't change anything.  The value of td isn't null when the exception is thrown, so its not like we accidentally lost the value, if I enumerate the Tasks after deleting it, it's gone, and I have no problem creating a new Task with any other name I want aside from the one I deleted.",
+    "LastUpdatedDate": "2013-05-16T04:49:11.54-07:00",
+    "PlannedForRelease": "Release 1.6.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2011-06-29T22:11:35.433-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Deleting a V1 task and then registering it again gives FileNotFound exception",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 8875
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

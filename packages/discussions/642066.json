@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1436344",
+    "ThreadId": "642066",
+    "Html": "I have two servers in a domain: SERVER_A and SERVER_B. SERVER_A runs a collection of scheduled tasks defined in the Task Scheduler.\r<br />\n<br />\nI have an application that creates scheduled tasks by importing an XML task definition file using the Task Scheduler Managed Wrapper using the following code:\r<br />\n<br />\nImports System.IO\r<br />\nImports Microsoft.Win32.TaskScheduler\r<br />\n<br />\nDim ts as TaskService\r<br />\nDim tf As TaskFolder\r<br />\nDim FolderName as String = &quot;\\TaskFolder&quot;\r<br />\nDim taskDefFilePath As String\r<br />\nDim taskDefXML As String\r<br />\n<br />\nts = New TaskService(&quot;SERVER_A&quot;)\r<br />\ntf = ts.GetFolder(FolderName)\r<br />\ntaskDefXML = IO.File.ReadAllText(taskDefFilePath)\r<br />\ntf.RegisterTask(\r<br />\n  taskName,\r<br />\n  taskDefXML,\r<br />\n  TaskCreation.CreateOrUpdate,\r<br />\n  Nothing,\r<br />\n  Nothing,\r<br />\n  TaskLogonType.InteractiveToken,\r<br />\n  Nothing\r<br />\n)\r<br />\n<br />\nWhen the above code is run from SERVER_B (connecting remotely to SERVER_A to set up the scheduled task), the code runs as expected and sets up a new scheduled task. If I run the above code from SERVER_A, then the application throws the following exception:\r<br />\n<br />\nSystem.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\r<br />\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTask(String Path, String XmlText, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTask(String Path, String XmlText, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r<br />\n<br />\nI am logging into SERVER_A and SERVER_B using a domain user that has local administrator rights on SERVER_A.\r<br />\n<br />\nAny idea why I can run the above code remotely from another server in the domain, but get the exception thrown when I try to run locally on SERVER_A?<br />\n",
+    "PostedDate": "2015-07-28T10:33:33.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1451825",
+    "ThreadId": "642066",
+    "Html": "Are the two servers running different versions of Windows? Are they in different domains? Could the account of the process running this code have different permissions on each of the two servers?<br />\n",
+    "PostedDate": "2015-11-11T10:39:00.987-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452155",
+    "ThreadId": "642066",
+    "Html": "Same version of Windows.\r<br />\nSame domain (very first point in the original post).\r<br />\nThe account running the process has local admin rights on both servers. The account is a domain account. Technically, the only thing that should matter is that the account has rights to administer the scheduled tasks on the machine where the scheduled tasks are created and run (SERVER_A).\r<br />\n<br />\nI can use the Scheduled Task Manager directly on SERVER_A; or running Scheduled Task Manager on SERVER_B and remotely administering the scheduled tasks on SERVER_A.<br />\n",
+    "PostedDate": "2015-11-12T13:31:39.823-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452807",
+    "ThreadId": "642066",
+    "Html": "Have you checked the information on the <a href=\"https://taskscheduler.codeplex.com/wikipage?title=TaskSecurity\" rel=\"nofollow\">Security Documentation</a> page? It could have something to do with the firewall settings, UAC, or group membership on the target server.<br />\n",
+    "PostedDate": "2015-11-17T10:26:26.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452840",
+    "ThreadId": "642066",
+    "Html": "Able to run remotely and manage a remote Task Scheduler. Fails when trying to run the app on the same machine as the Task Scheduler.\r<br />\nAble to use the standard Windows Scheduled Task Manager either locally on the same machine where the task is scheduled, or remotely to manage the scheduled tasks from another machine in the domain.\r<br />\n<br />\nFirewall would not be an issue. \r<br />\nSecurity would not be an issue.\r<br />\n<br />\nSecurity or a firewall might make sense if it worked locally on the target server but not remotely. It's working remotely but not locally - the opposite of what you'd expect if security or some sort of networking issue was the problem.<br />\n",
+    "PostedDate": "2015-11-17T12:14:45.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1452989",
+    "ThreadId": "642066",
+    "Html": "And when you run it locally, are you running it &quot;as administrator&quot;? UAC does some crazy stuff and the MMC Task Scheduler app forces itself to run elevated.<br />\n",
+    "PostedDate": "2015-11-18T07:45:09.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

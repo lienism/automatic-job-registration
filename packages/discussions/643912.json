@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1441045",
+    "ThreadId": "643912",
+    "Html": "Hello,<br />\n<ol>\n<li>\nCreated a task (Let's say this is TaskA)<br />\n   When running the task..user account : SYSTEM<br />\n   Set Run with highest privileges. <br />\n   Set Action to run a console exe application (Let's say this is ConsoleApp) at the specific time.<br />\n</li>\n</ol>\nIn that ConsoleApp, what it does is to add one more trigger based on some business logic..and call RegisterChanges to update...<br />\n<br />\nHere are what I noticed.. <br />\n<ol>\n<li>When running the ConsoleApp with admin right in command window, it works file.</li>\n<li>\nWhen running the ConsoleApp without admin right, it didn't work. (GetTask method returns null, so no update happened)<br />\n</li>\n</ol>\nI think this is a security related issue... I CANNOT change the SYSTEM account to some other account for the TaskA. Is there any way that ConsoleApp should be run under the context of Windows Task Scheduler to make update happen?<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2015-08-19T06:11:15.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

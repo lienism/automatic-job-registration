@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "916931",
+    "ThreadId": "396744",
+    "Html": "\r\n<p>I have been using latest TaskScheduler library to collect Windows Task information from Windows 2008 Server R2 standard. I am able to get the task Configure For &quot;Windows Server 2003, Windows XP or Windows 2000&quot;. When a new task is created it is set to Configure\r\n for: &quot;Windows Vista, Windows 2008&quot;. TaskScheduler library does not show these new tasks. Please let me know how to resolve this issue. Any help will be appreciated. Thanks.</p>\r\n",
+    "PostedDate": "2012-09-24T16:30:35.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917334",
+    "ThreadId": "396744",
+    "Html": "<p>To get a task to register to support a specific version of the library (which is what that ComboBox is referring to), you set the TaskDefinition.Settings.Compatibility property. Under the 1.8.x version of the library and earlier, you can only set this to V1 (WS2K, WS03, or XP) or V2 (Vista, WS08 and later). Under the 1.9.x version of the library and later, you will be able to set this to specific versions of the library that correspond to those referenced in the Microsoft documentation allowing for specific Windows 7 additions (V2_1) and then specific Windows 8 additions (V2_2).</p>",
+    "PostedDate": "2012-09-25T09:11:07.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "917567",
+    "ThreadId": "396744",
+    "Html": "<p>Hi David,</p>\r\n<p>Thank you very much for prompt answer.</p>\r\n<p>I am trying to get the list of tasks using the lastest taskscheduler library (1.8.3), but not able to get the list of tasks that are configure for \"Windows Vista, Windows 2008\". Please let me know what property I need to set to get the task list.</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2012-09-25T18:01:33.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "919044",
+    "ThreadId": "396744",
+    "Html": "<p>Make sure that when you create the TaskService instance, you are not providing \"true\" for the last parameter of the constructor. This will limit your access to those tasks created with version 1.0 of the library.</p>",
+    "PostedDate": "2012-09-28T08:47:08.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "920312",
+    "ThreadId": "396744",
+    "Html": "<p>Thanks you for your reply - still no luck. I tried both passing false and try for Version. Currently the task is set to configure for \"Windows Vista, Windows Server 2008\". These tasks are not showing in my list. Is there any issue with permissions? Any special permission I need?</p>\r\n<p>Thanks.</p>",
+    "PostedDate": "2012-10-01T18:36:02.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

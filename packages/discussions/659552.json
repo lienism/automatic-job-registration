@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1488379",
+    "ThreadId": "659552",
+    "Html": "I notice this happens on Windows Server 2012 R2. \r<br />\n<br />\nI created a new task and this task is yet to run. By using the Task Scheduler Managed Wrapper, it returns status code 0x1 in LastTaskResult property. Whereas when i checked the Task Scheduler Windows, it shows a blank value under LastRunResult column.\r<br />\n<br />\nIt doesn't happen on Windows Server 2016 due to the behavior seems different that it shows status code 0x41303 instead of a blank value.\r<br />\n<br />\nSo, is it normal to return 0x1 status for blank status as shown in Task Scheduler Window?<br />\n",
+    "PostedDate": "2016-11-19T06:55:39.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489382",
+    "ThreadId": "659552",
+    "Html": "It could. The wrapper library goes a step further than the native when looking for the last run result. Not only does it check the value displayed in the Task Scheduler applet, but if that doesn't return a value, it looks at the event log.<br />\n",
+    "PostedDate": "2016-12-06T13:41:55.883-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-12-06T13:41:58.43-08:00"
+  }
+]

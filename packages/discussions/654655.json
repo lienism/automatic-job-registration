@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1473407",
+    "ThreadId": "654655",
+    "Html": "Hello,\r<br />\n<br />\nI need to set the Start in (Optional) setting for Windows 7 Task.\r<br />\n<br />\nDoes anyone know how I can perform this task.\r<br />\n<br />\nThanks,<br />\n",
+    "PostedDate": "2016-05-13T14:43:14.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473412",
+    "ThreadId": "654655",
+    "Html": "When creating an ExecAction, add a value to the WorkingDirectory property.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// In constructor, last param is WorkingDirectory</span>\n<span style=\"color:Blue;\">var</span> action = <span style=\"color:Blue;\">new</span> ExecAction(<span style=\"color:#A31515;\">&quot;cmd.exe&quot;</span>, <span style=\"color:#A31515;\">&quot;echo Working...&quot;</span>, <span style=\"color:#A31515;\">@&quot;C:\\&quot;</span>);\n<span style=\"color:Green;\">// In object, use property</span>\naction.WorkingDirectory = <span style=\"color:#A31515;\">@&quot;C:\\Windows&quot;</span>;\r\n</pre></div>",
+    "PostedDate": "2016-05-13T16:42:49.93-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-13T16:42:52.487-07:00"
+  }
+]

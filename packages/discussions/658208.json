@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1484525",
+    "ThreadId": "658208",
+    "Html": "Is it possible to hide the first page of the task scheduler wizard?\r<br />\nThis is the page that allows you to enter the name and description.\r<br />\nI've tried to set TaskSchedulerWizard.AvailableWizardPages to exclude the Intro page but it still shows the first page.<br />\n",
+    "PostedDate": "2016-09-23T12:03:02.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484572",
+    "ThreadId": "658208",
+    "Html": "Thank you for finding this bug. It is actually a bug in the wizard control this project uses, which I also happened to develop. I will update that project and test it, then roll it into this project. It may take a couple weeks, but it will be there soon.<br />\n",
+    "PostedDate": "2016-09-24T10:10:06.123-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-09-24T10:10:10.537-07:00"
+  }
+]

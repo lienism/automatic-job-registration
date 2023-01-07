@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "617295",
+    "ThreadId": "258792",
+    "Html": "\r\n<p>I have developed an application that uses Task Scheduler internally for scheduling the tasks.</p>\r\n<p>Now i want to schedule a task which would get triggered when an application launches (say for example a Browser or Paint application is launched) and ends when the triggering application is closed.<br>\r\nFor example the task should get triggered when an application say A.exe executes and terminates when A.exe is terminated.</p>\r\n<p>I tried creating a task for this using the Task Scheduler's 'On an event' trigger type, but couldn't get the desired functionality.<br>\r\nIs there any other way of creating such a task using Task Scheduler?</p>\r\n<p>Thanks.</p>\r\n",
+    "PostedDate": "2011-05-24T05:00:56.057-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "617477",
+    "ThreadId": "258792",
+    "Html": "<p>I don't know of any way to do this and my only guess would be to look at using the EventTrigger as well. However, I don't have any idea what system events are fired, if any, on an application execution or termination. I would assume that somewhere there is a system event for process start and stops. If you figure something out, please submit the Subscription string you used.</p>",
+    "PostedDate": "2011-05-24T09:57:40.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "691505",
+    "ThreadId": "277730",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I write a program to create a task and let other users can modify its trigger.</p>\r\n<p>First, I create one task under administrator account like this one:</p>\r\n<p>using (TaskService ts = new TaskService())<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DailyTrigger dailyTrig = new DailyTrigger();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.StartBoundary = DateTime.Now;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.DaysInterval = 2;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(dailyTrig);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExecAction ac = new ExecAction(&quot;D:\\\\a.exe&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(ac);<br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Register the task in the root folder<br>\r\n<span style=\"color:#000000\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(&quot;TEST&quot;, td, TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);</span></p>\r\n<p>}</p>\r\n<p>This task will run a.exe under local system account. It's good, I can create the task, and let it run</p>\r\n<p>After that, I log off and log in as a standard user (not administrator) such as TEST, and then modify the task.</p>\r\n<p>&nbsp;</p>\r\n<p>using (TaskService ts = new TaskService())<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task task = ts.FindTask(_taskName);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (task != null)<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; task.Enabled = true;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td = task.Definition;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Clear();</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WeeklyTrigger weeklyTrig = new WeeklyTrigger();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weeklyTrig.WeeksInterval = 1;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weeklyTrig.DaysOfWeek = DaysOfTheWeek.Monday | DaysOfTheWeek.Tuesday | DaysOfTheWeek.Wednesday | DaysOfTheWeek.Thursday | DaysOfTheWeek.Friday;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(weeklyTrig);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n<span style=\"color:#ff0000\">ts.RootFolder.RegisterTaskDefinition(_taskName, td, TaskCreation.CreateOrUpdate, _userId, null, TaskLogonType.ServiceAccount);</span><br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>\r\n}</p>\r\n<p>&nbsp;</p>\r\n<p>The problem is when it runs to the red line of code, it causes error that 0x80070005\r\n<span>(E_ACCESSDENIED)</span></p>\r\n<p>&nbsp;</p>\r\n<p><span>When I log off and run under Administrator account, this code can run correctly.</span></p>\r\n<p>&nbsp;</p>\r\n<p><span>My question is if I want to modify a task (create by administrator account) under standard user account (not administrator account), how can I do this?</span></p>\r\n<p><br>\r\nThis one is so strange, as only Administrator can create and modify task in Task Scheduler?</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks so much.</p>\r\n",
+    "PostedDate": "2011-10-31T02:23:15.07-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "691959",
+    "ThreadId": "277730",
+    "Html": "<p>Does anyone have any idea?</p>",
+    "PostedDate": "2011-10-31T23:27:36.75-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "692516",
+    "ThreadId": "277730",
+    "Html": "<p>The following is pulled from the <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa382140(v=VS.85).aspx\">MSDN documentation</a> and edited to match this library:</p>\r\n<p>By default, a user who creates a task can read, update, delete, and run the task. A user must have file write permission on a task file to update a task, file read permission on a task file to read a task, delete permission on a task file to delete a task, and file execute permission on a task to run a task using the <strong>Task.Run</strong> or <strong>RunEx</strong> methods. Members of the Administrators group or the SYSTEM account can read, update, delete, and run any tasks. Members of the Users group, the LocalService account, and the NetworkService account can only read, update, delete, and run the tasks that they have created. This default behavior is changed when the DACL of the task file is changed, in which case the DACL defines which users have file write, read, execute, and delete permission. To set permissions for a task file, use the <strong>Task.SecurityDescriptor&nbsp;</strong>property or set the security descriptor when you register the task using the <strong>RegisterTask </strong>or <strong>RegisterTaskDefinition </strong>methods.<br />&nbsp;<br />A user must have WriteDAC permission in addition to the read/write permissions to update a task if the task update requires a change to the DACL for the task.</p>",
+    "PostedDate": "2011-11-01T21:28:07.687-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "694232",
+    "ThreadId": "277730",
+    "Html": "<p>Hi Dahall, Thanks for your response.</p>\r\n<p>Now, I decide to use impersonation so that standard user can impersonates user Administrator to register task, not standard user.</p>\r\n<p>I have 2 ways to do this.</p>\r\n<p><span style=\"color: #ff0000;\">1. First, I use the TaskService constructor, like this one:</span></p>\r\n<p>using (TaskService ts = new TaskService(Environment.MachineName, \"ADMIN\", Environment.MachineName, \"123456\", false))</p>\r\n<p>{</p>\r\n<p>.... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(\"TEST\", td, TaskCreation.CreateOrUpdate, \"SYSTEM\", null, TaskLogonType.ServiceAccount);</p>\r\n<p>}</p>\r\n<p>This one cause an error: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)). I already checked the the username and password of admin.</p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"color: #ff0000;\">2. Second I use Impersonation class from Microsoft, so that I will impersonate Admin before register the task.</span></p>\r\n<p>using (Impersonation imp = new Impersonation(\"ADMIN\", \"DOMAIN\", \"123456\"))</p>\r\n<p>{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using (TaskService ts = new TaskService())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(\"TEST\", td, TaskCreation.CreateOrUpdate, \"SYSTEM\", null, TaskLogonType.ServiceAccount);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>}</p>\r\n<p>When I go to line&nbsp; using (TaskService ts = new TaskService()), it cause an error:</p>\r\n<p>Retrieving the COM class factory for component with CLSID {0F87369F-A4E5-4CFC-BD3E-73E6154572DD} failed due to the following error: 80070542.</p>\r\n<p>&nbsp;</p>\r\n<p>Is it possible for using impersonation so that standard user can impersonate Admin to register task with SYSTEM account?</p>\r\n<p>Can you show me which part of code that I make wrong?</p>\r\n<p>Thanks so much.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-11-05T07:10:04.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "694871",
+    "ThreadId": "277730",
+    "Html": "<p>What is your target platform?</p>",
+    "PostedDate": "2011-11-07T11:31:04.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "695045",
+    "ThreadId": "277730",
+    "Html": "<p>Hi Dahall,</p>\r\n<p>My platform is Windows Vista Business 32 bit.</p>",
+    "PostedDate": "2011-11-07T17:49:30.703-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "695363",
+    "ThreadId": "277730",
+    "Html": "<p>Method (1) from your example above is the one I have tested and used. It works. You need to make sure the account is either a domain admin or local admin and use the appropriate domain or workstation name. You also need to make sure the account has LOGON32_LOGON_BATCH rights.</p>",
+    "PostedDate": "2011-11-08T08:02:17.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "696243",
+    "ThreadId": "277730",
+    "Html": "<p>Hi Dahall,</p>\r\n<p>I use a local ADMIN account and the domain name of my local machine, it also has LOGON32_LOGON_BATCH right. Can you check for me whether this one works or not, in my case, it does not work, causing an error access is denied.</p>\r\n<p>&nbsp;</p>\r\n<p>First, I log in as ADMIN account ( I create this one, not the built in administrator), to create one task name TEST.</p>\r\n<p>Then I login as user TEST (standard user) and use impersonation in constructor of Task Service class to ADMIN account and modify the task.</p>\r\n<p>It causes an error that access is denied. when running to the line</p>\r\n<p>using (TaskService ts = new TaskService(Environment.MachineName, \"ADMIN\", Environment.MachineName, \"123456\", false))</p>",
+    "PostedDate": "2011-11-09T21:17:35.38-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "696775",
+    "ThreadId": "277730",
+    "Html": "<p>I was just looking at some of the tasks on my Windows 7 system. They are registered under the \"Users\" group. This would give all system users the ability to change and run the task. Give that a try and let us know if it works.</p>",
+    "PostedDate": "2011-11-10T19:24:34.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "696777",
+    "ThreadId": "277730",
+    "Html": "<p>By the way, I tried your test and got the same errors. I can't explain what is happening so that is why I proposed the 'Users' group solution.</p>",
+    "PostedDate": "2011-11-10T19:25:22.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "700059",
+    "ThreadId": "277730",
+    "Html": "<p>Hi Dahall,</p>\r\n<p>Sorry for late reply.</p>\r\n<p>For standard user, it cannot register the task under a group, so it cannot modify the task when register with \"Users\" group. In my mind, I think there is no way for a standard user to register the task with \"SYSTEM\" account. If someone knows how to make it, very appreciate. Thanks.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2011-11-18T01:54:01.733-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "924790",
+    "ThreadId": "277730",
+    "Html": "\r\n<p>Hi all,<br>\r\nI'm reading this post since I'm having &quot;Access is denied&quot; on RegisterTaskDefinition, launching my application from a domain user which belongs to Administrators group on the machine (I'm trying on both Windows 7 and Windows Server 2008 R2).</p>\r\n<p>What is strange is that thientan0206&nbsp;said that the first operation works fine (&quot;<span>First,</span><span>&nbsp;I create one task under administrator account like this one: [...]</span><span>&nbsp;It's good, I can create the task, and let it run&quot;). In\r\n my case, this simply operation already causes the &quot;Access is denied&quot; message error.</span></p>\r\n<p>I tried to copy and paste these lines of code in a sample app:</p>\r\n<p style=\"padding-left:30px\">using (TaskService ts = new TaskService())&nbsp;<br>\r\n{<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DailyTrigger dailyTrig = new DailyTrigger();<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.StartBoundary = DateTime.Now;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dailyTrig.DaysInterval = 2;<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers.Add(dailyTrig);<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ExecAction ac = new ExecAction(&quot;D:\\\\a.exe&quot;);<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(ac);<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Register the task in the root folder<br>\r\n<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(&quot;TEST&quot;, td, TaskCreation.CreateOrUpdate,\r\n<br>\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);<br>\r\n</span>}</p>\r\n<p>...launched it and it doesn't work: I'm getting that annoying message.<br>\r\nOf course, if I try adding the same activity using the Task Scheduler snap-in, the activity gets created succesfully...<br>\r\nWhy? What I'm doing wrong?&nbsp;</p>\r\n",
+    "PostedDate": "2012-10-10T09:27:17.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "924897",
+    "ThreadId": "277730",
+    "Html": "<p>jeanie77: I just ran the following code without a problem logged into a domain account which is in my local Adminstrators group and had no errors. I have to assume there is something about your runtime environment that is causing the problem. Could it be UAC? Are you running the application \"as Administrator\"?</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">using</span> (TaskService ts = <span style=\"color: blue;\">new</span> TaskService())\r\n{\r\n   TaskDefinition td = ts.NewTask();\r\n   td.Triggers.Add(<span style=\"color: blue;\">new</span> DailyTrigger(2));\r\n   td.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(<span style=\"color: #a31515;\">\"D:\\\\a.exe\"</span>));\r\n   Task t = ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount);\r\n}\r\n\r\n</pre>\r\n</div>",
+    "PostedDate": "2012-10-10T13:14:09.447-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "925088",
+    "ThreadId": "277730",
+    "Html": "\r\n<p>Hi Dahall,<br>\r\nthank you for your reply.</p>\r\n<p>Yes, I have UAC enabled (Default -&nbsp;Notify me only when programs try to make changes to my computer)&nbsp;and probably that's the reason why I cannot register using the API.&nbsp;</p>\r\n<p>If I launch my application &quot;As Administrator&quot;, it registers successfully.</p>\r\n<p>The problem is that &quot;Access is denied&quot; error comes out for several and different reasons...<br>\r\nThank you, bye! Valentina</p>\r\n",
+    "PostedDate": "2012-10-11T00:49:33.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

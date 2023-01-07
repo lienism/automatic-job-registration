@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "641007",
+    "ThreadId": "264807",
+    "Html": "<p>Before telling me to look at it, i already looked at the thread: <a title=\"Create a Task to Run as LocalSystem  Wiki Link: [discussion:45013]  \" href=\"http://taskscheduler.codeplex.com/discussions/45013\" target=\"_blank\">http://taskscheduler.codeplex.com/discussions/45013</a><br />I've posted there, but than thought this might e a differnent error, and irrelevant to a two years old post..</p>\n<p>I did exactly as written, and an exception was thrown:<br />COMException: (18,8):LogonType:<br />StackTrace:<br />&nbsp;&nbsp;&nbsp;in&nbsp; Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)<br />&nbsp;&nbsp;&nbsp;in&nbsp; Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)</p>\n<p>I'm running Windows 7 x64 Ultimate, and writing my code in VS2005 (.net 2 SP1).</p>\n<p>My code is this:</p>\n<div style=\"background-color: white; color: black;\">\n<pre>TaskDefinition td = ts.NewTask();\r\ntd.RegistrationInfo.Source = <span style=\"color: #a31515;\">\"Installer\"</span>;\r\ntd.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Setup required operation.\"</span>;\r\ntd.Principal.LogonType = TaskLogonType.InteractiveToken;\r\ntd.Principal.UserId = <span style=\"color: #a31515;\">\"NT AUTHORITY\\\\SYSTEM\"</span>;\r\ntd.Principal.RunLevel = TaskRunLevel.Highest;\r\n<span style=\"color: blue;\">if</span> (ts.HighestSupportedVersion.Minor &lt;= 1)\r\n   td.Settings.RunOnlyIfLoggedOn = <span style=\"color: blue;\">true</span>;\r\n\r\ntd.Settings.RunOnlyIfIdle = <span style=\"color: blue;\">false</span>;\r\ntd.Settings.IdleSettings.StopOnIdleEnd = <span style=\"color: blue;\">false</span>;\r\ntd.Settings.IdleSettings.RestartOnIdle = <span style=\"color: blue;\">false</span>;\r\ntd.Settings.RunOnlyIfNetworkAvailable = <span style=\"color: blue;\">false</span>;\r\ntd.Settings.StartWhenAvailable = <span style=\"color: blue;\">true</span>;\r\n\r\ntd.Triggers.Add(<span style=\"color: blue;\">new</span> BootTrigger());\r\n\r\ntd.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(ProcessPath, arguments, Environment.CurrentDirectory));\r\n       \r\nMicrosoft.Win32.TaskScheduler.Task task = folder.RegisterTaskDefinition(ProcessName, td, TaskCreation.Create, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color: blue;\">null</span>);&nbsp;</pre>\n</div>\n<p>What I want to do is to give my installer the ability to run on startup in case it requires reboot (As in installing Microsoft .Net Framework 4), and thus continue its operation from before.<br />Therefore, I need it to run as an administrator, regardless of the user logged in, and in interactive mode.</p>\n<p>Is there a way to achieve this?</p>\n<p>Thanks in advance,<br />EZ</p>",
+    "PostedDate": "2011-07-12T04:53:02.133-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641116",
+    "ThreadId": "264807",
+    "Html": "<p>I think what you desire can be accomplished with this code:&nbsp;</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskDefinition td = ts.NewTask();\r\ntd.RegistrationInfo.Source = <span style=\"color: #a31515;\">\"Installer\"</span>;\r\ntd.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Setup required operation.\"</span>;\r\ntd.Triggers.Add(<span style=\"color: blue;\">new</span> LogonTrigger());\r\ntd.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(ProcessPath, arguments, Environment.CurrentDirectory));\r\nTask task = folder.RegisterTaskDefinition(ProcessName, td, TaskCreation.Create, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">null</span>, TaskLogonType.ServiceAccount, <span style=\"color: blue;\">null</span>);\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-07-12T08:16:05.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641649",
+    "ThreadId": "264807",
+    "Html": "<p>I've tried what you have suggested.&nbsp;and the task is running under SYSTEM but is not interactive.</p>\r\n<p>Can it be interactive with another user when running under SYSTEM?</p>",
+    "PostedDate": "2011-07-13T06:23:51.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "641823",
+    "ThreadId": "264807",
+    "Html": "<p>The only way to run a task interactively is with the current user or with an account and password&nbsp;that has Administrator privileges for the machine.</p>\r\n<p>On an non-library note, could use just utilize the registry setting for running things once (HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce) or put the executable in the AllUsers\\Startup folder?</p>",
+    "PostedDate": "2011-07-13T10:32:56.583-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "642312",
+    "ThreadId": "264807",
+    "Html": "<p>The other way you are talking about is impossible on windows&nbsp;Vista and above&nbsp;though it doesn't allow programs to run on startup with administrator privilieges, and I need such ﻿﻿privilieges in order to continue installation.</p>\r\n<p>The only way aroumd this that I know of is through task scheduling. Maybe you have another idea?</p>\r\n<p>Regardless, if I declare one should continue installing after startup with the same user he started it with, will not entering password on the RegisterTaskDefinition ﻿work?</p>",
+    "PostedDate": "2011-07-14T06:39:14.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "643113",
+    "ThreadId": "264807",
+    "Html": "<p>If the current user has admin privileges to run the installation in the first place, that user's account can be used just through the registry entry to run the remainder on next logon. If you do want to use a task on Vista and above, you could register the task as the current user with the TaskLogonType.InteractiveTokenOrPassword and use the LogonTrigger setting the UserId to the 'domain\\username' of the current user.</p>\r\n<div id=\"_mcePaste\" class=\"mcePaste\" style=\"position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;\">﻿</div>",
+    "PostedDate": "2011-07-15T12:58:06.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "847465",
+    "ThreadId": "359167",
+    "Html": "\r\n<pre><p>Environment:<br>Windows Vista Business SP2 32 or 64-bit<br>Windows 7 Pro SP1 64-bit <br>&nbsp;<br>The Problem:<br>Any attempt to select the dates in the &quot;From&quot; or &quot;To&quot; Calendar drop downs of the &quot;Run Times&quot; tab of the Task Scheduler editor on 32 or 64-bit Vista or<br>Windows 7 is returning a System.IO.FileNotFoundException. The problem does not reproduce on XP Pro SP3 or 64-bit XP Pro SP2.</p><p>Exception details:<br>The system cannot find the file specified. (Exception from HRESULT: 0x80070002)<br>&nbsp;<br>Exception type: System.IO.FileNotFoundException<br>Message:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The system cannot find the file specified. (Exception from<br>HRESULT: 0x80070002)<br>Source:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Microsoft.Win32.TaskScheduler<br>Target Site:&nbsp;&nbsp;&nbsp;&nbsp; GetRunTimes<br>&nbsp;<br>System.IO.FileNotFoundException was unhandled by user code<br>&nbsp; Message=The system cannot find the file specified. (Exception from HRESULT: 0x80070002)<br>&nbsp; Source=Microsoft.Win32.TaskScheduler<br>&nbsp; StackTrace:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.V2Interop.IRegisteredTask.GetRunTimes(SystemTime&amp; pstStart, SystemTime&amp; pstEnd, UInt32&amp; pCount, IntPtr&amp; pRunTimes)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Task.GetRunTimes(DateTime start, DateTime end, UInt32 count) in C:\\develop\\git_repos\\Framework\\Utilities\\Source\\TaskService\\Task.cs:line 791<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskRunTimesControl.Fetch() in C:\\develop\\git_repos\\Framework\\Utilities\\Source\\TaskEditor\\TaskRunTimesControl.cs:line 110<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskRunTimesControl.dateValueChanged(Object sender, EventArgs e) in C:\\develop\\git_repos\\Framework\\Utilities\\Source\\TaskEditor\\TaskRunTimesControl.cs:line 105<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.FullDateTimePicker.OnValueChanged(EventArgs eventArgs) in C:\\develop\\git_repos\\Framework\\Utilities\\Source\\TaskEditor\\FullDateTimePicker.cs:line 239<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.FullDateTimePicker.subControl_ValueChanged(Object sender, EventArgs e) in C:\\develop\\git_repos\\Framework\\Utilities\\Source\\TaskEditor\\FullDateTimePicker.cs:line 320<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.DateTimePicker.OnValueChanged(EventArgs eventargs)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.DateTimePicker.WmDateTimeChange(Message&amp; m)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.DateTimePicker.WmReflectCommand(Message&amp; m)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.DateTimePicker.WndProc(Message&amp; m)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)<br>&nbsp; InnerException: </p></pre>\r\n",
+    "PostedDate": "2012-06-11T06:40:00.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848521",
+    "ThreadId": "359167",
+    "Html": "<p>Fixed in changeset 78634. Thanks for reporting this.<span style=\"font-family: Consolas; font-size: xx-small;\"></span></p>",
+    "PostedDate": "2012-06-13T10:05:45.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "848547",
+    "ThreadId": "359167",
+    "Html": "<p>Awesome! Thanks David!</p>",
+    "PostedDate": "2012-06-13T10:50:52.657-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1132002",
+    "ThreadId": "359167",
+    "Html": "I don't think it is fixed - I ran into same problem on 64 bit Windows 7 (but just tested on another 64bit Windows 8 machine, works fine) - version i used is\r<br />\n<br />\nMicrosoft.Win32.TaskScheduler.dll (dll timestamp - 17 Sept 2013)<br />\n",
+    "PostedDate": "2013-12-04T22:49:22.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1150604",
+    "ThreadId": "359167",
+    "Html": "I believe this is fixed, again, with version 2.0.3.<br />\n",
+    "PostedDate": "2014-01-07T13:30:47.393-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432441",
+    "ThreadId": "359167",
+    "Html": "At the moment I'm running into this problem on 64 bit Windows 10 Pro Insider Preview Build 10158. Same call works on 64 bit Windows 8.1 Pro.\r<br />\n<br />\nSystem.IO.FileNotFoundException, The system cannot find the file specified. (Exception from HRESULT: 0x80070002)\r<br />\n   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\r<br />\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r<br />\n<br />\nUsed .NET-Framework 2.0 - Version 2.3.4.0<br />\n",
+    "PostedDate": "2015-06-30T05:17:38.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432545",
+    "ThreadId": "359167",
+    "Html": "Crayjin: what are you putting in for the &quot;createType&quot; parameter? Make sure it is CreateOrUpdate or Create. If that is still not working, try running the process in an elevated account with &quot;Run as Administrator&quot;. Sometimes there are permission problems that seem more prevalent the new the OS version.<br />\n",
+    "PostedDate": "2015-06-30T10:06:15.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433331",
+    "ThreadId": "359167",
+    "Html": "Hi dahall,\r<br />\n<br />\nthanks for your response.\r<br />\n<br />\nIn fact I'm using the TaskCreation.CreateOrUpdate  enum value and the process is elevated. Let me give you some more information:\r<br />\n<br />\nI'm using a RegistrationTrigger, with a delay of 8 seconds and a EndBoundary of 20 seconds.<br />\n<ul>\n<li>RunLevel is TaskRunLevel.LUA</li>\n<li>DeleteExpiredTaskAfter is 40 seconds</li>\n<li>\nPrincipal.UserId is the UserName of the Win32_ComputerSystem ManagementObject (Example:  WIN-GVLEGB4ESV6\\Test )<br />\n</li>\n</ul>\nIf you need further information, I'm also available on other communication channels.<br />\n",
+    "PostedDate": "2015-07-07T00:41:41.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433400",
+    "ThreadId": "359167",
+    "Html": "Will you post the code you are using to build the task and register it? I have a Win10 instance I can test it against. I'm not getting the failure building it out on my own.<br />\n",
+    "PostedDate": "2015-07-07T09:26:33.577-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433721",
+    "ThreadId": "359167",
+    "Html": "Hi dahall,\r<br />\n<br />\nhere my code:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">using</span> System;\n<span style=\"color:Blue;\">using</span> Microsoft.Win32.TaskScheduler;\n<span style=\"color:Blue;\">using</span> System.Management;\n\n<span style=\"color:Blue;\">namespace</span> TestTaskScheduler\n{\n    <span style=\"color:Blue;\">class</span> Program\n    {\n        <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> Main(<span style=\"color:Blue;\">string</span>[] args)\n        {\n\n            <span style=\"color:Blue;\">var</span> ts = <span style=\"color:Blue;\">new</span> TaskService();\n\n            TaskDefinition td = ts.NewTask();\n            td.RegistrationInfo.Description = <span style=\"color:#A31515;\">&quot;some description&quot;</span>;\n            td.Principal.LogonType = TaskLogonType.InteractiveToken;\n\n            <span style=\"color:Blue;\">var</span> computerSystemClass = <span style=\"color:Blue;\">new</span> ManagementClass(<span style=\"color:#A31515;\">&quot;Win32_ComputerSystem&quot;</span>);\n            <span style=\"color:Blue;\">var</span> computerSystems = computerSystemClass.GetInstances();\n            <span style=\"color:Blue;\">var</span> enumerator = computerSystems.GetEnumerator();\n            <span style=\"color:Blue;\">while</span> (enumerator.MoveNext())\n            {\n                <span style=\"color:Blue;\">var</span> computerSystem = enumerator.Current;\n                td.Principal.UserId = (<span style=\"color:Blue;\">string</span>)computerSystem[<span style=\"color:#A31515;\">&quot;UserName&quot;</span>];\n            }\n\n            td.Actions.Add(<span style=\"color:Blue;\">new</span> ExecAction(<span style=\"color:#A31515;\">&quot;cmd.exe&quot;</span>, <span style=\"color:#A31515;\">&quot;-someparameter&quot;</span>));\n\n            <span style=\"color:Green;\">// Create Trigger</span>\n            <span style=\"color:Blue;\">var</span> trigger = <span style=\"color:Blue;\">new</span> RegistrationTrigger { Enabled = <span style=\"color:Blue;\">true</span> };\n            trigger.Delay = TimeSpan.FromSeconds(8);\n            trigger.EndBoundary = DateTime.Now + TimeSpan.FromSeconds(20);\n            td.Triggers.Add(trigger);\n\n            TaskFolder tf = ts.RootFolder;\n\n            td.Principal.RunLevel = TaskRunLevel.LUA;\n\n            td.Settings.StartWhenAvailable = <span style=\"color:Blue;\">true</span>;\n            td.Settings.Hidden = <span style=\"color:Blue;\">false</span>;\n            td.Settings.MultipleInstances = TaskInstancesPolicy.StopExisting;\n            td.Settings.DisallowStartIfOnBatteries = <span style=\"color:Blue;\">false</span>;\n            td.Settings.StopIfGoingOnBatteries = <span style=\"color:Blue;\">false</span>;\n            td.Settings.IdleSettings.StopOnIdleEnd = <span style=\"color:Blue;\">false</span>;\n            td.Settings.DeleteExpiredTaskAfter = TimeSpan.FromSeconds(40);\n\n            TaskFolder testFolder = <span style=\"color:Blue;\">null</span>;\n\n            <span style=\"color:Blue;\">foreach</span> (TaskFolder taskFolder <span style=\"color:Blue;\">in</span> tf.SubFolders)\n            {\n                <span style=\"color:Blue;\">if</span> (taskFolder.Name.Equals(<span style=\"color:#A31515;\">&quot;TEST&quot;</span>, StringComparison.OrdinalIgnoreCase))\n                {\n                    testFolder = taskFolder;\n                }\n            }\n\n            <span style=\"color:Blue;\">if</span> (testFolder == <span style=\"color:Blue;\">null</span>)\n                testFolder = tf.CreateFolder(<span style=\"color:#A31515;\">&quot;TEST&quot;</span>);\n\n            testFolder.RegisterTaskDefinition(<span style=\"color:#A31515;\">&quot;Start&quot;</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color:Blue;\">null</span>, <span style=\"color:Blue;\">null</span>, TaskLogonType.InteractiveToken);\n            Console.ReadKey();\n        }\n    }\n}\n\n\r\n</pre></div>",
+    "PostedDate": "2015-07-09T06:26:17.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433840",
+    "ThreadId": "359167",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://taskscheduler.codeplex.com/workitem/12142\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2015-07-09T18:08:38.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433841",
+    "ThreadId": "359167",
+    "Html": "I've moved this to an issue.<br />\n",
+    "PostedDate": "2015-07-09T18:09:27.067-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed in version 2.3.1. Thanks for finding this.",
+    "ClosedDate": "2015-03-23T10:52:11.15-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "It was reproduced only on Win Server 2008  Enterprise. \nIf you create a task  in root folder the Task's field 'Folder' return null at first time.\nThat's happen because IRegisteredTask.Path returns the path without a slash at the beginning.\nAfter the reloading data the issue disappear.\n```\n\t\tpublic TaskFolder Folder\n\t\t{\n\t\t\tget\n\t\t\t{\n\t\t\t\tif (v2Task == null)\n\t\t\t\t\treturn this.TaskService.RootFolder;\n\n\t\t\t\tstring path = v2Task.Path;\n\t\t\t\tstring parentPath = System.IO.Path.GetDirectoryName(path);\n\t\t\t\tif (string.IsNullOrEmpty(parentPath))\n\t\t\t\t\treturn null;\n\t\t\t\treturn this.TaskService.GetFolder(parentPath);\n\t\t\t}\n\t\t}\n```\n(To get new task I use TaskEditorDialog.)\nWe can check v2Task.Path and add slash manually to the beginning. What do you think?\nAlso why  this.TaskService.RootFolder  return null when parentPath is empty. Maybe it should return this.TaskService.RootFolder?",
+    "LastUpdatedDate": "2017-12-11T21:32:29.897-08:00",
+    "PlannedForRelease": "Release 2.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-03-23T04:36:50.78-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Task.Folder return null",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 12057
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

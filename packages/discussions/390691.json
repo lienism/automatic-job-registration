@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "896877",
+    "ThreadId": "390691",
+    "Html": "\r\n<p>Why the antiviruses detect a riskware in the library?</p>\r\n<p><a href=\"https://www.virustotal.com/file/44dbb71bd125477c87e6a4c2ba899be7d3591b89c6c9d25029fe7d3f42cd7775/analysis/\">https://www.virustotal.com/file/44dbb71bd125477c87e6a4c2ba899be7d3591b89c6c9d25029fe7d3f42cd7775/analysis/</a></p>\r\n<p>Is it false detection? Or library actually have any dangerous parts?</p>\r\n",
+    "PostedDate": "2012-08-08T04:26:59.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "897303",
+    "ThreadId": "390691",
+    "Html": "<p>The library is just compiled .NET code referencing a COM library. I have never had anything show up in my antivirus scans on my computer using McAfee. All referenced libraries in the Editor assembly are also compiled code using no referenced work. I'm guessing it is a false detection. The ZIP file was scanned by WinZip as it was made and before I uploaded it to CodePlex. Looking at your link, it does appear that your antivirus software has problems with MSIL which is at the heart of any .NET library.</p>",
+    "PostedDate": "2012-08-08T16:14:53.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "897314",
+    "ThreadId": "390691",
+    "Html": "<p>Actually, I've checked some other .NET libraries and no any riskware was found inside of them. Also I've downloaded source code and recompiled it by self. Just after that antivirus software found nothing. But after some hours I've repeatedly checked the same library and again Kaspersky found \"not-a-virus\".</p>\r\n<p>I undestand it is false detection, but the problem is some mail servers don't undestand that, so I have to pack program in the archive with a password in order to send it through the mail.</p>\r\n<p>P.S.: stupid antivirus software :(</p>",
+    "PostedDate": "2012-08-08T17:16:06.563-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

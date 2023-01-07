@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Editor",
+      "DisplayName": "Editor"
+    },
+    "ClosedComment": "This is a bug and has been corrected in source code release 75843.",
+    "ClosedDate": "2012-03-05T06:28:15.81-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "According to your explanation here on how to edit a task: \nhttp://taskscheduler.codeplex.com/workitem/9998\n \nThe TaskEditDialog should propagate changes back to the TaskService after editing.\nI have used your supplied Form1.cs.\n \nWhen editing a task that resides in a folder, the TaskEditDialog will create a duplicate Task and \nplace it in the root folder, leaving the original untouched.",
+    "LastUpdatedDate": "2013-05-16T04:49:09.527-07:00",
+    "PlannedForRelease": "Release 1.8.3",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-03-05T00:46:12.697-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEdit dialog doesn't adhere to folders",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10009
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

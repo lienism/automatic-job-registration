@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "657917",
+    "ThreadId": "269010",
+    "Html": "\r\n<p>I have seen a similar discussion but it didn't appear to have had a conclusion, would anyone know how to regsister the task as the SYSTEM account....</p>\r\n<p>I seem to have tried every allowable combination and each throws and exception ---&nbsp; Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))</p>\r\n<p>Here is my code.</p>\r\n<p>I'm working on Win 7 x64 box.</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(@&quot;IQ2Download1&quot;, td, TaskCreation.Create, @&quot;NT AUTHORITY\\SYSTEM&quot;, null, TaskLogonType.ServiceAccount, null);</p>\r\n",
+    "PostedDate": "2011-08-13T22:11:15.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "658126",
+    "ThreadId": "269010",
+    "Html": "<p>See this post for the syntax: <a href=\"http://taskscheduler.codeplex.com/discussions/256611\">http://taskscheduler.codeplex.com/discussions/256611</a></p>",
+    "PostedDate": "2011-08-14T16:37:43.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "658134",
+    "ThreadId": "269010",
+    "Html": "<p>Thanks unfortunately... I did read that one. I</p>\r\n<p>my code is now identical to the example, (*I think*)</p>\r\n<p>Here's the whole thing ---</p>\r\n<p>&nbsp;using (TaskService ts = new TaskService())<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = ts.NewTask();<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Actions.Add(new ExecAction(\"notepad.exe\", AppDomain.CurrentDomain.BaseDirectory, null));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(\"Test\", td, TaskCreation.CreateOrUpdate, \"SYSTEM\", null, TaskLogonType.ServiceAccount, null);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>&nbsp;</p>\r\n<p>But no matter what.....I still recieve the error below....</p>\r\n<p>I'm hoping its just some boneheaded mistake I've made....</p>\r\n<p>Again, any help would be greatly appreciated ----pulling out my last hair..</p>\r\n<p>&nbsp;</p>\r\n<p>{\"Access is denied.(Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))\"}</p>\r\n<p>&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)<br />&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)<br />&nbsp;&nbsp; at WindowsFormsApplication1.Form1.button1_Click(Object sender, EventArgs e) in N:\\WindowsFormsApplication1a\\WindowsFormsApplication1a\\Form1.cs:line 55<br />&nbsp;&nbsp; at System.Windows.Forms.Control.OnClick(EventArgs e)<br />&nbsp;&nbsp; at System.Windows.Forms.Button.OnClick(EventArgs e)<br />&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)<br />&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)<br />&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)<br />&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)<br />&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)<br />&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message&amp; m)<br />&nbsp;&nbsp; at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message&amp; m)<br />&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)<br />&nbsp;&nbsp; at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG&amp; msg)<br />&nbsp;&nbsp; at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)<br />&nbsp;&nbsp; at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)<br />&nbsp;&nbsp; at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)<br />&nbsp;&nbsp; at System.Windows.Forms.Application.Run(Form mainForm)<br />&nbsp;&nbsp; at WindowsFormsApplication1.Program.Main() in N:\\WindowsFormsApplication1a\\WindowsFormsApplication1a\\Program.cs:line 18<br />&nbsp;&nbsp; at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)<br />&nbsp;&nbsp; at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)<br />&nbsp;&nbsp; at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()<br />&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart_Context(Object state)<br />&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean ignoreSyncCtx)<br />&nbsp;&nbsp; at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)<br />&nbsp;&nbsp; at System.Threading.ThreadHelper.ThreadStart()</p>",
+    "PostedDate": "2011-08-14T17:48:03.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "658341",
+    "ThreadId": "269010",
+    "Html": "<p>You must add a trigger before registering the task. A valid task must have both a trigger and an action.</p>",
+    "PostedDate": "2011-08-15T07:12:45.327-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

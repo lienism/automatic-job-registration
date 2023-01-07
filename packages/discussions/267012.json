@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "649338",
+    "ThreadId": "267012",
+    "Html": "\r\n<p>Are there any plans to add in import/export functionality? I'm planning on creating a task for each customer, and letting them control the (I guess actions) frequency and time of day. I would love to&nbsp;export out XMLs of these via code, so in the event\r\n of a real failure, I could import them back in and be on my merry way.</p>\r\n<p>Thanks!</p>\r\n",
+    "PostedDate": "2011-07-28T20:29:11.277-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "649976",
+    "ThreadId": "267012",
+    "Html": "<p>Each TaskDefinition has an XML property that can be written to to file. There are examples of how to import and export XML in the test project linked here <a href=\"http://taskscheduler.codeplex.com/SourceControl/changeset/view/69048#1108790\">http://taskscheduler.codeplex.com/SourceControl/changeset/view/69048#1108790</a>.</p>",
+    "PostedDate": "2011-07-30T08:26:30.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "650030",
+    "ThreadId": "267012",
+    "Html": "<p>I thank you sir.</p>",
+    "PostedDate": "2011-07-30T12:47:07.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

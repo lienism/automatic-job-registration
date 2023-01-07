@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "618218",
+    "ThreadId": "258992",
+    "Html": "\r\n<p>I am attempting to create a scheduled task that will run with the system account. &nbsp;This is for a 2003 machine. &nbsp;The account I'm running the program with is using a&nbsp;privileged&nbsp;account.</p>\r\n<p>Code:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">Dim</span> ts <span style=\"color:blue\">As</span> TaskService = <span style=\"color:blue\">New</span> TaskService()\r\nts.TargetServer = <span style=\"color:#a31515\">&quot;MyServer&quot;</span>\r\n<span style=\"color:blue\">Dim</span> td <span style=\"color:blue\">As</span> TaskDefinition = ts.NewTask()\r\ntd.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;just a test here&quot;</span>\r\n<span style=\"color:blue\">Dim</span> timeTrig <span style=\"color:blue\">As</span> TimeTrigger = <span style=\"color:blue\">New</span> TimeTrigger(<span style=\"color:blue\">New</span> <span style=\"color:blue\">Date</span>(2011, 8, 20, 5, 4, 3, 2))\r\ntimeTrig.EndBoundary = <span style=\"color:blue\">New</span> <span style=\"color:blue\">Date</span>(2011, 8, 20, 6, 5, 4, 3)\r\ntd.Triggers.Add(timeTrig)\r\ntd.Actions.Add(<span style=\"color:blue\">New</span> ExecAction(<span style=\"color:#a31515\">&quot;cmd.exe&quot;</span>))\r\nts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;winpatches&quot;</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color:blue\">Nothing</span>, <span style=\"color:blue\">Nothing</span>, TaskLogonType.ServiceAccount, <span style=\"color:blue\">Nothing</span>)\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I get:</p>\r\n<p>The task has been configured with an unsupported combination of account settings and run time options. (Exception from HRESULT: 0x80041314)</p>\r\n<p>&nbsp;</p>\r\n<p>What am I doing wrong? &nbsp;How can I create a scheduled task that will run as the system account.</p>\r\n",
+    "PostedDate": "2011-05-25T11:13:10.637-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618383",
+    "ThreadId": "258992",
+    "Html": "<p>Try specifying \"SYSTEM\" for the userId parameter on RegisterTaskDefinition.</p>",
+    "PostedDate": "2011-05-25T16:57:40.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "618851",
+    "ThreadId": "258992",
+    "Html": "<p>I tried this and I get the same result. &nbsp;I also tried multiple servers to make sure it was specific to one. &nbsp;</p>",
+    "PostedDate": "2011-05-26T10:32:27.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619114",
+    "ThreadId": "258992",
+    "Html": "<p>Will you post the full exception stack so I can see exactly which line of code is causing the exception within the libary?</p>",
+    "PostedDate": "2011-05-26T23:36:47.28-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619270",
+    "ThreadId": "258992",
+    "Html": "<p><strong>Senario:</strong></p>\n<p>Trying to create a scheduled task on Server 2003 R2 from a Server 2008 R2 box that will run as the \"NT AUTHORITY\\SYSTEM\" Account</p>\n<p><strong>Revised Code:</strong></p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"font-family: 'Segoe UI', 'Microsoft Sans Serif', Arial, Geneva, sans-serif;\"><span style=\"white-space: normal;\"><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService()\nts.TargetServer = <span style=\"color: #a31515;\">\"MyServer\"</span>\n<span style=\"color: blue;\">Dim</span> td <span style=\"color: blue;\">As</span> TaskDefinition = ts.NewTask()\ntd.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"just a test here\"</span>\n<span style=\"color: blue;\">Dim</span> timeTrig <span style=\"color: blue;\">As</span> TimeTrigger = <span style=\"color: blue;\">New</span> TimeTrigger(<span style=\"color: blue;\">New</span> <span style=\"color: blue;\">Date</span>(2011, 8, 20, 5, 4, 3, 2))\ntimeTrig.EndBoundary = <span style=\"color: blue;\">New</span> <span style=\"color: blue;\">Date</span>(2011, 8, 20, 6, 5, 4, 3)\ntd.Triggers.Add(timeTrig)\ntd.Actions.Add(<span style=\"color: blue;\">New</span> ExecAction(<span style=\"color: #a31515;\">\"cmd.exe\"</span>))\nts.RootFolder.RegisterTaskDefinition(<span style=\"color: #a31515;\">\"testTask\"</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color: #a31515;\">\"SYSTEM\"</span>, <span style=\"color: blue;\">Nothing</span>, TaskLogonType.ServiceAccount, <span style=\"color: blue;\">Nothing</span>) <span style=\"color: #ff0000;\">&lt;----Exception Occurs here</span>\n</pre>\n</div>\n</span></span></pre>\n</div>\n<p><strong>Full Exception:</strong></p>\n<div style=\"color: black; background-color: white;\">\n<pre>System.Runtime.InteropServices.COMException was unhandled\n  ErrorCode=-2147216620\n  Message=The task has been configured <span style=\"color: blue;\">with</span> an unsupported combination of account settings <span style=\"color: blue;\">and</span> run time options. (Exception <span style=\"color: blue;\">from</span> HRESULT: 0x80041314)\n  Source=Microsoft.Win32.TaskScheduler\n  StackTrace:\n       at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(<span style=\"color: blue;\">String</span> Path, ITaskDefinition pDefinition, Int32 flags, <span style=\"color: blue;\">Object</span> UserId, <span style=\"color: blue;\">Object</span> password, TaskLogonType LogonType, <span style=\"color: blue;\">Object</span> sddl)\n       at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(<span style=\"color: blue;\">String</span> Path, TaskDefinition definition, TaskCreation createType, <span style=\"color: blue;\">String</span> UserId, <span style=\"color: blue;\">String</span> password, TaskLogonType LogonType, <span style=\"color: blue;\">String</span> sddl)\n       at playgroundvb.Class1.schedulPatches() <span style=\"color: blue;\">in</span> E:\\src\\Cameron\\playgroundvb\\playgroundvb\\Class1.vb:line 50\n       at playgroundvb.Class1.Main() <span style=\"color: blue;\">in</span> E:\\src\\Cameron\\playgroundvb\\playgroundvb\\Class1.vb:line 18\n       at System.AppDomain._nExecuteAssembly(RuntimeAssembly <span style=\"color: blue;\">assembly</span>, <span style=\"color: blue;\">String</span>[] args)\n       at System.AppDomain.ExecuteAssembly(<span style=\"color: blue;\">String</span> assemblyFile, Evidence assemblySecurity, <span style=\"color: blue;\">String</span>[] args)\n       at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()\n       at System.Threading.ThreadHelper.ThreadStart_Context(<span style=\"color: blue;\">Object</span> state)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, <span style=\"color: blue;\">Object</span> state, <span style=\"color: blue;\">Boolean</span> ignoreSyncCtx)\n       at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, <span style=\"color: blue;\">Object</span> state)\n       at System.Threading.ThreadHelper.ThreadStart()\n  InnerException: Nothing</pre>\n</div>",
+    "PostedDate": "2011-05-27T05:14:41.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "619688",
+    "ThreadId": "258992",
+    "Html": "<p>Let me know if changing the first two lines of your supplied code to following corrects the error:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"MyServer\"</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">True</span>)\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-05-27T22:16:01.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620020",
+    "ThreadId": "258992",
+    "Html": "<p><span style=\"color: blue;\">\r\n<pre><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"MyServer\"</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">True</span>)</pre>\r\n</div>\r\n</pre>\r\n</span></p>\r\n<pre> works, but if you specified username or password it didnt work!</pre>\r\n<pre><pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"192.168.13.44\"</span>, <span style=\"color: blue;\">\"ISR_Task</span>, <span style=\"color: blue;\">\"main\"</span>, <span style=\"color: blue;\">\"PaSSword</span>, <span style=\"color: blue;\">True</span>)</pre>\r\n<pre>Error: Unknow Username or Password</pre>\r\n<pre>Server: 2008 R2</pre>\r\n<pre>Username and Password are correctly and the eventviewer is empty.</pre>\r\n<pre>If i try</pre>\r\n<pre><pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"192.168.13.44\"</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: blue;\">True</span>)</pre>\r\n<pre>eventviewer has 1 Entry with the username from the localmachine (nothing wrong)</pre>\r\n</pre>\r\n</pre>",
+    "PostedDate": "2011-05-29T12:41:01.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620105",
+    "ThreadId": "258992",
+    "Html": "<p>The three middle parameters are userName, userDomain &amp; password. Make sure they are in that order.</p>",
+    "PostedDate": "2011-05-29T20:24:50.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620395",
+    "ThreadId": "258992",
+    "Html": "<p>\"main\" is the name of my computer. i haven't a domain.</p>",
+    "PostedDate": "2011-05-30T11:34:30.15-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620542",
+    "ThreadId": "258992",
+    "Html": "<p>Those middle parameters are for an account&nbsp;that has permissions on the target computer. You can't use the local machine account as it will have no permissions.</p>",
+    "PostedDate": "2011-05-30T20:52:41.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "620990",
+    "ThreadId": "258992",
+    "Html": "<p>Administratoraccount on server named \"MAIN\" with the IP 192.168.13.44&nbsp;&nbsp;:</p>\r\n<p>Username: ISR_TASK</p>\r\n<p>Passwort: PaSSword</p>\r\n<p>I try'd to connect from a other PC with</p>\r\n<pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"192.168.13.44\"</span>, <span style=\"color: blue;\">\"ISR_Task</span>, <span style=\"color: blue;\">\"main\"</span>, <span style=\"color: blue;\">\"PaSSword</span>, <span style=\"color: blue;\">True</span>)</pre>\r\n<pre>What's wrong?</pre>\r\n<pre>Thx for your support!</pre>",
+    "PostedDate": "2011-05-31T12:54:28.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "621811",
+    "ThreadId": "258992",
+    "Html": "<p>I just did a test against a remote non-domain Win7 box and this worked:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre><span style=\"color: blue;\"><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\"><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\"><div style=\"color: black; background-color: white;\"><pre><span style=\"color: blue;\">Dim</span> ts <span style=\"color: blue;\">As</span> TaskService = <span style=\"color: blue;\">New</span> TaskService(<span style=\"color: #a31515;\">\"192.168.13.44\"</span>, <span style=\"color: #a31515;\">\"ISR_Task\"</span>, <span style=\"color: blue;\">Nothing</span>, <span style=\"color: #a31515;\">\"PaSSword\"</span>, <span style=\"color: blue;\">True</span>)\r\n</pre>\r\n</div>\r\n</span></pre>\r\n</div>\r\n</span></pre>\r\n</div>\r\n</span></pre>\r\n</div>",
+    "PostedDate": "2011-06-01T22:40:37.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "622572",
+    "ThreadId": "258992",
+    "Html": "<p>I try this but then come the next error:</p>\r\n<p>Object reference not set to an instance of an object.</p>\r\n<p>and the eventviewer has no entry... I think i give up..</p>",
+    "PostedDate": "2011-06-03T07:50:28.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "623605",
+    "ThreadId": "258992",
+    "Html": "<p>One last thought. Make sure to enable the File and Printer Sharing firewall exception on the remote computer.</p>",
+    "PostedDate": "2011-06-06T10:09:03.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

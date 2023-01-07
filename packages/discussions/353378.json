@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "827896",
+    "ThreadId": "353378",
+    "Html": "\r\n<p>Is there a way to get at the Process ID for a process that has been created as a result of a scheduled task? &nbsp;As an example, I can use the following to register a task and have it launch immediately (on registration):</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>TaskDefinition taskDefinition = taskService.NewTask();\r\nRegistrationTrigger trigger = <span style=\"color:blue\">new</span> RegistrationTrigger();\r\ntaskDefinition.Triggers.Add(trigger);\r\nExecAction action = <span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#a31515\">&quot;&quot;</span>, <span style=\"color:#a31515\">&quot;c:\\mydir&quot;</span>);\r\ntaskDefinition.Actions.Add(action);\r\nTaskFolder folder = taskService.GetFolder(<span style=\"color:#a31515\">&quot;MyFolder&quot;</span>);\r\nTask task = folder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;KrisTask&quot;</span>, taskDefinition);\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>The task / TaskDefinition classes do &nbsp;not expose PIDs, which makes sense since they don't necessarily correspond to a running process. &nbsp; The RunningTask class exposes an enginePID, however this appears to be the PID for the taskeng.exe process\r\n that spawned the process (notepad.exe in my example). &nbsp;Looking at the Task Scheduler GUI, the History for a Task contains a &quot;Create Task Process&quot; event which lists the correct process id:</p>\r\n<p>&nbsp; &nbsp; &nbsp;instance &quot;notepad.exe&quot; &nbsp;with process ID 9888.</p>\r\n<p>What is the best way, if any, to retrieve the process ID for the spawned process? &nbsp;For now, I am going to do a manual set difference of the running processes before and after the RegisterTaskDefinition() call (with some arbitrary delay that is hopefully\r\n &quot;long enough&quot;) and filter by the executable name. &nbsp;This should work for my specific case, however it will not be a long-term solution.</p>\r\n<p>-Kris</p>\r\n",
+    "PostedDate": "2012-04-24T07:56:22.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828071",
+    "ThreadId": "353378",
+    "Html": "<p>I believe, though not completely sure, that you can get the process ID for a running task by looking at the EnginePID property for the RunningTask instances exposed when calling the TaskService.GetRunningTasks method.</p>",
+    "PostedDate": "2012-04-24T13:25:13.907-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "828088",
+    "ThreadId": "353378",
+    "Html": "<p>Thanks for the response! &nbsp;Unfortunately the RunningTask.EnginePID in the RunningTaskCollection appears to correspond to the taskeng.exe and taskhost.exe processes, rather than the process that was spawned (notepad.exe in my example). &nbsp;My test code is :</p>\n<p>&nbsp;</p>\n<div style=\"color: black; background-color: white;\">\n<pre><span style=\"color: blue;\">foreach</span> (RunningTask t <span style=\"color: blue;\">in</span> taskService.GetRunningTasks())\n{\n<span style=\"white-space: pre;\">\t</span>Console.WriteLine(\"{0}\\n\\tTask PID: {1}\\n\\tCurrent Action: {2}\", t.Name, t.EnginePID, t.CurrentAction);\n}\n</pre>\n</div>\n<p>Note that the output from this test is :</p>\n<p>Kris</p>\n<p><span style=\"white-space: pre;\">&nbsp;</span>Task PID: 1234 (process id of taskeng.exe)</p>\n<p><span style=\"white-space: pre;\">&nbsp;</span>Current Action: notepad.exe</p>\n<p>While attempting to print the information for the RunningTask in the foreach statement above, I noticed that I don't [have] access to the process name in the way I would expect - t.CurrentAction has the process name.</p>",
+    "PostedDate": "2012-04-24T14:24:54.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

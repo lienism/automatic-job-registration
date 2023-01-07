@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497875",
+    "ThreadId": "663680",
+    "Html": "I want to create a task with BootTrigger programmatically. The issue is that when I try to create it, I get an access denied exception, even if the user has admin rights. Is there anything that I am doing wrong?<br />\n<pre><code>var trigger = new BootTrigger();\ntrigger.Delay = TimeSpan.FromMinutes(2);\ntrigger.Repetition = new RepetitionPattern(TimeSpan.FromMinutes(1), TimeSpan.Zero);\nvar accion = new ExecAction(Path.GetFullPath(&quot;executable.exe&quot;));\nts.AddTask(&quot;task&quot;, trigger, accion, &quot;username&quot;, &quot;password&quot;, TaskLogonType.Password, &quot;task&quot;);</code></pre>\n\n",
+    "PostedDate": "2017-08-30T07:47:23.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "248931",
+    "ThreadId": "72879",
+    "Html": "<p>Hi!</p>\r\n<p>I tried to modify a task (trigger date), it works fine on Vista,</p>\r\n<p>but on XP, the Task is deleted when I call RegisterTaskDefinition, and throws a FileNotFoundException.</p>\r\n<p>I figured it out, that it modifies the task on XP, if I call it this way: (so I don't give the Path)</p>\r\n<p>ts.RootFolder.RegisterTaskDefinition(&quot;&quot;, task.Definition);</p>\r\n<p>but on Vista, this causes a new Task with a GUID like said in the RegisterTaskDefinition description.</p>\r\n<p>Do you have any idea how to fix this?</p>",
+    "PostedDate": "2009-10-23T03:03:37.747-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "250034",
+    "ThreadId": "72879",
+    "Html": "<p>Make sure that the name does not include any characters other than numbers, letters, and spaces. Usually FileNotFoundExceptions are thrown when the 1.0 engine doesn't know how to persist the file. Especially make sure that the task name does not include any backslashes.</p>",
+    "PostedDate": "2009-10-26T21:56:27.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "250271",
+    "ThreadId": "72879",
+    "Html": "<p>Thanks, the task name does not include dots or something like this, but on Vista the path looks like:</p>\r\n<p>task.Path = &quot;\\\\TaskName&quot;,</p>\r\n<p>and on XP:</p>\r\n<p>task.Path = &quot;C:\\\\Windows\\\\Tasks\\\\TaskName.job&quot;</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-27T11:00:37.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "250792",
+    "ThreadId": "72879",
+    "Html": "<p>I have run this code that&nbsp;uses the same COM library as on XP and it works as it should. Are you doing something different? Please include your code if this example doesn't help.</p>\r\n<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService(<span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">null</span>, <span style=\"color:Blue\">true</span>))\r\n{\r\n  <span style=\"color:Green\">// Create a new task definition and assign properties</span>\r\n  TaskDefinition td = ts.NewTask();\r\n  td.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;Does something&quot;</span>;\r\n  td.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n  <span style=\"color:Green\">// Create a trigger that will fire the task at this time every other day</span>\r\n  DailyTrigger dt = (DailyTrigger)td.Triggers.Add(<span style=\"color:Blue\">new</span> DailyTrigger { DaysInterval = 2 });\r\n  dt.Repetition.Duration = TimeSpan.FromHours(4);\r\n  dt.Repetition.Interval = TimeSpan.FromHours(1);\r\n\r\n  <span style=\"color:Green\">// Create an action that will launch Notepad whenever the trigger fires</span>\r\n  td.Actions.Add(<span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#A31515\">&quot;c:\\\\test.log&quot;</span>, <span style=\"color:Blue\">null</span>));\r\n\r\n  <span style=\"color:Green\">// Register the task in the root folder</span>\r\n  <span style=\"color:Blue\">const</span> <span style=\"color:Blue\">string</span> taskName = <span style=\"color:#A31515\">&quot;Test&quot;</span>;\r\n  Task t = ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n  System.Threading.Thread.Sleep(1000);\r\n  Console.WriteLine(<span style=\"color:#A31515\">&quot;LastTime &amp; Result: {0} ({1})&quot;</span>, t.LastRunTime, t.LastTaskResult);\r\n\r\n  <span style=\"color:Green\">// Retrieve the task, add a trigger and save it.</span>\r\n  t = ts.GetTask(taskName);\r\n  td = t.Definition;\r\n  td.Triggers[0].StartBoundary = DateTime.Today + TimeSpan.FromDays(7);\r\n  ts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n\r\n  <span style=\"color:Green\">// Remove the task we just created</span>\r\n  Console.ReadKey(<span style=\"color:Blue\">false</span>);\r\n  ts.RootFolder.DeleteTask(taskName);\r\n}\r\n</pre>\r\n</div>",
+    "PostedDate": "2009-10-28T11:15:30.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "251057",
+    "ThreadId": "72879",
+    "Html": "<p>Thanks for the detailed code, here is mine, I only want to modify the start date of the task:</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskService ts = new TaskService();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Task task = ts.GetTask(&quot;Test&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TaskDefinition td = task.Definition;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; td.Triggers[0].StartBoundary = date; // a DateTime<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(task.Path, td);</p>\r\n<p>&nbsp;</p>\r\n<p>As I see, you didn't use the task.Path, instead you used the TaskName. I saw this task.Path in an example here in the Discussions,</p>\r\n<p>maybe that will be the problem.</p>\r\n<p>Also I think I must add some logontype, because it modifies the original, if I use the above code.</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-10-29T00:29:42.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "252917",
+    "ThreadId": "72879",
+    "Html": "<p>Using the Path property for Task will return the folder path on Vista and higher, but returns the file path of the .job file on XP. The TaskFolder.RegisterTaskDefinition method expects a folder path only. On XP, since there are no subfolders, only a name is accepted. Using Task.Path is your problem. Use whichever variable you are using in GetTask.</p>",
+    "PostedDate": "2009-11-03T10:23:29.523-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

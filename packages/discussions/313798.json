@@ -1,0 +1,106 @@
+[
+  {
+    "Id": "764603",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I have an existing task pointing to a batch file with no arguments.&nbsp; I want to pass arguments dynamically to the task when calling &lt;Task&gt;.Run() without updating the actual task and calling RegisterChanges().</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">string</span>[] sParams = <span style=\"color:blue\">new</span> <span style=\"color:blue\">string</span>[1] { <span style=\"color:#a31515\">&quot;1&quot;</span> };\r\nRunningTask taskRun = task.Run(sParams);\r\n</pre>\r\n</div>\r\n<p>This code doesn't pass &quot;1&quot; to the task/batch file.&nbsp; What is the string array used for in the Run function?</p>\r\n<p>Matt</p>\r\n",
+    "PostedDate": "2012-02-14T12:04:47.76-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "767749",
+    "ThreadId": "313798",
+    "Html": "<p>See <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa380767(v=vs.85).aspx\">this article</a> for more info, but essentially you need to specify&nbsp;\"$(Arg0)\" as the value for the ExecAction.Arguments property.</p>",
+    "PostedDate": "2012-02-15T08:08:02.03-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "981849",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>Hello dahall,</p>\r\n<p>I read up on the article you provided but it doesn't tell much. Perhaps you have an example?</p>\r\n<p>I am trying something like:&nbsp;regTask.Run(&nbsp;new KeyValuePair&lt;object, string&gt;(&quot;ExecAction.Arguments&quot;, $(Arg0)));</p>\r\n<p>&nbsp;</p>\r\n<p>But it doesn't work. Do you have a sample syntax of what exactly needs to go into the .Run parameter?</p>\r\n<p>&nbsp;</p>\r\n<p>Charles</p>\r\n",
+    "PostedDate": "2012-12-30T16:58:50.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982041",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>When you create the ExecAction, you need to specify $(Arg0)&nbsp;for the Arguments value.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;myprogram.exe&quot;</span>, <span style=\"color:#a31515\">&quot;$(Arg0)&quot;</span>));</pre>\r\n</div>\r\n<p>Then, you can call the Run method using the string value you wish to pass as a parameter.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>task.Run(<span style=\"color:#a31515\">&quot;My parameter string to pass to myprogram.exe&quot;</span>);</pre>\r\n</div>\r\n",
+    "PostedDate": "2012-12-31T18:20:32.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982810",
+    "ThreadId": "313798",
+    "Html": "\r\n<blockquote style=\"border:solid .1em #ccc; font-style:italic; margin:.25em 1em 0 1em; padding:0 .25em 0 .25em\">\r\n<strong>dahall wrote:</strong><br>\r\n<p>When you create the ExecAction, you need to specify $(Arg0)&nbsp;for the Arguments value.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;myprogram.exe&quot;</span>, <span style=\"color:#a31515\">&quot;$(Arg0)&quot;</span>));</pre>\r\n</div>\r\n<p>Then, you can call the Run method using the string value you wish to pass as a parameter.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>task.Run(<span style=\"color:#a31515\">&quot;My parameter string to pass to myprogram.exe&quot;</span>);</pre>\r\n</div>\r\n</blockquote>\r\n<p>Hi Dashall,</p>\r\n<p>Sorry for bothering again but when I did:</p>\r\n<p></p>\r\n<pre>td.Actions.Add(new ExecAction(&quot;C:\\test.bat&quot;, &quot;$(Arg0)&quot;,null));\r\n                    task.RootFolder.RegisterTaskDefinition(ScheduledTaskName, td);\r\n\r\ntasks.Run(&quot;hello&quot;);</pre>\r\nIt is giving the xml containing too many nodes error. Any ideas?\r\n<p></p>\r\n",
+    "PostedDate": "2013-01-03T13:28:00.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982828",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>Sorry for the earlier confusion. I was using</p>\r\n<p>TaskService task = new TaskService(MachineName,null,null,null,false)</p>\r\n<p>&nbsp;</p>\r\n<p>instead of</p>\r\n<p>TaskService task = new TaskService(MachineName,null,null,null,true)</p>\r\n<p>&nbsp;</p>\r\n<p>Now everything works!</p>\r\n<p>&nbsp;</p>\r\n<p>Thanks for the suggestion!</p>\r\n",
+    "PostedDate": "2013-01-03T14:05:24.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "982879",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>You will only get that error with the &quot;false&quot; last parameter to TaskService if you are adding more than one Action to the TaskDefinition. Make sure there is only one and the parameters to TaskService can be set anyway you want. The example I gave above works\r\n for V1 and V2 instances of the Task Scheduler.</p>\r\n",
+    "PostedDate": "2013-01-03T16:40:37.81-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983086",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>I am using V2 to call V1 tasks on another machine so I think it's forcing me to use the force 1.0 compatibility as the last parameter.</p>\r\n<p>It seems like the only way to do it is to re-register the task...do you know if I can bypass the RegisterTaskDefinition step?</p>\r\n",
+    "PostedDate": "2013-01-04T08:37:04.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "983107",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>You are correct on both accounts. To call the Run method on&nbsp;a V1 task, you need to force a V1 connection. You always have to call RegisterTaskDefinition after any changes to a task.</p>\r\n",
+    "PostedDate": "2013-01-04T09:49:53.127-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "988671",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>How to add multiple arguments</p>\r\n<p>if i add</p>\r\n<pre>td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;myprogram.exe&quot;</span>, <span style=\"color:#a31515\">&quot;$(Arg0,Arg1,Arg2)&quot;</span>));</pre>\r\n<pre>i am getting error</pre>\r\n<pre>can any one explain about how to pass arguments to myprogram.exe using task schedular</pre>\r\n",
+    "PostedDate": "2013-01-18T04:43:20.217-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "988748",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>Try to use the following code and then use separate string items in the Run command.</p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre>td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;myprogram.exe&quot;</span>, <span style=\"color:#a31515\">&quot;$(Arg0),$(Arg1),$(Arg2)&quot;</span>));\r\n\r\ntask.Run(<span style=\"color:#a31515\">&quot;A&quot;</span>, <span style=\"color:#a31515\">&quot;B&quot;</span>, <span style=\"color:#a31515\">&quot;C&quot;</span>);\r\n</pre>\r\n</div>\r\n",
+    "PostedDate": "2013-01-18T07:31:30.55-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989608",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>Thanks for reply.</p>\r\n<p>sorry i am not using task.Run() method to pass multiple arguments we need to pass arguments by providing spaces .</p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\"></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\">new</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n</span></span><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\"><span style=\"font-family:Consolas; color:#2b91af; font-size:x-small\">ExecAction</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">(\r\n</span></span><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\">&quot;program.exe&quot;</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">,\r\n id&#43; </span></span><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\">&quot; &quot;</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n &#43; startDate &#43; </span></span><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\">&quot; &quot;</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n &#43; endDate &#43; </span></span><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\"><span style=\"font-family:Consolas; color:#a31515; font-size:x-small\">&quot; &quot;</span></span></span><span style=\"font-family:Consolas; font-size:x-small\"><span style=\"font-family:Consolas; font-size:x-small\">\r\n &#43; time, </span></span><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\"><span style=\"font-family:Consolas; color:#0000ff; font-size:x-small\">null</span></span></span><span style=\"font-family:Consolas; font-size:x-small\">\r\n</span></p>\r\n<p>&nbsp;</p>\r\n<p></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\">));</span></p>\r\n<p><span style=\"font-family:Consolas; font-size:x-small\">&nbsp;</span>so that exe will take this as arguments based on the spaces provided</p>\r\n<p></p>\r\n<p>taskDefinition.Actions.Add(</p>\r\n",
+    "PostedDate": "2013-01-21T02:45:55.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "989828",
+    "ThreadId": "313798",
+    "Html": "\r\n<p>In order to pass variables that change each time the task runs on its own, you have to use the run command as shown in previous posts. If you just want to pass the variables when the task is registered, you can do exactly as you have posted.</p>\r\n",
+    "PostedDate": "2013-01-21T08:57:44.813-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

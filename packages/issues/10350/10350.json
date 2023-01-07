@@ -1,0 +1,75 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "See the notes in Examples section for detail: https://taskscheduler.codeplex.com/wikipage?title=Examples&referringTitle=Documentation#remote",
+    "ClosedDate": "2014-04-17T16:19:08.88-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I want to call remotely windows task scheduler for this i am using Microsoft.Win32.TaskScheduler.dll and created object of TaskService class like\n```\nTaskService  01_server = getTaskService(\"\\\\\\\\123.122.222.222\", \"administrator\", \"domain1\", \"pwd0\", true);\nTaskService 02_server = getTaskService(\"\\\\\\\\123.122.222.222\", \"administrator\", \"domain2\", \"pwd1\", true);\n```\nand bind task to grodview \n \nfor server 01_serve\n```\nDataTable dataTable = new DataTable();\ndataTable.Columns.Add(\"TaskName\");\ndataTable.Columns.Add(\"TaskSchedule\");\ndataTable.Columns.Add(\"TaskNextRun\");\ndataTable.Columns.Add(\"TaskLastRun\");\ndataTable.Columns.Add(\"State\");\ndataTable.AcceptChanges();\n\nDataRow dataRow;\nStringBuilder sbTaskSchedule = new StringBuilder();\n\nVersion ver =  01_server .HighestSupportedVersion;\nbool newVer = (ver >= new Version(1, 2));\n\nTaskFolder tf = 01_serve.RootFolder;\n\nint ctaskNx = 01_serve.RootFolder.Tasks.Count;\n\nfor (int i = 0; i < ctaskNx; i++)\n{\n    m_Task = 01_serve.RootFolder.Tasks[i];\n\n    string strFileNamePath = m_Task.Definition.Actions.ToString().Trim();\n\n    if (strFileNamePath.Contains(\".vbs\"))\n    {\n        dataRow = dataTable.NewRow();\n        dataRow[\"TaskName\"] = m_Task.Name.ToString().Trim();\n        dataRow[\"TaskNextRun\"] = m_Task.NextRunTime.ToString().Trim();\n        dataRow[\"TaskLastRun\"] = m_Task.LastRunTime.ToString().Trim();\n        dataRow[\"State\"] = m_Task.State.ToString().Trim();\n        dataTable.Rows.Add(dataRow);\n        dataTable.AcceptChanges();\n    }\n}\n```\nfor server 02_serve\n```\nVersion ver =  02_server .HighestSupportedVersion;\nbool newVer = (ver >= new Version(1, 2));\n\nTaskFolder tf = 02_server.RootFolder;\n\nint ctaskNx = 02_server.RootFolder.Tasks.Count;\n\nfor (int i = 0; i < ctaskNx; i++)\n{\n    m_Task = 02_server.RootFolder.Tasks[i];\n\n    string strFileNamePath = m_Task.Definition.Actions.ToString().Trim();\n\n    if (strFileNamePath.Contains(\".vbs\"))\n    {\n        dataRow = dataTable.NewRow();\n        dataRow[\"TaskName\"] = m_Task.Name.ToString().Trim();\n        dataRow[\"TaskNextRun\"] = m_Task.NextRunTime.ToString().Trim();\n        dataRow[\"TaskLastRun\"] = m_Task.LastRunTime.ToString().Trim();\n        dataRow[\"State\"] = m_Task.State.ToString().Trim();\n        dataTable.Rows.Add(dataRow);\n        dataTable.AcceptChanges();\n    }\n}\n```\nbut i am not able to get task from remote server\nplease guide me where i am wrong",
+    "LastUpdatedDate": "2014-04-17T16:19:08.88-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-07-19T05:31:11.293-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "how to get task from remote server",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 10350
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Hi All please guide me how to get task from remote server",
+      "PostedDate": "2012-07-19T05:32:58.233-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-07-20T02:06:17.097-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:01.747-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-03-11T12:14:23.23-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Team,\r\n\r\nI also do have the same question.Any update answer on this please.\r\n\r\nHow to remote connect a remote machine to check the status of scheduled task\r\n\r\n\r\n\r\nMany Thanks,\nSisir",
+      "PostedDate": "2013-05-17T00:14:57.357-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-19T23:00:48.26-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-04-17T16:19:08.88-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

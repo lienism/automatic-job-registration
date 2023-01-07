@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1471648",
+    "ThreadId": "654126",
+    "Html": "Hello I try to create a logonTrigger, in windows 7 work perfect the time delay, but on XP dont set the time delay, any some help?<br />\n<pre><code> using (TaskService ts = new TaskService())\n            {\n                //new task\n                TaskDefinition td = ts.NewTask();\n              \n                if (ts.HighestSupportedVersion &gt;= new Version(1, 2))\n                    td.RegistrationInfo.Date = DateTime.Now;\n\n                td.RegistrationInfo.Description = &quot;Tarea para descarga de marcas de relojes marcadores.&quot;;\n                td.Principal.LogonType = TaskLogonType.InteractiveToken;\n                //logon delay 10minutes\n                LogonTrigger lt = (LogonTrigger)td.Triggers.Add(new LogonTrigger() { Delay = TimeSpan.FromMinutes(10) });//15 minutos despues de iniciar la pc\n                \n                //daily job\n                DailyTrigger dt = (DailyTrigger)td.Triggers.Add(new DailyTrigger(1) { StartBoundary = DateTime.Today + TimeSpan.FromHours(11) });\n                //the action\n                td.Actions.Add(new ExecAction(Application.ExecutablePath, &quot;service&quot;, null));\n                //rregister the job\n                ts.RootFolder.RegisterTaskDefinition(_taskName, td);\n            }</code></pre>\n\n",
+    "PostedDate": "2016-04-28T10:58:50.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1471720",
+    "ThreadId": "654126",
+    "Html": "As I know, the &quot;Delay&quot; property is not support in Task Scheduler 1.0.\r<br />\nAnd XP use Task Scheduler 1.0, so the &quot;Delay &quot; property not work.<br />\n",
+    "PostedDate": "2016-04-29T00:22:58.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-04-29T09:51:25.793-07:00"
+  },
+  {
+    "Id": "1471801",
+    "ThreadId": "654126",
+    "Html": "bad news :(<br />\n",
+    "PostedDate": "2016-04-29T09:01:20.99-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

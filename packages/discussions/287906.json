@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "732680",
+    "ThreadId": "287906",
+    "Html": "\r\n<p>I am getting an Access Denied error when trying to read a task on a Windows Server 2008.&nbsp; When I run my C# program from my Windows 7 laptop I do not get the error.&nbsp; When I run the C# code from a Windows 2003 server,&nbsp;I get the error.&nbsp;\r\n I am using credentials that are Administrator on both the Windows 2003 and 2008 servers.&nbsp; The 2003 server can successfully access and populate the TaskService object, so the error is just on the Task population.&nbsp; I have tried different task jobs\r\n on the 2008 server and get the same error.&nbsp; However, those same jobs can be read when they are on a 2003 server.</p>\r\n<p>I have tried both supplying credentials within the code and using no credentials in the code, either way errors.&nbsp; I have also run the code as a service and as a stand alone app on the 2003 server, with Admin credentials, and it still errors getting\r\n a Task on 2008 server.&nbsp; Is there something different about accessing jobs on 2008 from a 2003 server?&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-01-30T08:19:13.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "732784",
+    "ThreadId": "287906",
+    "Html": "<p>This is one of those scenarios where Microsoft's choice to complete change the library between those releases bites you. Windows 2003 only has the V1 library installed and therefore all access to other systems is limited to V1 tasks and security. Windows 2008, by default&nbsp;and like Win7, will use the V2 library to create tasks. One thing you can try is to use the constructor for TaskService and always force to V1. Then all tasks created should be compatible regardless of where they're accessed from. Please post back your findings.</p>",
+    "PostedDate": "2012-01-30T11:22:35.887-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "733239",
+    "ThreadId": "287906",
+    "Html": "<p>Thanks for the response; that is good information and makes sense.&nbsp; I created a task on the 2008 server from a C# program and forced V1.&nbsp; It was successfully accessed from the program running on the 2003 server as you predicted.&nbsp; The interesting thing is that when the job is read from the program running on Windows 7, the job's&nbsp;HighestSupportedVersion = 1.3, and when read from server 2003 that same job's&nbsp;HighestSupportedVersion is 1.1.&nbsp; Also, the program running on Windows 7 and reading jobs&nbsp;from server 2003 show HighestSupportVersion = 1.1.&nbsp; I'm not sure I understand what is going on&nbsp;with the 1.1 and 1.3 on the same job&nbsp;so if you have an explanation I would be interested to hear it.</p>\r\n<p>My plan is to simply run my monitoring program from a 2008 server.&nbsp; In my case I am reading existing jobs and not creating new ones.&nbsp; Thank you for creating this excellent code for use with Windows Task Scheduler.</p>",
+    "PostedDate": "2012-01-31T07:09:30.967-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

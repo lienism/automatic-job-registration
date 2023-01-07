@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1463370",
+    "ThreadId": "651361",
+    "Html": "Hi.\r<br />\nThanks for your work!\r<br />\n<br />\nI found two exceptions on history tab of edit dialog. May be they are low but both are unhandled. \r<br />\nSteps to reproduce\r<br />\n1.<br />\n<ul>\n<li>open task edit dialog on existing task</li>\n<li>\ngo to history tab and close dialog before loading is ended.<br />\n</li>\n</ul>\n<pre><code>&quot;Object reference not set to an instance of an object.&quot;\n   at System.Windows.Forms.ListView.InsertItems(Int32 displayIndex, ListViewItem[] items, Boolean checkHosting)\n   at System.Windows.Forms.ListView.ApplyUpdateCachedItems()\n   at System.Windows.Forms.ListView.Sort()\n   at System.Windows.Forms.ListView.ListViewNativeItemCollection.AddRange(ListViewItem[] values)\n   at System.Windows.Forms.ListView.ListViewItemCollection.AddRange(ListViewItem[] items)\n   at Microsoft.Win32.TaskScheduler.TaskHistoryControl.historyBackgroundWorker_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e) in C:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\TaskHistoryControl.cs:line 239</code></pre>\n\n2.<br />\n<ul>\n<li>open task edit dialog on existing task</li>\n<li>go to history tab</li>\n<li>\ntry to sort any column  before loading is ended.<br />\n</li>\n</ul>\n<pre><code>&quot;Object reference not set to an instance of an object.&quot;\n   at System.Windows.Forms.ListView.ListViewNativeItemCollection.get_Item(Int32 displayIndex)\n   at System.Windows.Forms.ListView.ListViewItemCollection.get_Item(Int32 index)\n   at System.Windows.Forms.ListView.WndProc(Message&amp; m)\n   at System.Windows.Forms.ListViewEx.WndProc(Message&amp; m) in C:\\spb.Common Components\\TaskScheduler\\TaskService\\TaskEditor\\Native\\ListViewEx.cs:line 183</code></pre>\n\n",
+    "PostedDate": "2016-02-16T05:09:14.963-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463371",
+    "ThreadId": "651361",
+    "Html": "The second error I temporally suppressed by try|catch in ListViewEx.WndProc(ref Message m) .\r<br />\n \r<br />\ntry{ base.WndProc(ref m); }catch {}<br />\n",
+    "PostedDate": "2016-02-16T05:20:48.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463405",
+    "ThreadId": "651361",
+    "Html": "Both are fixed in 2.5.15, due shortly. Thanks for the posts and detail.<br />\n",
+    "PostedDate": "2016-02-16T09:31:47.687-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463504",
+    "ThreadId": "651361",
+    "Html": "Thanks!<br />\n",
+    "PostedDate": "2016-02-17T06:59:52.487-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

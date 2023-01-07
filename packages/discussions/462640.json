@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1108942",
+    "ThreadId": "462640",
+    "Html": "I am writing a small intranet application in ASP .Net, using Basic Authentication. I can respond to the challenge prompt with my Active Directory credentials and the HttpContext.Current.Identity is set properly, as is the current thread's identity. The application pool is set (the default on our apps) to use a service account. When I don't send the username and password properties and try to connect to another server on our network, I get everyone's favorite error: &quot;Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))&quot;\r<br />\n<br />\nWhen I manually set the username and password in the TaskScheduler constructor to the values that I know to be the case for the HttpContext.Current.Identity, I can successfully connect to that server. Is there a way to see the specific username and password it is trying to use? Thanks for any help you can provide.<br />\n",
+    "PostedDate": "2013-10-17T12:36:45.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1109018",
+    "ThreadId": "462640",
+    "Html": "Like I said in my original post: I knew the current user was correct, and I knew the code worked if I explicitly passed in that user's name and password.... so why not impersonate yourself? This sounds silly, but it was the easiest way to make this work. I eagerly await anyone who has a better answer, but in the meantime, I wrote a static method on the base class of this and other classes that require authentication, like starting/stopping Windows services:<br />\n<pre><code>public static TOut DoImpersonatedActivity&lt;TOut&gt;(Func&lt;TOut&gt; action)\n{\n    TOut retVal;\n    WindowsImpersonationContext impersonation = null;\n    try\n    {\n        impersonation = ((WindowsIdentity)System.Web.HttpContext.Current.User.Identity).Impersonate();\n        retVal = action();\n    }\n    finally\n    {\n        if (impersonation != null) impersonation.Undo();\n    }\n    return retVal;\n}</code></pre>\n\nTo call this code, you'd simply wrap the line of code that needs authentication in an empty lambda and pass it to the above method. I hate it when someone on a message board only gives me half a solution, so here's <a href=\"http://msdn.microsoft.com/en-us/library/bb549151.aspx\" rel=\"nofollow\">more info on Funcs</a>, if you require. Basically, since .Net 3.5, lambdas, Funcs, and delegates are basically identical as they are all anonymous methods in the C# language specification.<br />\n<pre><code>using (var ts = DoImpersonatedActivity(() =&gt; new TaskService(serverName)))\n{\n    //do fun stuff\n}</code></pre>\n\n",
+    "PostedDate": "2013-10-17T19:12:21.703-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2013-10-17T19:12:24.493-07:00"
+  }
+]

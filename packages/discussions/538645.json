@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1221477",
+    "ThreadId": "538645",
+    "Html": "Hey<br />\n<br />\nIs it possible to disable history on a newly created task?<br />\n<br />\n<br />\nRegards<br />\nDennis<br />\n",
+    "PostedDate": "2014-03-11T08:21:56.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221912",
+    "ThreadId": "538645",
+    "Html": "Not that I'm aware of. This is a system feature and I have never seen any flag that affects it.<br />\n",
+    "PostedDate": "2014-03-12T08:05:17.49-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:08:45.703-07:00"
+  }
+]

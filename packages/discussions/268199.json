@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "654475",
+    "ThreadId": "268199",
+    "Html": "\r\n<p>Good evening,</p>\r\n<p>I am trying to create a task with a&nbsp;indefinitely duration. The problem is that Repetition.Duration must be greater than Repetition.Interval. If I set Repetion.Duration to zero, it gives an exception running on XP (because of V1).\r\n<br>\r\nIs there a way to solve it?</p>\r\n<p>Regards</p>\r\n",
+    "PostedDate": "2011-08-08T05:51:02.963-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "654526",
+    "ThreadId": "268199",
+    "Html": "<p>Under XP, if Duration is 0 to signify Indefinite, then Interval must be 0. The logic is that if a task is allowed to run forever, then there should be no interval at which it will restart.</p>",
+    "PostedDate": "2011-08-08T07:16:12.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "654732",
+    "ThreadId": "268199",
+    "Html": "<p>I've set duration to one day and now it is ok. Thanks for help</p>",
+    "PostedDate": "2011-08-08T11:23:54.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362061",
+    "ThreadId": "268199",
+    "Html": "Hi dahall,\r<br />\nI have been using your library for more than 3 years now..and its just amazing.\r<br />\n<br />\nBut recently i came across a scenario where i needed to configure a task hourly for indefintely time frame.\r<br />\n<br />\nThat is i need to set trigger.repetition.duration = INDEFINITE.\r<br />\n<br />\nHow to do that? <br />\n",
+    "PostedDate": "2015-03-10T02:11:55.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1362528",
+    "ThreadId": "268199",
+    "Html": "Trigger.Repetition.Duration = TimeSpan.Zero<br />\n",
+    "PostedDate": "2015-03-11T09:51:47.22-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-03-11T09:51:53.803-07:00"
+  },
+  {
+    "Id": "1363126",
+    "ThreadId": "268199",
+    "Html": "I did try to use that but my task needs to be repeated hourly. So i have to set the trigger.Repetition.Interval to 1 hr timespan value and then while creating the task it complains that trigger.Repetition.Interval needs to be lower than trigger.repetition.duration<br />\n",
+    "PostedDate": "2015-03-13T06:53:53.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

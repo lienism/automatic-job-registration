@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1483800",
+    "ThreadId": "657989",
+    "Html": "When I change the task with the Editor UI, after entering my username and password, I get a Exception not handled error message.\r<br />\n<br />\nStack trace:\r<br />\nSystem.ArgumentException: (27,8):UserId:\r<br />\n   en\r<br />\nMicrosoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(S\r<br />\ntring Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\r<br />\n   en Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String\r<br />\nPath, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\r<br />\n   en Microsoft.Win32.TaskScheduler.TaskEditDialog.okBtn_Click(Object\r<br />\nsender, EventArgs e)\r<br />\n   en System.Windows.Forms.Control.OnClick(EventArgs e)\r<br />\n   en System.Windows.Forms.Button.OnClick(EventArgs e)\r<br />\n   en System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)\r<br />\n   en System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)\r<br />\n   en System.Windows.Forms.Control.WndProc(Message&amp; m)\r<br />\n   en System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)\r<br />\n   en System.Windows.Forms.Button.WndProc(Message&amp; m)\r<br />\n   en System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)<br />\n",
+    "PostedDate": "2016-09-15T12:58:20.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483952",
+    "ThreadId": "657989",
+    "Html": "The error indicates that the native task registration method could not handle the value supplied for the UserId, which is the combination of the username and domain name you supplied in the editor. Can you tell me what you entered (more the format than the actual account, e.g. XxxxXxx\\Yyyyyy or <a href=\"mailto:xxx@yyy.com)\" rel=\"nofollow\">xxx@yyy.com)</a> and the type of system you're on (domain attached, standalone workstation, etc.) and if you're trying to use a local account? This may help me troubleshoot your error.<br />\n",
+    "PostedDate": "2016-09-17T10:25:34.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484055",
+    "ThreadId": "657989",
+    "Html": "\r\n<div dir=\"ltr\">\r\n<div>\r\n<div>1) The format is xxxx\\yyyy<br>\r\n</div>\r\n2) The system is domain attached<br>\r\n</div>\r\n3) I was trying to use a domain account, I think<br>\r\n</div>\r\n",
+    "PostedDate": "2016-09-18T18:12:47.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

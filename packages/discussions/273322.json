@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "674702",
+    "ThreadId": "273322",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>I'm having a strange issue wherein the tasks I attempt to create isn't getting created and listed in the Scheduled Tasks console. The error that I get is as follows.</p>\r\n<p><strong>Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password,\r\n TaskLogonType LogonType, Object sddl)&nbsp; &nbsp;at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)</strong></p>\r\n<p>The following is the code I'm using to create the task.</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">using</span> ( TaskService service = <span style=\"color:blue\">new</span> TaskService( ) )\r\n            {\r\n                ExecAction action = <span style=\"color:blue\">new</span> ExecAction( <span style=\"color:#a31515\">@&quot;c:\\windows\\notepad.exe&quot;</span> );\r\n\r\n                TimeTrigger trigger = <span style=\"color:blue\">new</span> TimeTrigger( );\r\n                trigger.StartBoundary = DateTime.Now.AddMinutes( 2 );\r\n                trigger.EndBoundary = trigger.StartBoundary.AddHours( 12 );\r\n\r\n                TaskDefinition definition = service.NewTask( );\r\n                definition.RegistrationInfo.Description = txtTaskName.Text;\r\n                definition.Actions.Add( action );\r\n                definition.Settings.AllowHardTerminate = <span style=\"color:blue\">true</span>;\r\n                definition.Principal.RunLevel = TaskRunLevel.Highest;\r\n                definition.Triggers.Add( trigger );\r\n\r\n                <span style=\"color:blue\">try</span>\r\n                {\r\n                    service.RootFolder.RegisterTaskDefinition( txtTaskName.Text, definition, TaskCreation.CreateOrUpdate, txtUserName.Text, txtPassword.Text, TaskLogonType.Password );\r\n                    txtResponse.Text = <span style=\"color:blue\">string</span>.Format( <span style=\"color:#a31515\">&quot;Task: {0} registered successfully.&quot;</span>, txtTaskName.Text );\r\n                }\r\n                <span style=\"color:blue\">catch</span> ( Exception ex )\r\n                {\r\n\r\n                    txtResponse.Text = ex.Message &#43; Environment.NewLine &#43; ex.StackTrace;\r\n                }\r\n\r\n            }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>I'm able to manually create the task using the console but not programmatically.&nbsp;</p>\r\n<p>I'm using Windows Server 2008 R2 Standard, .NET Framework 4.0 and v.1.6.4186.14621 of&nbsp;Microsoft.Win32.TaskScheduler.dll</p>\r\n<p>Can anyone please give me a clue as to what must be going wrong here? Is it something to do with CAS settings in the machine or anything else?</p>\r\n<p>Thanks &amp; Regards,</p>\r\n<p>Sanjay.</p>\r\n",
+    "PostedDate": "2011-09-21T07:03:30.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "674823",
+    "ThreadId": "273322",
+    "Html": "<p><span style=\"font-family: 'Segoe UI','sans-serif'; color: black; font-size: 10pt;\">My guess is that it has to do with the privileges of the account you are using to run the program. That account has to have the rights to create tasks. You have two ways to specify an account. When you create a TaskService instance with no parameters, the account running the executable is used. If you are launching this from a user session, make sure you are running as Administrator so UAC doesn&rsquo;t choke the privileges. You can also instantiate TaskService specifying the username, password and domain. This way ensures that you are running with known privileges.</span></p>",
+    "PostedDate": "2011-09-21T10:34:07.323-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683027",
+    "ThreadId": "273322",
+    "Html": "<p>Hi Dahall,</p>\r\n<p>Thank you so much for your guidance. The code was as per your suggestion. But what I could find is that it's some sort a permissions issue in this particular server. I also tried impersonating the task creation</p>\r\n<p>code in an impersonation context and calling the default ctor of TaskService using an account that's a member of the Administrators group. It still fails. But if the application is set to \"Run as Administrator\"</p>\r\n<p>or set to run in XP SP3 compatibility mode, then it works fine. I suppose it's something to do with User Access Control. UAC seems to be disabled on the server though. What are your picks on this and what</p>\r\n<p>do you think must be happening?&nbsp;</p>\r\n<p>Thank you once again for all the great suggestions.</p>\r\n<p>Regards,</p>\r\n<p>Sanjay.</p>",
+    "PostedDate": "2011-10-12T02:58:43.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683342",
+    "ThreadId": "273322",
+    "Html": "<p>You don't need to use impersonation when connecting. Use the additional parameters on the TaskService constructor to specify the username, domain, and password of the account that has the correct privileges. Then you should be able to register the task without error.</p>",
+    "PostedDate": "2011-10-12T12:46:03.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683612",
+    "ThreadId": "273322",
+    "Html": "<p>Hi,</p>\r\n<p>Am having the same issue, and understand that we require admin rights to create the task, if I run my program as a normal user, i get the access is denied exception as above, if I run as adminstrator the task is created fine. (I am using TaskService with no paramaters)</p>\r\n<p>My question is though why can I successfully create a task as the normal user, through the windows task console, using the same settings as I am using programmatically? I would expect it to have the same behaviour as my program and not be allowed. Does the Windows task console run with escalated priveleges without me knowing it? (I'm on Win 7 so would expect the UAC pop up if it was doing this).</p>\r\n<p>Thanks in advance if anyone can advise.</p>\r\n<p>Andy</p>",
+    "PostedDate": "2011-10-13T04:10:54.33-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "683978",
+    "ThreadId": "273322",
+    "Html": "<p>From what I have read about UAC, yes, all MMC actions run with elevated privileges. I found an article <a href=\"http://www.aneef.net/2009/06/29/request-uac-elevation-for-net-application-managed-code\">here</a> that shows how to request elevated privileges for your .NET application. Let me know if this helps.</p>",
+    "PostedDate": "2011-10-13T13:58:56.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

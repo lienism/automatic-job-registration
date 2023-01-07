@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "585023",
+    "ThreadId": "250856",
+    "Html": "\r\n<p>Is there a way to get the trigger description text as displayed by the Task Scheduler?&nbsp; E.g., Run &quot;At 1:31 PM every 2 days - After triggered, repeat every 00:10:00 indefinitely.&quot;</p>\r\n",
+    "PostedDate": "2011-03-23T06:58:41.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585126",
+    "ThreadId": "250856",
+    "Html": "<p>task.definition.trigger.ToString()</p>",
+    "PostedDate": "2011-03-23T09:38:41.367-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "585180",
+    "ThreadId": "250856",
+    "Html": "<p>As <em>smvdh </em>noted, the Trigger.ToString() method will do that. Since the library is using a resource file for all that text, you can also support localization by supplying your own translated resources asssemblies. Assuming your task is registered and there is only one trigger, the code would look something like the following:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskService ts = <span style=\"color: blue;\">new</span> TaskService();\r\n<span style=\"color: blue;\">string</span> descText = ts.GetTask(<span style=\"color: #a31515;\">\"MyTaskName\"</span>).Definition.Triggers[0].ToString();\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-03-23T10:31:42.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

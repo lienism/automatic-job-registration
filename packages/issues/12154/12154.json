@@ -1,0 +1,50 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-09-15T12:32:44.537-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "A user of mine is having troubles when scheduling a task from his win2k3 server to a Win7 \nEverything always works from other servers and for other pc's.\n\nThe error he's getting is \"The system cannot find the path specified. (Exception from HRESULT: 0x80070003)\"\nThis happens when calling \"RegisterTaskDefinition\" using the following bit of code:\n\n ts.RootFolder.RegisterTaskDefinition(\"Rester\", tduser, TaskCreation.CreateOrUpdate, Domain + \"\\\\\" + User, password, TaskLogonType.Password);\n\n\n\nBit of context(test)\n```\nTry\n{\n\tWindowsImpersonationContext ImpersoToken = Impersonate(User, Domain, password);\n\tif (ImpersoToken != null)\n\t{\n\t\tusing (ImpersoToken)\n\t\t{\n\t\t\tusing (TaskService ts = new TaskService(hostname, null, null, null, !IsVistaOrLater))\n\t\t\t{\n\t\t\t\tTaskDefinition tduser = ts.NewTask();\n\t\t\t\tbool newVer = (ts.HighestSupportedVersion >= new Version(1, 2));\n\t\t\t\ttduser.Actions.Add(new ExecAction(\"cmd\", \"/c set >> \" + rootPath + \"\\\\Test.txt\", null));\n\t\t\t\ttduser.Settings.DisallowStartIfOnBatteries = false;\n\t\t\t\ttduser.Settings.StopIfGoingOnBatteries = false;\n\n\t\t\t\tif (newVer)\n\t\t\t\t{\n\t\t\t\t\ttduser.Principal.RunLevel = TaskRunLevel.Highest; //v2.0 \n\t\t\t\t\ttduser.Settings.AllowDemandStart = true;\n\t\t\t\t}\n\t\t\t\ttduser.RegistrationInfo.Description = \"Tester\";\n\n\t\t\t\ttry\n\t\t\t\t{     \n\t\t\t\t\tts.RootFolder.RegisterTaskDefinition(\"Tester\", tduser, TaskCreation.CreateOrUpdate, Domain + \"\\\\\" + User, password, TaskLogonType.Password);\n\t\t\t\t\tts.GetTask(\"Tester\").Run();\n\t\t\t\t}\n\t\t\t\tcatch (Exception ex)\n\t\t\t\t{\n\t\t\t\t\t//handleException(ex);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tRevertToSelf();\n\t}\n}\ncatch (Exception ex)\n{\n\t//handleException(ex);\n}\n```",
+    "LastUpdatedDate": "2015-09-15T12:32:44.537-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2015-07-22T09:38:36.66-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "Error using RegisterTaskDefinition on Windows 7",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12154
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Make sure that the security settings on the remote system allow that user to access system tasks. There are a number of suggestions and links in the security section of the documentation to assist here.",
+      "PostedDate": "2015-08-22T18:12:45.413-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-09-15T12:32:44.537-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

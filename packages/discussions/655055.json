@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1474633",
+    "ThreadId": "655055",
+    "Html": "I want to hide some controls and cannot find any related API.\r<br />\nFor now I just use reflection to implement it, but it is rough.\r<br />\nSo I wonder if it is possible to provide some API or any ways to configure the visibility of controls?<br />\n",
+    "PostedDate": "2016-05-30T01:59:12.263-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1474668",
+    "ThreadId": "655055",
+    "Html": "I'll need a lot more information. Which controls are you trying to hide? What is the use case? Does the interface need to adapt its layout when controls are removed?<br />\n",
+    "PostedDate": "2016-05-30T10:04:16.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

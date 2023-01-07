@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "850742",
+    "ThreadId": "360103",
+    "Html": "\r\n<p>Can some one give me an example on how to copy &#65279;from one server to many? Is it possable?</p>\r\n<p>I first created a power shell script on my local (Win7) and was able to deploy Scheduled tasks to many servers using the XML property. But this all hit a pretty solid wall when i tried the script in out 2003 preprod server. I then found your dll and gave\r\n it a try but could not find a way to simply copy / paste. I have 40 servers in Prod and Copy / Paste is going to be more of a pain then getting this script to work with both versions.</p>\r\n<p>My last attempt was to Register the source's task definition into the target's root but all that did was update the source. I'm guessing there must be a full path somewhere but i don't know where nore how to change it.</p>\r\n<p>Is there by chance a code snippit to transfer the data from one definition to another?</p>\r\n<p>&#65279;&#65279;&#65279;&#65279;&#65279;&#65279;&#65279;</p>\r\n",
+    "PostedDate": "2012-06-19T01:30:57.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850939",
+    "ThreadId": "360103",
+    "Html": "<p>Unfortunately, under Task Scheduler Library 1.0 (XP/2003 Server and prior), there is not a simple way to \"clone\" the task definition. My suggestion would be to use this library to create the tasks as it will work between the 1.0 and 2.0 versions of the native COM libraries and then just loop through your servers, setting the TaskService.TargetServer property to the new server and the following the same steps to create the task. After changing the TargetServer property, you can even query the TaskService instance to see which version of the library you've connected to if you want to take advantage of 2.0 features specifically.</p>",
+    "PostedDate": "2012-06-19T08:17:35.833-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "850946",
+    "ThreadId": "360103",
+    "Html": "<p>OK thanks.<br /><br />Side note: I don't know if it's your settings, mine or the site's but the notification email comes back in font size 4.<br /><br />Is that normal?</p>",
+    "PostedDate": "2012-06-19T08:26:34.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "851546",
+    "ThreadId": "360103",
+    "Html": "<p>I think this is from CodePlex. I get the same thing.</p>",
+    "PostedDate": "2012-06-20T07:21:01.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "851547",
+    "ThreadId": "360103",
+    "Html": "<p>UPDATE: Your hint at the key work \"clone\" lead to another post where I found some sample code.<br /><br />Posting my version here for future on lookers.</p>\r\n<p>Thanks again.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp; #Create a NetworkCredential to get the password<br />&nbsp;&nbsp;&nbsp; $tmpNetworkCredential = $UserCredential.GetNetworkCredential();<br /><br />&nbsp;&nbsp;&nbsp; #Get TaskService<br />&nbsp;&nbsp;&nbsp; $tmpTaskService = Get-TaskService -ComputerName $ComputerName -UserCredential $UserCredential;<br /><br />&nbsp;&nbsp;&nbsp; #Get New Empty ScheduledTask Definition<br />&nbsp;&nbsp;&nbsp; $tmpNewTaskDefinition = $tmpTaskService.NewTask()<br /><br />&nbsp;&nbsp;&nbsp; #clone Triggers<br />&nbsp;&nbsp;&nbsp; foreach ($tmpTrigger in $ScheduledTask.Definition.Triggers)<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tmpNewTaskDefinition.Triggers.Add($tmpTrigger.Clone());<br />&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp; #clone Actions<br />&nbsp;&nbsp;&nbsp; foreach ($tmpAction in $ScheduledTask.Definition.Actions)<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tmpNewTaskDefinition.Actions.Add($tmpAction);<br />&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp; #clone Description<br />&nbsp;&nbsp;&nbsp; $tmpNewTaskDefinition.RegistrationInfo.Description = $ScheduledTask.RegistrationInfo.Description;<br /><br />&nbsp;&nbsp;&nbsp; #Add cloned ScheduledTask<br />&nbsp;&nbsp;&nbsp; $tmpTaskService.RootFolder.RegisterTaskDefinition($ScheduledTask.Name, $tmpNewTaskDefinition, 6, $UserCredential.Username, $tmpNetworkCredential.Password, 1, $null) #6 = Add or Update (2 = Add, 4 = Update), 1 = Supply Loggin Password, $null = sddl</p>",
+    "PostedDate": "2012-06-20T07:27:25.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "856444",
+    "ThreadId": "360103",
+    "Html": "<p>Update, in source code version 78863 and soon in release 1.8.3, XML input and output are supported for V1 instances.</p>",
+    "PostedDate": "2012-07-02T10:15:44.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

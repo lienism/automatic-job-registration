@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2010-02-05T20:41:15.52-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When editing an exisiting windows task using the editor in the project the following is noticed:\nAction and trigger list views show incorrect duplicate triggers and actions (missing list.items.clear() before list population in TaskDefinition setter)\nSome checks and selections differ between editing a task with this control and using the actual windows task scheduler (misinterpretation of task properties or just work in progress implementations?)\nCrash on V2 TaskDefinition getter, index 0 not valid for selectedindex (taskVersionCombo missing index bounds and item counts checks at end of TaskDefinition setter)\n \nProject needs extensive testing and comparison the built in windows editor. \n \n(Original poster working on this, Windows 7 specifically, but will test other platforms, hoping to be able to contribute changes back here?)",
+    "LastUpdatedDate": "2013-05-16T04:49:14.653-07:00",
+    "PlannedForRelease": "Release 1.4.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2010-02-04T23:52:45.317-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskEditor various inconsistencies and missing checks",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 5344
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for finding these. I had tested the control with a full reset each time and not reusing it. There were also some logic issues that I found as I dug into your findings. Thanks for doing this testing and the good descriptions of the issues. I believe they are all corrected now in the source code and the release assemblies.",
+      "PostedDate": "2010-02-05T20:41:05.74-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2010-02-05T20:41:15.52-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-21T17:21:09.217-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T04:49:14.653-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-02-07T09:50:16.673-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hello, \n\nIf I set forceV1=true on V2 systems and try to change a task via TaskEditDialog I catch an exception.\nThere is ability to change version via dialog and the exception occurs if you try to change it. \n(Dialog disable this option for V1 system)\n\n```\nException: Microsoft.Win32.TaskScheduler.NotV1SupportedException\nMessage: TaskSettings.set_Compatibility is not supported on Task Scheduler 1.0\nStack Trace:\n   at Microsoft.Win32.TaskScheduler.TaskSettings.set_Compatibility(TaskCompatibility value)\n   at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.taskVersionCombo_SelectedIndexChanged(Object sender, EventArgs e)\n   at System.Windows.Forms.ComboBox.OnSelectedIndexChanged(EventArgs e)\n   at System.Windows.Forms.ComboBox.WmReflectCommand(Message& m)\n   at System.Windows.Forms.ComboBox.WndProc(Message& m)\n   at System.Windows.Forms.DisabledItemComboBox.WndProc(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)\n   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)\n   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)\n```",
+    "LastUpdatedDate": "2016-02-07T09:50:16.673-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2016-02-01T04:07:31.113-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Get Unhandled exception in TaskEditDialog for v1 if try to change \"configure for\"",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12339
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5055,
+      "FileName": "EditDialog_.png",
+      "DownloadUrl": ".\\5055"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Thank you. This is fixed in 2.5.13 due shortly.",
+      "PostedDate": "2016-02-06T07:06:36.417-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-02-07T09:50:16.673-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

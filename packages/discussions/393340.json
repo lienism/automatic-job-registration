@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "905058",
+    "ThreadId": "393340",
+    "Html": "\r\n<p>Steps for reproducing the error:</p>\r\n<p>1. Click 'Triggers' tab<br>\r\n2. Click 'New' button<br>\r\n3. Select 'On An Event' from drop down list.<br>\r\n4. Select 'Custom' radio button<br>\r\n5. Type 'test' -&gt; 'OK'</p>\r\n<p>Data at the root level is invalid. Line 1, position 1.</p>\r\n<p>-------------------------- Technical Information Follows --------------------------</p>\r\n<p>Exception Details:<br>\r\n----------------------------------------<br>\r\nException type:&nbsp; System.Xml.XmlException<br>\r\nMessage:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data at the root level is invalid. Line 1, position 1.<br>\r\nSource:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Xml<br>\r\nTarget Site:&nbsp;&nbsp;&nbsp;&nbsp; Throw</p>\r\n<p>Stack Trace:<br>\r\n&nbsp;&nbsp; at System.Xml.XmlTextReaderImpl.Throw(String res, String arg)<br>\r\n&nbsp;&nbsp; at System.Xml.XmlTextReaderImpl.ParseRootLevelWhitespace()<br>\r\n&nbsp;&nbsp; at System.Xml.XmlTextReaderImpl.ParseDocumentContent()<br>\r\n&nbsp;&nbsp; at System.Xml.XmlReader.MoveToContent()<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.EventTrigger.GetBasic(String&amp; log, String&amp; source, Nullable`1&amp; eventId)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.EventTrigger.V2GetTriggerString()<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.Trigger.ToString()<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.TaskPropertiesControl.AddTriggerToList(Trigger tr, Int32 index)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WmMouseUp(Message&amp; m, MouseButtons button, Int32 clicks)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Control.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ButtonBase.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.Button.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)</p>\r\n",
+    "PostedDate": "2012-08-28T05:07:53.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905226",
+    "ThreadId": "393340",
+    "Html": "<p>I have added error handling to catch when an invalid event string is supplied to the EventTrigger.Subscription property. To avoid this exception, and a failure when the task tries to execute, you should use valid event XML syntax here. See this <a href=\"http://msdn.microsoft.com/en-us/library/windows/desktop/aa380713(v=vs.85).aspx\">link</a> for more information.</p>",
+    "PostedDate": "2012-08-28T10:26:19.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "905237",
+    "ThreadId": "393340",
+    "Html": "<p>Thanks for the swift response, David!</p>",
+    "PostedDate": "2012-08-28T10:42:20.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1238619",
+    "ThreadId": "393340",
+    "Html": "I get error when I use EventTrigger.GetBasic(). However if I use EventTrigger.SetBasic() I don't get any error. Can anyone tell me what exactly to write in .GetBasic() method<br />\n",
+    "PostedDate": "2014-04-27T21:57:59.943-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1238837",
+    "ThreadId": "393340",
+    "Html": "<a href=\"https://www.codeplex.com/site/users/view/curtishagen\" rel=\"nofollow\">curtishagen</a> also posted the following as part of his question:<br />\n<br />\nHi, I am using some part of the above code <br />\n<pre><code>if (preWin7)\n{\n   // Create a trigger that will fire on a system security event\n   EventTrigger eTrigger = (EventTrigger)td.Triggers.Add(new EventTrigger());\n   eTrigger.SetBasic(&quot;Security&quot;, &quot;VSSAudit&quot;, 25);\n   eTrigger.ValueQueries.Add(&quot;Name&quot;, &quot;Value&quot;);\n}</code></pre>\n\neTrigger.SetBasic(&quot;Security&quot;, &quot;VSSAudit&quot;, 25); creates a duplicate value in the Log and Source of task scheduler, which doesn't work i-e execute notepad at my end. Is there anyway I can use eTrigger.GetBasic(&quot;Security&quot;, &quot;VSSAudit&quot;, 25);. I tried using it, it gives me error as method has invalid arguments and it should be used with &quot;out&quot; keyword. Thanks!<br />\n",
+    "PostedDate": "2014-04-28T08:25:13.95-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:06:49.657-07:00"
+  },
+  {
+    "Id": "1238847",
+    "ThreadId": "393340",
+    "Html": "First of all, you must be running the executable with an account that has sufficient permissions to watch events and create tasks (usually an Admin) or, if debugging, run Visual Studio as Administrator. You also must be running the task on a Vista or later system.<br />\n<br />\nThe EventTrigger has a constructor with the same parameters as the SetTrigger method. Either will create a simple event query for the trigger that will execute the task when a new event from the specified log, with the specified source and ID, is added. To be honest, I have no idea what adding ValueQueries does. The documentation is inconclusive. However, I have confirmed that the above code will indeed fire the task when that event is added.<br />\n<br />\nThe SetTrigger (or equivalent constructor) are only for creating these single entity queries. For more complex queries, one must use the Subscription property. In fact, SetTrigger simply sets the Subscription property with a pre-defined XML snippet. GetBasic looks for that pre-defined XML snippet and, if found, parses out the values and returns them through it's method parameters. If you put more complicated XML in the Subscription property, GetBasic will fail as it no longer matches the pre-defined XML snippet.<br />\n<br />\nGetBasic should be used when reading an already created task as follows:<br />\n<pre><code>Task t = ts.GetTask(taskName);\ntd = t.Definition;\nif (td.Triggers[0] is EventTrigger)\n{\n   string log, source;\n   int? id;\n   if (((EventTrigger)td.Triggers[0]).GetBasic(out log, out source, out id))\n      Console.WriteLine(&quot;The task has an event trigger looking for {0}/{1} &quot; +\n         &quot;with event ID {2}&quot;, log, source, id.Value);\n   else\n      Console.WriteLine(&quot;The task has a custom event trigger with the following &quot; +\n         &quot;XML search value: {0}&quot;, ((EventTrigger)td.Triggers[0]).Subscription);\n}</code></pre>\n\n",
+    "PostedDate": "2014-04-28T08:35:10.68-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:06:46.52-07:00"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1463620",
+    "ThreadId": "651470",
+    "Html": "Hi!\r<br />\n<br />\nI found a small issue. There is need to provide a password when task logon type is S4U and task runner is differ from current user\r<br />\n<img src=\"http://i67.tinypic.com/2llnl0x.png\" alt=\"Image\" />\r<br />\nNow edit dialog checks and adds password only when type is InterraciveTokenOrPasswor or Password.\r<br />\nThe issue is located here: TaskEditDialog.okBtn_Click\r<br />\nstep to reproduce:<br />\n<ul>\n<li>run edit dialog (edit|new task)</li>\n<li>change user account for task running</li>\n<li>set &quot;Run whether user is logged on or not&quot; and &quot;Do not store password&quot;</li>\n</ul>\n",
+    "PostedDate": "2016-02-18T07:43:55.34-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463645",
+    "ThreadId": "651470",
+    "Html": "Thanks. Fixed in 2.5.15<br />\n",
+    "PostedDate": "2016-02-18T11:24:39.727-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464703",
+    "ThreadId": "651470",
+    "Html": "Hi,<br />\n<br />\nNew build works fine when you add a new task but does not work with an old task when you try to edit it.<br />\nFor this case UserId always is not empty and check at Task.cs does not work:<br />\n<pre><code>        public bool RequiresPassword() =&gt; LogonType == TaskLogonType.InteractiveTokenOrPassword ||\n            LogonType == TaskLogonType.Password || (LogonType == TaskLogonType.S4U &amp;&amp; UserId != null);</code></pre>\n\nI meant in  that  case password dialog appears in anyway independently of if current user is runner of task or not.<br />\n",
+    "PostedDate": "2016-02-26T04:47:13.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464721",
+    "ThreadId": "651470",
+    "Html": "Thank you for doing better testing than me. I have corrected and it will be in the next release.<br />\n",
+    "PostedDate": "2016-02-26T07:50:57.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464960",
+    "ThreadId": "651470",
+    "Html": "I have tested again and found a new issue) Sometime unnecessary dialog appears for current user. I don't know how but right now I have two tasks with current user as runner but its name has different cases.\r<br />\nI guess string.Compare(UserId, System.Security.Principal.WindowsIdentity.GetCurrent().Name) should compare with ignore case (StringComparison.OrdinalIgnoreCase). \r<br />\n<br />\nThank you. <br />\n",
+    "PostedDate": "2016-02-28T23:58:49.077-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465038",
+    "ThreadId": "651470",
+    "Html": "Thanks. I will publish today or tomorrow with this fix as well.<br />\n",
+    "PostedDate": "2016-02-29T11:38:55.48-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

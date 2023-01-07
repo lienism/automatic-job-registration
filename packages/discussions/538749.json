@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1221865",
+    "ThreadId": "538749",
+    "Html": "Hi i Have a problem  used the task scheduler managed wrapper an i really like it a lot my app works fine on win7 and server 2008 but it throws an error on Win server 2003 it says \r<br />\nArguementException: Trigger.Repetition.Interval Must be less than trigger.Repetition.Duration under task scheduler 1.0 \r<br />\nat Microsoft win32. TaskScheduler.Trigger.SetV1TriggerData()\r<br />\nat Microsoft win32. TaskScheduler.RepetitionPattern.Bind()\r<br />\nat Microsoft win32. TaskScheduler.Repetition.set_Interval(TimeSpan value)\r<br />\nat ConfugApp.Form.scheduleTask()\r<br />\n<br />\n<br />\nHere is my code below<br />\n<pre><code>                    TaskDefinition td = ts.NewTask();\n\n\n                    td.RegistrationInfo.Description = &quot;POSClientRealtimeUpdate&quot;;\n                    td.Principal.LogonType = TaskLogonType.InteractiveToken;\n                    DailyTrigger dt = (DailyTrigger)td.Triggers.Add(new DailyTrigger { DaysInterval = 1 });\n                    dt.Repetition.Interval = TimeSpan.FromMinutes(5);\n\n\n\n                    td.Actions.Add(new ExecAction(txtschedulePosclient.Text, null));\n\n                    td.Settings.ExecutionTimeLimit = TimeSpan.FromHours(1);\n                    td.Settings.IdleSettings.RestartOnIdle = false;\n                    td.Settings.IdleSettings.StopOnIdleEnd = false;\n                    td.Settings.IdleSettings.WaitTimeout = TimeSpan.FromMinutes(10);\n\n\n                    const string taskName = &quot;POSClientRealtimeUpdate&quot;;\n                    ts.RootFolder.RegisterTaskDefinition(taskName, td, TaskCreation.Create, &quot;SYSTEM&quot;, null, TaskLogonType.ServiceAccount);\n                    label6.Visible = true;\n                    label6.Text = &quot;Posclient Realtime...scheduled&quot;;\n\n</code></pre>\n\nCan you please Help<br />\n",
+    "PostedDate": "2014-03-12T07:11:13.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1221914",
+    "ThreadId": "538749",
+    "Html": "The error is exactly as described in the exception: Under XP an WS2K3, you are using the Task Scheduler 1.0 library which demands that &quot;Trigger.Repetition.Interval must be less than Trigger.Repetition.Duration under Task Scheduler 1.0&quot;. You set the variable &quot;dt.Repetition.Interval&quot; to 5 minutes. You must therefore set &quot;dt.Repetition.Duration&quot; to something greater than 5 minutes before registering the task.<br />\n",
+    "PostedDate": "2014-03-12T08:09:04.47-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-04-03T11:07:56.38-07:00"
+  },
+  {
+    "Id": "1222221",
+    "ThreadId": "538749",
+    "Html": "Thank you very much you helped me a lot. I appreciate it, it works like a bomb<br />\n",
+    "PostedDate": "2014-03-13T00:28:16.337-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1035964",
+    "ThreadId": "441641",
+    "Html": "I am setting task scheduler from a button inside a update panel.\r<br />\n<br />\nwhen I run my project locally, everything is working very fine, but when I deploy my web app to IIS server and I create task scheduler from a button inside a update panel, the tasks wont be able to create.\r<br />\n<br />\nI have no idea about it because there is no error or anything.<br />\n",
+    "PostedDate": "2013-04-26T01:28:29.817-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1036545",
+    "ThreadId": "441641",
+    "Html": "Please look at other discussions for hints regarding how to get IIS permissions set so that local and remote tasks can be managed. This is very likely a permissions problem.<br />\n",
+    "PostedDate": "2013-04-27T09:48:10.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1038855",
+    "ThreadId": "441641",
+    "Html": "\r\n<div dir=\"ltr\">\r\n<div>\r\n<div>Hi Dahall,<br>\r\n<br>\r\n</div>\r\nI found my solution already. The problem is that I only implement that locally not on a remote methodology.<br>\r\n</div>\r\nThank you so much for your response.<br clear=\"all\">\r\n<div>\r\n<div>\r\n<div>\r\n<div><br>\r\n-- <br>\r\nSincerely Yours,<br>\r\n<br>\r\nSereyboth Van<br>\r\n<br>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2013-05-02T19:36:33.44-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

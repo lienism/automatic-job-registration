@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "141151",
+    "ThreadId": "42465",
+    "Html": "Great post!<br>\r\n<br>\r\nI need to create a job that runs on everyday at a specific time (1:00AM everyday) &amp; stop the job if it runs more than 3 hours.<br>\r\nAlso, I like the job should run with the domain administrator account if possible.<br>\r\n<br>\r\nThanks in advance for the helps!<br>\r\n<br>\r\nJH<br>\r\n",
+    "PostedDate": "2008-12-16T16:00:34.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "150436",
+    "ThreadId": "42465",
+    "Html": "<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n\tTaskDefinition td = ts.NewTask();\r\n\ttd.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;Runs at 10, stops after 3&quot;</span>;\r\n\ttd.Settings.ExecutionTimeLimit = TimeSpan.FromHours(3);\r\n\ttd.Settings.Enabled = <span style=\"color:Blue\">true</span>;\r\n\ttd.Triggers.Add(<span style=\"color:Blue\">new</span> DailyTrigger { StartBoundary = DateTime.Today + TimeSpan.FromHours(10) });\r\n\ttd.Actions.Add(<span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#A31515\">&quot;c:\\\\test.log&quot;</span>, <span style=\"color:Blue\">null</span>));\r\n\tts.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;TaskName&quot;</span>, td, TaskCreation.CreateOrUpdate, <span style=\"color:#A31515\">@&quot;DOMAIN\\Admin&quot;</span>, <span style=\"color:#A31515\">&quot;AdminPwd&quot;</span>, TaskLogonType.Password, <span style=\"color:Blue\">null</span>);\r\n}</pre>\r\n</div>",
+    "PostedDate": "2009-01-23T17:45:36.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

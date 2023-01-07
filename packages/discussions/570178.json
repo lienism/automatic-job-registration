@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1314726",
+    "ThreadId": "570178",
+    "Html": "I want to register a task in client system at the time of installation ...\r<br />\nI combined it with installer class .. but when running installer its give exception UserId: , Task:\r<br />\nI already run it as Admin\r<br />\nIt is giving exception on line when register task.. i.e \r<br />\n<br />\nts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td);\r<br />\n<br />\nPlease Help Me!\r<br />\n Thank you<br />\n",
+    "PostedDate": "2014-10-19T02:01:37.643-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314766",
+    "ThreadId": "570178",
+    "Html": "Will you elaborate on the exception you are getting and the trigger and action you have added to the task?<br />\n",
+    "PostedDate": "2014-10-19T09:04:54.2-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314881",
+    "ThreadId": "570178",
+    "Html": "public override void Install(IDictionary mySavedState)<br />\n<pre><code>    {\n        try\n        {\n            using (TaskService ts = new TaskService())\n            {\n                // Create a new task definition and assign properties\n                TaskDefinition td = ts.NewTask();\n                td.RegistrationInfo.Description = &quot;Hello&quot;;\n                td.Settings.RestartCount = 50;\n\n                td.Settings.RestartInterval = TimeSpan.FromMinutes(1);\n               // td.Principal.UserId = string.Concat(Environment.UserDomainName, &quot;\\\\&quot;, Environment.UserName);\n                td.Principal.RunLevel = TaskRunLevel.Highest;\n                td.Settings.DisallowStartIfOnBatteries = false;\n                td.Settings.RunOnlyIfIdle = false;\n                td.Settings.RunOnlyIfNetworkAvailable = false;\n                td.Settings.StopIfGoingOnBatteries = false;\n                td.Settings.StartWhenAvailable = true;\n                td.Settings.WakeToRun = true;\n                td.Settings.Enabled = true;\n                td.Settings.AllowHardTerminate = false;\n                td.Settings.IdleSettings.StopOnIdleEnd = false;\n                td.Principal.LogonType = TaskLogonType.S4U;\n                td.Triggers.Add((new DailyTrigger { DaysInterval = 10 }));\n\n                td.Actions.Add(new ExecAction(&quot;notepad.exe&quot;, null, null));\n\n                // Register the task in the root folder\n                ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td);\n            }\n        }\n        catch (Exception ex)\n        {\n            MessageBox.Show(ex.Message.ToString());\n        }\n    }</code></pre>\n\n",
+    "PostedDate": "2014-10-20T00:32:47.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1314885",
+    "ThreadId": "570178",
+    "Html": "when i am running above code in installer class its giving error (18,8)UserId:\r<br />\nif i am going to provide UserId: in \r<br />\n  ts.RootFolder.RegisterTaskDefinition(&quot;Test&quot;, td,TaskCreation.CreateOrUpdate,string.Concat(Environment.UserDomainName, &quot;\\&quot;, Environment.UserName),null,TaskLogonType.S4U,null);\r<br />\n<br />\nagain error\r<br />\n(20,8)UserId:\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2014-10-20T00:43:24.603-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1316277",
+    "ThreadId": "570178",
+    "Html": "Check this response to see if it helps: <a href=\"https://taskscheduler.codeplex.com/discussions/370130\" rel=\"nofollow\">https://taskscheduler.codeplex.com/discussions/370130</a><br />\n",
+    "PostedDate": "2014-10-24T07:28:49.96-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-09-01T10:04:14.64-07:00"
+  }
+]

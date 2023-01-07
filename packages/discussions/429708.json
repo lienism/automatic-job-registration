@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "987241",
+    "ThreadId": "429708",
+    "Html": "\r\n<p>We are seeing one isolated case where the scheduler dialog will not close after selecting the &quot;Run with highest privileges&quot; option&nbsp;followed by clicking on the OK button.&nbsp;Our assigned tester was able to&nbsp;replicate the problem on 64-bit\r\n Windows 7 Pro. SP1. Has anyone seen this issue before?</p>\r\n<p>Thanks, Audi</p>\r\n",
+    "PostedDate": "2013-01-15T11:46:39.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987273",
+    "ThreadId": "429708",
+    "Html": "\r\n<p>Will you please specify which controls/dialogs are being called, any initial settings for the TaskDefinition and the exact steps to replicate the problem?</p>\r\n",
+    "PostedDate": "2013-01-15T12:46:14.363-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "987719",
+    "ThreadId": "429708",
+    "Html": "\r\n<p>Hi David,</p>\r\n<p>This issue seems to be isolated,&nbsp;and&nbsp;appears to occur only in an older version of our software (with an &quot;older&quot; version of&nbsp;the task scheduler source code). It doesn't occur in newer versions of our software.</p>\r\n<p>The TaskEditDialog with the General tab active is shown with the following&nbsp;settings:</p>\r\n<p>o Trigger is based on time schedule (specific date and time), ran once only.</p>\r\n<p>o Run whether user is logged on or not is checked.</p>\r\n<p>o Do not store password is checked.</p>\r\n<p>o All other settings are default settings.</p>\r\n<p>I'll take a look at some validation code for the &quot;Run with highest privileges&quot; option when the OK button in the TaskEditDialog is clicked.</p>\r\n<p>Thanks, Audi</p>\r\n",
+    "PostedDate": "2013-01-16T10:58:17.917-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

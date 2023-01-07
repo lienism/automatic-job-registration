@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1472382",
+    "ThreadId": "654295",
+    "Html": "have you tried it on azure, when we change the trigger settings it is only can be seen after restarting the role. <br />\n",
+    "PostedDate": "2016-05-04T02:48:03.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1472486",
+    "ThreadId": "654295",
+    "Html": "From what I know, Azure is a set of cloud services so I'm not sure where TaskScheduler would even be running unless in a VM hosting some version of Windows. Will you provide a lot more detail?<br />\n",
+    "PostedDate": "2016-05-04T18:25:41.27-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

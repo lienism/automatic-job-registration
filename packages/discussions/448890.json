@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1063817",
+    "ThreadId": "448890",
+    "Html": "I am facing a weird issue. I am trying to enumerate tasks in multiple remote servers (V1 and V2) and then display the tasks in a datagrid. This issue happens when I am connecting to a V1 server (<strong>using forceV1=true</strong>). The enumeration works fine - the data is passed to the grid even. But as soon as I move my cursor over the grid, I get a SecurityException saying 'Requested registry access is not allowed.' Does anyone know what's going on?<br />\n<pre><code>public partial class MainWindow : Window\n{\n        public MainWindow()\n        {\n                String osVer;\n                using (var reg = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, &quot;deves07&quot;))\n                using (var key = reg.OpenSubKey(@&quot;Software\\Microsoft\\Windows NT\\CurrentVersion\\&quot;))\n                {\n                        osVer = string.Format(&quot;Name:{0}, Version:{1}&quot;, key.GetValue(&quot;ProductName&quot;), key.GetValue(&quot;CurrentVersion&quot;));\n                }\n                TaskService ts;\n                if (osVer.Contains(&quot;2003&quot;))\n                {\n                        ts = new TaskService(&quot;REMOTE&quot;, &quot;username&quot;, &quot;domain&quot;, &quot;password&quot;, true);\n                }\n                else\n                {\n                        ts = new TaskService(&quot;REMOTE&quot;, &quot;username&quot;, &quot;domain&quot;, &quot;password&quot;);\n                }\n                List&lt;TaskInfo&gt; taskList = new List&lt;TaskInfo&gt;();\n                EnumFolderTasks(ts.RootFolder, taskList);\n                DataContext = taskList;\n        }\n\n        void EnumFolderTasks(TaskFolder fld, List&lt;TaskInfo&gt; taskLst)\n        {\n                Debug.WriteLine(fld.Name);\n                foreach (Task task in fld.Tasks)\n                        taskLst.Add(ActOnTask(task));\n                foreach (TaskFolder sfld in fld.SubFolders)\n                        EnumFolderTasks(sfld, taskLst);\n        }\n\n        TaskInfo ActOnTask(Task t)\n        {\n                TaskInfo taskInfo = new TaskInfo();\n                taskInfo.Name = t.Name;\n                taskInfo.isRunning = t.IsActive;\n                taskInfo.NextRunTime = t.NextRunTime;\n                taskInfo.LastRunTime = t.LastRunTime;\n                //taskInfo.LastRunStatus = t.LastTaskResult;\n                return taskInfo;\n        }\n\n}\n\npublic class TaskInfo\n{\n        public string Name { set; get; }\n        public bool isRunning { set; get; }\n        public DateTime NextRunTime { set; get; }\n        public DateTime LastRunTime { set; get; }\n        public int LastRunStatus { set; get; }\n}</code></pre>\n\n",
+    "PostedDate": "2013-07-02T14:35:03.71-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1063902",
+    "ThreadId": "448890",
+    "Html": "First, try putting brackets in around the scope of your first &quot;using&quot; statement. You can also do the same with the TaskService instance. You could do this by doing:<br />\n<pre><code>List&lt;TaskInfo&gt; taskList = new List&lt;TaskInfo&gt;();\nusing (TaskService ts = new TaskService(REMOTE&quot;, &quot;username&quot;, &quot;domain&quot;, &quot;password&quot;, osVer.Contains(&quot;2003&quot;)))\n{\n    EnumFolderTasks(ts.RootFolder, taskList);\n}\nDataContext = taskList;</code></pre>\n\n",
+    "PostedDate": "2013-07-02T20:09:24.74-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1064098",
+    "ThreadId": "448890",
+    "Html": "Localizing the TaskService call works like a charm. Thanks a ton!\r<br />\n<br />\nI am still unsure why this would happen only on V1 calls though - any idea there?<br />\n",
+    "PostedDate": "2013-07-03T06:20:02.493-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1064332",
+    "ThreadId": "448890",
+    "Html": "My only guess is that there is something different in the way .NET is releasing the underlying COM objects for the two libraries is different.<br />\n",
+    "PostedDate": "2013-07-03T17:15:58.047-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

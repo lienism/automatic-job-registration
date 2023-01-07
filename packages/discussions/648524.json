@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1455157",
+    "ThreadId": "648524",
+    "Html": "Is there an easy way to retrieve all tasks (regardless of whether they are active or not)?  I've seen the sample:\r<br />\n<br />\nTaskService ts = new TaskService();\r<br />\nvar allTasks = ts.FindAllTasks(x =&gt; x.IsActive);\r<br />\n<br />\nBut, that only returns active.  I've tried to change the argument, but FindAllTasks requires an argument.  As a work-around, I'm using:\r<br />\n<br />\nTaskService ts2 = new TaskService();\r<br />\nvar allTasks = ts2.FindAllTasks(x =&gt; x.Xml != &quot;&quot;);\r<br />\n<br />\nIs there a better way to do this?<br />\n",
+    "PostedDate": "2015-12-08T12:01:04.843-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455198",
+    "ThreadId": "648524",
+    "Html": "<pre><code>TaskService ts2 = new TaskService(); \n var allTasks = ts2.AllTasks;</code></pre>\n\n",
+    "PostedDate": "2015-12-08T14:57:45.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-12-11T13:34:54.367-08:00"
+  }
+]

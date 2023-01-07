@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Library",
+      "DisplayName": "Library"
+    },
+    "ClosedComment": "Fixed with 1.9.2. Thanks for finding this.",
+    "ClosedDate": "2012-11-29T15:45:45.55-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Class TaskDefinition has Dispose() method, but does not implement IDisposable, so we can't use using() statement",
+    "LastUpdatedDate": "2013-05-16T04:49:08.593-07:00",
+    "PlannedForRelease": "Release 1.9.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2012-11-19T09:16:38.217-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "TaskDefinition does not implement IDisposable",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 10612
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

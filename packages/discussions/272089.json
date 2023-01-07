@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "669796",
+    "ThreadId": "272089",
+    "Html": "\r\n<p><strong>Captured from Comments on Examples Page - Moved here for better visibility</strong></p>\r\n<p><span style=\"color:#0000ff\">jmealing3</span> Thu at 8:29 PM<br>\r\nGreat looking package, thanks.<br>\r\nQuestion: How do I schedule a task to run at uniform intervals? I see how to set the start time and the end time for the process being started, but I want to have a process that re-schedules itself at regular intervals.\r\n<br>\r\nMore examples and better descriptions would be greatly appreciated (not everyone is as strong a C# and OO programmer as you).<br>\r\nAlso, I expected the notepad example to actually run notepad - it doesn't seem to do anything. I think that I'm missing some understanding of how the TaskScheduler is supposed to work</p>\r\n<p><span style=\"color:#0000ff\">dahall </span>Thu at 11:38 PM<br>\r\nSee the TimeTrigger section of the &quot;Complex Example&quot; above for an example of how to setup a recurring trigger on an interval. I'll look to improve the examples and descriptions. For the examples, notepad should actually run if the triggers and the task are\r\n all enabled.</p>\r\n<p><span style=\"color:#0000ff\">jmealing3 </span>Today at 1:24 PM<br>\r\nThanks for the pointer. Just tried to build the editor and it would not compile. Couldn't find the TaskEditDialog. I have added references to all the dlls in the TaskScheculer and Editor but the compiler (VS 2010) cannot find the dialog. What am I missing?\r\n Also, every example ends by removing the task. Why and where should I look to find the registered task(s)? I commented out that line and still cannot find the task register file. The root directory come back as &quot;\\&quot;, b ut I've looked everywhere and still cannot\r\n find the file. Thanks for your help one this.</p>\r\n<p><span style=\"color:#0000ff\">jmealing3 </span>Today at 2:48 PM<br>\r\nSome good news: The notepad task did finally run: way late, but it ran.<br>\r\nEnvironment: .Net 4, VS 2010 Ultimate, WinXP SP3<br>\r\nMore problems: I downloaded the source code and only the COMTask would build. Here are the error messages from the TaskEditor:</p>\r\n<p>Error 727 'AeroWizard.WizardPage' does not contain a definition for 'Suppress' and no extension method 'Suppress' accepting a first argument of type 'AeroWizard.WizardPage' could be found (are you missing a using directive or an assembly reference?) D:\\Downloads\\TaskScheduler\\taskscheduler-70200\\TaskService\\TaskEditor\\TaskSchedulerWizard.cs\r\n 868 9 TaskEditor</p>\r\n<p>From TestTaskService 17 errors, first one shown:<br>\r\nError 605 'Microsoft.Win32.TaskScheduler.TaskSchedulerWizard' does not contain a definition for 'AvailablePages' and no extension method 'AvailablePages' accepting a first argument of type 'Microsoft.Win32.TaskScheduler.TaskSchedulerWizard' could be found (are\r\n you missing a using directive or an assembly reference?) D:\\Downloads\\TaskScheduler\\taskscheduler-70200\\TaskService\\TestTaskService\\Program.cs 192 10 TestTaskService</p>\r\n<p><span style=\"color:#0000ff\">jmealing3 </span>Today at 4:19 PM<br>\r\nGot some more information that might help: I'm running Win XP SP3, but behind on updates (lots of them). When I built the Complex example, I found that I have only V1.1 of TaskScheduler. While this won't fix everything, it might reduce the problems somewhat.\r\n Any idea where to get V 2?</p>\r\n<p>I will be installing the updates today, hoping that V2 comes in, but the list of updates does not show V2 explicitly. Is there some place that I can get it? MS downloads don't show it anywhere. Thanks in advance.</p>\r\n<p><span style=\"color:#0000ff\">jmealing3 </span>Today at 5:10 PM<br>\r\nStill more info: Task scheduler doesn't run on XP. My bad!<br>\r\nComplexTaskSample doesn't compile: line 185 throws an exception. It shouldn't, but it does - at least on my machine. The line is:<br>\r\nMonthlyDOWTrigger mdTrigger = (MonthlyDOWTrigger)td.Triggers.Add(new MonthlyDOWTrigger());</p>\r\n",
+    "PostedDate": "2011-09-09T10:38:50.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "669957",
+    "ThreadId": "272089",
+    "Html": "<p><strong>To compile the solution: </strong>You will need to look in the projects at the references and make sure the corresponding assemblies&nbsp;from the current download are in those locations. You don't really need to compile the solution. You should be able to just pull the assemblies from the download section and then reference them in your code. To make this really easy, I would recommend installing NuGet (nuget.org) and using it to pull in the references you need. The base library is available as \"﻿﻿﻿﻿﻿﻿Task Scheduler Managed Wrapper\". This will work for all programmatic access to tasks. If you need UI elements in your code to give the users the ability to manipulate tasks then also include \"﻿﻿﻿Task Scheduler Managed Wrapper UI library\". The nice thing about NuGet is that it adds the references and all dependencies for you and then will alert you whenever there are updates.</p>\r\n<p><strong>V2:</strong> The V2 version of the library is only available on Vista/Server 2008 and later. You cannot get it for XP or Server 2003. XP and earlier have a \"Tasks\" item in Control Panel to view the current tasks.</p>",
+    "PostedDate": "2011-09-09T18:51:54.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "670677",
+    "ThreadId": "272089",
+    "Html": "<p>Thanks for all your help. Got&nbsp;Wizard running, my bad. NuGet is smooth, thanks for the pointer.</p>\r\n<p>Looking forward to 1.6.4 so that DOW trigger works.</p>",
+    "PostedDate": "2011-09-12T10:03:32.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "671238",
+    "ThreadId": "272089",
+    "Html": "<p>Wrote a simple task scheduler to run a task at 5 minute intervals for 30 minutes using TimeTriggerEndBoundry. Set the TimeTriggerRepetition.Duration to 4 hours. Set StopAtDurationEnd to true.</p>\r\n<p>After 1.5 hours, it is still running. It looks like the Duration overrides the EndBoundry - or am I missing something again?</p>\r\n<p>Thanks for the help.</p>",
+    "PostedDate": "2011-09-13T08:56:45.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "671370",
+    "ThreadId": "272089",
+    "Html": "<p>EndBoundary has no effect on the time a task is allowed to run. StopAtDurationEnd will kill the task at the end of the time.</p>",
+    "PostedDate": "2011-09-13T13:47:20.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

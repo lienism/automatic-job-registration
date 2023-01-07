@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1313018",
+    "ThreadId": "569725",
+    "Html": "hi, i have time trigger for my task to run and show message to users, but when my specific date arrives my code, do no thing and time tirger doesnt fire?? why should i do to fix this issue??<br />\n",
+    "PostedDate": "2014-10-13T23:04:04.03-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1313321",
+    "ThreadId": "569725",
+    "Html": "After setting up the task, go into Task Scheduler and look at it. If it doesn't have Next Run Times, then you have likely setup the trigger incorrectly. If you look at the Actions, you will want to confirm that you can execute them. Try running it directly to see if it will execute. With the scarce information you provided, it is pretty hard to diagnose your problem.<br />\n",
+    "PostedDate": "2014-10-14T15:02:01.08-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

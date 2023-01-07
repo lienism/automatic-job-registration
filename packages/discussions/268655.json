@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "656346",
+    "ThreadId": "268655",
+    "Html": "\r\n<p>Hi,</p>\r\n<p>&nbsp;</p>\r\n<p>I'm experiencing a little problem with a task scheduling on a windows server 2003.</p>\r\n<p><br>\r\nThis code works on a windows 7:</p>\r\n<p></p>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:blue\">class</span> Program\r\n    {\r\n        <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> Main(<span style=\"color:blue\">string</span>[] args)\r\n        {\r\n            <span style=\"color:blue\">try</span>\r\n            {\r\n                AddTask();\r\n            }<span style=\"color:blue\">catch</span>(Exception ex)\r\n            {\r\n                Console.WriteLine(ex.ToString());\r\n            }\r\n\r\n            Console.ReadLine();\r\n        }\r\n\r\n        <span style=\"color:blue\">private</span> <span style=\"color:blue\">static</span> <span style=\"color:blue\">void</span> AddTask()\r\n        {\r\n            <span style=\"color:blue\">using</span> (TaskService ts = <span style=\"color:blue\">new</span> TaskService())\r\n            {\r\n\r\n                <span style=\"color:green\">// Create a new task definition and assign properties</span>\r\n                TaskDefinition td = ts.NewTask();\r\n                td.RegistrationInfo.Description = <span style=\"color:#a31515\">&quot;Task description&quot;</span>;\r\n\r\n                <span style=\"color:green\">// Create a trigger that will fire the task at this time every other day</span>\r\n                DailyTrigger dailyTrigger = <span style=\"color:blue\">new</span> DailyTrigger() { DaysInterval = 1 };\r\n                dailyTrigger.Repetition.Interval = TimeSpan.FromHours(1);\r\n                dailyTrigger.StartBoundary = DateTime.Now.AddMinutes(5);\r\n                td.Triggers.Add(dailyTrigger);\r\n\r\n                <span style=\"color:green\">// Create an action that will launch Notepad whenever the trigger fires</span>\r\n                td.Actions.Add(<span style=\"color:blue\">new</span> ExecAction(<span style=\"color:#a31515\">&quot;notepad.exe&quot;</span>));\r\n\r\n                <span style=\"color:green\">// Register the task in the root folder</span>\r\n                ts.RootFolder.RegisterTaskDefinition(<span style=\"color:#a31515\">&quot;notepadTask&quot;</span>, td);\r\n\r\n\r\n            }\r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n<p></p>\r\n<p>But not on a windows server 2003. They are both in 32 bits.</p>\r\n<p>I suppose that windows server supports only 1.0 library actions, but I don't see which action can be of the 2.0 library.</p>\r\n<p>What did I wrong?</p>\r\n",
+    "PostedDate": "2011-08-11T00:37:37.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656366",
+    "ThreadId": "268655",
+    "Html": "<p>I just saw that if I remove the line for the Repetition configuration, I can the task. But this seems to be possible with the windows configuration, so I suppose it should be possible through this taskscheduler</p>",
+    "PostedDate": "2011-08-11T01:04:24.677-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656527",
+    "ThreadId": "268655",
+    "Html": "<p>You must also set a Repetition.Duration value&nbsp;that is less than the Repetition.Interval value you have specified under V1.</p>",
+    "PostedDate": "2011-08-11T06:44:43.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "656559",
+    "ThreadId": "268655",
+    "Html": "<p>It was that! Thank you!</p>",
+    "PostedDate": "2011-08-11T07:20:51.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1472928",
+    "ThreadId": "654479",
+    "Html": "In the task edit trigger, it is able to multiSelect the trigger, but if I select two trigger and click delete, the UI will throw an exception.\r<br />\n<br />\nSo is it possible to set triggerListView.MultiSelect to false to fix this?<br />\n",
+    "PostedDate": "2016-05-09T18:51:05.253-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1473050",
+    "ThreadId": "654479",
+    "Html": "Fixed!<br />\n",
+    "PostedDate": "2016-05-10T11:04:56.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-05-10T11:50:49.883-07:00"
+  }
+]

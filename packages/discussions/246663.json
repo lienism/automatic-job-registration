@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "568679",
+    "ThreadId": "246663",
+    "Html": "\r\n<p>Under Security Options in the Task Scheduler GUI, it says, &quot;When running the task, use the following user account,&quot; and by default, that field is populated with the domain and user account of the person creating the task. In the GUI, I can click on the button\r\n &quot;Change User or Group...&quot; to change that field. But how can I do this programmatically?</p>\r\n",
+    "PostedDate": "2011-02-18T10:16:55.23-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570284",
+    "ThreadId": "246663",
+    "Html": "<p>That UI element is connected to the TaskDefinition.Principal.UserId or TaskDescriptor.Principal.GroupId property. See the examples under the Documentation tab for how to set that.</p>",
+    "PostedDate": "2011-02-22T09:38:08.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570343",
+    "ThreadId": "246663",
+    "Html": "<p>I've tried using the properties you suggest, but it doesn't seem to work for me. Here is the code I'm using for setting up and creating my task:</p>\r\n<p>TaskService ts = new TaskService();<br />TaskDefinition td = ts.NewTask();<br />td.RegistrationInfo.Description = \"Run \" + taskName + \" at logon\";<br />td.Settings.DisallowStartIfOnBatteries = false;<br />td.Settings.ExecutionTimeLimit = TimeSpan.Zero;<br />td.Principal.GroupId = \"BUILTIN\";<br />td.Principal.UserId = \"Administrators\";<br />LogonTrigger lTrigger = (LogonTrigger)td.Triggers.Add(new LogonTrigger());<br />td.Actions.Add(new ExecAction(taskAppLocation, null, null));<br />ts.RootFolder.RegisterTaskDefinition(taskName, td);</p>\r\n<p>I want the task to run under the Administrators account because I want the task to run for all users and administrators, regardless of which administrator created the task. It seems that&nbsp;in Windows 7, Task Scheduler won't run a task created by one administrator if another administrator is logged in, but you can get around this behavior by setting the security option to run the task under the BUILTIN\\Administrators account. I just can't seem to set that setting through the managed wrapper. I implemented the code as written above (following your guidance as I understand it), but it doesn't change the security option setting from the default. Am I missing something? Perhaps one of my other settings is interfering?</p>\r\n<p>Thanks for your help.</p>",
+    "PostedDate": "2011-02-22T11:33:20.373-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "570534",
+    "ThreadId": "246663",
+    "Html": "<p>You are trying to use the Principal class incorrectly. The GroupId property is to be used when the LogonType property is set to TaskLogonType.Group. The UserId property is to be used for all other logon types. The corrected code would be:</p>\r\n<div style=\"color: black; background-color: white;\">\r\n<pre>TaskService ts = <span style=\"color: blue;\">new</span> TaskService();\r\nTaskDefinition td = ts.NewTask();\r\ntd.RegistrationInfo.Description = <span style=\"color: #a31515;\">\"Run \"</span> + taskName + <span style=\"color: #a31515;\">\" at logon\"</span>;\r\ntd.Settings.DisallowStartIfOnBatteries = <span style=\"color: blue;\">false</span>;\r\ntd.Settings.ExecutionTimeLimit = TimeSpan.Zero;\r\ntd.Principal.GroupId = <span style=\"color: #a31515;\">@\"BUILTIN\\Administrators\"</span>;\r\ntd.Principal.LogonType = TaskLogonType.Group;\r\ntd.Triggers.Add(<span style=\"color: blue;\">new</span> LogonTrigger());\r\ntd.Actions.Add(<span style=\"color: blue;\">new</span> ExecAction(taskAppLocation, <span style=\"color: blue;\">null</span>, <span style=\"color: blue;\">null</span>));\r\nts.RootFolder.RegisterTaskDefinition(taskName, td);\r\n</pre>\r\n</div>",
+    "PostedDate": "2011-02-22T17:30:04.163-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "571048",
+    "ThreadId": "246663",
+    "Html": "<p>Yep, that did it. Thanks for correcting my understanding of how to use the GroupId and UserId properties.</p>",
+    "PostedDate": "2011-02-23T12:57:34.927-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

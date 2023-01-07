@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2014-10-18T08:10:46.857-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I'm getting this exception with this code:\n\n```\nImports Microsoft.Win32.TaskScheduler\n\nPublic Sub GetAllTasks()\n        Using taskService As New TaskService\n            For Each task As Task In taskService.AllTasks\n                Using task\n                    Debug.WriteLine(task.Definition.Settings.Priority)\n                End Using\n            Next\n        End Using\n    End Sub\n```\n\nI've tested and this occurs everytime i use the \"Settings\" namespace, even alone.\nAlthough the property succeeds and no error is thrown back to my code (is handled by the dll) it would be nice for it to be fixed, if it's not intended.\n\nThanks for reading, searched for this library when P/ Invoke was burning my head.",
+    "LastUpdatedDate": "2014-10-18T08:10:46.857-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2014-10-17T10:32:43.44-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Non-issue"
+    },
+    "Summary": "A first chance exception of type 'System.InvalidCastException' occurred in Microsoft.Win32.TaskScheduler.dll",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11900
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "So, just to be clear, you're seeing exceptions thrown in the debugger, but they aren't being thrown up into your code when you call the \"Settings\" property from the TaskDefinition class?\r\n\r\nIf that is correct, you are seeing the internals of the code trying to determine which version of the Task Scheduler library is available from the OS. There are currently four and each have more properties that they expose. Unfortunately, the only way to determine what is available is to call into the COM library via Interop and _cast_ the object to the different COM interfaces and see which come back. On Windows 8 and Server 2012, you shouldn't see the exceptions as they support all the library versions.",
+      "PostedDate": "2014-10-17T15:37:44.753-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "You can look at the constructor for the TaskSettings class in my code to see exactly what's happening. Those exceptions will also only occur the first time you reference the Settings property for each task instance.",
+      "PostedDate": "2014-10-17T15:40:48.857-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Yes, you are absolutely correct, thanks for this information, i tested now and it does exactly what you say, only \"throws\" on the first call for settings for each task.\r\n\r\nI reported to be sure that this \"error\" wouldn't catch me up later in some release build, in that case, thanks again !\nAnd good luck with further development.",
+      "PostedDate": "2014-10-17T16:37:09.823-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2014-10-18T08:10:46.857-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

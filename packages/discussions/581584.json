@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1354807",
+    "ThreadId": "581584",
+    "Html": "On my development machine, I've tried changing the TaskDefinition to use the SYSTEM user account, which did not save (Windows 8.1 x64).\r<br />\n<br />\nI switched to changing it during the RegisterTaskDefinition but get an Access Denied error.  I am an administrator, and have tested it with UAC off, but it still won't take.  (The path is fine and works)  Here's the code:<br />\n<pre><code>_TaskService.RootFolder.RegisterTaskDefinition(HDC_FOLDER &amp; &quot;\\&quot; &amp; ApplicationFolder() &amp; &quot;\\&quot; &amp; Schedule.Id.ToString(), Schedule.TaskDefinition, TaskCreation.CreateOrUpdate, &quot;SYSTEM&quot;, Nothing, TaskLogonType.ServiceAccount)</code></pre>\n\n",
+    "PostedDate": "2015-02-22T22:13:50.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1355071",
+    "ThreadId": "581584",
+    "Html": "Update ...\r<br />\n<br />\nWhile my dev machine breaks while setting the user to System, a production machine does not.  Oddest stuff.  Anybody with any ideas?<br />\n",
+    "PostedDate": "2015-02-23T19:26:58.903-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

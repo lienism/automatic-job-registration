@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "682466",
+    "ThreadId": "275412",
+    "Html": "\r\n<p>Thanks for your reply. And My requirements is, I want to Create One Task in that i want to create Multiple Actions. If i click on delete that particular action want to delete not entire Task. Reply ASAP and also give code for above requirements.</p>\r\n",
+    "PostedDate": "2011-10-11T01:41:54.053-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682622",
+    "ThreadId": "275412",
+    "Html": "<p>See code in this response to one of your other posts: <a href=\"http://taskscheduler.codeplex.com/discussions/275324\">http://taskscheduler.codeplex.com/discussions/275324</a></p>",
+    "PostedDate": "2011-10-11T08:06:19.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682627",
+    "ThreadId": "275412",
+    "Html": "<p>How to create Multiple Actions in one task.</p>",
+    "PostedDate": "2011-10-11T08:15:52.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682628",
+    "ThreadId": "275412",
+    "Html": "<p>how to create Multiple Actions in one task.</p>",
+    "PostedDate": "2011-10-11T08:16:17.923-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "682849",
+    "ThreadId": "275412",
+    "Html": "<p>This can only be done on Windows Vista and later systems. For sample code, please look at the documentation already provided on this site. You can find an example of setting multiple actions in the Complex example (<a href=\"http://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation#complex\">http://taskscheduler.codeplex.com/wikipage?title=Examples&amp;referringTitle=Documentation#complex</a>) about 3/4 of the way down where you see a number of td.Actions.Add calls.</p>",
+    "PostedDate": "2011-10-11T15:19:40.12-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

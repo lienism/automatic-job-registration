@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "211851",
+    "ThreadId": "62418",
+    "Html": "<p>Hi,</p>\r\n<p>I would like to setup one-time trigger. Could you show me a sample code please?</p>\r\n<p>Thanks</p>\r\n<p>&nbsp;</p>",
+    "PostedDate": "2009-07-14T13:52:43.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "212866",
+    "ThreadId": "62418",
+    "Html": "<div style=\"color:Black;background-color:White\">\r\n<pre><span style=\"color:Blue\">using</span> (TaskService ts = <span style=\"color:Blue\">new</span> TaskService())\r\n{\r\n\tTaskDefinition td = ts.NewTask();\r\n\ttd.RegistrationInfo.Description = <span style=\"color:#A31515\">&quot;Does something&quot;</span>;\r\n\ttd.Principal.LogonType = TaskLogonType.InteractiveToken;\r\n\r\n\t<span style=\"color:Green\">// Create a trigger that will fire the task at a specific date and time</span>\r\n\ttd.Triggers.Add(<span style=\"color:Blue\">new</span> TimeTrigger {  StartBoundary = <span style=\"color:Blue\">new</span> DateTime(2009, 7, 20, 7, 0, 0) });\r\n\r\n\t<span style=\"color:Green\">// Create an action that will launch Notepad whenever the trigger fires</span>\r\n\ttd.Actions.Add(<span style=\"color:Blue\">new</span> ExecAction(<span style=\"color:#A31515\">&quot;notepad.exe&quot;</span>, <span style=\"color:#A31515\">&quot;c:\\\\test.log&quot;</span>, <span style=\"color:Blue\">null</span>));\r\n\r\n\t<span style=\"color:Green\">// Register the task in the root folder</span>\r\n\tts.RootFolder.RegisterTaskDefinition(<span style=\"color:#A31515\">&quot;MyTask&quot;</span>, td);\r\n}</pre>\r\n</div>",
+    "PostedDate": "2009-07-16T21:31:04.377-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

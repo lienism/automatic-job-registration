@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "901541",
+    "ThreadId": "392331",
+    "Html": "\r\n<p>[Environment]<br>\r\nOS: 64bit Win7 zh_CN<br>\r\nBuild: 64bit EG 6.100.0.1084</p>\r\n<p>[Repro Steps]<br>\r\n1. EG &gt; New a program/task<br>\r\n2. Go to Process Flow panel &gt; 'Schedule' &gt; Select 'Schedule project'<br>\r\n3. The 'Schedule' dialog opens<br>\r\n4. Click 'Trigger' tab &gt; click 'New' button<br>\r\n5. 'New Trigger' dialog opens &gt; select 'On An Event' from drop down list<br>\r\n6. Select 'Security' from log drop down list</p>\r\n<p>See below for exception details:</p>\r\n<p>Attempted to perform an unauthorized operation.</p>\r\n<p><br>\r\n-------------------------- Technical Information Follows<br>\r\n--------------------------</p>\r\n<p>Exception Details:<br>\r\n----------------------------------------<br>\r\nException type:&nbsp; System.UnauthorizedAccessException<br>\r\nMessage:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attempted to perform an unauthorized operation.<br>\r\nSource:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Core<br>\r\nTarget Site:&nbsp;&nbsp;&nbsp;&nbsp; Throw</p>\r\n<p>Stack Trace:<br>\r\n&nbsp;&nbsp; at System.Diagnostics.Eventing.Reader.EventLogException.Throw(Int32<br>\r\nerrorCode)<br>\r\n&nbsp;&nbsp; at System.Diagnostics.Eventing.Reader.EventLogConfiguration..ctor(String<br>\r\nlogName, EventLogSession session)<br>\r\n&nbsp;&nbsp; at Microsoft.Win32.TaskScheduler.SystemEventEnumerator.GetEventSources(String<br>\r\ncomputerName, String log)<br>\r\n&nbsp;&nbsp; at<br>\r\nMicrosoft.Win32.TaskScheduler.TriggerEditDialog.onEventLogCombo_SelectedIndexCha<br>\r\nnged(Object sender, EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ComboBox.OnSelectedIndexChanged(EventArgs e)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ComboBox.WmReflectCommand(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.ComboBox.WndProc(Message&amp; m)<br>\r\n&nbsp;&nbsp; at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr<br>\r\nwparam, IntPtr lparam)</p>\r\n",
+    "PostedDate": "2012-08-20T07:18:15.37-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "901739",
+    "ThreadId": "392331",
+    "Html": "<p>I will add some error handling for this retrieval method. The error you are seeing comes from the fact that the process running your code does not have access to the Event Log on the computer you are connected to with the Task Scheduler.</p>",
+    "PostedDate": "2012-08-20T16:22:51.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "902634",
+    "ThreadId": "392331",
+    "Html": "<p>Thanks David!</p>",
+    "PostedDate": "2012-08-22T10:47:35.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

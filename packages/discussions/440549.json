@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1031560",
+    "ThreadId": "440549",
+    "Html": "I have been filtering through here all day. I have an app that registers tasks for one of our applications. I want to add a check box that will represent the present/not present status of the task. but I can't find or figure out how to do that for one service. Can anyone assist or at least enlighten me.\r<br />\n<br />\nthanks.<br />\n",
+    "PostedDate": "2013-04-17T00:09:39.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1031843",
+    "ThreadId": "440549",
+    "Html": "If by &quot;present/not present&quot; status you mean if the task is registered on the system, you can find that by using the TaskService.FindTask(&quot;taskname&quot;) method. It will look through all folders and try to find the specified task. If not found, the method returns <em>null</em>. If the task is registered and &quot;present/not present&quot; status means that the task is running or ready, then once you have an instance of the Task, then use the State property.<br />\n",
+    "PostedDate": "2013-04-17T07:38:55.593-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

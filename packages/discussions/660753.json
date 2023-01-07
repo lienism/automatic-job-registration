@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1491230",
+    "ThreadId": "660753",
+    "Html": "Hello,\r<br />\n<br />\nI am trying to create a scheduled task. I am getting below mentioned error. I am using windows 7 x64 with VS2010 and my project targets .NET Framework 3.5. Please help as soon as possible as I am stuck rite now. Thanks in advance.\r<br />\n<br />\nSystem.Runtime.InteropServices.COMException was unhandled by user code\r<br />\n  Message=(16,8):StartBoundary:\r<br />\n  Source=&quot;&quot;\r<br />\n  ErrorCode=-2147216615\r<br />\n  StackTrace:<br />\n<pre><code>   at Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl)\n   at Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition)\n   at NullVoidCreations.Janitor.Shell.Models.TaskModel.Create() in D:\\Projects\\Janitor\\NullVoidCreations.Janitor.Shell\\Models\\TaskModel.cs:line 38\n   at NullVoidCreations.Janitor.Shell.ViewModels.SettingsViewModel.ExecuteSaveSchedule(Object parameter) in D:\\Projects\\Janitor\\NullVoidCreations.Janitor.Shell\\ViewModels\\SettingsViewModel.cs:line 350\n   at NullVoidCreations.Janitor.Shared.Base.AsyncDelegateCommand.DoWork(Object sender, DoWorkEventArgs target) in D:\\Projects\\Janitor\\NullVoidCreations.Janitor.Shared\\Base\\AsyncDelegateCommand.cs:line 63\n   at System.ComponentModel.BackgroundWorker.OnDoWork(DoWorkEventArgs e)\n   at System.ComponentModel.BackgroundWorker.WorkerThreadStart(Object argument)</code></pre>\n\nInnerException: <br />\n",
+    "PostedDate": "2017-01-17T10:48:01.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491287",
+    "ThreadId": "660753",
+    "Html": "Given the error, this has to do with the StartBoundary setting on one of the triggers. Check to make sure it is before any EndBoundary setttings and has not been set to DateTime.MinTime. There are a few settings that are also interdependent. If you send the code for how you are setting the trigger(s), I can help you debug further.<br />\n",
+    "PostedDate": "2017-01-18T07:41:33.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-01-18T10:56:49.023-08:00"
+  },
+  {
+    "Id": "1491293",
+    "ThreadId": "660753",
+    "Html": "Below is a glimpse of method I am using to schedule tasks. You will see TaskModel which is just a wrapper to store schedule information. Do let me know where I have gone wrong. Look ahead to hearing from you very soon.\r<br />\n<br />\nobject ExecuteSaveSchedule(object parameter)<br />\n<pre><code>    {\n        var task = new TaskModel();\n        task.Name = string.Format(&quot;{0}AutomaticSmartScan&quot;, SettingsManager.Instance.CodeName);\n        if (IsScheduleDisabled)\n            return task.Delete();\n\n        task.ExecutablePath = SettingsManager.Instance.ExecutablePath;\n        task.CommandLineArguments = string.Format(&quot;/{0} /{1}&quot;, CommandLineManager.CommandLineArgument.Silent, CommandLineManager.CommandLineArgument.SmartScan);\n\n\n        var schedule = new DateTime(Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second);\n        if (IsScheduleOnce)\n        {\n            task.Schedule = new TimeTrigger(schedule);\n            task.Schedule.EndBoundary = DateTime.MaxValue;\n        }\n        else if (IsScheduleDaily)\n        {\n            task.Schedule = new DailyTrigger();\n            task.Schedule.StartBoundary = schedule;\n            task.Schedule.EndBoundary = DateTime.MaxValue;\n        }\n        else if (IsScheduleWeekly)\n        {\n            DaysOfTheWeek days = DaysOfTheWeek.AllDays;\n            for (short index = 0; index &lt; WeekDays.Count; index++)\n            {\n                if (!WeekDays[index])\n                    continue;\n\n                DaysOfTheWeek day = DaysOfTheWeek.AllDays;\n                switch (index)\n                {\n                    case 0:\n                        day = DaysOfTheWeek.Sunday;\n                        break;\n\n                    case 1:\n                        day = DaysOfTheWeek.Monday;\n                        break;\n\n                    case 2:\n                        day = DaysOfTheWeek.Tuesday;\n                        break;\n\n                    case 3:\n                        day = DaysOfTheWeek.Wednesday;\n                        break;\n\n                    case 4:\n                        day = DaysOfTheWeek.Thursday;\n                        break;\n\n                    case 5:\n                        day = DaysOfTheWeek.Friday;\n                        break;\n\n                    case 6:\n                        day = DaysOfTheWeek.Saturday;\n                        break;\n                }\n\n                if (days == DaysOfTheWeek.AllDays)\n                    days = day;\n                else\n                    days |= day;\n            }\n            task.Schedule = new WeeklyTrigger(days);\n            task.Schedule.StartBoundary = schedule;\n            task.Schedule.EndBoundary = DateTime.MaxValue;\n        }\n\n\n        var result = task.Create();\n        if (result)\n        {\n            Date = task.Schedule.StartBoundary;\n            Time = task.Schedule.StartBoundary;\n        }\n        return result;\n    }</code></pre>\n\n",
+    "PostedDate": "2017-01-18T09:32:15.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491296",
+    "ThreadId": "660753",
+    "Html": "I figured out, date was an issue. I will send you a free license of software I am making. Just email me at <a href=\"mailto:walia.rubal@gmail.com\" rel=\"nofollow\">walia.rubal@gmail.com</a>.<br />\n",
+    "PostedDate": "2017-01-18T10:56:27.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1491319",
+    "ThreadId": "660753",
+    "Html": "Glad you figured it out. If you would please add in what you found to be the problem by editing your last message. I'd also remove your email as this is a public forum.<br />\n",
+    "PostedDate": "2017-01-18T17:31:29.247-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

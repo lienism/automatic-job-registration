@@ -1,0 +1,181 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in 2.6.2 - Released today",
+    "ClosedDate": "2017-10-05T17:29:12.287-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "On Windows Vista, I can't register a task when a password is required. I'm using the version 2.5.27 of the wrapper.\nThe next code works on other operative systems, but not in Windows Vista:\n\nTaskDefinition td = taskScheduler.NewTask();\ntd.Actions.Add(Application.ExecutablePath, string.Format(\"\\\"{0}\\\"\", configPath));\ntd.Settings.DisallowStartIfOnBatteries = false;\ntd.Settings.StopIfGoingOnBatteries = false;\n\nTask task = taskScheduler.RootFolder.RegisterTaskDefinition(taskName, td);\ntask.Definition.Principal.LogonType = TaskLogonType.Password;\ntask.Definition.Principal.RunLevel = TaskRunLevel.Highest;\n\nTaskEditDialog editorForm = new TaskEditDialog(task, true, true);\neditorForm.ShowDialog();\n\nWhen clicking on OK button of the Task Edit Dialog, we are prompted to type password of the account. Even if the password is right, we get the error of the screenshot.",
+    "LastUpdatedDate": "2017-10-05T17:29:12.287-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "taskscheduler",
+    "ReportedDate": "2017-06-27T00:10:56.503-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Error registering task on Windows Vista",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 12469
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5096,
+      "FileName": "error.JPG",
+      "DownloadUrl": ".\\5096"
+    },
+    {
+      "FileId": 5100,
+      "FileName": "cannotcreate.JPG",
+      "DownloadUrl": ".\\5100"
+    },
+    {
+      "FileId": 5104,
+      "FileName": "errorVista.JPG",
+      "DownloadUrl": ".\\5104"
+    },
+    {
+      "FileId": 5105,
+      "FileName": "successVista.JPG",
+      "DownloadUrl": ".\\5105"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Your problem is not in the code. I have tested it on Vista without error. Therefore, the problem must lie with permissions. Please see http://taskscheduler.codeplex.com/wikipage?title=TaskSecurity for information on appropriate permissions to edit a task. You may try using the TaskEditDialog constructor that takes a TaskDefinition instance and not pre-registering the task before calling the dialog.",
+      "PostedDate": "2017-06-27T09:13:23.137-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-29T05:23:04.63-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have added my account to the Administrator group. But the problem persists.\nSee the attachment, I'm using the account administrator of the domain.\nI will try to use the TaskEditDialog constructor that takes a TaskDefinition.",
+      "PostedDate": "2017-06-29T05:23:05.163-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Using the TaskEditDialog constructor that takes de TaskDefinition, I get the same error.\r\n\r\nTaskDefinition td = taskScheduler.NewTask();\ntd.Actions.Add(Application.ExecutablePath, string.Format(\"\\\"{0}\\\"\", configPath));\ntd.Settings.DisallowStartIfOnBatteries = false;\ntd.Settings.StopIfGoingOnBatteries = false;\ntd.Principal.RunLevel = TaskRunLevel.Highest;\ntd.Principal.LogonType = TaskLogonType.Password;\r\n\r\nTaskEditDialog editorForm = new TaskEditDialog(taskScheduler, td, true, true);\neditorForm.TaskName = taskName;\neditorForm.ShowDialog();",
+      "PostedDate": "2017-06-29T06:46:40.64-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please try running the troubleshooter @ https://taskscheduler.codeplex.com/releases/view/622295",
+      "PostedDate": "2017-07-01T09:32:46.22-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I still see the error.\nI cannot tell customers to use the tool and resolve the problem.\nOther windows applications(running under the same user) are able to create tasks in taskscheduler.\r\n\r\ncan you suggest some-other solution.",
+      "PostedDate": "2017-07-01T10:16:19.37-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "My guess, given that other programs work, is that there is something tied to UAC for your program unique to that system. Have you tested this on multiple Windows 7 machines? If it is just this one, then check those permissions. If multiple, then check your program's manifest. I can tell you that multiple Windows 7 and Vista installations are working with the latest bits.",
+      "PostedDate": "2017-07-01T21:10:53.593-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-12T08:10:52.797-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I still have this error in Windows Vista. Not reproduced in Windows 7 or later.\nI have used your Test Task Scheduler, as you can see in the screenshot.\n",
+      "PostedDate": "2017-07-12T08:10:53.497-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-07-12T08:23:44.403-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The error happens if we pass though the TaskEditDialog. But If we try to register the task directly, we don't get any error, as you can see in the attachment \"successVista.jpg\".\nOf course, in both cases the password is right typed.",
+      "PostedDate": "2017-07-12T08:23:44.99-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Please confirm that issue has also been resolved. I think it has the same resolution as the other one that you said I could close.",
+      "PostedDate": "2017-07-20T08:35:45.86-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am not sure that the issue was the same as the other one. Because, I don't get an access denied error.\r\n\r\n* The next code works:\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\n\t\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\r\n\r\n// Register the task in the root folder\nvar t = ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");\r\n\r\n\n*But this one not (The only change is to open the TaskEditDialog):\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\n\t\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\\\test.log\", null));\r\n\r\n// Register the task in the root folder\nvar t = ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\r\n\r\nt.Definition.Principal.LogonType = TaskLogonType.Password;\nTaskEditDialog editForm = new TaskEditDialog(t,true, true);\neditForm.ShowDialog();\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");",
+      "PostedDate": "2017-07-21T01:04:28.493-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am not sure that the issue was the same as the other one. Because, I don't get an access denied error.\r\n\r\n* The next code works:\r\n\r\n```\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\r\n\r\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\test.log\", null));\r\n\r\n// Register the task in the root folder\nvar t = ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");\n```\r\n\r\n* But this one not (The only change is to open the TaskEditDialog):\r\n\r\n```\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\r\n\r\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\test.log\", null));\r\n\r\n// Register the task in the root folder\nvar t = ts.RootFolder.RegisterTaskDefinition(@\"Test\", td);\r\n\r\nt.Definition.Principal.LogonType = TaskLogonType.Password;\nTaskEditDialog editForm = new TaskEditDialog(t,true, true);\neditForm.ShowDialog();\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");\n```",
+      "PostedDate": "2017-07-21T01:43:32.107-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The problem seems to be with how the dialog is converting a saved task that is setup as \"Interactive\" to a \"Password\" task. I have duplicated your errors and will work through them in the next release. Until then, the following code works and, I believe, accomplished what you are trying to do.\n```\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\ntd.Principal.LogonType = TaskLogonType.Password;\r\n\r\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\test.log\", null));\r\n\r\n// Call the dialog with the definition only (not a registered task)\nTaskEditDialog editForm = new TaskEditDialog(ts, td, true, true) { TaskName = \"Test\" };\nvar r = editForm.ShowDialog();\nif (r == System.Windows.Forms.DialogResult.Cancel) return;\nTask t = editForm.Task;\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");\n```",
+      "PostedDate": "2017-07-21T11:39:14.233-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hi Dahall,\nDo you have news about the issue?",
+      "PostedDate": "2017-08-22T00:25:29.557-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I'm struggling to find the error in the code that would cause this problem only on Vista. My last thought is to ask you to tell me what you see for the \"user\" in the password prompt. I'm curious if I'm not getting the full user name to pass to the Register method.",
+      "PostedDate": "2017-08-29T08:30:10.01-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Hello Dahall,\nSorry for my late reply.",
+      "PostedDate": "2017-09-22T06:48:09.147-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I am trying to attach screenshots, but it doesn't work.\nThe work around that you proposed doesn't solve my issue. Because I need to register the task before open the dialog, to avoid that the user could change the name of the task.",
+      "PostedDate": "2017-09-22T06:54:18.613-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have fought with this for a number of hours and cannot find a way around how Microsoft is handling this in Win7. In the next release (2.6.2), I have added a property to TaskEditDialog called 'TaskNameIsEditable' that you can set to false to prevent changes to it. New use would be:\n```c#\n// Create a new task definition and assign properties\nTaskDefinition td = ts.NewTask();\ntd.RegistrationInfo.Description = \"Does something\";\ntd.Principal.LogonType = TaskLogonType.Password;\r\n\r\n// Create a trigger that will fire the task at this time every other day\ntd.Triggers.Add(new DailyTrigger { DaysInterval = 2 });\r\n\r\n// Create an action that will launch Notepad whenever the trigger fires\ntd.Actions.Add(new ExecAction(\"notepad.exe\", \"c:\\test.log\", null));\r\n\r\n// Call the dialog with the definition only (not a registered task)\nTaskEditDialog editForm = new TaskEditDialog(ts, td, true, true) { TaskName = \"Test\", TaskNameIsEditable = false };\nvar r = editForm.ShowDialog();\nif (r == System.Windows.Forms.DialogResult.Cancel) return;\nTask t = editForm.Task;\r\n\r\n// If no exception thrown, then log success\noutput.WriteLine(\"Success! Task '{0}' created by '{1}' under '{2}'.\", t.Name, t.Definition.RegistrationInfo.Author, t.Definition.Principal);\r\n\r\n// Delete task\nts.RootFolder.DeleteTask(@\"Test\");\n```",
+      "PostedDate": "2017-09-22T09:47:07.88-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Thanks Dahall,\nI think that it should work for us.\nI will test it when the version is available.",
+      "PostedDate": "2017-09-25T08:06:29.29-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "When the version 2.6.2 will be available?",
+      "PostedDate": "2017-09-27T03:37:03.393-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I have also included a .NET Standard 2.0 build in this release, but it hasn't been tested and really can't be fully tested until the next version of VS (15.4) comes out. I'd like to wait until then, but am willing to push it sooner if this is imperative for you. My guess is that if I don't document the new build, very few will use it and potentially find bugs. Please let me know your urgency.",
+      "PostedDate": "2017-09-27T09:29:39.397-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-10-05T17:29:12.287-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

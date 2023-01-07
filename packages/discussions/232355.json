@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "512666",
+    "ThreadId": "232355",
+    "Html": "\r\n<p>&nbsp;</p>\r\n<p>Hello everyone,</p>\r\n<p>I'm running a web app on Windows 2008 server box under .NET 3.5</p>\r\n<p>Creating a scheduled task from the web app like this:<br>\r\nusing (TaskService ts = new TaskService(&quot;localhost&quot;, tsuser, tsdomain, tspass, false))<br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... blablabla ...</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ts.RootFolder.RegisterTaskDefinition(@&quot;Run Report &quot; &#43; id, td);</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>\r\n<p>The app throws back an exception instead of creating a task:</p>\r\n<h2><em><em>The filename, directory name, or volume label syntax is incorrect. (Exception from HRESULT: 0x8007007B)</em></em></h2>\r\n<p><span style=\"font-family:Arial,Helvetica,Geneva,SunSans-Regular,sans-serif\"><strong>Exception Details:\r\n</strong>System.IO.FileNotFoundException: The filename, directory name, or volume label syntax is incorrect. (Exception from HRESULT: 0x8007007B)</span></p>\r\n<p><span style=\"font-family:Arial,Helvetica,Geneva,SunSans-Regular,sans-serif\"></p>\r\n<pre>[FileNotFoundException: The filename, directory name, or volume label syntax is incorrect. (Exception from HRESULT: 0x8007007B)]<br>   Microsoft.Win32.TaskScheduler.V2Interop.ITaskFolder.RegisterTaskDefinition(String Path, ITaskDefinition pDefinition, Int32 flags, Object UserId, Object password, TaskLogonType LogonType, Object sddl) &#43;0<br>   Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition, TaskCreation createType, String UserId, String password, TaskLogonType LogonType, String sddl) &#43;96<br>   Microsoft.Win32.TaskScheduler.TaskFolder.RegisterTaskDefinition(String Path, TaskDefinition definition) &#43;67<br></pre>\r\n</span>\r\n<p></p>\r\n<p>I looked around on forums but haven't seen anyone run into this before. Anyone got suggestions? :)</p>\r\n",
+    "PostedDate": "2010-10-26T05:38:33.233-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "512914",
+    "ThreadId": "232355",
+    "Html": "\r\n<p>Apparently this was due to a special character in Task Name. I apologize for inconvenience. This part works just fine.</p>\r\n",
+    "PostedDate": "2010-10-26T11:59:22.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]
